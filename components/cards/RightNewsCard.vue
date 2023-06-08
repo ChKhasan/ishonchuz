@@ -1,0 +1,72 @@
+<template lang="html">
+  <div class="right-news-card">
+    <div class="right-news-text">
+      <p>
+        Yuragida o‘ti bor ijodkor yoshlardan Amir Temur xotirasi uchun tayyorlangan
+        shedevr!
+      </p>
+    </div>
+    <div class="right-news-footer">
+      <span> <span v-html="comments"></span> 0</span>
+      <span><span v-html="view"></span>1232</span>
+      <span><span v-html="date"></span>12:32</span>
+    </div>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      comments: require("../../assets/svg/comments.svg?raw"),
+      view: require("../../assets/svg/view.svg?raw"),
+      date: require("../../assets/svg/date.svg?raw"),
+    };
+  },
+};
+</script>
+<style lang="css">
+.right-news-card {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eeeeee;
+}
+.right-news-text {
+  padding-left: 17px;
+  position: relative;
+}
+.right-news-text::after {
+  position: absolute;
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0192ff;
+  top: 8px;
+  left: 0;
+}
+.right-news-text p {
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: #000000;
+}
+.right-news-footer {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+.right-news-footer > span {
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: #888888;
+  margin-left: 17px;
+}
+.right-news-footer span span {
+  margin-right: 5px;
+}
+</style>

@@ -1,0 +1,164 @@
+<template>
+  <div class="home-page">
+    <div class="container_xl">
+      <div class="home-page-grid">
+        <div>
+          <div class="home-carousel">
+            <div class="world">
+              <div
+                style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                class="swiper mySwiper2"
+              >
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide" v-for="item in topNews" :key="item.id">
+                    <BannerCard :topNews="item" />
+                  </div>
+                </div>
+              </div>
+              <div thumbsSlider="" class="swiper mySwiper">
+                <div class="swiper-wrapper flex-row">
+                  <div
+                    class="swiper-slide carousel-dot-items"
+                    v-for="item in topNews"
+                    :key="item.id"
+                  >
+                    <div>
+                      {{ item?.title }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <TitleComp :link="true" title="So’ngi yangiliklar" />
+          <div class="h-news-grid">
+            <HNewsCard v-for="newsItem in news" :key="newsItem.id" :news="newsItem" />
+          </div>
+          <div class="v-news-grid">
+            <VNewsCard v-for="news in simpleNews" :key="news.id" :news="news" />
+          </div>
+          <TitleComp :link="true" />
+          <div class="video-news-grid">
+            <VideoNewsCard v-for="news in videoNews" :key="news?.id" :news="news" />
+          </div>
+          <TitleComp :link="true" title="Video galeraya" />
+          <div class="news-images-grid">
+            <NewsImagesCard />
+            <NewsImagesCard />
+            <NewsImagesCard />
+            <NewsImagesCard />
+          </div>
+        </div>
+        <div class="home-page-right">
+          <div class="block1">
+            <div class="home-page-right-title">Gazeta</div>
+            <div class="home-page-right-drop">
+              Kutubxona <span v-html="dropdown"></span>
+            </div>
+            <div class="home-page-right-drop">
+              Ko'ngil-Ochar <span v-html="dropdown"></span>
+            </div>
+          </div>
+          <div class="block2">
+            <div class="home-page-right-title" style="text-align: center">
+              biz haqimizda
+            </div>
+            <div class="right-banner">
+              <img src="../assets/images/Снимок экрана (926).png" alt="" />
+            </div>
+          </div>
+          <TitleComp :link="false" title="Muharrir Tanlovi" />
+          <div class="mt-3 mb-5"><VNewsCard /></div>
+          <TitleComp :link="false" title="Dolzarb mavzular" />
+
+          <div class="right-news-list">
+            <RightNewsCard />
+            <RightNewsCard />
+            <RightNewsCard />
+            <RightNewsCard />
+            <RightNewsCard />
+            <RightNewsCard />
+            <RightNewsCard />
+          </div>
+          <div class="right-show-more">Barchashini ko’rish</div>
+          <RightTelegramCard />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import BannerCard from "../components/cards/BannerCard.vue";
+import TitleComp from "../components/Title-comp.vue";
+import HNewsCard from "../components/cards/HNewsCard.vue";
+import VNewsCard from "../components/cards/VNewsCard.vue";
+import VideoNewsCard from "../components/cards/VideoNewsCard.vue";
+import NewsImagesCard from "../components/cards/NewsImagesCard.vue";
+import RightNewsCard from "../components/cards/RightNewsCard.vue";
+import RightTelegramCard from "../components/cards/RightTelegramCard.vue";
+import Swiper from "swiper/swiper-bundle.js";
+import "swiper/swiper-bundle.min.css";
+const baseUrl =
+  "https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/";
+export default {
+  name: "IndexPage",
+  data() {
+    return {
+      baseUrl,
+      dropdown: require("../assets/svg/dropdown.svg?raw"),
+    };
+  },
+  mounted() {
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 16,
+      slidesPerView: 4,
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      loop: true,
+      spaceBetween: 10,
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+  },
+  async asyncData({ store }) {
+    const [newsData, topNewsData, simpleNewsData, videoNewsData] = await Promise.all([
+      store.dispatch("fetchNews/getNews", { last_news: true, page_size: 6 }),
+      store.dispatch("fetchNews/getNews", { top: true, page_size: 6 }),
+      store.dispatch("fetchNews/getNews", { page_size: 4 }),
+      store.dispatch("fetchNews/getNews", { video: true, page_size: 4 }),
+    ]);
+    const news = newsData.results;
+    const topNews = topNewsData.results;
+    const simpleNews = simpleNewsData.results;
+    const videoNews = videoNewsData.results;
+    return {
+      news,
+      topNews,
+      simpleNews,
+      videoNews,
+    };
+  },
+  methods: {
+    getImgUrl(i) {
+      return `${baseUrl}abstract0${i + 1}.jpg`;
+    },
+  },
+  components: {
+    BannerCard,
+    TitleComp,
+    HNewsCard,
+    VNewsCard,
+    VideoNewsCard,
+    NewsImagesCard,
+    RightNewsCard,
+    RightTelegramCard,
+  },
+};
+</script>
+<style lang="css">
+@import "../assets/css/pages/home-page.css";
+</style>
