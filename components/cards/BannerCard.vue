@@ -14,7 +14,7 @@
           </p>
         </div>
         <div class="banner-card-body_footer">
-          <span> <span v-html="comments"></span> {{ topNews?.comments }} </span>
+          <span v-if="topNews?.comments"> <span v-html="comments"></span> {{ topNews?.comments }} </span>
           <span><span v-html="view"></span> {{ topNews?.views }} </span>
           <span> <span v-html="date"></span>{{ topNews?.date }}</span>
         </div>

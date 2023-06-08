@@ -114,10 +114,11 @@ h6 {
 .home-page {
   padding-bottom: 250px;
 }
-.home-page-grid {
-  display: grid;
+.home-page-grid:first-child {
+  /* padding-right: 30px; */
+  /* display: grid;
   grid-template-columns: 10.7fr 3.37fr;
-  grid-gap: 30px;
+  grid-gap: 30px; */
 }
 .home-page-right-title {
   padding: 10px 32px;
@@ -131,7 +132,10 @@ h6 {
   border-radius: 8px;
   color: #ffffff;
 }
-.home-page-right-drop {
+.home-page-left {
+  padding-right: 30px !important;
+}
+.home-page-right-drop h5 {
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 500;
@@ -139,16 +143,52 @@ h6 {
   line-height: 170%;
   text-transform: capitalize;
   color: #0192ff;
-  margin-top: 13px;
-  background: #f9f9f9;
-  padding: 11px 32px;
-  border: 1px solid #eeeeee;
-  border-radius: 8px;
   display: flex;
   justify-content: space-between;
+  padding: 0 10px;
+  cursor: pointer;
+
+  /* flex-direction: column; */
+}
+.home-page-right-drop h5 span svg {
+  transition: 0.2s;
+}
+.home-page-right-drop {
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  margin-top: 13px;
+  background: #f9f9f9;
+  padding: 11px 22px;
+  max-height: 52px;
+  transition: max-height 0.4s ease-out;
+  overflow: hidden;
+}
+.home-page-right-drop-board {
+  margin-top: 16px;
+  padding-top: 5px;
+  /* border-top: 1px solid #eeeeee; */
+}
+.home-page-right-drop-board ul li {
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-transform: capitalize;
+  color: #292929;
+  padding: 14px 28px;
+  transition: 0.2s;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .home-page-right-drop span svg path {
   fill: #0192ff;
+}
+.home-page-right-drop-board ul li:hover {
+  color: #0192ff;
+  background: rgba(1, 146, 255, 0.2);
 }
 /* .carousel-dot-items {
     display: grid;

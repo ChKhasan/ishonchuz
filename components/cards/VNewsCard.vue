@@ -71,7 +71,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: 1s ease;
+  transition: 0.3s;
 }
 .v-news-card-img span {
   padding: 7px 12px;

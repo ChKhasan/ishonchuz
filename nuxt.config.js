@@ -24,6 +24,7 @@ export default {
 
   plugins: [
     { src: "~plugins/antdv.js" },
+    { src: "~plugins/lazy-youtube.js", ssr: false },
     { src: "~plugins/v-mask.js", ssr: false },
   ],
 

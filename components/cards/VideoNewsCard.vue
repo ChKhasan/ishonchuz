@@ -1,18 +1,25 @@
 <template lang="html">
   <div class="video-news-card">
     <div class="video-news-card-img">
-      <iframe
+      <!-- <iframe
         width="420"
         height="315"
         ref="youtubeVid"
         :src="news?.video"
         frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       >
-      </iframe>
-      <!-- <img src="../../assets/images/Снимок экрана (925).png" alt="" /> -->
+      </iframe> -->
+      <LazyYoutube
+        @change="changeVideo"
+        ref="lazyVideo"
+        src="https://www.youtube.com/watch?v=TcMBFSGVi1c"
+      />
       <span> Tahlil </span>
-      <!-- <div v-html="video"></div> -->
+      <div v-if="videoShow">
+        <div @click="handleClick('playVideo')" v-html="video"></div>
+      </div>
     </div>
     <div class="video-news-card-body">
       <nuxt-link :to="`/news/${news?.slug}`">
@@ -31,14 +38,25 @@ export default {
   props: ["news"],
   data() {
     return {
+      videoShow: true,
       comments: require("../../assets/svg/comments.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
       video: require("../../assets/svg/video.svg?raw"),
     };
   },
+  methods: {
+    handleClick(event) {
+      this.$refs["lazyVideo"][event]();
+      this.videoShow = false;
+      console.log(this.$refs["lazyVideo"]);
+    },
+    changeVideo(e) {
+      console.log(e);
+    },
+  },
   mounted() {
-    console.log(this.$refs.youtubeVid.paused);
+    console.log(this.$refs["lazyVideo"]);
   },
 };
 </script>
@@ -66,8 +84,16 @@ export default {
   height: 100%;
   object-fit: cover;
 }
-.video-news-card-img div {
+.video-news-card-img > div {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+}
+.video-news-card-img > div div {
   width: 84px;
   height: 84px;
   border-radius: 50%;

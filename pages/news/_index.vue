@@ -1,8 +1,8 @@
 <template>
   <div class="home-page news-page">
     <div class="container_xl">
-      <div class="home-page-grid">
-        <div>
+      <div class="home-page-grid row">
+        <div class="col-9 p-0 home-page-left">
           <div class="new-category-title"><h2>Iqtisod</h2></div>
           <div class="news-breadcrumb">
             <nuxt-link to="/">Home <span v-html="dropdown"></span></nuxt-link>
@@ -99,14 +99,13 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right">
+        <div class="home-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
           <TitleComp :link="false" title="Dolzarb mavzular" />
-
           <div class="right-news-list">
             <RightNewsCard />
             <RightNewsCard />

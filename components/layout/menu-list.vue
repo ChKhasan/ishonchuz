@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="menu-list">
+  <div class="menu-list" id="navbar" ref="navScroll">
     <div class="container_xl">
       <div class="menu-list-container">
         <ul>
@@ -253,6 +253,19 @@ export default {
       },
     };
   },
+  mounted() {
+    var header = this.$refs.navScroll;
+    var sticky = header.offsetTop;
+    window.addEventListener("scroll", () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (window.pageYOffset >= sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+      this.lastScrollTop = scrollTop;
+    });
+  },
   methods: {
     submit() {
       this.$router.push(`/search/${this.searchValue}`);
@@ -287,6 +300,12 @@ export default {
 };
 </script>
 <style lang="css">
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
 .search-block input {
   padding: 12px 27px 12px 44px;
   font-family: var(--ROBOTO_SERIF);
@@ -328,6 +347,9 @@ export default {
     top: 100%;
     opacity: 1;
   }
+}
+.menu-list {
+  background: #ffffff;
 }
 .menu-list-container {
   display: flex;

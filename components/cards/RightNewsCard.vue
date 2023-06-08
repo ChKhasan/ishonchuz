@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="right-news-card">
     <div class="right-news-text">
-      <p>
+      <nuxt-link to="/">
         Yuragida o‘ti bor ijodkor yoshlardan Amir Temur xotirasi uchun tayyorlangan
         shedevr!
-      </p>
+      </nuxt-link>
     </div>
     <div class="right-news-footer">
       <span> <span v-html="comments"></span> 0</span>
@@ -32,6 +32,7 @@ export default {
 .right-news-text {
   padding-left: 17px;
   position: relative;
+  cursor: pointer;
 }
 .right-news-text::after {
   position: absolute;
@@ -43,13 +44,16 @@ export default {
   top: 8px;
   left: 0;
 }
-.right-news-text p {
+.right-news-text a {
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: #000000;
+}
+.right-news-text a:hover {
+  color: #0192ff;
 }
 .right-news-footer {
   margin-top: 18px;
