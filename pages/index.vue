@@ -68,7 +68,19 @@
             </div>
           </div>
           <TitleComp :link="false" title="Muharrir Tanlovi" />
-          <div class="mt-3 mb-5"><VNewsCard /></div>
+          <div class="mt-3 mb-5">
+            <div class="flex items-center justify-center">
+              <div class="swiper-banner-right" style="overflow: hidden; width: 337px">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide" v-for="news in redactorNews" :key="news?.id">
+                    <VNewsCard :news="news" />
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-pagination-banner-right"></div>
+            </div>
+            <div></div>
+          </div>
           <TitleComp :link="false" title="Dolzarb mavzular" />
 
           <div class="right-news-list">
@@ -123,23 +135,42 @@ export default {
         swiper: swiper,
       },
     });
+    const swiperRight = new Swiper(".swiper-banner-right", {
+      flipEffect: {
+        slideShadows: false,
+      },
+      pagination: {
+        el: ".swiper-pagination-banner-right",
+        type: "bullets",
+        clickable: true,
+      },
+    });
   },
   async asyncData({ store }) {
-    const [newsData, topNewsData, simpleNewsData, videoNewsData] = await Promise.all([
+    const [
+      newsData,
+      topNewsData,
+      simpleNewsData,
+      videoNewsData,
+      redactorNewsData,
+    ] = await Promise.all([
       store.dispatch("fetchNews/getNews", { last_news: true, page_size: 6 }),
       store.dispatch("fetchNews/getNews", { top: true, page_size: 6 }),
       store.dispatch("fetchNews/getNews", { page_size: 4 }),
       store.dispatch("fetchNews/getNews", { video: true, page_size: 4 }),
+      store.dispatch("fetchNews/getNews", { redactor_choice: true, page_size: 3 }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
     const videoNews = videoNewsData.results;
+    const redactorNews = redactorNewsData.results;
     return {
       news,
       topNews,
       simpleNews,
       videoNews,
+      redactorNews,
     };
   },
   methods: {
@@ -161,4 +192,12 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/home-page.css";
+.swiper-banner-right .swiper-slide {
+  width: 100% !important;
+}
+.swiper-pagination-banner-right {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
 </style>
