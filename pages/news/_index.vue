@@ -4,12 +4,13 @@
       <div class="home-page-grid row">
         <div class="col-9 p-0 home-page-left">
           <div class="new-category-title"><h2>Iqtisod</h2></div>
-          <div class="news-breadcrumb">
+          <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link to="/">Home <span v-html="dropdown"></span></nuxt-link>
-            <nuxt-link to="/">Iqtisod <span v-html="dropdown"></span></nuxt-link>
             <nuxt-link to="/"
-              >Xodimni ishga tiklash uchun kurash: muammo Oliy sudda yechim topdi
-              <span v-html="dropdown"></span
+              >{{ news?.category?.title }} <span v-html="dropdown"></span
+            ></nuxt-link>
+            <nuxt-link to="/"
+              >{{ news?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
           </div>
           <div class="news-container">
@@ -333,6 +334,9 @@ export default {
   margin-top: 40px;
   padding-bottom: 160px;
   border-bottom: 1px solid #e7e7e7;
+}
+.news-container-body img {
+  width: 100%;
 }
 .news-container-body h1 {
   font-family: var(--ROBOTO_SERIF);

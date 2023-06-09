@@ -19,7 +19,7 @@
           <div class="" v-if="categories?.top_news.length > 0">
             <BannerCard :topNews="categories?.top_news[0]" />
           </div>
-          <div class="v-news-grid" v-if="categories?.video_news?.legth > 0">
+          <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
             <VNewsCard
               v-for="item in categories?.video_news"
               :key="item?.id"

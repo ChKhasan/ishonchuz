@@ -14,7 +14,7 @@
       <LazyYoutube
         @change="changeVideo"
         ref="lazyVideo"
-        src="https://www.youtube.com/watch?v=TcMBFSGVi1c"
+        :src="news?.video"
       />
       <span> Tahlil </span>
       <div v-if="videoShow">
