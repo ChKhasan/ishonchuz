@@ -30,18 +30,27 @@
               </div>
             </div>
           </div>
-          <TitleComp :link="true" title="So’ngi yangiliklar" />
+          <TitleComp
+            :link="true"
+            :title="$store.state.translations['main.latest_news']"
+          />
           <div class="h-news-grid">
             <HNewsCard v-for="newsItem in news" :key="newsItem.id" :news="newsItem" />
           </div>
           <div class="v-news-grid">
             <VNewsCard v-for="news in simpleNews" :key="news.id" :news="news" />
           </div>
-          <TitleComp :link="true" title="Video galereya" />
+          <TitleComp
+            :link="true"
+            :title="$store.state.translations['main.video_gallery']"
+          />
           <div class="video-news-grid">
             <VideoNewsCard v-for="news in videoNews" :key="news?.id" :news="news" />
           </div>
-          <TitleComp :link="true" title="Foto repartaj" />
+          <TitleComp
+            :link="true"
+            :title="$store.state.translations['main.photo_repartee']"
+          />
           <div class="news-images-grid">
             <NewsImagesCard />
             <NewsImagesCard />
@@ -51,14 +60,16 @@
         </div>
         <div class="home-page-right col-3 p-0">
           <div class="block1">
-            <div class="home-page-right-title">Gazeta</div>
+            <div class="home-page-right-title">
+              {{ $store.state.translations["main.newspaper"] }}
+            </div>
             <div
               class="home-page-right-drop"
               @click="dropAction(1)"
               :class="{ heightAuto: dropVal == 1 }"
             >
               <h5>
-                Kutubxona
+                {{ $store.state.translations["main.library"] }}
                 <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
               </h5>
               <Transition name="bounceDrop">
@@ -78,7 +89,7 @@
               :class="{ heightAuto: dropVal == 2 }"
             >
               <h5>
-                Ko'ngil-Ochar
+                {{ $store.state.translations["main.entertainment"] }}
                 <span v-html="dropdown" :class="{ rotate180: dropVal == 2 }"></span>
               </h5>
               <Transition name="bounceDrop">
@@ -94,13 +105,16 @@
           </div>
           <div class="block2">
             <div class="home-page-right-title" style="text-align: center">
-              biz haqimizda
+              {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">
               <img src="../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
-          <TitleComp :link="false" title="Muharrir Tanlovi" />
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['main.editor_choice']"
+          />
           <div class="mt-3 mb-5">
             <div class="flex items-center justify-center">
               <div class="swiper-banner-right" style="overflow: hidden; width: 337px">
@@ -114,12 +128,17 @@
             </div>
             <div></div>
           </div>
-          <TitleComp :link="false" title="Dolzarb mavzular" />
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['main.active_topics']"
+          />
 
           <div class="right-news-list">
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
-          <div class="right-show-more">Barchashini ko’rish</div>
+          <div class="right-show-more">
+            {{ $store.state.translations["main.see_all"] }}
+          </div>
           <RightTelegramCard />
         </div>
       </div>

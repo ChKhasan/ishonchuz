@@ -6,7 +6,7 @@
           <div class="new-category-title"><h2>Iqtisod</h2></div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
-              >Home <span v-html="dropdown"></span
+              >{{$store.state.translations['main.home']}} <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
@@ -108,7 +108,10 @@
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
-          <TitleComp :link="false" title="Dolzarb mavzular" />
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['main.active_topics']"
+          />
           <div class="right-news-list">
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
@@ -120,16 +123,23 @@
       <div class="comment-container-grid">
         <div>
           <div class="comment-form">
-            <h5>Izoh qoldiring</h5>
-            <div><input type="text" placeholder="Ism*" /><a-rate v-model="value" /></div>
+            <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+            <div>
+              <input
+                type="text"
+                :placeholder="$store.state.translations['news.comment_input_place']"
+              /><a-rate v-model="value" />
+            </div>
             <textarea
               rows="5"
-              placeholder="Qoldirilgan izohlar, admin tomonidan ahloqiy, manaviy jihattan tekshirilgandan so’ng izohlarda ko’rinadi.*"
+              :placeholder="$store.state.translations['news.comment_textarea_place']"
             ></textarea>
-            <div class="send-btn">Izoh qoldiring</div>
+            <div class="send-btn">
+              {{ $store.state.translations["news.leave_comment"] }}
+            </div>
           </div>
           <div class="comments-list">
-            <h4>Qoldirilgan izohlar (11)</h4>
+            <h4>{{ $store.state.translations["news.comments_title"] }} (11)</h4>
             <div class="comments-grid">
               <CommentCard />
               <CommentCard />
@@ -137,16 +147,21 @@
               <CommentCard />
               <CommentCard />
             </div>
-            <div class="show-more-count">Yana ko’rish (8)</div>
+            <div class="show-more-count">
+              {{ $store.state.translations["news.see_again"] }} (8)
+            </div>
           </div>
-          <TitleComp :link="false" title="Mavzuga oid" />
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['news.on_subject']"
+          />
           <div class="v-news-grid">
             <VNewsCard v-for="news in topicNews" :key="news?.id" :news="news" />
           </div>
         </div>
         <div>
           <div class="general-assessment">
-            <h5>Izoh qoldiring</h5>
+            <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
             <div class="main-rate"><a-rate v-model="value" /><span>4/5</span></div>
             <div class="item-rate">
               <a-rate v-model="value" /><span><p>3</p></span>

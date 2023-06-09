@@ -36,7 +36,7 @@
           </div>
           <!-- <div class="right-show-more">Yana yuklash</div> -->
           <div class="messangers-container">
-            <h5>Bizni ijtimoiy tarmoqlarda kuzating</h5>
+            <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
             <div class="follow-us-message">FOLLOW US!</div>
             <div class="messanger-icons">
               <a href="#">

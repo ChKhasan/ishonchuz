@@ -29,7 +29,7 @@
           <li>
             <a-dropdown :trigger="['click']">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
-                Kutubxona <span v-html="drop"></span>
+                {{ $store.state.translations["main.library"] }} <span v-html="drop"></span>
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
@@ -50,7 +50,7 @@
           <li>
             <a-dropdown :trigger="['click']">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
-                Boshqalar <span v-html="drop"></span>
+                {{ $store.state.translations["main.others"] }} <span v-html="drop"></span>
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">

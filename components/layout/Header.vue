@@ -10,7 +10,7 @@
             </nuxt-link>
           </div>
           <ul class="currency-list">
-            <h6>Valyuta UZS</h6>
+            <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
             <li>
               USD
               <p>11 418.11 <span>7.94</span></p>

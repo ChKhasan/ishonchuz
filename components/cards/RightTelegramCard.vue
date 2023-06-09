@@ -4,10 +4,12 @@
       <span v-html="logo"></span>
     </div>
     <div class="right-tg-card_body">
-      <p>Yangiliklarda tezroq xabardor bo’lish uchun Telegram kanalimizga a’zo bo’ling</p>
+      <p>{{ $store.state.translations["main.tg_card_text"] }}</p>
     </div>
     <div class="right-tg-card_footer">
-      <a href="#" class="to-tg-btn"><span v-html="tg"></span> Kanalga a’zo bo’lish</a>
+      <a href="#" class="to-tg-btn"
+        ><span v-html="tg"></span> {{ $store.state.translations["main.tg_card_link"] }}</a
+      >
     </div>
   </div>
 </template>
@@ -29,6 +31,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 40px;
 }
 .right-tg-card_head {
   padding-top: 9px;

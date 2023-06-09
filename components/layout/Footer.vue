@@ -8,14 +8,16 @@
         <div class="footer-body">
           <div class="footer-info">
             <h6>
-              Ishonch.uz” axborot-tahliliy portali 2019 yilning 10 yanvarida elektron OAV
-              sifatida davlat ro‘yxatidan o‘tkazilgan.
+              {{ $store.state.translations["main.footer_text"] }}
             </h6>
-            <p>Guvohnoma raqami: <span>1263</span></p>
             <p>
-              Tahririyat manzili: <span>Toshkent shahri, Buxoro ko‘chasi, 24-uy</span>
+              {{ $store.state.translations["main.footer_number"] }}: <span>1263</span>
             </p>
-            <p>Elektron manzil: <a href="#">ishonch1991@yandex.uz</a></p>
+            <p>
+              {{ $store.state.translations["main.footer_adress"] }}:
+              <span>Toshkent shahri, Buxoro ko‘chasi, 24-uy</span>
+            </p>
+            <p> {{ $store.state.translations["main.footer_email"] }}: <a href="#">ishonch1991@yandex.uz</a></p>
           </div>
           <div class="footer-menu">
             <ul>
@@ -27,14 +29,14 @@
             <ul>
               <li>Madaniyat va marifat</li>
               <li>Mehnat huquqi</li>
-              <li>Kutubxona</li>
-              <li>Boshqalar</li>
+              <li>{{ $store.state.translations["main.library"] }}</li>
+              <li>{{ $store.state.translations["main.others"] }}</li>
             </ul>
             <ul>
-              <li>Sayt haqida</li>
-              <li>Reklama</li>
-              <li>Aloqa</li>
-              <li>Biz haqimizda</li>
+              <li>{{ $store.state.translations["main.about_site"] }}</li>
+              <li>{{ $store.state.translations["main.reklama"] }}</li>
+              <li>{{ $store.state.translations["main.contact"] }}</li>
+              <li>{{ $store.state.translations["main.about_us"] }}</li>
             </ul>
           </div>
         </div>
@@ -71,7 +73,7 @@ export default {
 <style lang="css">
 .footer {
   padding-top: 36px;
-  border-top: 1px solid #EEEEEE;
+  border-top: 1px solid #eeeeee;
 }
 .footer-logo {
   margin-bottom: 30px;
@@ -138,7 +140,6 @@ export default {
   padding-bottom: 103px;
 }
 .footer-messangers {
-  
   padding-top: 50px;
   padding-bottom: 66px;
 }

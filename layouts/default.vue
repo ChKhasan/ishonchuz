@@ -27,25 +27,38 @@ export default {
     },
   },
   async fetch() {
-    const [categoriesData] = await Promise.all([
+    const [categoriesData, translationsData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
+      this.$store.dispatch("fetchTranslations/getTranslations", {
         headers: {
           Language: this.$i18n.locale,
         },
       }),
     ]);
     this.categories = categoriesData.results;
+    this.$store.commit("getTranslations", translationsData);
+    console.log(this.translations);
   },
   watch: {
     async targetLang() {
-      const [categoriesData] = await Promise.all([
+      const [categoriesData,translationsData] = await Promise.all([
         this.$store.dispatch("fetchCategories/getCategories", {
           headers: {
             Language: this.$i18n.locale,
           },
         }),
+        this.$store.dispatch("fetchTranslations/getTranslations", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
       ]);
       this.categories = categoriesData.results;
+      this.$store.commit("getTranslations", translationsData);
     },
   },
   components: { Header, Footer },

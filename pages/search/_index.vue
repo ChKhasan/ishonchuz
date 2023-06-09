@@ -25,7 +25,7 @@
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
-          <TitleComp :link="false" title="Dolzarb mavzular" />
+          <TitleComp :link="false" :title="$store.state.translations['main.active_topics']" />
 
           <div class="right-news-list">
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
@@ -38,7 +38,7 @@
 
       <div>
         <div class="messangers-container">
-          <h5>Bizni ijtimoiy tarmoqlarda kuzating</h5>
+          <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
           <div class="follow-us-message">FOLLOW US!</div>
           <div class="messanger-icons">
             <a href="#">

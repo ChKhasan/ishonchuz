@@ -2,7 +2,7 @@
   <div class="title-comp">
     <h2><span v-html="titleIcon"></span> {{ title }}</h2>
     <nuxt-link v-if="link" :to="localePath('/')"
-      >Barchasini ko’rish <span v-html="linkIcon"></span
+      >{{ $store.state.translations["main.see_all"] }}<span v-html="linkIcon"></span
     ></nuxt-link>
   </div>
 </template>
