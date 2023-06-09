@@ -1,20 +1,20 @@
 <template lang="html">
   <div class="right-news-card">
     <div class="right-news-text">
-      <nuxt-link to="/">
-        Yuragida o‘ti bor ijodkor yoshlardan Amir Temur xotirasi uchun tayyorlangan
-        shedevr!
+      <nuxt-link :to="`/news/${news?.slug}`">
+        {{ news?.title }}
       </nuxt-link>
     </div>
     <div class="right-news-footer">
-      <span> <span v-html="comments"></span> 0</span>
-      <span><span v-html="view"></span>1232</span>
-      <span><span v-html="date"></span>12:32</span>
+      <span> <span v-html="comments"></span> {{ news?.comment_count }}</span>
+      <span><span v-html="view"></span> {{ news?.views }}</span>
+      <span><span v-html="date"></span> {{ news?.date }}</span>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: ["news"],
   data() {
     return {
       comments: require("../../assets/svg/comments.svg?raw"),
@@ -51,6 +51,11 @@ export default {
   font-size: 16px;
   line-height: 150%;
   color: #000000;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
 }
 .right-news-text a:hover {
   color: #0192ff;

@@ -117,13 +117,7 @@
           <TitleComp :link="false" title="Dolzarb mavzular" />
 
           <div class="right-news-list">
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-show-more">Barchashini ko’rish</div>
           <RightTelegramCard />
@@ -191,24 +185,28 @@ export default {
       simpleNewsData,
       videoNewsData,
       redactorNewsData,
+      importantNewsData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", { last_news: true, page_size: 6 }),
       store.dispatch("fetchNews/getNews", { top: true, page_size: 6 }),
       store.dispatch("fetchNews/getNews", { page_size: 4 }),
       store.dispatch("fetchNews/getNews", { video: true, page_size: 4 }),
       store.dispatch("fetchNews/getNews", { redactor_choice: true, page_size: 3 }),
+      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
     const videoNews = videoNewsData.results;
     const redactorNews = redactorNewsData.results;
+    const importantNews = importantNewsData.results;
     return {
       news,
       topNews,
       simpleNews,
       videoNews,
       redactorNews,
+      importantNews,
     };
   },
   methods: {

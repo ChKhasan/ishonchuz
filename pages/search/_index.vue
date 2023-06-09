@@ -28,13 +28,7 @@
           <TitleComp :link="false" title="Dolzarb mavzular" />
 
           <div class="right-news-list">
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
             <img src="../../assets/images/Снимок экрана (926).png" alt="" />
@@ -86,12 +80,15 @@ export default {
     };
   },
   async asyncData({ store, params }) {
-    const [searchData] = await Promise.all([
+    const [searchData, importantNewsData] = await Promise.all([
       store.dispatch("fetchNews/getNews", { search: params.index }),
+      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
     ]);
     const newsSearch = searchData.results;
+    const importantNews = importantNewsData.results;
     return {
       newsSearch,
+      importantNews,
     };
   },
   components: {

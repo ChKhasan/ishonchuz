@@ -108,13 +108,7 @@
           </div>
           <TitleComp :link="false" title="Dolzarb mavzular" />
           <div class="right-news-list">
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
             <img src="../../assets/images/Снимок экрана (926).png" alt="" />
@@ -196,15 +190,18 @@ export default {
     };
   },
   async asyncData({ store, params }) {
-    const [newsData, topicNewsData] = await Promise.all([
+    const [newsData, topicNewsData, importantNewsData] = await Promise.all([
       store.dispatch("fetchNews/getNewsBySlug", params.index),
       store.dispatch("fetchNews/getNews", { video: true, page_size: 3 }),
+      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
     ]);
     const news = newsData;
     const topicNews = topicNewsData.results;
+    const importantNews = importantNewsData.results;
     return {
       news,
       topicNews,
+      importantNews,
     };
   },
 
