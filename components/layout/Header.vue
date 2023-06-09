@@ -174,7 +174,7 @@ export default {
 }
 .currency-list li p {
   font-family: var(--ROBOTO_SERIF);
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
@@ -183,7 +183,7 @@ export default {
 }
 .currency-list li {
   font-family: var(--ROBOTO_SERIF);
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
@@ -191,7 +191,7 @@ export default {
 }
 .currency-list li p span {
   font-family: var(--ROBOTO_SERIF);
-  font-style: italic;
+  /* font-style: italic; */
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
