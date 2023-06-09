@@ -17,7 +17,7 @@
   height: 10px;
   background: #80c8ff;
   border-radius: 50%;
-  top: 5px;
+  top: 4px;
   left: 0;
 }
 .mySwiper .swiper-slide-thumb-active::after {

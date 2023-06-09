@@ -15,7 +15,7 @@
               <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
             </div>
             <div class="d-flex justify-content-center">
-              <div class="show-more-count">Yana yuklash</div>
+              <!-- <div class="show-more-count">Yana yuklash</div> -->
             </div>
           </div>
         </div>

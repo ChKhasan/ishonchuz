@@ -6,10 +6,10 @@
           <div class="new-category-title"><h2>Iqtisod</h2></div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link to="/">Home <span v-html="dropdown"></span></nuxt-link>
-            <nuxt-link to="/"
+            <nuxt-link :to="`/news-menu/${news?.category?.slug}`"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
-            <nuxt-link to="/"
+            <nuxt-link to="/" style="pointer-events: none"
               >{{ news?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
           </div>
