@@ -1,5 +1,5 @@
 <template lang="html">
-  <nuxt-link :to="`/news/${topNews?.slug}`">
+  <nuxt-link :to="localePath(`/news/${topNews?.slug}`)">
     <div class="banner-card">
       <div class="banner-card-img">
         <img v-if="topNews?.image" :src="topNews.image" alt="" />
@@ -8,7 +8,9 @@
       </div>
       <div class="banner-card-body">
         <div class="banner-card_text">
-          <nuxt-link :to="`/news/${topNews?.slug}`">{{ topNews?.title }}</nuxt-link>
+          <nuxt-link :to="localePath(`/news/${topNews?.slug}`)">{{
+            topNews?.title
+          }}</nuxt-link>
           <p>
             {{ topNews?.subtitle }}
           </p>

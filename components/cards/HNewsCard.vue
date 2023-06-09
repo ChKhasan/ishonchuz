@@ -1,13 +1,13 @@
 <template lang="html">
   <div class="h-news-card">
-    <nuxt-link :to="`/news/${news?.slug}`">
+    <nuxt-link :to="localePath(`/news/${news?.slug}`)">
       <div class="h-news-card-img">
         <img v-if="news?.image" :src="news?.image" alt="" />
         <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       </div>
     </nuxt-link>
     <div class="h-news-card-body">
-      <nuxt-link :to="`/news/${news?.slug}`">
+      <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
       <div class="h-news-card-info">

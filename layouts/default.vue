@@ -21,11 +21,32 @@ export default {
   //   ]);
   //   this.categories = categoriesData.results;
   // },
+  computed: {
+    targetLang() {
+      return this.$i18n.locale;
+    },
+  },
   async fetch() {
     const [categoriesData] = await Promise.all([
-      this.$store.dispatch("fetchCategories/getCategories", {}),
+      this.$store.dispatch("fetchCategories/getCategories", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
     ]);
     this.categories = categoriesData.results;
+  },
+  watch: {
+    async targetLang() {
+      const [categoriesData] = await Promise.all([
+        this.$store.dispatch("fetchCategories/getCategories", {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.categories = categoriesData.results;
+    },
   },
   components: { Header, Footer },
 };

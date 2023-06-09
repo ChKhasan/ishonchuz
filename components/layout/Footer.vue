@@ -19,7 +19,7 @@
           </div>
           <div class="footer-menu">
             <ul>
-              <li><nuxt-link to="/">O’zbekiston</nuxt-link></li>
+              <li><nuxt-link :to="localePath('/')">O’zbekiston</nuxt-link></li>
               <li>Xorij</li>
               <li>Tahlil</li>
               <li>O’zgacha rakurs</li>

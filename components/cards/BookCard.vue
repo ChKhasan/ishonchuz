@@ -7,7 +7,7 @@
       <h3>Bill Bryson - love and go home</h3>
     </div>
     <div class="book-card-footer">
-      <nuxt-link to="/">O’qish <span v-html="drop"></span></nuxt-link>
+      <nuxt-link :to="localePath('/')">O’qish <span v-html="drop"></span></nuxt-link>
     </div>
   </div>
 </template>

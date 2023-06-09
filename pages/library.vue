@@ -5,16 +5,16 @@
         <h5>O’zbekiston</h5>
         <ul>
           <li class="news-menu-active-categry">
-            <nuxt-link to="/">Iqtisod</nuxt-link>
+            <nuxt-link :to="localePath('/')">Iqtisod</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/">Siyosat</nuxt-link>
+            <nuxt-link :to="localePath('/')">Siyosat</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/">Sport</nuxt-link>
+            <nuxt-link :to="localePath('/')">Sport</nuxt-link>
           </li>
           <li>
-            <nuxt-link to="/">Jamiyat</nuxt-link>
+            <nuxt-link :to="localePath('/')">Jamiyat</nuxt-link>
           </li>
         </ul>
       </div>

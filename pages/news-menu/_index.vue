@@ -9,15 +9,17 @@
             :key="child?.id"
             :class="{ 'news-menu-active-categry': $route.params.index == child?.slug }"
           >
-            <nuxt-link :to="`/news-menu/${child?.slug}`">{{ child?.title }}</nuxt-link>
+            <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
+              child?.title
+            }}</nuxt-link>
           </li>
         </ul>
       </div>
 
       <div class="home-page-grid row">
         <div class="col-9 p-0 home-page-left">
-          <div class="" v-if="categories?.top_news.length > 0">
-            <BannerCard :topNews="categories?.top_news[0]" />
+          <div class="" v-if="categories?.news?.length > 0">
+            <BannerCard :topNews="categories?.news[0]" />
           </div>
           <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
             <VNewsCard
@@ -89,23 +91,62 @@ export default {
       // simpleNews: [],
     };
   },
-  async mounted() {
-    const [newsData, topNewsData, simpleNewsData] = await Promise.all([
-      this.$store.dispatch("fetchNews/getNews", { last_news: true, page_size: 3 }),
-      this.$store.dispatch("fetchNews/getNews", { top: true, page_size: 1 }),
-      this.$store.dispatch("fetchNews/getNews", {}),
-      this.$store.dispatch(
-        "fetchCategories/getCategoriesBySlug",
-        this.$route.params.index
-      ),
-    ]);
-  },
-  async asyncData({ store, params }) {
+  // async mounted() {
+  //   const [newsData, topNewsData, simpleNewsData] = await Promise.all([
+  //     this.$store.dispatch("fetchNews/getNews", {
+  //       params: { last_news: true, page_size: 3 },
+  //       headers: {
+  //         Language: this.$i18n.locale,
+  //       },
+  //     }),
+  //     this.$store.dispatch("fetchNews/getNews", {
+  //       params: { top: true, page_size: 1 },
+  //       headers: {
+  //         Language: this.$i18n.locale,
+  //       },
+  //     }),
+  //     this.$store.dispatch("fetchNews/getNews", {
+  //       headers: {
+  //         Language: this.$i18n.locale,
+  //       },
+  //     }),
+  //     this.$store.dispatch("fetchCategories/getCategoriesBySlug", {
+  //       id: this.$route.params.index,
+  //       header: {
+  //         headers: {
+  //           Language: this.$i18n.locale,
+  //         },
+  //       },
+  //     }),
+  //   ]);
+  // },
+  async asyncData({ store, params, i18n }) {
     const [newsData, topNewsData, simpleNewsData, categoriesData] = await Promise.all([
-      store.dispatch("fetchNews/getNews", { last_news: true, page_size: 3 }),
-      store.dispatch("fetchNews/getNews", { top: true, page_size: 1 }),
-      store.dispatch("fetchNews/getNews", {}),
-      store.dispatch("fetchCategories/getCategoriesBySlug", params.index),
+      store.dispatch("fetchNews/getNews", {
+        params: { last_news: true, page_size: 3 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { top: true, page_size: 1 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchCategories/getCategoriesBySlug", {
+        id: params.index,
+        header: {
+          headers: {
+            Language: i18n.locale,
+          },
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;

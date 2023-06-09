@@ -11,18 +11,14 @@
         allowfullscreen
       >
       </iframe> -->
-      <LazyYoutube
-        @change="changeVideo"
-        ref="lazyVideo"
-        :src="news?.video"
-      />
+      <LazyYoutube @change="changeVideo" ref="lazyVideo" :src="news?.video" />
       <span> Tahlil </span>
       <div v-if="videoShow">
         <div @click="handleClick('playVideo')" v-html="video"></div>
       </div>
     </div>
     <div class="video-news-card-body">
-      <nuxt-link :to="`/news/${news?.slug}`">
+      <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
       <div class="video-news-card-info">

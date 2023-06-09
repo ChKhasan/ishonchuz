@@ -79,10 +79,20 @@ export default {
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
     };
   },
-  async asyncData({ store, params }) {
+  async asyncData({ store, params,i18n }) {
     const [searchData, importantNewsData] = await Promise.all([
-      store.dispatch("fetchNews/getNews", { search: params.index }),
-      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
+      store.dispatch("fetchNews/getNews", {
+        params: { search: params.index },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { important: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const newsSearch = searchData.results;
     const importantNews = importantNewsData.results;

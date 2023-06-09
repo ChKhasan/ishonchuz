@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="title-comp">
     <h2><span v-html="titleIcon"></span> {{ title }}</h2>
-    <nuxt-link v-if="link" to="/"
+    <nuxt-link v-if="link" :to="localePath('/')"
       >Barchasini ko’rish <span v-html="linkIcon"></span
     ></nuxt-link>
   </div>

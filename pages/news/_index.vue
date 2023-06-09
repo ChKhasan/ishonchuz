@@ -5,11 +5,13 @@
         <div class="col-9 p-0 home-page-left">
           <div class="new-category-title"><h2>Iqtisod</h2></div>
           <div class="news-breadcrumb" v-if="news?.category">
-            <nuxt-link to="/">Home <span v-html="dropdown"></span></nuxt-link>
-            <nuxt-link :to="`/news-menu/${news?.category?.slug}`"
+            <nuxt-link :to="localePath('/')"
+              >Home <span v-html="dropdown"></span
+            ></nuxt-link>
+            <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
-            <nuxt-link to="/" style="pointer-events: none"
+            <nuxt-link :to="localePath('/')" style="pointer-events: none"
               >{{ news?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
           </div>
@@ -187,13 +189,60 @@ export default {
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
       value: 0,
+      // news: [],
+      // topicNews: [],
+      // importantNews: [],
     };
   },
-  async asyncData({ store, params }) {
+  // async mounted() {
+  //   const [newsData, topicNewsData, importantNewsData] = await Promise.all([
+  //     this.$store.dispatch("fetchNews/getNewsBySlug", {
+  //       id: this.$route.params.index,
+  //       header: {
+  //         headers: {
+  //           Language: this.$i18n.locale,
+  //         },
+  //       },
+  //     }),
+  //     this.$store.dispatch("fetchNews/getNews", {
+  //       params: { video: true, page_size: 3 },
+  //       headers: {
+  //         Language: this.$i18n.locale,
+  //       },
+  //     }),
+  //     this.$store.dispatch("fetchNews/getNews", {
+  //       params: { important: true, page_size: 6 },
+  //       headers: {
+  //         Language: this.$i18n.locale,
+  //       },
+  //     }),
+  //   ]);
+  //   this.news = newsData;
+  //   this.topicNews = topicNewsData.results;
+  //   this.importantNews = importantNewsData.results;
+  // },
+  async asyncData({ store, params, i18n }) {
     const [newsData, topicNewsData, importantNewsData] = await Promise.all([
-      store.dispatch("fetchNews/getNewsBySlug", params.index),
-      store.dispatch("fetchNews/getNews", { video: true, page_size: 3 }),
-      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
+      store.dispatch("fetchNews/getNewsBySlug", {
+        id: params.index,
+        header: {
+          headers: {
+            Language: i18n.locale,
+          },
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { video: true, page_size: 3 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { important: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData;
     const topicNews = topicNewsData.results;

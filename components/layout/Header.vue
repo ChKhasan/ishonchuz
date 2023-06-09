@@ -5,7 +5,7 @@
       <div class="container_xl">
         <div class="header-container">
           <div class="logo_block">
-            <nuxt-link to="/" class="header-logo">
+            <nuxt-link :to="localePath('/')" class="header-logo">
               <span v-html="logo"></span>
             </nuxt-link>
           </div>
@@ -43,9 +43,14 @@
             <span v-html="drop"></span>
           </div>
           <ul class="header-lang">
-            <li class="active-lang">O'z</li>
-            <li>Уз</li>
-            <li>Ру</li>
+            <li
+              :class="{ 'active-lang': $i18n.locale == lang.code }"
+              v-for="lang in locales"
+              :key="lang.id"
+              @click="$router.push(switchLocalePath(lang.code))"
+            >
+              {{ lang.name }}
+            </li>
           </ul>
         </div>
       </div>
@@ -66,15 +71,23 @@ export default {
       cloud: require("../../assets/svg/cloud.svg?raw"),
       drop: require("../../assets/svg/dropdown.svg?raw"),
       locales: [
-        { id: 1, code: "ru", name: "Ру" },
+        { id: 1, code: "oz", name: "O'z" },
         {
           id: 2,
-          code: "en",
-          name: "En",
+          code: "uz",
+          name: "Уз",
+        },
+        {
+          id: 3,
+          code: "ru",
+          name: "Ру",
         },
       ],
       color: true,
     };
+  },
+  mounted() {
+    console.log(this.$i18n);
   },
   methods: {
     onChange(checked) {
@@ -127,7 +140,7 @@ export default {
   pointer-events: none;
 }
 .header-logo svg path {
-  fill: #041769;
+  /* fill: #041769; */
 }
 .header-container {
   display: flex;

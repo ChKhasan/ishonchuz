@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="v-news-card" @click="$router.push(`/news/${news?.slug}`)">
+  <div class="v-news-card" @click="$router.push(localePath(`/news/${news?.slug}`))">
     <div class="v-news-card-img">
       <iframe
         width="420"
@@ -20,7 +20,7 @@
       <span> Tahlil </span>
     </div>
     <div class="v-news-card-body">
-      <nuxt-link :to="`/news/${news?.slug}`">
+      <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
       <div class="v-news-card-info">

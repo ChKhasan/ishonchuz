@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="right-news-card">
     <div class="right-news-text">
-      <nuxt-link :to="`/news/${news?.slug}`">
+      <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
     </div>

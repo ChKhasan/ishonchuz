@@ -10,13 +10,13 @@
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item :key="index" v-for="(child, index) in category?.children">
-                  <nuxt-link :to="`/news-menu/${child?.slug}`">{{
+                  <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
                     child?.title
                   }}</nuxt-link>
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
-            <nuxt-link v-else :to="`/news-menu/${category?.slug}`">
+            <nuxt-link v-else :to="localePath(`/news-menu/${category?.slug}`)">
               {{ category?.title }}</nuxt-link
             >
           </li>
@@ -33,16 +33,16 @@
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
-                  <nuxt-link to="/library">Adabiyot</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Adabiyot</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <nuxt-link to="/library">Ilmiy ishlar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Ilmiy ishlar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <nuxt-link to="/library">Maqolalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Maqolalar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="3">
-                  <nuxt-link to="/library">Kasaba faollari uchun qo’llanmalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Kasaba faollari uchun qo’llanmalar</nuxt-link>
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
@@ -54,16 +54,16 @@
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
-                  <nuxt-link to="/library">Adabiyot</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Adabiyot</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <nuxt-link to="/library">Ilmiy ishlar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Ilmiy ishlar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <nuxt-link to="/library">Maqolalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Maqolalar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="3">
-                  <nuxt-link to="/library">Kasaba faollari uchun qo’llanmalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library')">Kasaba faollari uchun qo’llanmalar</nuxt-link>
                 </a-menu-item>
               </a-menu>
             </a-dropdown>

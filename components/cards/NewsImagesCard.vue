@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="news-images-card">
-  <nuxt-link to="/">
+  <nuxt-link :to="localePath('/')">
     <div class="news-images-card-img">
       <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
       <div>

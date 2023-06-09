@@ -178,7 +178,7 @@ export default {
       },
     });
   },
-  async asyncData({ store }) {
+  async asyncData({ store, i18n }) {
     const [
       newsData,
       topNewsData,
@@ -187,12 +187,42 @@ export default {
       redactorNewsData,
       importantNewsData,
     ] = await Promise.all([
-      store.dispatch("fetchNews/getNews", { last_news: true, page_size: 6 }),
-      store.dispatch("fetchNews/getNews", { top: true, page_size: 6 }),
-      store.dispatch("fetchNews/getNews", { page_size: 4 }),
-      store.dispatch("fetchNews/getNews", { video: true, page_size: 4 }),
-      store.dispatch("fetchNews/getNews", { redactor_choice: true, page_size: 3 }),
-      store.dispatch("fetchNews/getNews", { important: true, page_size: 6 }),
+      store.dispatch("fetchNews/getNews", {
+        params: { last_news: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { top: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { page_size: 4 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { video: true, page_size: 4 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { redactor_choice: true, page_size: 3 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchNews/getNews", {
+        params: { important: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
