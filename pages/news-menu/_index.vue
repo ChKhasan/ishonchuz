@@ -30,9 +30,13 @@
           </div>
           <div
             class="h-news-grid news-menu_news-list"
-            v-if="categories?.news?.length > 0"
+            v-if="categories?.news?.length > 1"
           >
-            <HNewsCard v-for="news in categories?.news" :key="news?.id" :news="news" />
+            <HNewsCard
+              v-for="news in categories?.news.filter((item, index) => index != 0)"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <!-- <div class="right-show-more">Yana yuklash</div> -->
           <div class="messangers-container">
