@@ -15,7 +15,6 @@
           </li>
         </ul>
       </div>
-
       <div class="home-page-grid row">
         <div class="col-9 p-0 home-page-left">
           <div class="" v-if="categories?.news?.length > 0">

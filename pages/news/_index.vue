@@ -17,7 +17,7 @@
           </div>
           <div class="news-container">
             <div class="news-container-tag">
-              <span class="tag">Tahlil</span>
+              <span class="tag">{{$store.state.translations['main.analysis']}}</span>
             </div>
             <div class="news-container-head">
               <div class="news-container-character">
@@ -293,7 +293,7 @@ export default {
 }
 .news-container {
   padding: 60px 70px;
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 8px;
   padding-bottom: 90px;
 }
@@ -345,7 +345,7 @@ export default {
   font-weight: 700;
   font-size: 26px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
 }
 .news-container-header h6 {
   font-family: var(--ROBOTO_SERIF);
@@ -354,7 +354,7 @@ export default {
   font-weight: 600;
   font-size: 22px;
   line-height: 150%;
-  color: #111111;
+  color: var(--sub_title);
 }
 .news-container-banner {
   margin-top: 40px;

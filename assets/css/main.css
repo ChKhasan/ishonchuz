@@ -27,12 +27,17 @@ h6 {
   --text_color_nav: #000000;
   --body_color: #ffffff;
   --header_bg: #f9f9f9;
+  --card_bg: #f9f9f9;
+  --sub_title: #111111
 }
 .dark-theme {
   --text_color: #ffffff;
   --body_color: #000000;
   --text_color_nav: #f9f9f9;
   --header_bg: #111111;
+  --card_bg: #292929;
+  --sub_title: #F9F9F9
+
 }
 .container_xl {
   margin: 0 auto;

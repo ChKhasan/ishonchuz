@@ -6,7 +6,7 @@
         <div class="header-container">
           <div class="logo_block">
             <nuxt-link :to="localePath('/')" class="header-logo">
-              <span v-html="logo"></span>
+              <span v-html="$store.state.theme ? logo:darkLogo"></span>
             </nuxt-link>
           </div>
           <ul class="currency-list">
@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),
+      darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       sun: require("../../assets/svg/sun.svg?raw"),
       moon: require("../../assets/svg/moon.svg?raw"),
       cloud: require("../../assets/svg/cloud.svg?raw"),

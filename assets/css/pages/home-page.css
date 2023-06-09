@@ -2,7 +2,7 @@
   margin-top: 40px;
 }
 .mySwiper .swiper-slide-thumb-active div {
-  color: #000;
+  color: var(--text_color);
 }
 .mySwiper .swiper-slide {
   padding-top: 30px;

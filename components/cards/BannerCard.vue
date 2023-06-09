@@ -4,7 +4,7 @@
       <div class="banner-card-img">
         <img v-if="topNews?.image" :src="topNews.image" alt="" />
         <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
-        <span>Jamiyat</span>
+        <span>{{$store.state.translations['main.society']}}</span>
       </div>
       <div class="banner-card-body">
         <div class="banner-card_text">
@@ -42,7 +42,7 @@ export default {
   display: grid;
   grid-template-columns: 5.7fr 4.65fr;
   grid-gap: 12px;
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 4px;
 }
 .banner-card-img {
@@ -84,7 +84,7 @@ export default {
   font-weight: 700;
   font-size: 26px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
   overflow: hidden;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -101,7 +101,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
   overflow: hidden;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;

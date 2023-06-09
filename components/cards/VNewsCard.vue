@@ -17,7 +17,7 @@
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span> Tahlil </span>
+      <span> {{$store.state.translations['main.analysis']}} </span>
     </div>
     <div class="v-news-card-body">
       <nuxt-link :to="localePath(`/news/${news?.slug}`)">
@@ -49,7 +49,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 16px;
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -99,7 +99,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
   overflow: hidden;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

@@ -23,7 +23,7 @@
             <ul>
               <li><nuxt-link :to="localePath('/')">O’zbekiston</nuxt-link></li>
               <li>Xorij</li>
-              <li>Tahlil</li>
+              <li>{{$store.state.translations['main.analysis']}}</li>
               <li>O’zgacha rakurs</li>
             </ul>
             <ul>

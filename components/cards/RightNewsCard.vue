@@ -50,7 +50,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
   overflow: hidden;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

@@ -22,7 +22,7 @@
           </li>
 
           <!-- <li>Xorij <span v-html="drop"></span></li>
-          <li @click="$router.push('/news-menu')">Tahlil</li>
+          <li @click="$router.push('/news-menu')">{{$store.state.translations['main.analysis']}}</li>
           <li>O'zgacha rakurs</li>
           <li>Madaniyat va ma'rifat</li>
           <li>Mehnat huquqi</li> -->
@@ -317,6 +317,7 @@ export default {
   top: 0;
   width: 100%;
   z-index: 1000;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0.5rem 1rem;
 }
 .search-block input {
   padding: 12px 27px 12px 44px;

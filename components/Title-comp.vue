@@ -30,7 +30,7 @@ export default {
   font-weight: 600;
   font-size: 22px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
 }
 .title-comp h2 span {
   margin-right: 10px;

@@ -14,7 +14,7 @@
             <nuxt-link :to="localePath('/')">Sport</nuxt-link>
           </li>
           <li>
-            <nuxt-link :to="localePath('/')">Jamiyat</nuxt-link>
+            <nuxt-link :to="localePath('/')">{{$store.state.translations['main.society']}}</nuxt-link>
           </li>
         </ul>
       </div>
