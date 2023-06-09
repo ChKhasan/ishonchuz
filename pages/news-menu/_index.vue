@@ -2,27 +2,22 @@
   <div class="home-page news-menu-page">
     <div class="container_xl">
       <div class="news-menu-page-header">
-        <h5>O’zbekiston</h5>
+        <h5>{{ categories?.parent?.title }}</h5>
         <ul>
-          <li class="news-menu-active-categry">
-            <nuxt-link to="/">Iqtisod</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/">Siyosat</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/">Sport</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link to="/">Jamiyat</nuxt-link>
+          <li
+            v-for="child in categories?.parent?.children"
+            :key="child?.id"
+            :class="{ 'news-menu-active-categry': $route.params.index == child?.slug }"
+          >
+            <nuxt-link :to="`/news-menu/${child?.slug}`">{{ child?.title }}</nuxt-link>
           </li>
         </ul>
       </div>
 
-      <div class="home-page-grid">
-        <div>
-          <div class="">
-            <BannerCard :topNews="topNews[0]" />
+      <div class="home-page-grid row">
+        <div class="col-9 p-0 home-page-left">
+          <div class="" v-if="categories?.top_news.length > 0">
+            <BannerCard :topNews="categories?.top_news[0]" />
           </div>
           <div class="v-news-grid">
             <VNewsCard v-for="item in news" :key="item?.id" :news="item" />
@@ -53,15 +48,15 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right">
+        <div class="home-page-right col-3 p-0">
           <div class="block1">
             <div class="right-banner mt-0">
-              <img src="../assets/images/Снимок экрана (926).png" alt="" />
+              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
           <div class="block2">
             <div class="right-banner">
-              <img src="../assets/images/Снимок экрана (926).png" alt="" />
+              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
         </div>
@@ -71,32 +66,49 @@
 </template>
 
 <script>
-import BannerCard from "../components/cards/BannerCard.vue";
-import HNewsCard from "../components/cards/HNewsCard.vue";
-import VNewsCard from "../components/cards/VNewsCard.vue";
+import BannerCard from "../../components/cards/BannerCard.vue";
+import HNewsCard from "../../components/cards/HNewsCard.vue";
+import VNewsCard from "../../components/cards/VNewsCard.vue";
 export default {
   data() {
     return {
-      telegram: require("../assets/svg/telegram.svg?raw"),
-      facebook: require("../assets/svg/facebook.svg?raw"),
-      twitter: require("../assets/svg/twitter.svg?raw"),
-      instagram: require("../assets/svg/instagram.svg?raw"),
-      whatsapp: require("../assets/svg/whatsapp.svg?raw"),
+      telegram: require("../../assets/svg/telegram.svg?raw"),
+      facebook: require("../../assets/svg/facebook.svg?raw"),
+      twitter: require("../../assets/svg/twitter.svg?raw"),
+      instagram: require("../../assets/svg/instagram.svg?raw"),
+      whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
+      // news: [],
+      // topNews: [],
+      // simpleNews: [],
     };
   },
-  async asyncData({ store }) {
+  async mounted() {
     const [newsData, topNewsData, simpleNewsData] = await Promise.all([
+      this.$store.dispatch("fetchNews/getNews", { last_news: true, page_size: 3 }),
+      this.$store.dispatch("fetchNews/getNews", { top: true, page_size: 1 }),
+      this.$store.dispatch("fetchNews/getNews", {}),
+      this.$store.dispatch(
+        "fetchCategories/getCategoriesBySlug",
+        this.$route.params.index
+      ),
+    ]);
+  },
+  async asyncData({ store, params }) {
+    const [newsData, topNewsData, simpleNewsData, categoriesData] = await Promise.all([
       store.dispatch("fetchNews/getNews", { last_news: true, page_size: 3 }),
       store.dispatch("fetchNews/getNews", { top: true, page_size: 1 }),
       store.dispatch("fetchNews/getNews", {}),
+      store.dispatch("fetchCategories/getCategoriesBySlug", params.index),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
+    const categories = categoriesData;
     return {
       news,
       topNews,
       simpleNews,
+      categories,
     };
   },
   components: {
@@ -107,8 +119,8 @@ export default {
 };
 </script>
 <style lang="css">
-@import "../assets/css/pages/home-page.css";
-@import "../assets/css/pages/news-menu-page.css";
+@import "../../assets/css/pages/home-page.css";
+@import "../../assets/css/pages/news-menu-page.css";
 .news-menu_news-list {
   margin-bottom: 80px;
 }

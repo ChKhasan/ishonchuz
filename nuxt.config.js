@@ -38,7 +38,7 @@ export default {
     init(axios) {
       axios.defaults.withCredentials = true;
     },
-    baseURL: "http://ishonch.pythonanywhere.com/api",
+    baseURL: "https://ishonch.pythonanywhere.com/api",
   },
   build: {
     babel: {

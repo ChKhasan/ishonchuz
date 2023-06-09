@@ -50,13 +50,14 @@
         </div>
       </div>
     </div>
-    <MenuList />
+    <MenuList :categories="categories"/>
   </div>
 </template>
 <script>
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
+  props: ['categories'],
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),

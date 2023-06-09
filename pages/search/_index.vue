@@ -1,8 +1,8 @@
 <template>
   <div class="home-page search-page">
     <div class="container_xl">
-      <div class="home-page-grid">
-        <div>
+      <div class="home-page-grid row">
+        <div class="col-9 p-0 home-page-left">
           <div class="search-page-container">
             <h3>
               “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right">
+        <div class="home-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />

@@ -3,34 +3,21 @@
     <div class="container_xl">
       <div class="menu-list-container">
         <ul>
-          <li>
+          <li v-for="category in categories" :key="category?.id">
             <a-dropdown :trigger="['click']">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
-                O'zbekiston <span v-html="drop"></span>
+                {{ category?.title }} <span v-html="drop"></span>
               </a>
               <a-menu slot="overlay" class="dropdown-board">
-                <a-menu-item key="0">
-                  <nuxt-link to="/">Yangi O’zbekiston suratlarda</nuxt-link>
-                </a-menu-item>
-                <a-menu-item key="1">
-                  <nuxt-link to="/">Kolumnistlar</nuxt-link>
-                </a-menu-item>
-                <a-menu-item key="2">
-                  <nuxt-link to="/">O’zbekiston jurnalistlar</nuxt-link>
+                <a-menu-item :key="index" v-for="(child, index) in category?.children">
+                  <nuxt-link :to="`/news-menu/${child?.slug}`">{{
+                    child?.title
+                  }}</nuxt-link>
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
           </li>
-          <!-- <li @click="openDrop(1)">
-            O'zbekiston <span v-html="drop" :class="{ rotate180: dropShow }"></span>
-            <Transition name="bounce">
-              <div class="dropdown-board" v-if="dropShow">
-                <nuxt-link to="/">Yangi O’zbekiston suratlarda</nuxt-link>
-                <nuxt-link to="/">Kolumnistlar</nuxt-link>
-                <nuxt-link to="/">O’zbekiston jurnalistlar</nuxt-link>
-              </div>
-            </Transition>
-          </li> -->
+
           <li>Xorij <span v-html="drop"></span></li>
           <li @click="$router.push('/news-menu')">Tahlil</li>
           <li>O'zgacha rakurs</li>
@@ -210,6 +197,7 @@
 </template>
 <script>
 export default {
+  props: ["categories"],
   data() {
     return {
       searchValue: "",
@@ -266,6 +254,7 @@ export default {
       this.lastScrollTop = scrollTop;
     });
   },
+
   methods: {
     submit() {
       this.$router.push(`/search/${this.searchValue}`);
