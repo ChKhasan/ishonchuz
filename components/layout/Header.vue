@@ -20,7 +20,7 @@
               <p>12 460.11 <span>16.94</span></p>
             </li>
             <li>
-              USD
+              RUB
               <p>139.11 <span>-0.43</span></p>
             </li>
           </ul>
