@@ -19,13 +19,20 @@
           <div class="" v-if="categories?.top_news.length > 0">
             <BannerCard :topNews="categories?.top_news[0]" />
           </div>
-          <div class="v-news-grid">
-            <VNewsCard v-for="item in news" :key="item?.id" :news="item" />
+          <div class="v-news-grid" v-if="categories?.video_news?.legth > 0">
+            <VNewsCard
+              v-for="item in categories?.video_news"
+              :key="item?.id"
+              :news="item"
+            />
           </div>
-          <div class="h-news-grid news-menu_news-list">
-            <HNewsCard v-for="news in simpleNews" :key="news?.id" :news="news" />
+          <div
+            class="h-news-grid news-menu_news-list"
+            v-if="categories?.news?.length > 0"
+          >
+            <HNewsCard v-for="news in categories?.news" :key="news?.id" :news="news" />
           </div>
-          <div class="right-show-more">Yana yuklash</div>
+          <!-- <div class="right-show-more">Yana yuklash</div> -->
           <div class="messangers-container">
             <h5>Bizni ijtimoiy tarmoqlarda kuzating</h5>
             <div class="follow-us-message">FOLLOW US!</div>

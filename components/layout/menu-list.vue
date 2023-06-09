@@ -4,7 +4,7 @@
       <div class="menu-list-container">
         <ul>
           <li v-for="category in categories" :key="category?.id">
-            <a-dropdown :trigger="['click']">
+            <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
                 {{ category?.title }} <span v-html="drop"></span>
               </a>
@@ -16,13 +16,16 @@
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
+            <nuxt-link v-else :to="`/news-menu/${category?.slug}`">
+              {{ category?.title }}</nuxt-link
+            >
           </li>
 
-          <li>Xorij <span v-html="drop"></span></li>
+          <!-- <li>Xorij <span v-html="drop"></span></li>
           <li @click="$router.push('/news-menu')">Tahlil</li>
           <li>O'zgacha rakurs</li>
           <li>Madaniyat va ma'rifat</li>
-          <li>Mehnat huquqi</li>
+          <li>Mehnat huquqi</li> -->
           <li>
             <a-dropdown :trigger="['click']">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
@@ -44,7 +47,27 @@
               </a-menu>
             </a-dropdown>
           </li>
-          <li>Boshqalar <span v-html="drop"></span></li>
+          <li>
+            <a-dropdown :trigger="['click']">
+              <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                Boshqalar <span v-html="drop"></span>
+              </a>
+              <a-menu slot="overlay" class="dropdown-board">
+                <a-menu-item key="0">
+                  <nuxt-link to="/library">Adabiyot</nuxt-link>
+                </a-menu-item>
+                <a-menu-item key="1">
+                  <nuxt-link to="/library">Ilmiy ishlar</nuxt-link>
+                </a-menu-item>
+                <a-menu-item key="2">
+                  <nuxt-link to="/library">Maqolalar</nuxt-link>
+                </a-menu-item>
+                <a-menu-item key="3">
+                  <nuxt-link to="/library">Kasaba faollari uchun qo’llanmalar</nuxt-link>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+          </li>
         </ul>
         <div class="menu-list-btns">
           <div @click="visibleSearch = true"><span v-html="search"></span></div>
@@ -349,7 +372,8 @@ export default {
 .menu-list-container ul {
   display: flex;
 }
-.menu-list-container ul li,
+/* .menu-list-container ul li, */
+.menu-list-container ul li a,
 .ant-dropdown-link {
   position: relative;
   font-family: var(--ROBOTO_SERIF);
@@ -359,10 +383,17 @@ export default {
   line-height: 130%;
   text-transform: uppercase;
   color: var(--text_color_nav);
-  margin-right: 24px;
+  margin-right: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 9px 10px;
+  border-radius: 7px;
+  transition: 0.3s;
+}
+.menu-list-container ul li a:hover,
+.ant-dropdown-link:hover {
+  background: rgba(0, 0, 0, 0.06);
 }
 .menu-list-container ul li:hover {
   color: #0192ff;
