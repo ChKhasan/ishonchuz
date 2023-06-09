@@ -361,7 +361,7 @@ export default {
   }
 }
 .menu-list {
-  background: #ffffff;
+  background: var(--body_color);
 }
 .menu-list-container {
   display: flex;

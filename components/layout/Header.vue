@@ -5,7 +5,7 @@
       <div class="container_xl">
         <div class="header-container">
           <div class="logo_block">
-            <nuxt-link to="/">
+            <nuxt-link to="/" class="header-logo">
               <span v-html="logo"></span>
             </nuxt-link>
           </div>
@@ -50,14 +50,14 @@
         </div>
       </div>
     </div>
-    <MenuList :categories="categories"/>
+    <MenuList :categories="categories" />
   </div>
 </template>
 <script>
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
-  props: ['categories'],
+  props: ["categories"],
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),
@@ -81,7 +81,7 @@ export default {
 </script>
 <style lang="css">
 .header {
-  background: #f9f9f9;
+  background: var(--header_bg);
 }
 .weather-drop {
   display: flex;
@@ -97,7 +97,7 @@ export default {
 }
 .color-switch {
   padding: 3px;
-  background: #ffffff;
+  background: var(--body_color);
   border-radius: 26px;
   display: flex;
 }
@@ -117,6 +117,9 @@ export default {
 .active-color {
   background: #e6f4ff;
   pointer-events: none;
+}
+.header-logo svg path {
+  fill: #041769;
 }
 .header-container {
   display: flex;
@@ -146,7 +149,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
-  color: #000000;
+  color: var(--text_color_nav);
 }
 .currency-list li p {
   font-family: var(--ROBOTO_SERIF);
@@ -163,7 +166,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
-  color: #000000;
+  color: var(--text_color_nav);
 }
 .currency-list li p span {
   font-family: var(--ROBOTO_SERIF);

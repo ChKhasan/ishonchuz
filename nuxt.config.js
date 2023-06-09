@@ -29,7 +29,14 @@ export default {
   ],
 
   components: true,
-
+  i18n: {
+    locales: ["ru", "en"],
+    defaultLocale: "ru",
+    vueI18n: {
+      fallbackLocale: "en",
+      messages: Locale,
+    },
+  },
   buildModules: ["@nuxtjs/svg"],
 
   modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios"],
