@@ -4,9 +4,12 @@
       <div class="home-page-grid row">
         <div class="col-9 p-0 home-page-left">
           <div class="search-page-container">
-            <h3>
+            <h3 v-if="newsSearch?.length > 0">
               “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
               <span>{{ newsSearch?.length }}</span> ta maqola topildi
+            </h3>
+            <h3 v-else>
+              “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
             </h3>
             <div class="search-page-grid">
               <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
