@@ -6,7 +6,7 @@
           <div class="new-category-title"><h2>Iqtisod</h2></div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
-              >{{$store.state.translations['main.home']}} <span v-html="dropdown"></span
+              >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
@@ -542,6 +542,10 @@ export default {
   width: 288px;
   margin-right: 20px;
   padding: 11px 20px;
+}
+.comment-form input:focus,
+.comment-form textarea:focus {
+  outline: none;
 }
 .comment-form input::placeholder {
   color: #888888;
