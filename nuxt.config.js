@@ -30,16 +30,15 @@ export default {
 
   components: true,
   i18n: {
-    locales: ["ru", "en"],
-    defaultLocale: "ru",
+    locales: ["oz", "uz", "ru"],
+    defaultLocale: "oz",
     vueI18n: {
-      fallbackLocale: "en",
-      messages: Locale,
+      fallbackLocale: "oz",
     },
   },
   buildModules: ["@nuxtjs/svg"],
 
-  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios"],
+  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
   axios: {
     credentials: false,
     init(axios) {

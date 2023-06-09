@@ -65,6 +65,14 @@ export default {
       moon: require("../../assets/svg/moon.svg?raw"),
       cloud: require("../../assets/svg/cloud.svg?raw"),
       drop: require("../../assets/svg/dropdown.svg?raw"),
+      locales: [
+        { id: 1, code: "ru", name: "Ру" },
+        {
+          id: 2,
+          code: "en",
+          name: "En",
+        },
+      ],
       color: true,
     };
   },
