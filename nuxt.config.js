@@ -26,8 +26,8 @@ export default {
     { src: "~plugins/antdv.js" },
     { src: "~plugins/lazy-youtube.js", ssr: false },
     { src: "~plugins/v-mask.js", ssr: false },
+    { src: "~/plugins/client-only.js", mode: "client" },
   ],
-
   components: true,
   i18n: {
     locales: ["oz", "uz", "ru"],
@@ -36,8 +36,8 @@ export default {
       fallbackLocale: "oz",
     },
   },
-  buildModules: ["@nuxtjs/svg"],
 
+  buildModules: ["@nuxtjs/svg"],
   modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
   axios: {
     credentials: false,
@@ -45,6 +45,9 @@ export default {
       axios.defaults.withCredentials = true;
     },
     baseURL: "https://ishonch.pythonanywhere.com/api",
+  },
+  router: {
+    middleware: ['auth']
   },
   build: {
     babel: {

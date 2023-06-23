@@ -17,7 +17,7 @@
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span> {{$store.state.translations['main.analysis']}} </span>
+      <span> {{ $store.state.translations["main.analysis"] }} </span>
     </div>
     <div class="v-news-card-body">
       <nuxt-link :to="localePath(`/news/${news?.slug}`)">
@@ -75,7 +75,7 @@ export default {
 }
 .v-news-card-img span {
   padding: 7px 12px;
-  background: #eeeeee;
+  background: var(--card_badges_bg);
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
@@ -83,7 +83,7 @@ export default {
   line-height: 130%;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #111111;
+  color: var(--card_badges_color);
   position: absolute;
   left: 0;
   bottom: 10px;

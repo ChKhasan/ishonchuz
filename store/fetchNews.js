@@ -13,4 +13,8 @@ export const actions = {
     });
     return res;
   },
+  async postNewsComment({}, data) {
+    const res = await this.$axios.$post(`/comments/create`, data);
+    return res;
+  },
 };

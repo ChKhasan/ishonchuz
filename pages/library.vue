@@ -2,37 +2,30 @@
   <div class="home-page library-page">
     <div class="container_xl">
       <div class="news-menu-page-header">
-        <h5>O’zbekiston</h5>
-        <ul>
-          <li class="news-menu-active-categry">
-            <nuxt-link :to="localePath('/')">Iqtisod</nuxt-link>
+        <h5>Kutubxona</h5>
+        <ul class="library_tab">
+          <li :class="{ 'news-menu-active-categry': $route.query.type == 'literature' }">
+            <span @click="tabChange('literature')">Adabiyot</span>
+          </li>
+          <li :class="{ 'news-menu-active-categry': $route.query.type == 'scientific' }">
+            <span @click="tabChange('scientific')">Ilmiy ishlar</span>
+          </li>
+          <li :class="{ 'news-menu-active-categry': $route.query.type == 'articles' }">
+            <span @click="tabChange('articles')">Maqolalar</span>
           </li>
           <li>
-            <nuxt-link :to="localePath('/')">Siyosat</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link :to="localePath('/')">Sport</nuxt-link>
-          </li>
-          <li>
-            <nuxt-link :to="localePath('/')">{{$store.state.translations['main.society']}}</nuxt-link>
+            <span>{{ $store.state.translations["main.society"] }}</span>
           </li>
         </ul>
       </div>
-      <div class="library-page-container">
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
-        <BookCard />
+      <div class="library-page-container" v-if="$route.query.type == 'literature'">
+        <BookCard v-for="book in literature" :key="book.id" :book="book" />
+      </div>
+      <div class="library-page-container" v-if="$route.query.type == 'scientific'">
+        <BookCard v-for="book in scientific" :key="book.id" :book="book" />
+      </div>
+      <div class="library-page-container" v-if="$route.query.type == 'articles'">
+        <BookCard v-for="book in articles" :key="book.id" :book="book" />
       </div>
     </div>
   </div>
@@ -42,6 +35,59 @@
 import BookCard from "../components/cards/BookCard.vue";
 
 export default {
+  data() {
+    return {
+      activeTab: "literature",
+    };
+  },
+  async asyncData({ store, i18n }) {
+    const [literatureData, scientificData, articlesData] = await Promise.all([
+      store.dispatch("fetchBooks/getBooks", {
+        params: {
+          type: "literature",
+        },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchBooks/getBooks", {
+        params: {
+          type: "science",
+        },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchBooks/getArticles", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+    ]);
+    const literature = literatureData.results;
+    const scientific = scientificData.results;
+    const articles = articlesData.results;
+    return {
+      literature,
+      scientific,
+      articles,
+    };
+  },
+  mounted() {
+    if (Object.keys(this.$route.query).length == 0) {
+      this.tabChange("literature");
+    }
+  },
+  methods: {
+    tabChange(name) {
+      this.$router.replace({
+        path: "/library",
+        query: {
+          type: name,
+        },
+      });
+    },
+  },
   components: {
     BookCard,
   },

@@ -88,7 +88,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$i18n);
+
   },
   methods: {
     onChange(checked) {

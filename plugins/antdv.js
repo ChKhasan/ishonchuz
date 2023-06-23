@@ -16,13 +16,13 @@ import {
   // Popconfirm,
   // Radio,
 //   Icon,
-  // Spin,
+  Spin,
   Dropdown,
   // Menu,
   // Layout,
   // TimePicker,
   // DatePicker,
-  // notification,
+  notification,
   // message,
   // InputNumber,
   // Skeleton,
@@ -30,7 +30,7 @@ import {
   // Alert,
 } from "ant-design-vue";
 // const { info, success, error, warning, confirm } = Modal;
-// Vue.prototype.$notification = notification;
+Vue.prototype.$notification = notification;
 // Vue.prototype.$message = message;
 // Vue.prototype.$confirm = confirm;
 // Vue.use(Checkbox);
@@ -58,6 +58,6 @@ Vue.use(Modal);
 // Vue.use(Radio);
 // Vue.use(Icon);
 // Vue.use(Input);
-// Vue.use(Spin);
+Vue.use(Spin);
 Vue.use(Dropdown);
 // Vue.use(Menu);

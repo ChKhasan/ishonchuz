@@ -37,7 +37,7 @@ export default {
   display: grid;
   grid-template-columns: 1.6fr 2.8fr;
   grid-gap: 16px;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--right_drop_border);
 }
 
 .h-news-card-img img {

@@ -56,15 +56,18 @@
         </div>
       </div>
     </div>
+    <Loading v-if="loading" />
   </div>
 </template>
 <script>
 import ProfileMenu from "../../components/profile-menu.vue";
+import Loading from "../../components/loading.vue";
 export default {
+  middlewareL: "auth",
   data() {
     return {
+      loading: true,
       edit: require("../../assets/svg/profile-edit.svg?raw"),
-
       form: {
         name: "",
         last_name: "",
@@ -79,7 +82,21 @@ export default {
       },
     };
   },
+  mounted() {
+    if (this.loading) {
+      document.body.style.height = "100vh";
+      document.body.style.overflow = "hidden";
+    }
+    this.middlewareAuth();
+  },
   methods: {
+    middlewareAuth() {
+      if (!localStorage.getItem("access_token")) {
+        this.$router.push("/");
+      } else {
+        this.loading = false;
+      }
+    },
     onSubmit() {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
@@ -91,7 +108,18 @@ export default {
       });
     },
   },
-  components: { ProfileMenu },
+  watch: {
+    loading(val) {
+      if (val) {
+        document.body.style.height = "100vh";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "auto";
+        document.body.style.overflow = "auto";
+      }
+    },
+  },
+  components: { ProfileMenu, Loading },
 };
 </script>
 <style lang="css">
@@ -143,5 +171,4 @@ export default {
   right: 8px;
   cursor: pointer;
 }
-
 </style>

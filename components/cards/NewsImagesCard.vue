@@ -1,29 +1,29 @@
 <template lang="html">
   <div class="news-images-card">
-  <nuxt-link :to="localePath('/')">
-    <div class="news-images-card-img">
-      <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
-      <div>
+    <nuxt-link :to="localePath('/')">
+      <div class="news-images-card-img">
         <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
-        <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
+        <div>
+          <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
+          <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
+        </div>
       </div>
-    </div>
-    <div class="news-images-card-body">
-      <p>
-        Si Szinpinning aytishicha, Rossiyaning yadro qurolidan foydalanishini bo‘lmaydi…
-      </p>
-      <div class="news-images-card-info">
-        <span> <span v-html="comments"></span> 0</span>
-        <span><span v-html="view"></span>1232</span>
-        <span><span v-html="date"></span>12:32 | 23.12.2023</span>
+      <div class="news-images-card-body">
+        <p>
+          Si Szinpinning aytishicha, Rossiyaning yadro qurolidan foydalanishini bo‘lmaydi…
+        </p>
+        <div class="news-images-card-info">
+          <span> <span v-html="comments"></span> 0</span>
+          <span><span v-html="view"></span>1232</span>
+          <span><span v-html="date"></span>12:32 | 23.12.2023</span>
+        </div>
       </div>
-    </div>
-  </nuxt-link>
+    </nuxt-link>
   </div>
 </template>
 <script>
 export default {
-    data() {
+  data() {
     return {
       comments: require("../../assets/svg/comments.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
@@ -38,7 +38,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 16px;
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 4px;
 }
 .news-images-card-img {
@@ -73,7 +73,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color);
 }
 .news-images-card-info > span {
   font-family: var(--ROBOTO_SERIF);

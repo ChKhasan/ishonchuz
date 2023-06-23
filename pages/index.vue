@@ -169,6 +169,7 @@ export default {
     };
   },
   mounted() {
+    document.cookie = "username=John Doe";
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,

@@ -4,21 +4,20 @@
       <img src="../../assets/images/Frame 1239.png" alt="" />
     </div>
     <div class="comment-card-body">
-      <h6>Rahimjon Gaziyev</h6>
+      <h6>{{ comment?.full_name }}</h6>
       <span>
-        <a-rate v-model="value" />
-        <p>09:45</p></span
+        <a-rate v-model="comment.stars" disabled />
+        <p>{{ comment?.date }}</p></span
       >
       <p>
-        Viloyat kengashining mehnat huquq inspektori bilan hamkorlikda ariza o‘rganildi.
-        Aniqlanishicha, S.Jo‘rayeva Jizzax viloyati xalq taʼlimi boshqarmasining 2017 yil
-        18 dekabrdagi buyrug‘iga ko‘ra buyrug‘iga ko‘ra,
+        {{ comment?.text }}
       </p>
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: ["comment"],
   data() {
     return {
       value: 2,
@@ -53,8 +52,8 @@ export default {
   margin-bottom: 14px;
 }
 .comment-card-body span {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 .comment-card-body span p {
   font-family: var(--ROBOTO_SERIF);

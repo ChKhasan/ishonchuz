@@ -1,6 +1,9 @@
 export const state = () => ({
   theme: true,
   translations: {},
+  auth: false,
+  literature: [],
+  science: [],
 });
 
 export const mutations = {
@@ -9,5 +12,37 @@ export const mutations = {
   },
   getTranslations(state, payload) {
     state.translations = payload;
+  },
+  chackAuth(state, payload) {
+    console.log(localStorage.getItem("access_token"));
+    if (localStorage.getItem("access_token")) {
+      state.auth = true;
+    } else {
+      state.auth = false;
+    }
+  },
+  addToStore(state, payload) {
+    let cart = JSON.parse(localStorage.getItem(payload.name));
+    if (cart.includes(payload.id)) {
+      cart.splice(cart.indexOf(payload.id), 1);
+    } else {
+      cart.push(payload.id);
+    }
+    localStorage.setItem(payload.name, JSON.stringify(cart));
+    state[payload.name] = cart;
+  },
+  reloadStore(state) {
+    if (localStorage.getItem("literature")) {
+      const literature = JSON.parse(localStorage.getItem("literature"));
+      state.literature = literature;
+    } else {
+      localStorage.setItem("literature", JSON.stringify([]));
+    }
+    if (localStorage.getItem("science")) {
+      const science = JSON.parse(localStorage.getItem("science"));
+      state.science = science;
+    } else {
+      localStorage.setItem("science", JSON.stringify([]));
+    }
   },
 };

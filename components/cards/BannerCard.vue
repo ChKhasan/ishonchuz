@@ -4,7 +4,7 @@
       <div class="banner-card-img">
         <img v-if="topNews?.image" :src="topNews.image" alt="" />
         <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
-        <span>{{$store.state.translations['main.society']}}</span>
+        <span>{{ $store.state.translations["main.society"] }}</span>
       </div>
       <div class="banner-card-body">
         <div class="banner-card_text">
@@ -72,11 +72,11 @@ export default {
   line-height: 130%;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #111111;
+  color: var(--card_badges_color);
   position: absolute;
   left: 0;
   bottom: 12px;
-  background: #eeeeee;
+  background: var(--card_badges_bg);
 }
 .banner-card_text a {
   font-family: var(--ROBOTO_SERIF);

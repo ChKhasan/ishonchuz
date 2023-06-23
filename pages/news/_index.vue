@@ -17,7 +17,7 @@
           </div>
           <div class="news-container">
             <div class="news-container-tag">
-              <span class="tag">{{$store.state.translations['main.analysis']}}</span>
+              <span class="tag">{{ $store.state.translations["main.analysis"] }}</span>
             </div>
             <div class="news-container-head">
               <div class="news-container-character">
@@ -121,62 +121,94 @@
         </div>
       </div>
       <div class="comment-container-grid">
-        <div>
-          <div class="comment-form">
-            <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
-            <div>
-              <input
-                type="text"
-                :placeholder="$store.state.translations['news.comment_input_place']"
-              /><a-rate v-model="value" />
+        <a-form-model ref="ruleFormComment" :model="form" :rules="rules">
+          <div>
+            <div class="comment-form">
+              <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+              <a-form-model-item class="form-item mb-0 w-100" prop="full_name">
+                <div>
+                  <input
+                    type="text"
+                    v-model="form.full_name"
+                    :placeholder="$store.state.translations['news.comment_input_place']"
+                  />
+                  <a-rate v-model="form.stars" />
+                </div>
+              </a-form-model-item>
+              <a-form-model-item class="form-item mb-0 w-100" prop="text">
+                <textarea
+                  rows="5"
+                  v-model="form.text"
+                  :placeholder="$store.state.translations['news.comment_textarea_place']"
+                ></textarea>
+              </a-form-model-item>
+
+              <div class="send-btn" @click="submit()">
+                {{ $store.state.translations["news.leave_comment"] }}
+              </div>
             </div>
-            <textarea
-              rows="5"
-              :placeholder="$store.state.translations['news.comment_textarea_place']"
-            ></textarea>
-            <div class="send-btn">
-              {{ $store.state.translations["news.leave_comment"] }}
+            <div class="comments-list">
+              <h4>
+                {{ $store.state.translations["news.comments_title"] }} ({{
+                  news?.comments.length
+                }})
+              </h4>
+              <div class="comments-grid">
+                <CommentCard
+                  v-for="comment in news?.comments.slice(0, 3)"
+                  :key="comment?.id"
+                  :comment="comment"
+                />
+              </div>
+              <div class="show-more-count" v-if="news?.comments.length > 3">
+                {{ $store.state.translations["news.see_again"] }} ({{
+                  news?.comments.length - 3
+                }})
+              </div>
+            </div>
+            <TitleComp
+              :link="false"
+              :title="$store.state.translations['news.on_subject']"
+            />
+            <div class="v-news-grid">
+              <VNewsCard v-for="news in topicNews" :key="news?.id" :news="news" />
             </div>
           </div>
-          <div class="comments-list">
-            <h4>{{ $store.state.translations["news.comments_title"] }} (11)</h4>
-            <div class="comments-grid">
-              <CommentCard />
-              <CommentCard />
-              <CommentCard />
-              <CommentCard />
-              <CommentCard />
-            </div>
-            <div class="show-more-count">
-              {{ $store.state.translations["news.see_again"] }} (8)
-            </div>
-          </div>
-          <TitleComp
-            :link="false"
-            :title="$store.state.translations['news.on_subject']"
-          />
-          <div class="v-news-grid">
-            <VNewsCard v-for="news in topicNews" :key="news?.id" :news="news" />
-          </div>
-        </div>
+        </a-form-model>
         <div>
           <div class="general-assessment">
             <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
-            <div class="main-rate"><a-rate v-model="value" /><span>4/5</span></div>
-            <div class="item-rate">
-              <a-rate v-model="value" /><span><p>3</p></span>
+            <div class="main-rate">
+              <a-rate
+                :default-value="Number.parseInt(Number(news?.rating))"
+                allow-half
+                disabled
+              /><span>{{ Number.parseInt(news?.rating) }}/5</span>
             </div>
             <div class="item-rate">
-              <a-rate v-model="value" /><span><p>3</p></span>
+              <a-rate :default-value="5" disabled /><span
+                ><p>{{ news?.rating_info["5"] }}</p></span
+              >
             </div>
             <div class="item-rate">
-              <a-rate v-model="value" /><span><p>3</p></span>
+              <a-rate :default-value="4" disabled /><span
+                ><p>{{ news?.rating_info["4"] }}</p></span
+              >
             </div>
             <div class="item-rate">
-              <a-rate v-model="value" /><span><p>3</p></span>
+              <a-rate :default-value="3" disabled /><span
+                ><p>{{ news?.rating_info["3"] }}</p></span
+              >
             </div>
             <div class="item-rate">
-              <a-rate v-model="value" /><span><p>3</p></span>
+              <a-rate :default-value="2" disabled /><span
+                ><p>{{ news?.rating_info["2"] }}</p></span
+              >
+            </div>
+            <div class="item-rate">
+              <a-rate :default-value="1" disabled /><span
+                ><p>{{ news?.rating_info["1"] }}</p></span
+              >
             </div>
           </div>
         </div>
@@ -204,9 +236,18 @@ export default {
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
       value: 0,
-      // news: [],
-      // topicNews: [],
-      // importantNews: [],
+      rules: {
+        full_name: [
+          { required: true, message: "This field is required", trigger: "blur" },
+        ],
+        text: [{ required: true, message: "This field is required", trigger: "blur" }],
+      },
+      form: {
+        full_name: "",
+        text: "",
+        news: null,
+        stars: 0,
+      },
     };
   },
   // async mounted() {
@@ -268,7 +309,51 @@ export default {
       importantNews,
     };
   },
-
+  computed: {
+    rateSumm() {
+      const summa =
+        this.news?.rating_info["5"] * 5 +
+        this.news?.rating_info["4"] * 4 +
+        this.news?.rating_info["3"] * 3 +
+        this.news?.rating_info["2"] * 2 +
+        this.news?.rating_info["1"] * 1;
+      return summa;
+    },
+  },
+  methods: {
+    submit() {
+      this.form.news = this.news.id;
+      console.log(this.form);
+      this.$refs.ruleFormComment.validate((valid) => {
+        if (valid) {
+          this.__POST_COMMENT(this.form);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    emptyForm() {
+      this.form = {
+        full_name: "",
+        text: "",
+        news: null,
+        stars: 0,
+      };
+    },
+    async __POST_COMMENT(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
+        this.$notification["success"]({
+          message: "Success",
+          description: "Комментарий отправлен успешно.",
+        });
+        this.emptyForm();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
   components: {
     TitleComp,
     VNewsCard,
@@ -280,6 +365,7 @@ export default {
 </script>
 <style lang="css">
 @import "../../assets/css/pages/home-page.css";
+@import "../../assets/css/pages/comment-components.css";
 .news-page {
   padding-top: 28px;
 }
@@ -289,7 +375,7 @@ export default {
   font-weight: 700;
   font-size: 26px;
   line-height: 150%;
-  color: #000000;
+  color: var(--text_color_nav);
 }
 .news-container {
   padding: 60px 70px;
@@ -298,7 +384,7 @@ export default {
   padding-bottom: 90px;
 }
 .news-container .tag {
-  background: #eeeeee;
+  background: var(--card_badges_bg);
   padding: 7px 12px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -307,11 +393,11 @@ export default {
   line-height: 130%;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #111111;
+  color: var(--card_badges_color);
 }
 .news-container-tag {
   padding-bottom: 16px;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid var(--news_container_br);
 }
 .news-container-character > span {
   font-family: var(--ROBOTO_SERIF);
@@ -394,7 +480,11 @@ export default {
 .news-container-body {
   margin-top: 40px;
   padding-bottom: 160px;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid var(--news_container_br);
+}
+.news-container-body p,
+.news-container-body span {
+  color: var(--text_color) !important;
 }
 .news-container-body img {
   width: 100%;
@@ -504,164 +594,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 145%;
-  color: #707070;
+  color: var(--news_container_link);
   margin-right: 16px;
-}
-.comment-container-grid {
-  display: grid;
-  grid-template-columns: 10.7fr 3.37fr;
-  grid-gap: 30px;
-  margin-top: 70px;
-}
-.comment-form {
-  padding: 40px 50px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-bottom: 68px;
-}
-.comment-form h5,
-.general-assessment h5 {
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 19px;
-  line-height: 170%;
-  color: #000000;
-  margin-bottom: 20px;
-}
-.comment-form input {
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  border-radius: 6px;
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 145%;
-  color: #000;
-  width: 288px;
-  margin-right: 20px;
-  padding: 11px 20px;
-}
-.comment-form input:focus,
-.comment-form textarea:focus {
-  outline: none;
-}
-.comment-form input::placeholder {
-  color: #888888;
-}
-.comment-form textarea {
-  padding: 9px 20px;
-  margin-top: 14px;
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  border-radius: 6px;
-  width: 100%;
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 145%;
-  color: #000;
-}
-.comment-form textarea::placeholder {
-  color: #888888;
-}
-.send-btn {
-  display: inline-flex;
-  padding: 10px 87px;
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  text-align: center;
-  cursor: pointer;
-  color: #ffffff;
-  background: #0192ff;
-  border-radius: 4px;
-  margin-top: 40px;
-}
-.general-assessment {
-  padding: 40px;
-  background: #f9f9f9;
-  border-radius: 8px;
-}
-.main-rate svg {
-  width: 28px;
-  height: 26px;
-}
-.main-rate span {
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  text-align: right;
-  color: #414141;
-}
-.main-rate {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-}
-.main-rate .ant-rate-star:not(:last-child) {
-  margin-right: 4px !important;
-}
-.item-rate .ant-rate-star:not(:last-child) {
-  margin-right: 4px !important;
-}
-.item-rate {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-  position: relative;
-  align-items: center;
-}
-.item-rate:last-child {
-  margin-bottom: 0;
-}
-.item-rate svg {
-  width: 20px;
-  height: 19px;
-}
-.item-rate span {
-  padding-left: 10px;
-  position: relative;
-  z-index: 15;
-  background: #f9f9f9;
-}
-.item-rate .ant-rate {
-  padding-right: 10px;
-  position: relative;
-  z-index: 15;
-  background: #f9f9f9;
-}
-.item-rate::after {
-  content: "";
-  position: absolute;
-  background: #e7e7e7;
-  border-radius: 2px;
-  height: 3px;
-  width: 100%;
-}
-.comments-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: 24px;
-  margin-bottom: 40px;
-}
-.comments-list {
-  margin-bottom: 86px;
-}
-.comments-list h4 {
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 600;
-  font-size: 19px;
-  line-height: 170%;
-  color: #000000;
-  margin-bottom: 28px;
 }
 </style>

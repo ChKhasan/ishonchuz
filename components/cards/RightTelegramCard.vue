@@ -25,7 +25,7 @@ export default {
 </script>
 <style lang="css">
 .right-tg-card {
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 4px;
   padding: 16px;
   display: flex;
@@ -53,7 +53,7 @@ export default {
   font-size: 16px;
   line-height: 150%;
   text-align: center;
-  color: #414141;
+  color: var(--tg_card_text_color);
 }
 .right-tg-card_body {
   padding-top: 21px;
@@ -66,14 +66,14 @@ export default {
 }
 .right-tg-card_footer a {
   padding: 10px 0;
-  background: #e6f4ff;
+  background: var(--tg_card_btn_bg);
   border-radius: 4px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #0192ff;
+  color: var(--tg_card_btn_color);
   width: 100%;
   display: flex;
   justify-content: center;
@@ -81,5 +81,8 @@ export default {
 }
 .right-tg-card_footer a span {
   margin-right: 16.5px;
+}
+.right-tg-card_footer a span svg path {
+  fill: var(--tg_card_btn_color);
 }
 </style>

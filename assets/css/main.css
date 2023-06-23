@@ -28,7 +28,30 @@ h6 {
   --body_color: #ffffff;
   --header_bg: #f9f9f9;
   --card_bg: #f9f9f9;
-  --sub_title: #111111
+  --sub_title: #111111;
+  --right_drop_border: #eeeeee;
+  --right_drop: #f9f9f9;
+  --right_drop_text: #292929;
+  --header_btns_bg: #ffffff;
+  --header_btns_border: #e6e8f0;
+  --header_btns_svg: #6974a5;
+  --right_show_more_bg: #e6f4ff;
+  --right_show_more_border: transparent;
+  --tg_card_text_color: #414141;
+  --tg_card_btn_bg: #e6f4ff;
+  --tg_card_btn_color: #0192ff;
+  --cards_border_bt: #eeeeee;
+  --title_border_bt: #e7e7e7;
+  --card_badges_bg: #eeeeee;
+  --card_badges_color: #111111;
+  --footer_bg: transparent;
+  --footer_border_top: #eeeeee;
+  --footer_subtitle: #292929;
+  --footer_messangers: #9ba2c3;
+  --breadcrumb_text: #6974a5;
+  --breadcrumb_link: #051769;
+  --news_container_br: #e7e7e7;
+  --news_container_link: #707070;
 }
 .dark-theme {
   --text_color: #ffffff;
@@ -36,13 +59,39 @@ h6 {
   --text_color_nav: #f9f9f9;
   --header_bg: #111111;
   --card_bg: #292929;
-  --sub_title: #F9F9F9
-
+  --sub_title: #f9f9f9;
+  --right_drop_border: #292929;
+  --right_drop: #000000;
+  --header_btns_bg: #111111;
+  --header_btns_border: #292929;
+  --header_btns_svg: #888888;
+  --right_drop_text: #ffffff;
+  --right_show_more_bg: #000d17;
+  --right_show_more_border: #0192ff;
+  --tg_card_text_color: #f9f9f9;
+  --tg_card_btn_bg: #0192ff;
+  --tg_card_btn_color: #ffffff;
+  --title_border_bt: #111111;
+  --card_badges_bg: #0192ff;
+  --card_badges_color: #e6f4ff;
+  --footer_bg: #111111;
+  --footer_border_top: transparent;
+  --footer_subtitle: #e7e7e7;
+  --footer_messangers: #ffffff;
+  --breadcrumb_text: #e7e7e7;
+  --breadcrumb_link: #34a8ff;
+  --news_container_br: #414141;
+  --news_container_link: #b8b8b8;
 }
 .container_xl {
   margin: 0 auto;
   padding: 0 15px;
   width: 100%;
+}
+@media (min-width: 1470px) {
+  .container_xl {
+    padding: 0;
+  }
 }
 @media (min-width: 1440px) {
   .container_xl {
@@ -65,7 +114,7 @@ ul {
 }
 .right-show-more,
 .show-more-count {
-  background: #e6f4ff;
+  background: var(--right_show_more_bg);
   border-radius: 4px;
   padding: 10px 0;
   font-family: var(--ROBOTO_SERIF);
@@ -77,6 +126,7 @@ ul {
   color: #0192ff;
   display: flex;
   justify-content: center;
+  border: 1px solid var(--right_show_more_border);
   cursor: pointer;
 }
 .show-more-count {
@@ -209,4 +259,7 @@ ul {
 }
 .messanger-icons a:last-child {
   margin-right: 0;
+}
+.disabled {
+  pointer-events: none;
 }

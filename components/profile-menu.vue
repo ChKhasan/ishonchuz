@@ -1,17 +1,27 @@
 <template lang="html">
   <div class="profile-menu">
     <ul>
-      <li :class="{ 'active-profile-menu': $route.name == 'profile-personal-info' }">
+      <li
+        :class="{ 'active-profile-menu': $route.name.includes('profile-personal-info') }"
+      >
         <nuxt-link to="/profile/personal-info"
           ><span v-html="user"></span> Mening sahifam</nuxt-link
         >
       </li>
-      <li :class="{ 'active-profile-menu': $route.name == 'profile-my-board' }">
+      <li
+        :class="{
+          'active-profile-menu': $route.name.includes('profile-my-board'),
+        }"
+      >
         <nuxt-link to="/profile/my-board"
           ><span v-html="star"></span> Mening javonim</nuxt-link
         >
       </li>
-      <li :class="{ 'active-profile-menu': $route.name == 'profile-saved' }">
+      <li
+        :class="{
+          'active-profile-menu': $route.name.includes('profile-saved'),
+        }"
+      >
         <nuxt-link to="/profile/saved"
           ><span v-html="comment"></span> Saqlanganlar</nuxt-link
         >

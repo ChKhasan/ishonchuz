@@ -21,7 +21,7 @@ export default {
 .title-comp {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid var(--title_border_bt);
   padding-bottom: 11px;
 }
 .title-comp h2 {

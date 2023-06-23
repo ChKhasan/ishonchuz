@@ -17,13 +17,16 @@
               {{ $store.state.translations["main.footer_adress"] }}:
               <span>Toshkent shahri, Buxoro ko‘chasi, 24-uy</span>
             </p>
-            <p> {{ $store.state.translations["main.footer_email"] }}: <a href="#">ishonch1991@yandex.uz</a></p>
+            <p>
+              {{ $store.state.translations["main.footer_email"] }}:
+              <a href="#">ishonch1991@yandex.uz</a>
+            </p>
           </div>
           <div class="footer-menu">
             <ul>
               <li><nuxt-link :to="localePath('/')">O’zbekiston</nuxt-link></li>
               <li>Xorij</li>
-              <li>{{$store.state.translations['main.analysis']}}</li>
+              <li>{{ $store.state.translations["main.analysis"] }}</li>
               <li>O’zgacha rakurs</li>
             </ul>
             <ul>
@@ -73,7 +76,8 @@ export default {
 <style lang="css">
 .footer {
   padding-top: 36px;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid var(--footer_border_top);
+  background: var(--footer_bg);
 }
 .footer-logo {
   margin-bottom: 30px;
@@ -93,7 +97,7 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 130%;
-  color: #292929;
+  color: var(--footer_subtitle);
 }
 .footer-info {
   max-width: 555px;
@@ -108,7 +112,7 @@ export default {
   padding-top: 11px;
 }
 .footer-info p span {
-  color: #000;
+  color: var(--text_color);
 }
 .footer-menu {
   display: flex;
@@ -123,7 +127,7 @@ export default {
   font-size: 14px;
   line-height: 130%;
   text-transform: uppercase;
-  color: #000000;
+  color: var(--text_color);
   margin-bottom: 16px;
 }
 .footer-bottom p {
@@ -132,16 +136,20 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
-  color: #000000;
+  color: var(--text_color);
 }
 .footer-bottom {
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid var(--footer_border_top);
   padding-top: 16px;
-  padding-bottom: 103px;
+  padding-bottom: 16px;
+  background: var(--body_color);
 }
 .footer-messangers {
   padding-top: 50px;
   padding-bottom: 66px;
+}
+.footer-messangers span svg path {
+  fill: var(--footer_messangers);
 }
 .footer-messangers a {
   margin-right: 30px;

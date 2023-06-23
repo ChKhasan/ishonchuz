@@ -29,20 +29,29 @@
           <li>
             <a-dropdown :trigger="['click']">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
-                {{ $store.state.translations["main.library"] }} <span v-html="drop"></span>
+                {{ $store.state.translations["main.library"] }}
+                <span v-html="drop"></span>
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
-                  <nuxt-link :to="localePath('/library')">Adabiyot</nuxt-link>
+                  <nuxt-link :to="localePath('/library?type=literature')"
+                    >Adabiyot</nuxt-link
+                  >
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <nuxt-link :to="localePath('/library')">Ilmiy ishlar</nuxt-link>
+                  <nuxt-link :to="localePath('/library?type=scientific')"
+                    >Ilmiy ishlar</nuxt-link
+                  >
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <nuxt-link :to="localePath('/library')">Maqolalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library?type=articles')"
+                    >Maqolalar</nuxt-link
+                  >
                 </a-menu-item>
                 <a-menu-item key="3">
-                  <nuxt-link :to="localePath('/library')">Kasaba faollari uchun qo’llanmalar</nuxt-link>
+                  <nuxt-link :to="localePath('/library?type=literature')"
+                    >Kasaba faollari uchun qo’llanmalar</nuxt-link
+                  >
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
@@ -63,7 +72,9 @@
                   <nuxt-link :to="localePath('/library')">Maqolalar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="3">
-                  <nuxt-link :to="localePath('/library')">Kasaba faollari uchun qo’llanmalar</nuxt-link>
+                  <nuxt-link :to="localePath('/profile/personal-info')"
+                    >Kasaba faollari uchun qo’llanmalar</nuxt-link
+                  >
                 </a-menu-item>
               </a-menu>
             </a-dropdown>
@@ -71,7 +82,15 @@
         </ul>
         <div class="menu-list-btns">
           <div @click="visibleSearch = true"><span v-html="search"></span></div>
-          <div @click="visible = true"><span v-html="user"></span></div>
+          <div
+            @click="
+              $store.state.auth
+                ? $router.push('/profile/personal-info')
+                : (visible = true)
+            "
+          >
+            <span v-html="user"></span>
+          </div>
           <div><span v-html="menu"></span></div>
         </div>
       </div>
@@ -91,7 +110,11 @@
         </div>
         <div class="vmodal-body">
           <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
-            <a-form-model-item class="form-item mb-0 w-100" label="Ism" prop="name">
+            <a-form-model-item
+              class="form-item mb-0 w-100 auth-form"
+              label="Номер телефона"
+              prop="phone_number"
+            >
               <the-mask
                 v-model="form.phone_number"
                 class="w-100"
@@ -102,9 +125,7 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="(visible = false), (visibleSms = true)">
-            Kirish
-          </div>
+          <div class="auth-btn" @click="onSubmit()">Kirish</div>
         </div>
       </div>
     </a-modal>
@@ -124,17 +145,38 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item class="form-item mb-0 w-100" label="Ism" prop="name">
+              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
                 <the-mask
                   v-model="formSms.phone_number"
-                  class="w-100"
+                  class="w-100 disabled"
                   :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                   placeholder="+998 (__) ___ __ __"
                 />
               </a-form-model-item>
-              <a-form-model-item class="form-item mb-0 w-100" label="SMS-kod" prop="name">
+              <a-form-model-item
+                class="form-item mb-0 w-100 auth-form"
+                label="SMS-kod"
+                prop="code"
+                :class="{
+                  sms_code_success: responseTypes.smsCodeSuccess,
+                  sms_code_error: responseTypes.smsCodeError,
+                }"
+              >
                 <a-input
-                  v-model="formSms.sms"
+                  v-model="formSms.code"
+                  class="w-100"
+                  placeholder="SMS kodni tering"
+                />
+              </a-form-model-item>
+              {{ responseTypes.userResponse }}
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                label="Name"
+                prop="name"
+                v-if="responseTypes.userResponse"
+              >
+                <a-input
+                  v-model="formName.full_name"
                   class="w-100"
                   placeholder="SMS kodni tering"
                 />
@@ -143,13 +185,11 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="(visibleName = true), (visibleSms = false)">
-            Kirish
-          </div>
+          <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
         </div>
       </div>
     </a-modal>
-    <a-modal
+    <!-- <a-modal
       :body-style="{ padding: '0' }"
       v-model="visibleName"
       centered
@@ -179,8 +219,14 @@
                   class="w-100"
                   placeholder="SMS kodni tering"
                 />
+                <span class="error_code">Xato kiritildi!</span>
               </a-form-model-item>
-              <a-form-model-item class="form-item mb-0 w-100" label="Name" prop="name">
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                label="Name"
+                prop="name"
+                v-if="responseTypes.smsCodeSuccess"
+              >
                 <a-input
                   v-model="formName.name"
                   class="w-100"
@@ -196,7 +242,7 @@
           </div>
         </div>
       </div>
-    </a-modal>
+    </a-modal> -->
     <a-modal
       class="search-modal"
       :body-style="{ padding: '0' }"
@@ -240,22 +286,26 @@ export default {
       },
       rules: {
         phone_number: [
-          { required: true, message: "Please input Activity name", trigger: "blur" },
+          { required: true, message: "Number is reqiured", trigger: "change" },
+          { min: 9, message: "Length should be 9", trigger: "change" },
         ],
       },
       formSms: {
         phone_number: "",
-        sms: "",
+        code: "",
       },
       rulesSms: {
-        phone_number: [
-          { required: true, message: "Please input Activity name", trigger: "blur" },
-        ],
+        code: [{ required: true, message: "Sms code is required", trigger: "change" }],
       },
       formName: {
         phone_number: "",
-        sms: "",
-        name: "",
+        code: "",
+        full_name: "",
+      },
+      responseTypes: {
+        smsCodeError: false,
+        smsCodeSuccess: false,
+        userResponse: false,
       },
       rulesName: {
         phone_number: [
@@ -284,14 +334,98 @@ export default {
       this.visibleSearch = false;
     },
     onSubmit() {
+      this.formSms.phone_number = this.form.phone_number;
       this.$refs.ruleFormAuth.validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.__SEND_NUMBER(this.form);
         } else {
           console.log("error submit!!");
           return false;
         }
       });
+    },
+    onSubmitSms() {
+      this.formSms.phone_number = this.form.phone_number;
+      const data = {
+        ...this.formSms,
+        full_name: this.formName.full_name,
+      };
+      this.$refs.ruleFormSms.validate((valid) => {
+        if (valid) {
+          this.responseTypes.smsCodeSuccess
+            ? this.__LOGIN_REGISTER(data)
+            : this.__CHECK_SMS_CODE(this.formSms);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    async __SEND_NUMBER(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postSendSmsCode", dataForm);
+        this.visible = false;
+        this.visibleSms = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async login() {
+      try {
+        await this.$auth.loginWith("local", {
+          data: {
+            username: "example",
+            password: "password",
+          },
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async __CHECK_SMS_CODE(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postCheckSmsCode", dataForm);
+        if (data.correct) {
+          this.responseTypes.smsCodeSuccess = true;
+          this.responseTypes.smsCodeError = false;
+
+          if (data.tokens) {
+            this.responseTypes.userResponse = false;
+            await localStorage.setItem(
+              "access_token",
+              JSON.stringify(data.tokens.access)
+            );
+            await localStorage.setItem(
+              "refresh_token",
+              JSON.stringify(data.tokens.refresh)
+            );
+            this.$store.commit("chackAuth");
+            this.visibleSms = false;
+            this.$router.push("/profile/personal-info");
+          } else {
+            this.responseTypes.userResponse = true;
+          }
+        } else {
+          this.responseTypes.smsCodeSuccess = false;
+          this.responseTypes.smsCodeError = true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async __LOGIN_REGISTER(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLoginRegister", dataForm);
+        this.responseTypes.smsCodeSuccess = true;
+        this.visibleSms = false;
+        localStorage.setItem("access_token", JSON.stringify(data.access));
+        localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
+        this.$store.commit("chackAuth");
+        this.$router.push("/profile/personal-info");
+      } catch (e) {
+        this.responseTypes.smsCodeError = true;
+        console.log(e);
+      }
     },
     handleOkSearch() {
       this.visibleSearch = false;
@@ -418,15 +552,19 @@ export default {
 }
 .menu-list-btns div {
   background: #ffffff;
-  border: 1px solid #e6e8f0;
+  border: 1px solid var(--header_btns_border);
   border-radius: 8px;
   width: 52px;
   height: 52px;
+  background: var(--header_btns_bg);
   margin-right: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.menu-list-btns div span svg path {
+  fill: var(--header_btns_svg);
 }
 .menu-list-btns div:last-child {
   margin-right: 0;
@@ -474,5 +612,40 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 16px;
+}
+.auth-form .has-error .ant-form-explain,
+.error_code {
+  position: absolute;
+  right: 17px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: right;
+  color: #c02600;
+}
+.auth-form .ant-form-item-control {
+  display: flex;
+  align-items: center;
+}
+.auth-form .ant-form-item-control span {
+  width: 100%;
+}
+.auth-form .ant-input {
+  background-color: #f9f9f9;
+}
+.sms_code_success label {
+  color: #00af4c;
+}
+.sms_code_success input {
+  background: #eafff3 !important;
+  color: #00af4c;
+}
+.sms_code_error label {
+  color: #c02600;
+}
+.sms_code_error input {
+  color: #c02600;
 }
 </style>

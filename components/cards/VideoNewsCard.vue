@@ -62,7 +62,7 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 16px;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--right_drop_border);
 }
 .video-news-card-img {
   height: 307px;

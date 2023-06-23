@@ -26,6 +26,10 @@ export default {
       return this.$i18n.locale;
     },
   },
+  mounted() {
+    this.$store.commit("chackAuth");
+    this.$store.commit("reloadStore");
+  },
   async fetch() {
     const [categoriesData, translationsData] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
@@ -45,17 +49,17 @@ export default {
   },
   watch: {
     async targetLang() {
-      const [categoriesData,translationsData] = await Promise.all([
+      const [categoriesData, translationsData] = await Promise.all([
         this.$store.dispatch("fetchCategories/getCategories", {
           headers: {
             Language: this.$i18n.locale,
           },
         }),
         this.$store.dispatch("fetchTranslations/getTranslations", {
-        headers: {
-          Language: this.$i18n.locale,
-        },
-      }),
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
       ]);
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
