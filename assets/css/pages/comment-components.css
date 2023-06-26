@@ -78,6 +78,9 @@
   background: var(--card_bg);
   border-radius: 8px;
 }
+.general-assessment-mobile {
+  display: none;
+}
 .main-rate svg {
   width: 28px;
   height: 26px;
@@ -157,4 +160,35 @@
   line-height: 170%;
   color: #000000;
   margin-bottom: 28px;
+}
+@media screen and (max-width: 1024px) {
+  .comment-container-grid {
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 30px;
+    margin-top: 70px;
+  }
+  .comments-list h4 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+    margin-bottom: 20px;
+  }
+  .comment-form {
+    margin-bottom: 20px;
+  }
+  .general-assessment-mobile {
+    display: block;
+    padding: 24px;
+    margin-bottom: 48px;
+  }
+  .general-assessment-web {
+    display: none;
+  }
+  .comment-form input {
+    margin-right: 0;
+  }
+  .comments-list {
+    margin-bottom: 63px;
+  }
 }

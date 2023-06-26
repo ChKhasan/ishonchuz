@@ -9,6 +9,7 @@
       }"
     />
     <MobileHeader />
+    <div class="layout_back"></div>
     <Nuxt />
     <Footer :categories="categories" />
   </div>
@@ -102,16 +103,20 @@ export default {
       }
     },
   },
-<<<<<<< HEAD
   components: { Header, Footer, MobileHeader },
-=======
-
-  components: { Header, Footer },
->>>>>>> 4e9bb6ef0c30dad807ef5800ac29d480480a7bc9
 };
 </script>
 <style lang="css">
 .default-layout {
   background-color: var(--body_color);
+}
+.layout_back {
+  display: none;
+}
+@media screen and (max-width: 1024px) {
+  .layout_back {
+    display: block;
+    height: 146px;
+  }
 }
 </style>

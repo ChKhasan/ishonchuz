@@ -32,6 +32,7 @@ export default {};
 
 <style scoped>
 .wrap {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -63,5 +64,10 @@ export default {};
   justify-content: center;
   width: 36px;
   height: 36px;
+}
+@media screen and (max-width: 1024px) {
+  .wrap {
+    display: block;
+  }
 }
 </style>

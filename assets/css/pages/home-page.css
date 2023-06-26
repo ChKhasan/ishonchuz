@@ -489,6 +489,22 @@ h6 {
     line-height: 130%;
   }
   .home-carousel {
-    padding-top: 140px;
+    padding-top: 10px;
+  }
+  .news-breadcrumb a {
+    font-size: 12px;
+    line-height: 150%;
+  }
+  .news-breadcrumb a:last-child {
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+  }
+  .news-breadcrumb a span {
+    margin-left: 8px;
+    margin-right: 8px;
   }
 }

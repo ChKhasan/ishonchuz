@@ -82,4 +82,15 @@ export default {
 .comment-card-body span .ant-rate-star:not(:last-child) {
   margin-right: 3px !important;
 }
+@media screen and (max-width: 1024px) {
+  .comment-card-body {
+    padding: 18px 20px;
+  }
+  .comment-card-body h6 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+    margin-bottom: 10px;
+  }
+}
 </style>

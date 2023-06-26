@@ -18,7 +18,7 @@
         </ul>
       </div>
       <div class="home-page-grid row">
-        <div class="col-9 p-0 home-page-left">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="" v-if="categories?.news?.length > 0">
             <BannerCard :topNews="categories?.news[0]" />
           </div>
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0">
+        <div class="home-page-right news-page-right col-3 p-0">
           <div class="block1">
             <div class="right-banner mt-0">
               <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
@@ -213,5 +213,13 @@ export default {
   line-height: 150%;
   color: var(--text_color);
   margin-bottom: 20px;
+}
+@media screen and (max-width: 1024px) {
+  .news-page-right {
+    display: none;
+  }
+  .news-menu-page {
+    padding-top: 20px;
+  }
 }
 </style>

@@ -2,14 +2,13 @@
   <div class="home-page news-page">
     <div class="container_xl">
       <div class="home-page-grid row">
-        <div class="col-9 p-0 home-page-left">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="new-category-title">
             <h2>{{ $store.state.translations["inner.economy"] }}</h2>
           </div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
-              >{{ $store.state.translations["main.home"] }}
-              <span v-html="dropdown"></span
+              >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
@@ -20,9 +19,14 @@
           </div>
           <div class="news-container">
             <div class="news-container-tag">
-              <span class="tag">{{
-                $store.state.translations["main.analysis"]
-              }}</span>
+              <span class="tag">{{ $store.state.translations["main.analysis"] }}</span>
+              <div class="news-container-messangers-mobile">
+                <a href="#"><span v-html="telegram"></span></a>
+                <a href="#"><span v-html="facebook"></span></a>
+                <a href="#"><span v-html="twitter"></span></a>
+                <a href="#"><span v-html="instagram"></span></a>
+                <a href="#"><span v-html="whatsapp"></span></a>
+              </div>
             </div>
             <div class="news-container-head">
               <div class="news-container-character">
@@ -107,7 +111,7 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0">
+        <div class="home-page-right col-3 p-0 news-page-right">
           <div class="block2">
             <div class="right-banner">
               <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
@@ -118,11 +122,7 @@
             :title="$store.state.translations['main.active_topics']"
           />
           <div class="right-news-list">
-            <RightNewsCard
-              v-for="news in importantNews"
-              :key="news?.id"
-              :news="news"
-            />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
             <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
@@ -139,9 +139,7 @@
                   <input
                     type="text"
                     v-model="form.full_name"
-                    :placeholder="
-                      $store.state.translations['news.comment_input_place']
-                    "
+                    :placeholder="$store.state.translations['news.comment_input_place']"
                   />
                   <a-rate v-model="form.stars" />
                 </div>
@@ -150,14 +148,47 @@
                 <textarea
                   rows="5"
                   v-model="form.text"
-                  :placeholder="
-                    $store.state.translations['news.comment_textarea_place']
-                  "
+                  :placeholder="$store.state.translations['news.comment_textarea_place']"
                 ></textarea>
               </a-form-model-item>
 
               <div class="send-btn" @click="submit()">
                 {{ $store.state.translations["news.leave_comment"] }}
+              </div>
+            </div>
+            <div class="general-assessment general-assessment-mobile">
+              <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+              <div class="main-rate">
+                <a-rate
+                  :default-value="Number.parseInt(Number(news?.rating))"
+                  allow-half
+                  disabled
+                /><span>{{ Number.parseInt(news?.rating) }}/5</span>
+              </div>
+              <div class="item-rate">
+                <a-rate :default-value="5" disabled /><span
+                  ><p>{{ news?.rating_info["5"] }}</p></span
+                >
+              </div>
+              <div class="item-rate">
+                <a-rate :default-value="4" disabled /><span
+                  ><p>{{ news?.rating_info["4"] }}</p></span
+                >
+              </div>
+              <div class="item-rate">
+                <a-rate :default-value="3" disabled /><span
+                  ><p>{{ news?.rating_info["3"] }}</p></span
+                >
+              </div>
+              <div class="item-rate">
+                <a-rate :default-value="2" disabled /><span
+                  ><p>{{ news?.rating_info["2"] }}</p></span
+                >
+              </div>
+              <div class="item-rate">
+                <a-rate :default-value="1" disabled /><span
+                  ><p>{{ news?.rating_info["1"] }}</p></span
+                >
               </div>
             </div>
             <div class="comments-list">
@@ -194,17 +225,21 @@
               :link="false"
               :title="$store.state.translations['news.on_subject']"
             />
-            <div class="v-news-grid">
-              <VNewsCard
-                v-for="news in topicNews"
-                :key="news?.id"
-                :news="news"
-              />
+
+            <div class="flex items-center justify-center">
+              <div class="swiper-news-mobile" style="overflow: hidden; width: 337px">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide" v-for="news in topicNews" :key="news?.id">
+                    <VNewsCard :news="news" />
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-pagination-banner-right"></div>
             </div>
           </div>
         </a-form-model>
         <div>
-          <div class="general-assessment">
+          <div class="general-assessment general-assessment-web">
             <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
             <div class="main-rate">
               <a-rate
@@ -250,7 +285,8 @@ import TitleComp from "../../components/Title-comp.vue";
 import VNewsCard from "../../components/cards/VNewsCard.vue";
 import RightNewsCard from "../../components/cards/RightNewsCard.vue";
 import CommentCard from "../../components/cards/CommentCard.vue";
-
+import Swiper from "swiper/swiper-bundle.js";
+import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
   data() {
@@ -291,6 +327,13 @@ export default {
   },
   mounted() {
     this.$store.commit("viewNewsStore", { id: this.news?.id });
+    const swiperRight = new Swiper(".swiper-news-mobile", {
+      flipEffect: {
+        slideShadows: false,
+      },
+      slidesPerView: 1,
+      pagination: false,
+    });
   },
   // async mounted() {
   //   const [newsData, topicNewsData, importantNewsData] = await Promise.all([
@@ -392,10 +435,7 @@ export default {
     },
     async __POST_COMMENT(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchNews/postNewsComment",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
         this.$notification["success"]({
           message: "Success",
           description: "Комментарий отправлен успешно.",
@@ -653,5 +693,83 @@ export default {
   line-height: 145%;
   color: var(--news_container_link);
   margin-right: 16px;
+}
+.news-container-messangers-mobile {
+  display: none;
+}
+.news-container-messangers {
+  display: block;
+}
+@media screen and (max-width: 1024px) {
+  .news-container-tag {
+    display: flex;
+    justify-content: space-between;
+  }
+  .news-page-right {
+    display: none;
+  }
+  .news-menu-page {
+    padding-top: 20px;
+  }
+  .news-container {
+    padding: 5px;
+    background: #ffffff;
+  }
+  .news-container-character > span {
+    margin-right: 13px;
+  }
+  .news-container-messangers-mobile {
+    display: block;
+  }
+  .news-container-messangers-mobile a svg {
+    width: 24px;
+    height: 24px;
+  }
+  .news-container-messangers-mobile a {
+    margin-left: 8px;
+  }
+  .news-container-messangers {
+    display: none;
+  }
+  .news-container-header h1 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .news-container-header h6 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .news-container-body p,
+  .news-container-body span,
+  .news-container-body li {
+    font-size: 14px !important;
+    line-height: 145%;
+  }
+  .news-container-links a {
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.24px;
+  }
+  .news-container-body {
+    padding-bottom: 50px;
+  }
+  .comment-form {
+    padding: 20px 24px;
+  }
+  .comment-form h5,
+  .general-assessment h5 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+    margin-bottom: 15px;
+  }
+  .send-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 }
 </style>
