@@ -2,7 +2,7 @@
   <div class="home-page">
     <div class="container_xl">
       <div class="home-page-grid row">
-        <div class="col-9 p-0 home-page-left">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="home-carousel">
             <div class="world">
               <div
@@ -422,5 +422,240 @@ export default {
 }
 .hidden {
   display: none;
+}
+@media screen and (max-width: 1024px) {
+  .hidden {
+    display: block;
+  }
+  .clear {
+    display: none;
+  }
+  .thumbs {
+    display: none;
+  }
+  .banner-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .banner-card_text a {
+    font-size: 14px;
+    margin-bottom: 24px;
+    display: flex;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .banner-card-img {
+    height: 172px;
+  }
+  .banner-card_text p {
+    display: none;
+  }
+  .home-carousel {
+    margin-bottom: 64px;
+  }
+  .h-news-grid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0;
+    gap: 0;
+  }
+  .home-page-left {
+    padding: 0 !important;
+  }
+  .row {
+    margin: 0 !important;
+  }
+  .title-comp h2 {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .title-comp h2 span {
+    margin: 0;
+  }
+  .title-comp a {
+    font-size: 14px;
+  }
+  .title-comp {
+    justify-content: space-between;
+  }
+  .h-news-card-img {
+    min-width: 94px;
+    height: 64px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .banner-card-body {
+    padding: 0;
+  }
+  .h-news-card-body a {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  .h-news-card-info > span {
+    font-size: 10px;
+    display: flex;
+  }
+  .h-news-card-info {
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .banner-card-body_footer > span {
+    margin: 0;
+  }
+  .banner-card-body_footer {
+    gap: 12px;
+  }
+  .v-news-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .v-news-card-img {
+    width: 100%;
+    height: 172px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .v-news-card-body a {
+    font-size: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .v-news-card-info > span {
+    font-size: 10px;
+    padding: 0;
+    margin: 0;
+  }
+  .v-news-card-info {
+    align-items: center;
+    gap: 12px;
+  }
+  .home-page-right-title {
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+  }
+  .home-page-right-drop {
+    padding: 12px 16px;
+  }
+  .home-page-right-drop h5 {
+    font-size: 14px;
+    padding: 0;
+  }
+  .block1 {
+    margin-bottom: 16px;
+  }
+  .right-banner {
+    height: 480px;
+  }
+  .swiper-banner-right {
+    width: 100% !important;
+  }
+  .right-news-list {
+    margin: 24px 0;
+  }
+  .right-news-text::after {
+    background: #0192ff;
+  }
+  .right-news-text a {
+    font-size: 14px;
+  }
+  .hidden {
+    margin-bottom: 34px;
+  }
+  .video-news-grid,
+  .news-images-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 12px;
+  }
+  .video-news-card {
+    padding: 12px 10px;
+    gap: 12px;
+    border-radius: 6px;
+    border: none;
+    background: var(--black-1, #f9f9f9);
+  }
+  .video-news-card-img {
+    height: 180px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .video-news-card-body a {
+    font-size: 14px;
+  }
+  .video-news-card-info > span,
+  .news-images-card-info > span {
+    margin: 0;
+  }
+  .video-news-card-info,
+  .news-images-card-info {
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  .news-images-card-body {
+    margin-top: 12px;
+  }
+  .news-images-card-body p {
+    font-size: 14px;
+  }
+  .home-page {
+    padding-bottom: 80px;
+  }
+  .footer-logo {
+    display: flex;
+    justify-content: center;
+  }
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .footer-info h6 {
+    font-size: 12px;
+  }
+  .footer-info p {
+    font-size: 12;
+    padding-top: 0;
+  }
+  .footer-menu {
+    width: 100%;
+    row-gap: 16px;
+    column-gap: 32px;
+  }
+  .footer-menu ul li a,
+  .footer-menu ul li {
+    font-size: 14px;
+    text-align: center;
+  }
+  .footer-messangers {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 32px 0;
+    padding: 0;
+  }
+  .footer-messangers a {
+    margin: 0;
+  }
+  .footer-messangers svg {
+    width: 24px;
+    height: 24px;
+  }
+  .footer-bottom {
+    color: #888;
+    text-align: center;
+    font-size: 12px;
+    line-height: 130%;
+  }
+  .home-carousel {
+    padding-top: 140px;
+  }
 }
 </style>
