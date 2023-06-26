@@ -6,11 +6,18 @@
           <div class="home-carousel">
             <div class="world">
               <div
-                style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                style="
+                  --swiper-navigation-color: #fff;
+                  --swiper-pagination-color: #fff;
+                "
                 class="swiper mySwiper2"
               >
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide" v-for="item in topNews" :key="item.id">
+                  <div
+                    class="swiper-slide"
+                    v-for="item in topNews"
+                    :key="item.id"
+                  >
                     <BannerCard :topNews="item" />
                   </div>
                 </div>
@@ -35,7 +42,11 @@
             :title="$store.state.translations['main.latest_news']"
           />
           <div class="h-news-grid">
-            <HNewsCard v-for="newsItem in news" :key="newsItem.id" :news="newsItem" />
+            <HNewsCard
+              v-for="newsItem in news"
+              :key="newsItem.id"
+              :news="newsItem"
+            />
           </div>
           <div class="v-news-grid">
             <VNewsCard v-for="news in simpleNews" :key="news.id" :news="news" />
@@ -45,7 +56,11 @@
             :title="$store.state.translations['main.video_gallery']"
           />
           <div class="video-news-grid">
-            <VideoNewsCard v-for="news in videoNews" :key="news?.id" :news="news" />
+            <VideoNewsCard
+              v-for="news in videoNews"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <TitleComp
             :link="true"
@@ -70,14 +85,19 @@
             >
               <h5>
                 {{ $store.state.translations["main.library"] }}
-                <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
+                <span
+                  v-html="dropdown"
+                  :class="{ rotate180: dropVal == 1 }"
+                ></span>
               </h5>
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board">
                   <ul>
-                    <li>Teatrlar</li>
-                    <li>Kutubxona</li>
-                    <li>Ko’rgazmalar</li>
+                    <li>{{ $store.state.translations["main.theatres"] }}</li>
+                    <li>{{ $store.state.translations["main.libraries"] }}</li>
+                    <li>
+                      {{ $store.state.translations["main.presentations"] }}
+                    </li>
                   </ul>
                 </div>
               </Transition>
@@ -90,14 +110,19 @@
             >
               <h5>
                 {{ $store.state.translations["main.entertainment"] }}
-                <span v-html="dropdown" :class="{ rotate180: dropVal == 2 }"></span>
+                <span
+                  v-html="dropdown"
+                  :class="{ rotate180: dropVal == 2 }"
+                ></span>
               </h5>
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board" v-if="dropVal == 2">
                   <ul>
-                    <li>Teatrlar</li>
-                    <li>Kutubxona</li>
-                    <li>Ko’rgazmalar</li>
+                    <li>{{ $store.state.translations["main.theatres"] }}</li>
+                    <li>{{ $store.state.translations["main.libraries"] }}</li>
+                    <li>
+                      {{ $store.state.translations["main.presentations"] }}
+                    </li>
                   </ul>
                 </div>
               </Transition>
@@ -117,9 +142,16 @@
           />
           <div class="mt-3 mb-5">
             <div class="flex items-center justify-center">
-              <div class="swiper-banner-right" style="overflow: hidden; width: 337px">
+              <div
+                class="swiper-banner-right"
+                style="overflow: hidden; width: 337px"
+              >
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide" v-for="news in redactorNews" :key="news?.id">
+                  <div
+                    class="swiper-slide"
+                    v-for="news in redactorNews"
+                    :key="news?.id"
+                  >
                     <VNewsCard :news="news" />
                   </div>
                 </div>
@@ -134,7 +166,11 @@
           />
 
           <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            <RightNewsCard
+              v-for="news in importantNews"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <div class="btn_container_show_more">
             <div class="right-show-more">

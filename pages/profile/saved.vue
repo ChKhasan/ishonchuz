@@ -4,33 +4,53 @@
       <div class="profile-grid">
         <ProfileMenu />
         <div class="profile-saved">
-          <h3>Mening javonim</h3>
+          <h3>{{ $store.state.translations["main.my-shelf"] }}</h3>
           <ul class="library_tab">
             <li
-              :class="{ 'news-menu-active-categry': $route.query.type == 'literature' }"
+              :class="{
+                'news-menu-active-categry': $route.query.type == 'literature',
+              }"
             >
-              <span @click="tabChange('literature')">Adabiyot</span>
+              <span @click="tabChange('literature')">{{
+                $store.state.translations["main.literature"]
+              }}</span>
             </li>
             <li
-              :class="{ 'news-menu-active-categry': $route.query.type == 'scientific' }"
+              :class="{
+                'news-menu-active-categry': $route.query.type == 'scientific',
+              }"
             >
-              <span @click="tabChange('scientific')">Ilmiy ishlar</span>
+              <span @click="tabChange('scientific')">{{
+                $store.state.translations["main.science"]
+              }}</span>
             </li>
-            <li :class="{ 'news-menu-active-categry': $route.query.type == 'articles' }">
-              <span @click="tabChange('articles')">Maqolalar</span>
+            <li
+              :class="{
+                'news-menu-active-categry': $route.query.type == 'articles',
+              }"
+            >
+              <span @click="tabChange('articles')">{{
+                $store.state.translations["main.articles"]
+              }}</span>
             </li>
             <li>
               <span>{{ $store.state.translations["main.society"] }}</span>
             </li>
           </ul>
-          <div class="saved-books-grid" v-if="$route.query.type == 'literature'">
+          <div
+            class="saved-books-grid"
+            v-if="$route.query.type == 'literature'"
+          >
             <BookCard
               v-for="book in savedBooks?.literature_books"
               :book="book"
               :key="book?.id"
             />
           </div>
-          <div class="saved-books-grid" v-if="$route.query.type == 'scientific'">
+          <div
+            class="saved-books-grid"
+            v-if="$route.query.type == 'scientific'"
+          >
             <BookCard
               v-for="book in savedBooks?.science_books"
               :book="book"

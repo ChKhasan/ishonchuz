@@ -2,7 +2,7 @@
   <div class="galleries-page">
     <div class="container_xl">
       <div class="galleries-page-header">
-        <h5>Yangi O’zbekiston suratlarda</h5>
+        <h5>{{ $store.state.translations["main.new-uzbekistan"] }}</h5>
       </div>
       <div class="galleries-page-container">
         <div class="galleries-card">
@@ -34,12 +34,18 @@
       </div>
       <div>
         <div class="btn_container_show_more">
-          <div class="right-show-more">Yana yuklash</div>
-          <div class="right-show-more-primary">Barchasini ko'rish</div>
+          <div class="right-show-more">
+            {{ $store.state.translations["main.more"] }}
+          </div>
+          <div class="right-show-more-primary">
+            {{ $store.state.translations["main.see_all"] }}
+          </div>
         </div>
         <div class="messangers-container">
           <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-          <div class="follow-us-message">FOLLOW US!</div>
+          <div class="follow-us-message">
+            {{ $store.state.translations["main.follow"] }}
+          </div>
           <div class="messanger-icons">
             <a href="#">
               <span v-html="telegram"> </span>

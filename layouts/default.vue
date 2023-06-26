@@ -92,8 +92,6 @@ export default {
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
     },
-  },
-  watch: {
     "$store.state.theme"(val) {
       if (!val) {
         document.body.classList.add("dark-theme");

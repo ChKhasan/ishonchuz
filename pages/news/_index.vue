@@ -3,10 +3,13 @@
     <div class="container_xl">
       <div class="home-page-grid row">
         <div class="col-9 p-0 home-page-left">
-          <div class="new-category-title"><h2>Iqtisod</h2></div>
+          <div class="new-category-title">
+            <h2>{{ $store.state.translations["inner.economy"] }}</h2>
+          </div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
-              >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
+              >{{ $store.state.translations["main.home"] }}
+              <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
@@ -17,7 +20,9 @@
           </div>
           <div class="news-container">
             <div class="news-container-tag">
-              <span class="tag">{{ $store.state.translations["main.analysis"] }}</span>
+              <span class="tag">{{
+                $store.state.translations["main.analysis"]
+              }}</span>
             </div>
             <div class="news-container-head">
               <div class="news-container-character">
@@ -113,7 +118,11 @@
             :title="$store.state.translations['main.active_topics']"
           />
           <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            <RightNewsCard
+              v-for="news in importantNews"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <div class="right-banner">
             <img src="../../assets/images/Снимок экрана (926).png" alt="" />
@@ -130,7 +139,9 @@
                   <input
                     type="text"
                     v-model="form.full_name"
-                    :placeholder="$store.state.translations['news.comment_input_place']"
+                    :placeholder="
+                      $store.state.translations['news.comment_input_place']
+                    "
                   />
                   <a-rate v-model="form.stars" />
                 </div>
@@ -139,7 +150,9 @@
                 <textarea
                   rows="5"
                   v-model="form.text"
-                  :placeholder="$store.state.translations['news.comment_textarea_place']"
+                  :placeholder="
+                    $store.state.translations['news.comment_textarea_place']
+                  "
                 ></textarea>
               </a-form-model-item>
 
@@ -182,7 +195,11 @@
               :title="$store.state.translations['news.on_subject']"
             />
             <div class="v-news-grid">
-              <VNewsCard v-for="news in topicNews" :key="news?.id" :news="news" />
+              <VNewsCard
+                v-for="news in topicNews"
+                :key="news?.id"
+                :news="news"
+              />
             </div>
           </div>
         </a-form-model>
@@ -250,9 +267,19 @@ export default {
       showAll: false,
       rules: {
         full_name: [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "blur",
+          },
         ],
-        text: [{ required: true, message: "This field is required", trigger: "blur" }],
+        text: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "blur",
+          },
+        ],
       },
       form: {
         full_name: "",
@@ -358,7 +385,10 @@ export default {
     },
     async __POST_COMMENT(dataForm) {
       try {
-        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
+        const data = await this.$store.dispatch(
+          "fetchNews/postNewsComment",
+          dataForm
+        );
         this.$notification["success"]({
           message: "Success",
           description: "Комментарий отправлен успешно.",

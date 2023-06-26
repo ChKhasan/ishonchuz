@@ -2,7 +2,7 @@
   <div class="home-page journalists-page">
     <div class="container_xl">
       <h3 class="journalists-page-title">
-        O’zbekiston jurnalistlari <span>(523) </span>
+        {{ $store.state.translations["main.journalists"] }} <span>(523) </span>
       </h3>
       <div class="journalists_container">
         <JournalistsCard />
@@ -13,12 +13,18 @@
       </div>
       <div class="">
         <div class="btn_container_show_more">
-          <div class="right-show-more">Yana yuklash</div>
-          <div class="right-show-more-primary">Barchasini ko'rish</div>
+          <div class="right-show-more">
+            {{ $store.state.translations["main.more"] }}
+          </div>
+          <div class="right-show-more-primary">
+            {{ $store.state.translations["main.see_all"] }}
+          </div>
         </div>
         <div class="messangers-container">
           <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-          <div class="follow-us-message">FOLLOW US!</div>
+          <div class="follow-us-message">
+            {{ $store.state.translations["main.follow"] }}
+          </div>
           <div class="messanger-icons">
             <a href="#">
               <span v-html="telegram"> </span>

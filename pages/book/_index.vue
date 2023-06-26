@@ -4,10 +4,12 @@
       <div class="book row">
         <div class="news-breadcrumb">
           <nuxt-link :to="localePath('/')"
-            >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
+            >{{ $store.state.translations["main.home"] }}
+            <span v-html="dropdown"></span
           ></nuxt-link>
           <nuxt-link :to="localePath(`/library`)"
-            >Kutubxona<span v-html="dropdown"></span
+            >{{ $store.state.translations["main.libraries"]
+            }}<span v-html="dropdown"></span
           ></nuxt-link>
           <nuxt-link :to="localePath('/')" style="pointer-events: none"
             >{{ book?.title }} <span v-html="dropdown"></span
@@ -27,20 +29,28 @@
             disabled
           />
           <p v-html="book?.short_desc"></p>
-          <h5>{{ `${book?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so’m</h5>
+          <h5>
+            {{ `${book?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so’m
+          </h5>
           <div class="book-btns">
             <div class="btn_container btn_container_primary">
-              <div class="primary_btn">Sotib olish</div>
               <div class="primary_btn">
-                <span>Barchasini ko'rish</span>
+                {{ $store.state.translations["main.buy"] }}
+              </div>
+              <div class="primary_btn">
+                <span>{{ $store.state.translations["main.see_all"] }}</span>
               </div>
             </div>
             <div
               class="btn_container btn_container_outline"
               v-if="!$store.state[book?.type]?.includes(book?.id)"
             >
-              <div class="outline_btn">Saqlab qo'yish</div>
-              <div class="primary_btn" @click="addToBasket(book)">Saqlab qo'yish</div>
+              <div class="outline_btn">
+                {{ $store.state.translations["main.save"] }}
+              </div>
+              <div class="primary_btn" @click="addToBasket(book)">
+                {{ $store.state.translations["main.save"] }}
+              </div>
               <Transition>
                 <div class="primary_btn success_btn" v-if="successBtn">
                   <span v-html="success"></span>
@@ -49,9 +59,13 @@
             </div>
 
             <div class="btn_container btn_container_outline" v-else>
-              <div class="outline_btn"><span v-html="success"></span>Saqlangan</div>
+              <div class="outline_btn">
+                <span v-html="success"></span
+                >{{ $store.state.translations["main.saved"] }}
+              </div>
               <div @click="addToBasket(book)" class="primary_btn">
-                <span v-html="deleteIcon"></span> O'chirish
+                <span v-html="deleteIcon"></span>
+                {{ $store.state.translations["main.delete"] }}
               </div>
               <Transition>
                 <div class="primary_btn success_btn" v-if="successBtn">
@@ -64,7 +78,7 @@
       </div>
 
       <div class="book-desc">
-        <h4>Kitob haqida qisqacha</h4>
+        <h4>{{ $store.state.translations["inner.about-book"] }}</h4>
         <div v-html="book?.desc"></div>
       </div>
       <div class="comment-container-grid">
@@ -77,7 +91,9 @@
                   <input
                     type="text"
                     v-model="form.full_name"
-                    :placeholder="$store.state.translations['news.comment_input_place']"
+                    :placeholder="
+                      $store.state.translations['news.comment_input_place']
+                    "
                   />
                   <a-rate v-model="form.stars" />
                 </div>
@@ -86,7 +102,9 @@
                 <textarea
                   rows="5"
                   v-model="form.text"
-                  :placeholder="$store.state.translations['news.comment_textarea_place']"
+                  :placeholder="
+                    $store.state.translations['news.comment_textarea_place']
+                  "
                 ></textarea>
               </a-form-model-item>
 
@@ -171,9 +189,19 @@ export default {
       deleteIcon: require("../../assets/svg/delete-basket.svg?raw"),
       rules: {
         full_name: [
-          { required: true, message: "This field is required", trigger: "blur" },
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "blur",
+          },
         ],
-        text: [{ required: true, message: "This field is required", trigger: "blur" }],
+        text: [
+          {
+            required: true,
+            message: "This field is required",
+            trigger: "blur",
+          },
+        ],
       },
       successBtn: false,
       form: {
@@ -248,7 +276,10 @@ export default {
     },
     async __POST_COMMENT(dataForm) {
       try {
-        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
+        const data = await this.$store.dispatch(
+          "fetchNews/postNewsComment",
+          dataForm
+        );
         this.$notification["success"]({
           message: "Success",
           description: "Комментарий отправлен успешно.",

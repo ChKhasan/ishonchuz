@@ -7,7 +7,9 @@
           <li
             v-for="child in categories?.parent?.children"
             :key="child?.id"
-            :class="{ 'news-menu-active-categry': $route.params.index == child?.slug }"
+            :class="{
+              'news-menu-active-categry': $route.params.index == child?.slug,
+            }"
           >
             <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
               child?.title
@@ -32,14 +34,18 @@
             v-if="categories?.news?.length > 1"
           >
             <HNewsCard
-              v-for="news in categories?.news.filter((item, index) => index != 0)"
+              v-for="news in categories?.news.filter(
+                (item, index) => index != 0
+              )"
               :key="news?.id"
               :news="news"
             />
           </div>
-          <!-- <div class="right-show-more">Yana yuklash</div> -->
+          <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
           <div class="btn_container_show_more">
-            <div class="right-show-more">Yana yuklash</div>
+            <div class="right-show-more">
+              {{ $store.state.translations["main.more"] }}
+            </div>
             <div class="right-show-more-primary">
               {{ $store.state.translations["main.see_all"] }}
             </div>
@@ -130,33 +136,34 @@ export default {
   //   ]);
   // },
   async asyncData({ store, params, i18n }) {
-    const [newsData, topNewsData, simpleNewsData, categoriesData] = await Promise.all([
-      store.dispatch("fetchNews/getNews", {
-        params: { last_news: true, page_size: 3 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        params: { top: true, page_size: 1 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchCategories/getCategoriesBySlug", {
-        id: params.index,
-        header: {
+    const [newsData, topNewsData, simpleNewsData, categoriesData] =
+      await Promise.all([
+        store.dispatch("fetchNews/getNews", {
+          params: { last_news: true, page_size: 3 },
           headers: {
             Language: i18n.locale,
           },
-        },
-      }),
-    ]);
+        }),
+        store.dispatch("fetchNews/getNews", {
+          params: { top: true, page_size: 1 },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchNews/getNews", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchCategories/getCategoriesBySlug", {
+          id: params.index,
+          header: {
+            headers: {
+              Language: i18n.locale,
+            },
+          },
+        }),
+      ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
