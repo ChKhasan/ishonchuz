@@ -156,4 +156,9 @@ export default {
 .footer-messangers a {
   margin-right: 30px;
 }
+@media screen and (max-width: 1024px) {
+  .footer-body {
+    flex-direction: column;
+  }
+}
 </style>

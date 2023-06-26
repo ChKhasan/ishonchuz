@@ -344,3 +344,9 @@ ul {
 .ant-rate-star-zero i {
   color: var(--comment_star);
 }
+@media screen and (max-width: 1024px) {
+  .header,
+  .menu-list {
+    display: none;
+  }
+}
