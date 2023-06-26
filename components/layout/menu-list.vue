@@ -361,7 +361,10 @@ export default {
       this.visibleSearch = false;
     },
     onSubmit() {
-      this.formSms.phone_number = this.form.phone_number;
+      this.formSms = {
+        ...this.formSms,
+        phone_number: `${this.form.phone_number}`,
+      };
       this.$refs.ruleFormAuth.validate((valid) => {
         if (valid) {
           this.__SEND_NUMBER(this.form);
@@ -372,7 +375,7 @@ export default {
       });
     },
     onSubmitSms() {
-      this.formSms.phone_number = this.form.phone_number;
+      // this.formSms.phone_number = this.form.phone_number;
       const data = {
         ...this.formSms,
         full_name: this.formName.full_name,
@@ -393,6 +396,7 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postSendSmsCode", dataForm);
         this.visible = false;
         this.visibleSms = true;
+        this.form.phone_number = "";
       } catch (e) {
         console.log(e);
       }
@@ -477,22 +481,37 @@ export default {
   watch: {
     visibleSms(val) {
       if (val) {
+        this.smsTimer = 45;
         const smInterval = setInterval(() => {
-          this.smsTimer--;
+          if (this.smsTimer > 0) {
+            this.smsTimer--;
+          }
           if (this.smsTimer == 0) {
             clearInterval(smInterval);
           }
         }, 1000);
+      } else {
+        this.formName.full_name = "";
+        this.formSms = {
+          phone_number: "",
+          code: "",
+        };
       }
     },
     smsTimer(val) {
-      if (val == 0) this.__SEND_NUMBER(this.form);
+      if (val == 0 && this.visibleSms) this.__SEND_NUMBER(this.form);
     },
     "formSms.code"(val) {
       if (val.length < 6) {
         (this.responseTypes.smsCodeError = false),
           (this.responseTypes.smsCodeSuccess = false);
       }
+    },
+    smsCodeSuccess(val) {
+      if (val) this.smsCodeError = false;
+    },
+    smsCodeError(val) {
+      if (val) this.smsCodeSuccess = false;
     },
   },
 };
@@ -512,9 +531,11 @@ export default {
   font-weight: 400;
   font-size: 14px;
   line-height: 145%;
-  color: #000;
+  color: var(--gray_e7e7e7, #000);
+
   width: 100%;
   border: none;
+  background: var(--black_414141, #f9f9f9);
 }
 .search-block input:focus {
   outline: none;
@@ -524,7 +545,7 @@ export default {
   display: flex;
   align-items: center;
   padding-left: 12px;
-  background: var(--header_bg);
+  background: var(--black_414141, #f9f9f9);
 }
 .search-block span {
   position: absolute;
@@ -547,6 +568,12 @@ export default {
     top: 100%;
     opacity: 1;
   }
+}
+.ant-form-item-children span {
+  display: flex;
+}
+.has-error .ant-form-item-children span {
+  display: none;
 }
 .menu-list {
   background: var(--body_color);
@@ -625,10 +652,11 @@ export default {
 }
 .vmodal-header {
   padding: 22px 40px;
-  background: #f9f9f9;
+  background: var(--modal_header_bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--modal_header_br);
 }
 .vmodal-header h2 {
   font-family: var(--ROBOTO_SERIF);
@@ -640,6 +668,9 @@ export default {
 }
 .vmodal-header span {
   cursor: pointer;
+}
+.vmodal-header span svg path {
+  stroke: var(--modal_exit_btn);
 }
 .vmodal-body {
   padding: 36px 40px;
@@ -668,7 +699,8 @@ export default {
   grid-gap: 16px;
 }
 .auth-form .has-error .ant-form-explain,
-.error_code {
+.error_code,
+.ant-form-explain {
   position: absolute;
   right: 17px;
   font-family: var(--ROBOTO_SERIF);
@@ -688,13 +720,17 @@ export default {
   width: 100%;
 }
 .auth-form .ant-input {
-  background-color: #f9f9f9;
+  background: var(--modal_input_bg);
 }
 .sms_code_success label {
-  color: #00af4c;
+  color: var(--gray_e7e7e7, #00af4c);
+}
+.has-error .ant-input,
+.has-error .ant-input:hover {
+  background: var(--black_414141, #f9f9f9) !important;
 }
 .sms_code_success input {
-  background: #eafff3 !important;
+  background: var(--black_414141, #eafff3) !important;
   color: #00af4c;
 }
 .sms_code_error label {
@@ -710,7 +746,7 @@ export default {
   width: auto !important;
 }
 .sms_timer {
-  color: var(--black-50, #707070);
+  color: var(--modal_input_timer, #707070);
   text-align: right;
   font-size: 16px;
   font-family: var(--ROBOTO_SERIF);

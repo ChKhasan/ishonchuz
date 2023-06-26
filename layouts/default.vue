@@ -9,7 +9,7 @@
       }"
     />
     <Nuxt />
-    <Footer />
+    <Footer :categories="categories" />
   </div>
 </template>
 <script>
@@ -92,8 +92,6 @@ export default {
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
     },
-  },
-  watch: {
     "$store.state.theme"(val) {
       if (!val) {
         document.body.classList.add("dark-theme");
@@ -102,6 +100,7 @@ export default {
       }
     },
   },
+
   components: { Header, Footer },
 };
 </script>

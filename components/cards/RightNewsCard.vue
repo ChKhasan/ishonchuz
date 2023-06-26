@@ -30,7 +30,7 @@ export default {
 <style lang="css">
 .right-news-card {
   padding-bottom: 10px;
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 1px solid var(--gray_292929, #eeeeee);
 }
 .right-news-text {
   padding-left: 17px;

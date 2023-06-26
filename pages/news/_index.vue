@@ -105,7 +105,7 @@
         <div class="home-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
-              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
             </div>
           </div>
           <TitleComp
@@ -116,7 +116,7 @@
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
-            <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+            <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
           </div>
         </div>
       </div>
@@ -293,7 +293,7 @@ export default {
   //   this.importantNews = importantNewsData.results;
   // },
   async asyncData({ store, params, i18n }) {
-    const [newsData, topicNewsData, importantNewsData] = await Promise.all([
+    const [newsData, topicNewsData, importantNewsData, bannersData] = await Promise.all([
       store.dispatch("fetchNews/getNewsBySlug", {
         id: params.index,
         header: {
@@ -314,14 +314,21 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData;
     const topicNews = topicNewsData.results;
     const importantNews = importantNewsData.results;
+    const banners = bannersData.results;
     return {
       news,
       topicNews,
       importantNews,
+      banners,
     };
   },
   computed: {
@@ -501,8 +508,10 @@ export default {
   border-bottom: 1px solid var(--news_container_br);
 }
 .news-container-body p,
-.news-container-body span {
+.news-container-body span,
+.news-container-body li {
   color: var(--text_color) !important;
+  background-color: transparent !important;
 }
 .news-container-body img {
   width: 100%;

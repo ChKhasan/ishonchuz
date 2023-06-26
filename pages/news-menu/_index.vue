@@ -38,7 +38,7 @@
             />
           </div>
           <!-- <div class="right-show-more">Yana yuklash</div> -->
-          <div class="btn_container_show_more">
+          <div class="btn_container_show_more" v-if="categories?.news?.length > 20">
             <div class="right-show-more">Yana yuklash</div>
             <div class="right-show-more-primary">
               {{ $store.state.translations["main.see_all"] }}
@@ -69,12 +69,12 @@
         <div class="home-page-right col-3 p-0">
           <div class="block1">
             <div class="right-banner mt-0">
-              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
             </div>
           </div>
           <div class="block2">
             <div class="right-banner">
-              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
             </div>
           </div>
         </div>
@@ -130,7 +130,13 @@ export default {
   //   ]);
   // },
   async asyncData({ store, params, i18n }) {
-    const [newsData, topNewsData, simpleNewsData, categoriesData] = await Promise.all([
+    const [
+      newsData,
+      topNewsData,
+      simpleNewsData,
+      categoriesData,
+      bannersData,
+    ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { last_news: true, page_size: 3 },
         headers: {
@@ -156,16 +162,23 @@ export default {
           },
         },
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
     const categories = categoriesData;
+    const banners = bannersData.results;
     return {
       news,
       topNews,
       simpleNews,
       categories,
+      banners,
     };
   },
   components: {

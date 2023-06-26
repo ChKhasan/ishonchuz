@@ -112,7 +112,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
-  color: #000000;
+  color: var(--gray_f9f9f9, #000000);
   margin: 0 10px;
 }
 .color-switch {
@@ -120,6 +120,12 @@ export default {
   background: var(--body_color);
   border-radius: 26px;
   display: flex;
+}
+.color-switch span:first-child svg path {
+  fill: var(--gray_B4B9D2, #0192ff);
+}
+.color-switch span:last-child svg path {
+  fill: var(--blue_0192FF, #b4b9d2);
 }
 .color-switch span {
   width: 34px;

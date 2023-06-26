@@ -67,12 +67,12 @@ export default {
 </script>
 <style lang="css">
 .profile-menu {
-  background: #f9f9f9;
+  background: var(--header_bg);
   border-radius: 8px;
   padding: 40px;
 }
 .profile-menu ul li a span svg path {
-  fill: #414141;
+  fill: var(--white_ffffff, #414141);
   transition: 0.3s;
 }
 .profile-menu ul {
@@ -87,7 +87,7 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #020105;
+  color: var(--gray_f9f9f9, #020105);
   display: flex;
   align-items: center;
   transition: 0.3s;
@@ -96,7 +96,7 @@ export default {
 .profile-menu ul a span,
 .profile-menu ul div span {
   margin-right: 8px;
-  background: #ffffff;
+  background: var(--gray_292929, #ffffff);
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -105,7 +105,9 @@ export default {
   justify-content: center;
   transition: 0.3s;
 }
-
+.profile-menu ul div span svg path {
+  fill: var(--white_ffffff, #414141);
+}
 .profile-menu ul li:hover a,
 .profile-menu ul li:hover div,
 .active-profile-menu a {
