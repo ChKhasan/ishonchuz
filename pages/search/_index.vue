@@ -12,10 +12,14 @@
               “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
             </h3>
             <div class="search-page-grid">
-              <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
+              <VNewsCard
+                v-for="news in newsSearch"
+                :key="news?.id"
+                :news="news"
+              />
             </div>
             <div class="d-flex justify-content-center">
-              <!-- <div class="show-more-count">Yana yuklash</div> -->
+              <!-- <div class="show-more-count">{{ $store.state.translations["main.more"] }}</div> -->
             </div>
           </div>
         </div>
@@ -25,10 +29,17 @@
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />
             </div>
           </div>
-          <TitleComp :link="false" :title="$store.state.translations['main.active_topics']" />
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['main.active_topics']"
+          />
 
           <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            <RightNewsCard
+              v-for="news in importantNews"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <div class="right-banner">
             <img src="../../assets/images/Снимок экрана (926).png" alt="" />
@@ -79,7 +90,7 @@ export default {
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
     };
   },
-  async asyncData({ store, params,i18n }) {
+  async asyncData({ store, params, i18n }) {
     const [searchData, importantNewsData] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { search: params.index },

@@ -2,11 +2,13 @@
   <div class="journalists-card">
     <div class="journalist-card-head">
       <div class="journalist-card-image">
-        <img src="../../assets/images/journalist.png" alt="" />
+        <img src="@/assets/images/journalist.png" alt="" />
       </div>
       <div class="journalist-card-title">
         <h4>Jane Cooper</h4>
-        <nuxt-link to="/">Batafsil <span v-html="dropdown"></span></nuxt-link>
+        <nuxt-link to="/journalists/slug"
+          >Batafsil <span v-html="dropdown"></span
+        ></nuxt-link>
       </div>
     </div>
     <div class="journalist-card-info">
@@ -19,7 +21,9 @@
             viewBox="0 0 24 24"
             fill="none"
           >
-            <g id="off-23-suitcase-bag-portfolio-office-tool-work-stationery.1.svg">
+            <g
+              id="off-23-suitcase-bag-portfolio-office-tool-work-stationery.1.svg"
+            >
               <path
                 id="Vector"
                 d="M15.5714 5.71429C15.5714 4.74286 14.8286 4 13.8571 4H10.4286C9.45714 4 8.71429 4.74286 8.71429 5.71429V6.28571H3V11.9429L3.57143 12V20H20.7143V12L21.2857 11.9429V6.28571H15.5714V5.71429ZM9.85714 5.71429C9.85714 5.37143 10.0857 5.14286 10.4286 5.14286H13.8571C14.2 5.14286 14.4286 5.37143 14.4286 5.71429V6.28571H9.85714V5.71429ZM19.5714 18.8571H4.71429V12.1714L11.5714 13.0857V14.2857H12.7143V13.0857L19.5714 12.1714V18.8571ZM20.1429 7.42857V10.9143L12.7143 11.8857V10.8H11.5714V11.8857L4.14286 10.9143V7.42857H20.1429Z"

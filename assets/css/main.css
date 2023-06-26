@@ -66,6 +66,7 @@ h6 {
   --modal_label: #888888;
   --modal_input_bg: #f9f9f9;
   --modal_input_text: #111111;
+  --journalist_btn: #505d96;
 }
 .dark-theme {
   --text_color: #ffffff;
@@ -221,7 +222,7 @@ ul {
   border-radius: 5px;
 }
 .dropdown-board a:hover {
-  color: var(--blue_0192FF,#000000);
+  color: var(--blue_0192FF, #000000);
   background: rgba(0, 0, 0, 0.08);
 }
 .ant-modal-footer {
@@ -375,4 +376,10 @@ ul {
 }
 .ant-rate-star-zero i {
   color: var(--comment_star);
+}
+@media screen and (max-width: 1024px) {
+  .header,
+  .menu-list {
+    display: none;
+  }
 }

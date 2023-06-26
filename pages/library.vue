@@ -2,30 +2,61 @@
   <div class="home-page library-page">
     <div class="container_xl">
       <div class="news-menu-page-header">
-        <h5>Kutubxona</h5>
+        <h5>{{ $store.state.translations["main.libraries"] }}</h5>
         <ul class="library_tab">
-          <li :class="{ 'news-menu-active-categry': $route.query.type == 'literature' }">
-            <span @click="tabChange('literature')">Adabiyot</span>
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'literature',
+            }"
+          >
+            <span @click="tabChange('literature')">{{
+              $store.state.translations["main.literature"]
+            }}</span>
           </li>
-          <li :class="{ 'news-menu-active-categry': $route.query.type == 'scientific' }">
-            <span @click="tabChange('scientific')">Ilmiy ishlar</span>
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'scientific',
+            }"
+          >
+            <span @click="tabChange('scientific')">{{
+              $store.state.translations["main.science"]
+            }}</span>
           </li>
-          <li :class="{ 'news-menu-active-categry': $route.query.type == 'articles' }">
-            <span @click="tabChange('articles')">Maqolalar</span>
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'articles',
+            }"
+          >
+            <span @click="tabChange('articles')">{{
+              $store.state.translations["main.articles"]
+            }}</span>
           </li>
           <li>
-            <span>Kasaba faollari uchun qo’llanmalar</span>
+            <span>{{ $store.state.translations["main.kasaba"] }}</span>
           </li>
         </ul>
       </div>
-      <div class="library-page-container" v-if="$route.query.type == 'literature'">
+      <div
+        class="library-page-container"
+        v-if="$route.query.type == 'literature'"
+      >
         <BookCard v-for="book in literature" :key="book.id" :book="book" />
       </div>
-      <div class="library-page-container" v-if="$route.query.type == 'scientific'">
+      <div
+        class="library-page-container"
+        v-if="$route.query.type == 'scientific'"
+      >
         <BookCard v-for="book in scientific" :key="book.id" :book="book" />
       </div>
-      <div class="articles-page-container" v-if="$route.query.type == 'articles'">
-        <ArticlesCard v-for="article in articles" :key="article.id" :article="article" />
+      <div
+        class="articles-page-container"
+        v-if="$route.query.type == 'articles'"
+      >
+        <ArticlesCard
+          v-for="article in articles"
+          :key="article.id"
+          :article="article"
+        />
       </div>
     </div>
   </div>

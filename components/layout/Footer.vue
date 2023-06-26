@@ -11,7 +11,8 @@
               {{ $store.state.translations["main.footer_text"] }}
             </h6>
             <p>
-              {{ $store.state.translations["main.footer_number"] }}: <span>1263</span>
+              {{ $store.state.translations["main.footer_number"] }}:
+              <span>1263</span>
             </p>
             <p>
               {{ $store.state.translations["main.footer_adress"] }}:
@@ -199,5 +200,10 @@ export default {
 }
 .footer-messangers a {
   margin-right: 30px;
+}
+@media screen and (max-width: 1024px) {
+  .footer-body {
+    flex-direction: column;
+  }
 }
 </style>

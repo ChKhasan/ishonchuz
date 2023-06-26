@@ -5,16 +5,30 @@
         <h5>Gazeta</h5>
         <ul class="library_tab">
           <li
-            :class="{ 'news-menu-active-categry': $route.query.type == 'literature' }"
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'literature',
+            }"
             class="news-menu-active-categry"
           >
-            <span @click="tabChange('literature')">Barchasi</span>
+            <span @click="tabChange('literature')">{{
+              $store.state.translations["main.see_all"]
+            }}</span>
           </li>
-          <li :class="{ 'news-menu-active-categry': $route.query.type == 'scientific' }">
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'scientific',
+            }"
+          >
             <span @click="tabChange('scientific')">O’zbek tili</span>
           </li>
-          <li :class="{ 'news-menu-active-categry': $route.query.type == 'articles' }">
-            <span @click="tabChange('articles')">Rus tili</span>
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'articles',
+            }"
+          >
+            <span @click="tabChange('articles')">{{
+              $store.state.translations["main.russian"]
+            }}</span>
           </li>
         </ul>
       </div>
@@ -28,7 +42,9 @@
       <div>
         <div class="messangers-container">
           <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-          <div class="follow-us-message">FOLLOW US!</div>
+          <div class="follow-us-message">
+            {{ $store.state.translations["main.follow"] }}
+          </div>
           <div class="messanger-icons">
             <a href="#">
               <span v-html="telegram"> </span>

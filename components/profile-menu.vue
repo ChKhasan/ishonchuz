@@ -2,10 +2,13 @@
   <div class="profile-menu">
     <ul>
       <li
-        :class="{ 'active-profile-menu': $route.name.includes('profile-personal-info') }"
+        :class="{
+          'active-profile-menu': $route.name.includes('profile-personal-info'),
+        }"
       >
         <nuxt-link :to="localePath('/profile/personal-info')"
-          ><span v-html="user"></span> Mening sahifam</nuxt-link
+          ><span v-html="user"></span>
+          {{ $store.state.translations["main.my-room"] }}</nuxt-link
         >
       </li>
       <li
@@ -14,7 +17,8 @@
         }"
       >
         <nuxt-link :to="localePath('/profile/my-board')"
-          ><span v-html="star"></span> Mening javonim</nuxt-link
+          ><span v-html="star"></span>
+          {{ $store.state.translations["main.my-shelf"] }}</nuxt-link
         >
       </li>
       <li
@@ -23,7 +27,8 @@
         }"
       >
         <nuxt-link :to="localePath('/profile/saved')"
-          ><span v-html="comment"></span> Saqlanganlar</nuxt-link
+          ><span v-html="comment"></span>
+          {{ $store.state.translations["main.saved"] }}</nuxt-link
         >
       </li>
       <li>

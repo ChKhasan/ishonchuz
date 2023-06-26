@@ -7,7 +7,9 @@
           <li
             v-for="child in categories?.parent?.children"
             :key="child?.id"
-            :class="{ 'news-menu-active-categry': $route.params.index == child?.slug }"
+            :class="{
+              'news-menu-active-categry': $route.params.index == child?.slug,
+            }"
           >
             <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
               child?.title
@@ -37,9 +39,11 @@
               :news="news"
             />
           </div>
-          <!-- <div class="right-show-more">Yana yuklash</div> -->
+          <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
           <div class="btn_container_show_more" v-if="categories?.news?.length > 20">
-            <div class="right-show-more">Yana yuklash</div>
+            <div class="right-show-more">
+              {{ $store.state.translations["main.more"] }}
+            </div>
             <div class="right-show-more-primary">
               {{ $store.state.translations["main.see_all"] }}
             </div>
@@ -168,6 +172,7 @@ export default {
         },
       }),
     ]);
+
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
