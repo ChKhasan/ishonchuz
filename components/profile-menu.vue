@@ -4,7 +4,7 @@
       <li
         :class="{ 'active-profile-menu': $route.name.includes('profile-personal-info') }"
       >
-        <nuxt-link to="/profile/personal-info"
+        <nuxt-link :to="localePath('/profile/personal-info')"
           ><span v-html="user"></span> Mening sahifam</nuxt-link
         >
       </li>
@@ -13,7 +13,7 @@
           'active-profile-menu': $route.name.includes('profile-my-board'),
         }"
       >
-        <nuxt-link to="/profile/my-board"
+        <nuxt-link :to="localePath('/profile/my-board')"
           ><span v-html="star"></span> Mening javonim</nuxt-link
         >
       </li>
@@ -22,12 +22,12 @@
           'active-profile-menu': $route.name.includes('profile-saved'),
         }"
       >
-        <nuxt-link to="/profile/saved"
+        <nuxt-link :to="localePath('/profile/saved')"
           ><span v-html="comment"></span> Saqlanganlar</nuxt-link
         >
       </li>
       <li>
-        <nuxt-link to="/"><span v-html="exit"></span> Chiqish</nuxt-link>
+        <div @click="logOut()"><span v-html="exit"></span> Chiqish</div>
       </li>
     </ul>
   </div>
@@ -41,6 +41,27 @@ export default {
       comment: require("../assets/svg/profile-comment.svg?raw"),
       exit: require("../assets/svg/exit.svg?raw"),
     };
+  },
+  methods: {
+    async logOut() {
+      const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLogOut", {
+          refresh_token: refreshToken,
+        });
+        this.$router.push("/");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.$router.push("/");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.$store.commit("chackAuth");
+        }
+      }
+    },
   },
 };
 </script>
@@ -59,7 +80,8 @@ export default {
   grid-template-columns: 1fr;
   grid-gap: 32px;
 }
-.profile-menu ul a {
+.profile-menu ul a,
+.profile-menu ul div {
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
@@ -69,8 +91,10 @@ export default {
   display: flex;
   align-items: center;
   transition: 0.3s;
+  cursor: pointer;
 }
-.profile-menu ul a span {
+.profile-menu ul a span,
+.profile-menu ul div span {
   margin-right: 8px;
   background: #ffffff;
   width: 48px;
@@ -83,6 +107,7 @@ export default {
 }
 
 .profile-menu ul li:hover a,
+.profile-menu ul li:hover div,
 .active-profile-menu a {
   color: #0192ff !important;
 }

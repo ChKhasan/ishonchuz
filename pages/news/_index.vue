@@ -153,14 +153,25 @@
                   news?.comments.length
                 }})
               </h4>
-              <div class="comments-grid">
+              <div class="comments-grid" v-if="showAll">
+                <CommentCard
+                  v-for="comment in news?.comments"
+                  :key="comment?.id"
+                  :comment="comment"
+                />
+              </div>
+              <div class="comments-grid" v-else>
                 <CommentCard
                   v-for="comment in news?.comments.slice(0, 3)"
                   :key="comment?.id"
                   :comment="comment"
                 />
               </div>
-              <div class="show-more-count" v-if="news?.comments.length > 3">
+              <div
+                class="show-more-count"
+                v-if="news?.comments.length > 3 && !showAll"
+                @click="showAll = true"
+              >
                 {{ $store.state.translations["news.see_again"] }} ({{
                   news?.comments.length - 3
                 }})
@@ -236,6 +247,7 @@ export default {
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
       value: 0,
+      showAll: false,
       rules: {
         full_name: [
           { required: true, message: "This field is required", trigger: "blur" },
@@ -249,6 +261,9 @@ export default {
         stars: 0,
       },
     };
+  },
+  mounted() {
+    this.$store.commit("viewNewsStore", { id: this.news?.id });
   },
   // async mounted() {
   //   const [newsData, topicNewsData, importantNewsData] = await Promise.all([
@@ -405,7 +420,7 @@ export default {
   font-weight: 500;
   font-size: 12px;
   line-height: 130%;
-  color: #888888;
+  color: var(--news_date);
   margin-right: 32px;
 }
 .news-container-head {
@@ -418,6 +433,9 @@ export default {
 }
 .news-container-messangers span svg {
   height: 16px;
+}
+.news-container-messangers span svg path {
+  fill: var(--footer_messangers);
 }
 .news-container-messangers span {
   margin-right: 32px;

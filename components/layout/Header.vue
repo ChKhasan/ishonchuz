@@ -6,7 +6,7 @@
         <div class="header-container">
           <div class="logo_block">
             <nuxt-link :to="localePath('/')" class="header-logo">
-              <span v-html="$store.state.theme ? logo:darkLogo"></span>
+              <span v-html="$store.state.theme ? logo : darkLogo"></span>
             </nuxt-link>
           </div>
           <ul class="currency-list">
@@ -62,7 +62,7 @@
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
-  props: ["categories"],
+  props: ["categories", "currency"],
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),
@@ -87,9 +87,7 @@ export default {
       color: true,
     };
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {
     onChange(checked) {
       console.log(`a-switch to ${checked}`);

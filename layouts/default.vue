@@ -1,6 +1,13 @@
 <template lang="html">
   <div class="default-layout" :class="{ 'dark-theme': !$store.state.theme }">
-    <Header :categories="categories" />
+    <Header
+      :categories="categories"
+      :currency="{
+        usdCurrency: usdCurrency,
+        eurCurrency: eurCurrency,
+        rubCurrency: rubCurrency,
+      }"
+    />
     <Nuxt />
     <Footer />
   </div>
@@ -13,6 +20,9 @@ export default {
   data() {
     return {
       categories: [],
+      rubCurrency: {},
+      eurCurrency: {},
+      usdCurrency: {},
     };
   },
   // async mounted() {
@@ -31,7 +41,13 @@ export default {
     this.$store.commit("reloadStore");
   },
   async fetch() {
-    const [categoriesData, translationsData] = await Promise.all([
+    const [
+      categoriesData,
+      translationsData,
+      // rubCurrencyData,
+      // eurCurrencyData,
+      // usdCurrencyData,
+    ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
           Language: this.$i18n.locale,
@@ -42,11 +58,23 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
+      // this.$axios.$get(
+      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=RUB"
+      // ),
+      // this.$axios.$get(
+      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=EUR"
+      // ),
+      // this.$axios.$get(
+      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=USD"
+      // ),
     ]);
     this.categories = categoriesData.results;
+    // this.rubCurrency = rubCurrencyData?.data;
+    // this.usdCurrency = usdCurrencyData?.data;
+    // this.eurCurrency = eurCurrencyData?.data;
     this.$store.commit("getTranslations", translationsData);
-    console.log(this.translations);
   },
+
   watch: {
     async targetLang() {
       const [categoriesData, translationsData] = await Promise.all([
@@ -63,6 +91,15 @@ export default {
       ]);
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
+    },
+  },
+  watch: {
+    "$store.state.theme"(val) {
+      if (!val) {
+        document.body.classList.add("dark-theme");
+      } else {
+        document.body.classList.remove("dark-theme");
+      }
     },
   },
   components: { Header, Footer },

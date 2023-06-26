@@ -12,7 +12,13 @@ export const actions = {
     return res;
   },
   async postLogOut({}, payload) {
-    const res = await this.$axios.$post(`/auth/logout`, payload);
+    const res = await this.$axios.$post(`/auth/logout`, payload, {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(
+          localStorage.getItem("access_token")
+        )}`,
+      },
+    });
     return res;
   },
   async postViewSaved({}, payload) {

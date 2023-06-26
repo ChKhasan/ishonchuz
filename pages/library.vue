@@ -14,7 +14,7 @@
             <span @click="tabChange('articles')">Maqolalar</span>
           </li>
           <li>
-            <span>{{ $store.state.translations["main.society"] }}</span>
+            <span>Kasaba faollari uchun qo’llanmalar</span>
           </li>
         </ul>
       </div>
@@ -24,15 +24,15 @@
       <div class="library-page-container" v-if="$route.query.type == 'scientific'">
         <BookCard v-for="book in scientific" :key="book.id" :book="book" />
       </div>
-      <div class="library-page-container" v-if="$route.query.type == 'articles'">
-        <BookCard v-for="book in articles" :key="book.id" :book="book" />
+      <div class="articles-page-container" v-if="$route.query.type == 'articles'">
+        <ArticlesCard v-for="article in articles" :key="article.id" :article="article" />
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import BookCard from "../components/cards/BookCard.vue";
+import ArticlesCard from "../components/cards/ArticlesCard.vue";
 
 export default {
   data() {
@@ -90,6 +90,7 @@ export default {
   },
   components: {
     BookCard,
+    ArticlesCard,
   },
 };
 </script>
@@ -103,6 +104,11 @@ export default {
 .library-page-container {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+  grid-gap: 30px;
+}
+.articles-page-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 30px;
 }
 </style>

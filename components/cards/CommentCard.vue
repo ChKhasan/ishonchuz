@@ -36,7 +36,7 @@ export default {
 }
 .comment-card-body {
   padding: 30px 30px 20px 30px;
-  background: #f9f9f9;
+  background: var(--card_bg);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -48,7 +48,7 @@ export default {
   font-weight: 500;
   font-size: 16px;
   line-height: 130%;
-  color: #111111;
+  color: var(--text_color);
   margin-bottom: 14px;
 }
 .comment-card-body span {
@@ -73,7 +73,7 @@ export default {
   font-size: 14px;
   line-height: 150%;
   margin-top: 20px;
-  color: #292929;
+  color: var(--right_drop_text);
 }
 .comment-card-body span svg {
   width: 15px;

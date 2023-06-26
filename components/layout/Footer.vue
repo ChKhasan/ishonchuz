@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="footer-container">
         <div class="footer-logo">
-          <span v-html="logo"></span>
+          <span v-html="$store.state.theme ? logo : darkLogo"></span>
         </div>
         <div class="footer-body">
           <div class="footer-info">
@@ -64,6 +64,7 @@ export default {
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),
+      darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       telegram: require("../../assets/svg/telegram.svg?raw"),
       facebook: require("../../assets/svg/facebook.svg?raw"),
       twitter: require("../../assets/svg/twitter.svg?raw"),

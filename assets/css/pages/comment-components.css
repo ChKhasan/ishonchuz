@@ -21,8 +21,8 @@
   margin-bottom: 20px;
 }
 .comment-form input {
-  background: #ffffff;
-  border: 1px solid #eeeeee;
+  background: var(--comment_input_bg);
+  border: 1px solid var(--footer_border_top);
   border-radius: 6px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -44,8 +44,8 @@
 .comment-form textarea {
   padding: 9px 20px;
   margin-top: 14px;
-  background: #ffffff;
-  border: 1px solid #eeeeee;
+  background: var(--comment_input_bg);
+  border: 1px solid var(--footer_border_top);
   border-radius: 6px;
   width: 100%;
   font-family: var(--ROBOTO_SERIF);
@@ -89,7 +89,7 @@
   font-size: 16px;
   line-height: 150%;
   text-align: right;
-  color: #414141;
+  color: var(--text_color);
 }
 .main-rate {
   display: flex;

@@ -23,6 +23,20 @@
               <span>{{ $store.state.translations["main.society"] }}</span>
             </li>
           </ul>
+          <div class="saved-books-grid" v-if="$route.query.type == 'literature'">
+            <BookCard
+              v-for="book in savedBooks?.literature_books"
+              :book="book"
+              :key="book?.id"
+            />
+          </div>
+          <div class="saved-books-grid" v-if="$route.query.type == 'scientific'">
+            <BookCard
+              v-for="book in savedBooks?.science_books"
+              :book="book"
+              :key="book?.id"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -32,11 +46,14 @@
 <script>
 import ProfileMenu from "../../components/profile-menu.vue";
 import Loading from "../../components/loading.vue";
+import BookCard from "../../components/cards/BookCard.vue";
+
 export default {
   middleware: "auth",
   data() {
     return {
       loading: true,
+      savedBooks: {},
     };
   },
 
@@ -76,6 +93,7 @@ export default {
           },
         }
       );
+      this.savedBooks = savedData;
       console.log(savedData);
     },
     middlewareAuth() {
@@ -98,7 +116,7 @@ export default {
       }
     },
   },
-  components: { ProfileMenu, Loading },
+  components: { ProfileMenu, Loading, BookCard },
 };
 </script>
 <style lang="css">
@@ -116,5 +134,17 @@ export default {
   font-weight: 600;
   line-height: 150%;
   margin-bottom: 16px;
+}
+.saved-books-grid {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 30px;
+}
+.profile-saved {
+  border-radius: 8px;
+  border: 1px solid var(--black-5, #e7e7e7);
+  background: var(--white, #fff);
+  padding: 50px 65px;
 }
 </style>

@@ -4,6 +4,7 @@ export const state = () => ({
   auth: false,
   literature: [],
   science: [],
+  viewNews: [],
 });
 
 export const mutations = {
@@ -31,6 +32,20 @@ export const mutations = {
     localStorage.setItem(payload.name, JSON.stringify(cart));
     state[payload.name] = cart;
   },
+  viewNewsStore(state, payload) {
+    console.log(payload);
+    let cart = JSON.parse(localStorage.getItem("viewNews"));
+    if (cart) {
+      if (!cart.includes(payload.id)) {
+        cart.push(payload.id);
+      }
+      localStorage.setItem("viewNews", JSON.stringify(cart));
+      state.viewNews = cart;
+    } else {
+      localStorage.setItem("viewNews", JSON.stringify([payload.id]));
+      state.viewNews.push(payload.id);
+    }
+  },
   reloadStore(state) {
     if (localStorage.getItem("literature")) {
       const literature = JSON.parse(localStorage.getItem("literature"));
@@ -43,6 +58,12 @@ export const mutations = {
       state.science = science;
     } else {
       localStorage.setItem("science", JSON.stringify([]));
+    }
+    if (localStorage.getItem("viewNews")) {
+      const viewNews = JSON.parse(localStorage.getItem("viewNews"));
+      state.viewNews = viewNews;
+    } else {
+      localStorage.setItem("viewNews", JSON.stringify([]));
     }
   },
 };

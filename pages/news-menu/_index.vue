@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="news-menu-page-header">
         <h5>{{ categories?.parent?.title }}</h5>
-        <ul>
+        <ul class="library_tab">
           <li
             v-for="child in categories?.parent?.children"
             :key="child?.id"
@@ -38,6 +38,12 @@
             />
           </div>
           <!-- <div class="right-show-more">Yana yuklash</div> -->
+          <div class="btn_container_show_more">
+            <div class="right-show-more">Yana yuklash</div>
+            <div class="right-show-more-primary">
+              {{ $store.state.translations["main.see_all"] }}
+            </div>
+          </div>
           <div class="messangers-container">
             <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
             <div class="follow-us-message">FOLLOW US!</div>

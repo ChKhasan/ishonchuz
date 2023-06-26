@@ -136,9 +136,15 @@
           <div class="right-news-list">
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
-          <div class="right-show-more">
-            {{ $store.state.translations["main.see_all"] }}
+          <div class="btn_container_show_more">
+            <div class="right-show-more">
+              {{ $store.state.translations["main.see_all"] }}
+            </div>
+            <div class="right-show-more-primary">
+              {{ $store.state.translations["main.see_all"] }}
+            </div>
           </div>
+
           <RightTelegramCard />
         </div>
       </div>
@@ -157,13 +163,10 @@ import RightNewsCard from "../components/cards/RightNewsCard.vue";
 import RightTelegramCard from "../components/cards/RightTelegramCard.vue";
 import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
-const baseUrl =
-  "https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/";
 export default {
   name: "IndexPage",
   data() {
     return {
-      baseUrl,
       dropVal: false,
       dropdown: require("../assets/svg/dropdown.svg?raw"),
     };
@@ -179,6 +182,7 @@ export default {
     var swiper2 = new Swiper(".mySwiper2", {
       loop: true,
       spaceBetween: 10,
+      effect: "fade",
       autoplay: {
         delay: 3000,
       },
@@ -266,9 +270,6 @@ export default {
       } else {
         this.dropVal = false;
       }
-    },
-    getImgUrl(i) {
-      return `${baseUrl}abstract0${i + 1}.jpg`;
     },
   },
   components: {

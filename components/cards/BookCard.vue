@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="book-card">
+  <div class="book-card" @click="$router.push(localePath(`/book/${book.slug}`))">
     <div class="book-card-img">
       <img v-if="book?.image" :src="book?.image" alt="" />
       <img v-else src="../../assets/images/image 1.png" alt="" />
@@ -26,9 +26,10 @@ export default {
 </script>
 <style lang="css">
 .book-card {
-  background: #f9f9f9;
+  background: var(--header_bg);
   padding: 16px;
   border-radius: 4px;
+  cursor: pointer;
 }
 .book-card-img {
   height: 149px;

@@ -1,6 +1,9 @@
 <template lang="html">
   <div class="right-news-card">
-    <div class="right-news-text">
+    <div
+      class="right-news-text"
+      :class="{ 'right-news-text-active': $store.state.viewNews.includes(news?.id) }"
+    >
       <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
@@ -40,9 +43,12 @@ export default {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0192ff;
+  background: #b8b8b8;
   top: 8px;
   left: 0;
+}
+.right-news-text-active::after {
+  background: #0192ff;
 }
 .right-news-text a {
   font-family: var(--ROBOTO_SERIF);

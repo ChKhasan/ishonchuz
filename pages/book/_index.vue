@@ -29,15 +29,36 @@
           <p v-html="book?.short_desc"></p>
           <h5>{{ `${book?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so’m</h5>
           <div class="book-btns">
-            <div class="primary_btn">Sotib olish</div>
-            <div
-              v-if="!$store.state[book.type].includes(book?.id)"
-              @click="$store.commit('addToStore', { id: book?.id, name: book?.type })"
-              class="primary_btn"
-            >
-              Saqlab qo'yish
+            <div class="btn_container btn_container_primary">
+              <div class="primary_btn">Sotib olish</div>
+              <div class="primary_btn">
+                <span>Barchasini ko'rish</span>
+              </div>
             </div>
-            <div v-else class="outline_btn"><span v-html="success"></span>Saqlangan</div>
+            <div
+              class="btn_container btn_container_outline"
+              v-if="!$store.state[book?.type]?.includes(book?.id)"
+            >
+              <div class="outline_btn">Saqlab qo'yish</div>
+              <div class="primary_btn" @click="addToBasket(book)">Saqlab qo'yish</div>
+              <Transition>
+                <div class="primary_btn success_btn" v-if="successBtn">
+                  <span v-html="success"></span>
+                </div>
+              </Transition>
+            </div>
+
+            <div class="btn_container btn_container_outline" v-else>
+              <div class="outline_btn"><span v-html="success"></span>Saqlangan</div>
+              <div @click="addToBasket(book)" class="primary_btn">
+                <span v-html="deleteIcon"></span> O'chirish
+              </div>
+              <Transition>
+                <div class="primary_btn success_btn" v-if="successBtn">
+                  <span v-html="success"></span>
+                </div>
+              </Transition>
+            </div>
           </div>
         </div>
       </div>
@@ -147,12 +168,14 @@ export default {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
       success: require("../../assets/svg/success.svg?raw"),
+      deleteIcon: require("../../assets/svg/delete-basket.svg?raw"),
       rules: {
         full_name: [
           { required: true, message: "This field is required", trigger: "blur" },
         ],
         text: [{ required: true, message: "This field is required", trigger: "blur" }],
       },
+      successBtn: false,
       form: {
         full_name: "",
         text: "",
@@ -235,6 +258,19 @@ export default {
         console.log(e);
       }
     },
+    addToBasket(book) {
+      this.$store.commit("addToStore", { id: book?.id, name: book?.type });
+      this.successBtn = true;
+    },
+  },
+  watch: {
+    successBtn(val) {
+      if (val) {
+        setTimeout(() => {
+          this.successBtn = false;
+        }, 500);
+      }
+    },
   },
   components: {
     TitleComp,
@@ -248,6 +284,15 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/home-page.css";
 @import "../../assets/css/pages/comment-components.css";
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 .book-page {
   padding-top: 20px;
 }
@@ -264,7 +309,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: var(--black-1, #f9f9f9);
+  background: var(--header_bg);
   padding-top: 50px;
   padding-bottom: 85px;
 }
@@ -272,7 +317,7 @@ export default {
   width: 68%;
 }
 .book-body h3 {
-  color: var(--black-100, #000);
+  color: var(--text_color);
   font-size: 26px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 700;
@@ -280,14 +325,14 @@ export default {
   margin-bottom: 8px;
 }
 .book-body p {
-  color: var(--black-70, #414141);
+  color: var(--book_text);
   font-size: 19px;
   font-family: var(--ROBOTO_SERIF);
   line-height: 170%;
   margin-top: 24px;
 }
 .book-body h5 {
-  color: var(--black-100, #000);
+  color: var(--text_color);
   font-size: 22px;
   font-weight: 600;
   line-height: 150%;
@@ -305,16 +350,11 @@ export default {
   background: var(--light-bue-100, #0192ff);
   color: #ffffff;
 }
+.primary_btn,
 .outline_btn {
-  border: 1px solid var(--light-bue-100, #0192ff);
-  color: var(--light-bue-100, #0192ff);
-}
-.book-btns > div:last-child span {
-  margin-right: 5px;
-}
-.book-btns > div {
   padding: 10px 0;
   width: 191px;
+  height: 45px;
   display: flex;
   justify-content: center;
   border-radius: 4px;
@@ -323,6 +363,20 @@ export default {
   line-height: 150%;
   cursor: pointer;
 }
+.btn_container_primary {
+  background: var(--light-bue-100, #0192ff);
+}
+.btn_container_outline {
+  border: 1px solid var(--light-bue-100, #0192ff);
+}
+.outline_btn {
+  /* border: 1px solid var(--light-bue-100, #0192ff); */
+  color: var(--light-bue-100, #0192ff);
+}
+.book-btns > div:last-child span {
+  margin-right: 5px;
+}
+
 .book-desc {
   margin-top: 80px;
 }
@@ -340,9 +394,16 @@ export default {
   grid-gap: 57px;
 }
 .book-desc > div > p {
-  color: var(--black-70, #414141);
+  color: var(--book_text);
   font-size: 19px;
   font-family: var(--ROBOTO_SERIF);
   line-height: 170%;
+}
+.success_btn span svg path {
+  fill: #ffffff;
+}
+.success_btn {
+  top: 0;
+  position: absolute;
 }
 </style>

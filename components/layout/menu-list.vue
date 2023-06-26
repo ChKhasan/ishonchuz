@@ -63,17 +63,16 @@
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
-                  <nuxt-link :to="localePath('/library')">Adabiyot</nuxt-link>
+                  <nuxt-link :to="localePath('/')"
+                    >Yangi O’zbekiston suratlarda</nuxt-link
+                  >
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <nuxt-link :to="localePath('/library')">Ilmiy ishlar</nuxt-link>
+                  <nuxt-link :to="localePath('/')">Kolumnistlar</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <nuxt-link :to="localePath('/library')">Maqolalar</nuxt-link>
-                </a-menu-item>
-                <a-menu-item key="3">
-                  <nuxt-link :to="localePath('/profile/personal-info')"
-                    >Kasaba faollari uchun qo’llanmalar</nuxt-link
+                  <nuxt-link :to="localePath('/journalists')"
+                    >O’zbekiston jurnalistlar</nuxt-link
                   >
                 </a-menu-item>
               </a-menu>
@@ -91,7 +90,7 @@
           >
             <span v-html="user"></span>
           </div>
-          <div><span v-html="menu"></span></div>
+          <!-- <div><span v-html="menu"></span></div> -->
         </div>
       </div>
     </div>
@@ -167,8 +166,20 @@
                   class="w-100"
                   placeholder="SMS kodni tering"
                 />
+                <span
+                  class="sms_success_icon"
+                  v-if="responseTypes.smsCodeSuccess"
+                  v-html="smsSuccess"
+                ></span>
+                <span
+                  class="sms_timer"
+                  v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
+                  >{{ smsTimer }}</span
+                >
+                <span class="error_code" v-if="responseTypes.smsCodeError"
+                  >Xato kiritildi!</span
+                >
               </a-form-model-item>
-              {{ responseTypes.userResponse }}
               <a-form-model-item
                 class="form-item mb-0 w-100"
                 label="Name"
@@ -275,12 +286,14 @@ export default {
       visibleSms: false,
       visibleName: false,
       dropShow: false,
+      smsTimer: 45,
       search: require("../../assets/svg/search.svg?raw"),
       searchInput: require("../../assets/svg/search-input.svg?raw"),
       user: require("../../assets/svg/user.svg?raw"),
       menu: require("../../assets/svg/menu.svg?raw"),
       drop: require("../../assets/svg/dropdown.svg?raw"),
       mClose: require("../../assets/svg/modal-close.svg?raw"),
+      smsSuccess: require("../../assets/svg/success.svg?raw"),
       form: {
         phone_number: "",
       },
@@ -319,13 +332,27 @@ export default {
     var sticky = header.offsetTop;
     window.addEventListener("scroll", () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (window.pageYOffset >= sticky) {
+      if (scrollTop > this.lastScrollTop && window.pageYOffset >= sticky) {
         header.classList.add("sticky");
-      } else {
+        header.style.top = "-128px";
+      } else if (window.pageYOffset < sticky) {
         header.classList.remove("sticky");
+      } else if (document.documentElement.scrollTop == 0) {
+        header.style.top = "0";
+      } else {
+        header.style.top = "0";
       }
       this.lastScrollTop = scrollTop;
     });
+    // window.addEventListener("scroll", () => {
+    //   let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    //   if (window.pageYOffset >= sticky) {
+    //     header.classList.add("sticky");
+    //   } else {
+    //     header.classList.remove("sticky");
+    //   }
+    //   this.lastScrollTop = scrollTop;
+    // });
   },
 
   methods: {
@@ -410,6 +437,10 @@ export default {
           this.responseTypes.smsCodeError = true;
         }
       } catch (e) {
+        if (e.response.status == 403) {
+          this.responseTypes.smsCodeSuccess = false;
+          this.responseTypes.smsCodeError = true;
+        }
         console.log(e);
       }
     },
@@ -421,7 +452,7 @@ export default {
         localStorage.setItem("access_token", JSON.stringify(data.access));
         localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
         this.$store.commit("chackAuth");
-        this.$router.push("/profile/personal-info");
+        // this.$router.push("/profile/personal-info");
       } catch (e) {
         this.responseTypes.smsCodeError = true;
         console.log(e);
@@ -443,6 +474,27 @@ export default {
       // dropShow = !dropShow
     },
   },
+  watch: {
+    visibleSms(val) {
+      if (val) {
+        const smInterval = setInterval(() => {
+          this.smsTimer--;
+          if (this.smsTimer == 0) {
+            clearInterval(smInterval);
+          }
+        }, 1000);
+      }
+    },
+    smsTimer(val) {
+      if (val == 0) this.__SEND_NUMBER(this.form);
+    },
+    "formSms.code"(val) {
+      if (val.length < 6) {
+        (this.responseTypes.smsCodeError = false),
+          (this.responseTypes.smsCodeSuccess = false);
+      }
+    },
+  },
 };
 </script>
 <style lang="css">
@@ -451,7 +503,7 @@ export default {
   top: 0;
   width: 100%;
   z-index: 1000;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 0.5rem 1rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0.1rem 0.4rem;
 }
 .search-block input {
   padding: 12px 27px 12px 44px;
@@ -471,7 +523,8 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
-  left: 12px;
+  padding-left: 12px;
+  background: var(--header_bg);
 }
 .search-block span {
   position: absolute;
@@ -497,6 +550,7 @@ export default {
 }
 .menu-list {
   background: var(--body_color);
+  transition: all 0.5s !important;
 }
 .menu-list-container {
   display: flex;
@@ -624,6 +678,7 @@ export default {
   line-height: 150%;
   text-align: right;
   color: #c02600;
+  width: auto !important;
 }
 .auth-form .ant-form-item-control {
   display: flex;
@@ -647,5 +702,21 @@ export default {
 }
 .sms_code_error input {
   color: #c02600;
+}
+.sms_success_icon,
+.sms_timer {
+  position: absolute;
+  right: 17px;
+  width: auto !important;
+}
+.sms_timer {
+  color: var(--black-50, #707070);
+  text-align: right;
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  line-height: 150%;
+}
+.sms_success_icon svg path {
+  fill: #00af4c;
 }
 </style>
