@@ -10,7 +10,7 @@
     />
     <MobileHeader />
     <Nuxt />
-    <Footer />
+    <Footer :categories="categories" />
   </div>
 </template>
 <script>
@@ -102,7 +102,12 @@ export default {
       }
     },
   },
+<<<<<<< HEAD
   components: { Header, Footer, MobileHeader },
+=======
+
+  components: { Header, Footer },
+>>>>>>> 4e9bb6ef0c30dad807ef5800ac29d480480a7bc9
 };
 </script>
 <style lang="css">

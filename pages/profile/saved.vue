@@ -4,25 +4,21 @@
       <div class="profile-grid">
         <ProfileMenu />
         <div class="profile-saved">
-          <h3>{{ $store.state.translations["main.my-shelf"] }}</h3>
+          <h3>Mening javonim</h3>
           <ul class="library_tab">
             <li
               :class="{
                 'news-menu-active-categry': $route.query.type == 'literature',
               }"
             >
-              <span @click="tabChange('literature')">{{
-                $store.state.translations["main.literature"]
-              }}</span>
+              <span @click="tabChange('literature')">Adabiyot</span>
             </li>
             <li
               :class="{
                 'news-menu-active-categry': $route.query.type == 'scientific',
               }"
             >
-              <span @click="tabChange('scientific')">{{
-                $store.state.translations["main.science"]
-              }}</span>
+              <span @click="tabChange('scientific')">Ilmiy ishlar</span>
             </li>
             <li
               :class="{
@@ -116,6 +112,7 @@ export default {
       this.savedBooks = savedData;
       console.log(savedData);
     },
+  
     middlewareAuth() {
       if (!localStorage.getItem("access_token")) {
         this.$router.push("/");
@@ -147,7 +144,7 @@ export default {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
 }
-.profile-saved h3 {
+.profile-saved h2 {
   color: var(--black, #020105);
   font-size: 22px;
   font-family: var(--ROBOTO_SERIF);
@@ -163,8 +160,8 @@ export default {
 }
 .profile-saved {
   border-radius: 8px;
-  border: 1px solid var(--black-5, #e7e7e7);
-  background: var(--white, #fff);
+  border: 1px solid var(--gray_292929, #e7e7e7);
+  background: var(--black_000000, #fff);
   padding: 50px 65px;
 }
 </style>

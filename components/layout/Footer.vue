@@ -25,16 +25,48 @@
           </div>
           <div class="footer-menu">
             <ul>
-              <li><nuxt-link :to="localePath('/')">O’zbekiston</nuxt-link></li>
-              <li>Xorij</li>
+              <!-- <li v-for="category in categories.slice(0, 4)" :key="category?.id">
+                <nuxt-link :to="localePath('/')">{{ category?.title }}</nuxt-link>
+              </li> -->
+              <li v-for="category in categories.slice(0, 4)" :key="category?.id">
+                <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
+                  <a class="" @click="(e) => e.preventDefault()">
+                    {{ category?.title }} <span v-html="drop"></span>
+                  </a>
+                  <a-menu slot="overlay" class="dropdown-board">
+                    <a-menu-item
+                      :key="index"
+                      v-for="(child, index) in category?.children"
+                    >
+                      <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
+                        child?.title
+                      }}</nuxt-link>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+                <nuxt-link v-else :to="localePath(`/news-menu/${category?.slug}`)">
+                  {{ category?.title }}</nuxt-link
+                >
+              </li>
+              <!-- <li>Xorij</li>
               <li>{{ $store.state.translations["main.analysis"] }}</li>
-              <li>O’zgacha rakurs</li>
+              <li>O’zgacha rakurs</li> -->
             </ul>
             <ul>
-              <li>Madaniyat va marifat</li>
-              <li>Mehnat huquqi</li>
-              <li>{{ $store.state.translations["main.library"] }}</li>
-              <li>{{ $store.state.translations["main.others"] }}</li>
+              <li
+                v-for="category in categories.slice(4, 6)"
+                :key="category?.id"
+                @click="$router.push(`/news-menu/${category?.slug}`)"
+              >
+                {{ category?.title }}
+              </li>
+              <!-- <li>Mehnat huquqi</li> -->
+              <li @click="$router.push(`/library`)">
+                {{ $store.state.translations["main.library"] }}
+              </li>
+              <li @click="$router.push(`/library`)">
+                {{ $store.state.translations["main.others"] }}
+              </li>
             </ul>
             <ul>
               <li>{{ $store.state.translations["main.about_site"] }}</li>
@@ -62,6 +94,7 @@
 </template>
 <script>
 export default {
+  props: ["categories"],
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),
@@ -71,6 +104,7 @@ export default {
       twitter: require("../../assets/svg/twitter.svg?raw"),
       instagram: require("../../assets/svg/instagram.svg?raw"),
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
+      drop: require("../../assets/svg/dropdown.svg?raw"),
     };
   },
 };
@@ -131,6 +165,17 @@ export default {
   text-transform: uppercase;
   color: var(--text_color);
   margin-bottom: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.footer-menu ul li:hover {
+  color: var(--blue_0192FF);
+}
+.footer-menu ul li a span {
+  margin-left: 14px;
+}
+.footer-menu ul li a span svg path {
+  fill: #9ba2c3;
 }
 .footer-bottom p {
   font-family: var(--ROBOTO_SERIF);

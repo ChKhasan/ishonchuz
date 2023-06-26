@@ -201,11 +201,9 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board">
                   <ul>
-                    <li>{{ $store.state.translations["main.theatres"] }}</li>
-                    <li>{{ $store.state.translations["main.libraries"] }}</li>
-                    <li>
-                      {{ $store.state.translations["main.presentations"] }}
-                    </li>
+                    <li>Teatrlar</li>
+                    <li>Kutubxona</li>
+                    <li>Ko’rgazmalar</li>
                   </ul>
                 </div>
               </Transition>
@@ -241,7 +239,7 @@
               {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">
-              <img src="../assets/images/Снимок экрана (926).png" alt="" />
+              <img :src="banners[0]?.image" alt="" />
             </div>
           </div>
           <TitleComp
@@ -354,6 +352,7 @@ export default {
       videoNewsData,
       redactorNewsData,
       importantNewsData,
+      bannersData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { last_news: true, page_size: 6 },
@@ -391,6 +390,11 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
@@ -398,6 +402,7 @@ export default {
     const videoNews = videoNewsData.results;
     const redactorNews = redactorNewsData.results;
     const importantNews = importantNewsData.results;
+    const banners = bannersData.results;
     return {
       news,
       topNews,
@@ -405,6 +410,7 @@ export default {
       videoNews,
       redactorNews,
       importantNews,
+      banners,
     };
   },
   methods: {

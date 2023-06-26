@@ -59,6 +59,13 @@ h6 {
   --active_tab_bg: #f2f3f7;
   --active_tab_color: #051769;
   --book_text: #414141;
+  --modal_header_bg: #f9f9f9;
+  --modal_bg: #ffffff;
+  --modal_exit_btn: #e45746;
+  --modal_header_br: transparent;
+  --modal_label: #888888;
+  --modal_input_bg: #f9f9f9;
+  --modal_input_text: #111111;
   --journalist_btn: #505d96;
 }
 .dark-theme {
@@ -97,9 +104,31 @@ h6 {
   --active_tab_bg: #292929;
   --active_tab_color: #ffffff;
   --book_text: #cfcfcf;
+  --modal_header_bg: #292929;
+  --modal_bg: #292929;
+  --modal_exit_btn: #ffffff;
+  --modal_header_br: #414141;
+  --modal_label: #e7e7e7;
+  --modal_input_bg: #414141;
+  --modal_input_text: #e7e7e7;
+  --modal_input_timer: #e7e7e7;
+  --black_414141: #414141;
+  --gray_e7e7e7: #e7e7e7;
+  --gray_f9f9f9: #f9f9f9;
+  --gray_292929: #292929;
+  --white_ffffff: #ffffff;
+  --black_000000: #000000;
+  --gray_B4B9D2: #b4b9d2;
+  --blue_0192FF: #0192ff;
 }
 .ant-modal-body {
   background: var(--header_bg);
+}
+.vmodal-body .ant-form-item-label > label {
+  color: var(--modal_label);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  line-height: 145%;
 }
 .container_xl {
   margin: 0 auto;
@@ -117,7 +146,10 @@ h6 {
   }
 }
 .vmodal-container {
-  background: var(--body_color);
+  background: var(--modal_bg);
+}
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.65) !important;
 }
 ul {
   margin-bottom: 0 !important;
@@ -163,7 +195,7 @@ ul {
   padding-right: 55px;
 }
 .dropdown-board {
-  background: #ffffff;
+  background: var(--gray_292929, #ffffff);
   border-radius: 10px;
   padding: 16px 8px;
   display: grid;
@@ -173,6 +205,7 @@ ul {
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.08);
   top: 100%;
   z-index: 10;
+  min-width: 288px;
 }
 .dropdown-board a {
   font-family: var(--ROBOTO_SERIF);
@@ -180,7 +213,7 @@ ul {
   font-weight: 400;
   font-size: 16px;
   line-height: 130%;
-  color: #000000;
+  color: var(--white_ffffff, #000000);
   white-space: nowrap;
   padding: 11px 18px;
   display: flex;
@@ -189,7 +222,7 @@ ul {
   border-radius: 5px;
 }
 .dropdown-board a:hover {
-  color: #000000;
+  color: var(--blue_0192FF, #000000);
   background: rgba(0, 0, 0, 0.08);
 }
 .ant-modal-footer {
@@ -213,7 +246,7 @@ ul {
   position: relative;
 }
 .form-item input {
-  background: #f9f9f9;
+  background: var(--modal_input_bg);
   border-radius: 4px;
   padding: 14px 16px;
   font-family: var(--ROBOTO_SERIF);
@@ -223,7 +256,7 @@ ul {
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  color: #000000;
+  color: var(--modal_input_text);
   border: none;
 }
 .form-item input:focus-visible {
