@@ -8,6 +8,7 @@
         rubCurrency: rubCurrency,
       }"
     />
+    <MobileHeader />
     <Nuxt />
     <Footer />
   </div>
@@ -15,6 +16,7 @@
 <script>
 import Footer from "../components/layout/Footer.vue";
 import Header from "../components/layout/Header.vue";
+import MobileHeader from "@/components/layout/MobileHeader.vue";
 
 export default {
   data() {
@@ -100,7 +102,7 @@ export default {
       }
     },
   },
-  components: { Header, Footer },
+  components: { Header, Footer, MobileHeader },
 };
 </script>
 <style lang="css">
