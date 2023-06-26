@@ -43,16 +43,16 @@
 </template>
 
 <script>
-import JournalistsCard from "../components/cards/JournalistsCard.vue";
+import JournalistsCard from "@/components/cards/JournalistsCard.vue";
 
 export default {
   data() {
     return {
-      telegram: require("../assets/svg/telegram.svg?raw"),
-      facebook: require("../assets/svg/facebook.svg?raw"),
-      twitter: require("../assets/svg/twitter.svg?raw"),
-      instagram: require("../assets/svg/instagram.svg?raw"),
-      whatsapp: require("../assets/svg/whatsapp.svg?raw"),
+      telegram: require("@/assets/svg/telegram.svg?raw"),
+      facebook: require("@/assets/svg/facebook.svg?raw"),
+      twitter: require("@/assets/svg/twitter.svg?raw"),
+      instagram: require("@/assets/svg/instagram.svg?raw"),
+      whatsapp: require("@/assets/svg/whatsapp.svg?raw"),
     };
   },
   // async mounted() {
@@ -127,7 +127,7 @@ export default {
 };
 </script>
 <style lang="css">
-@import "../assets/css/pages/news-menu-page.css";
+@import "@/assets/css/pages/news-menu-page.css";
 .journalists_container {
   margin-top: 16px;
   margin-bottom: 30px;
