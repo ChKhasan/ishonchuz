@@ -13,7 +13,7 @@
       <div class="h-news-card-info">
         <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
-        <span><span v-html="date"></span>{{ news?.date }}</span>
+        <span><span v-html="date"></span>{{ news?.date.split("|")[1] }}</span>
       </div>
     </div>
   </div>
