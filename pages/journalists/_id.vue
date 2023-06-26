@@ -6,10 +6,16 @@
           <div class="cardo">
             <div class="wrapper">
               <div class="img">
-                <img src="@/assets/images/review.jpg" alt="" class="pic" />
+                <img
+                  v-if="journalists?.image"
+                  :src="journalists?.image"
+                  alt=""
+                  class="pic"
+                />
+                <img v-else src="@/assets/images/review.jpg" alt="" class="pic" />
               </div>
               <div class="content">
-                <h4 class="name">Yu Jimin</h4>
+                <h4 class="name">{{ journalists?.full_name }}</h4>
                 <p class="status">Jurnalist</p>
               </div>
               <div class="socials">
@@ -26,19 +32,19 @@
               <p class="question">
                 <img src="@/assets/images/logo/bag.svg" alt="" /> Ish joyi:
               </p>
-              <p class="answer">O’zbekiston Teleradio kompaniyasi</p>
+              <p class="answer">{{ journalists?.work_place }}</p>
             </div>
             <div class="item">
               <p class="question">
                 <img src="@/assets/images/logo/target.svg" alt="" /> Tajribasi:
               </p>
-              <p class="answer">10 yil</p>
+              <p class="answer">{{ journalists?.experience }}</p>
             </div>
             <div class="item">
               <p class="question">
                 <img src="@/assets/images/logo/lang.svg" alt="" />Tillar
               </p>
-              <p class="answer">O’zbek tili, Rus tili, Ingliz tili</p>
+              <p class="answer">{{ journalists?.experience }}</p>
             </div>
           </div>
         </div>
@@ -59,90 +65,53 @@
           </div>
           <div class="body">
             <div :class="{ show: handleBio }" class="bio">
-              <h1>Qisqacha biografiyasi</h1>
+              <div class="bio-body" v-html="journalists?.bio"></div>
+              <!-- <h1>Qisqacha biografiyasi</h1>
               <p>
-                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi
-                mahallasida hunarmand-ishchilar oilasida tavallud topgan.
-                Sheʼrga, soʻzga, adabiyotga muhabbat unda bolaligida oialsidagi
-                muhit sababli paydo boʻlgan boʻlsa ajab emas. Ayniqsa, bunda
-                onasi Xadichabegimning roli katta: – Onamning qanchadan-qancha
-                qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi. Bu
-                sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar,
-                oʻziga rom qilib olar, har safar yangi jilva kasb etar edi
+                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi mahallasida
+                hunarmand-ishchilar oilasida tavallud topgan. Sheʼrga, soʻzga, adabiyotga
+                muhabbat unda bolaligida oialsidagi muhit sababli paydo boʻlgan boʻlsa
+                ajab emas. Ayniqsa, bunda onasi Xadichabegimning roli katta: – Onamning
+                qanchadan-qancha qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi.
+                Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
+                qilib olar, har safar yangi jilva kasb etar edi
               </p>
               <h4>Ta’lim davri</h4>
               <p>
-                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi
-                mahallasida hunarmand-ishchilar oilasida tavallud topgan.
-                Sheʼrga, soʻzga, adabiyotga muhabbat unda bolaligida oialsidagi
-                muhit sababli paydo boʻlgan boʻlsa ajab emas. Ayniqsa, bunda
-                onasi Xadichabegimning roli katta: – Onamning qanchadan-qancha
-                qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi. Bu
-                sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar,
-                oʻziga rom qilib olar, har safar yangi jilva kasb etar edi
-              </p>
-              <img src="@/assets/images/cert-1.jpg" alt="" />
-              <img src="@/assets/images/cert-2.jpg" alt="" />
+                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi mahallasida
+                hunarmand-ishchilar oilasida tavallud topgan. Sheʼrga, soʻzga, adabiyotga
+                muhabbat unda bolaligida oialsidagi muhit sababli paydo boʻlgan boʻlsa
+                ajab emas. Ayniqsa, bunda onasi Xadichabegimning roli katta: – Onamning
+                qanchadan-qancha qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi.
+                Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
+                qilib olar, har safar yangi jilva kasb etar edi
+              </p>-->
+              <img
+                :src="image?.image"
+                alt=""
+                v-for="image in journalists?.images"
+                :key="image?.id"
+              />
             </div>
             <div :class="{ show: handleArticles }" class="articles">
               <div class="grid">
-                <div class="article">
+                <div
+                  class="article"
+                  v-for="article in journalists?.articles"
+                  :key="article?.id"
+                >
                   <NuxtLink to="">
                     <div class="content">
-                      <h4 class="name">
-                        Yer sayyorasiga o’xshash sayyora topildi
-                      </h4>
-                      <p class="sub">
-                        Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning
-                        Oʻqchi mahallasida hunarmand-ishchilar oilasida tavallud
-                        topgan. Sheʼrga, soʻzga, adabiyotga muhabbat unda
-                        bolaligid…
-                      </p>
+                      <h4 class="name">{{ article?.title }}</h4>
+                      <p class="sub" v-html="article?.text"></p>
                     </div>
                     <div class="v-news-card-info">
-                      <span><span v-html="comments"></span>20</span>
-                      <span><span v-html="view"></span>1200</span>
-                      <span><span v-html="date"></span>12:32 | 23.12.2023</span>
-                    </div>
-                  </NuxtLink>
-                </div>
-                <div class="article">
-                  <NuxtLink to="">
-                    <div class="content">
-                      <h4 class="name">
-                        Yer sayyorasiga o’xshash sayyora topildi
-                      </h4>
-                      <p class="sub">
-                        Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning
-                        Oʻqchi mahallasida hunarmand-ishchilar oilasida tavallud
-                        topgan. Sheʼrga, soʻzga, adabiyotga muhabbat unda
-                        bolaligid…
-                      </p>
-                    </div>
-                    <div class="v-news-card-info">
-                      <span><span v-html="comments"></span>20</span>
-                      <span><span v-html="view"></span>1200</span>
-                      <span><span v-html="date"></span>12:32 | 23.12.2023</span>
-                    </div>
-                  </NuxtLink>
-                </div>
-                <div class="article">
-                  <NuxtLink to="">
-                    <div class="content">
-                      <h4 class="name">
-                        Yer sayyorasiga o’xshash sayyora topildi
-                      </h4>
-                      <p class="sub">
-                        Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning
-                        Oʻqchi mahallasida hunarmand-ishchilar oilasida tavallud
-                        topgan. Sheʼrga, soʻzga, adabiyotga muhabbat unda
-                        bolaligid…
-                      </p>
-                    </div>
-                    <div class="v-news-card-info">
-                      <span><span v-html="comments"></span>20</span>
-                      <span><span v-html="view"></span>1200</span>
-                      <span><span v-html="date"></span>12:32 | 23.12.2023</span>
+                      <span><span v-html="comments"></span>0</span>
+                      <span
+                        ><span v-html="view"></span
+                        >{{ article?.views ? article?.views : 0 }}</span
+                      >
+                      <span><span v-html="date"></span>{{ article?.date }}</span>
                     </div>
                   </NuxtLink>
                 </div>
@@ -171,6 +140,32 @@ export default {
       date: require("../../assets/svg/date.svg?raw"),
     };
   },
+  async mounted() {
+    const [journalistsData] = await Promise.all([
+      this.$store.dispatch("fetchJournalists/getJournalistsBySlug", {
+        id: this.$route.params.id,
+        header: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      }),
+    ]);
+  },
+  async asyncData({ store, params, i18n }) {
+    const [journalistsData] = await Promise.all([
+      store.dispatch("fetchJournalists/getJournalistsBySlug", {
+        id: params.id,
+        header: {
+          headers: {
+            Language: i18n.locale,
+          },
+        },
+      }),
+    ]);
+    const journalists = journalistsData;
+    return { journalists };
+  },
 };
 </script>
 
@@ -180,7 +175,7 @@ export default {
 }
 .cardo {
   border-radius: 12px;
-  background: var(--right_drop);
+  background: var(--black_111111, #f9f9f9);
   padding: 52px 0;
 }
 .wrapper {
@@ -199,7 +194,7 @@ export default {
   font-size: 22px;
   font-weight: 600;
   line-height: 150%;
-  color: var(--breadcrumb_link);
+  color: var(--white_ffffff, #051769);
   font-family: var(--ROBOTO_SERIF);
   margin-bottom: 12px;
 }
@@ -219,7 +214,7 @@ export default {
 }
 .second {
   border-radius: 12px;
-  background: var(--right_drop);
+  background: var(--black_111111, #f9f9f9);
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -235,11 +230,12 @@ export default {
   letter-spacing: 0.24px;
   margin-bottom: 8px;
   font-family: var(--ROBOTO_SERIF);
+  color: #a0a0a0;
 }
 .answer {
   font-size: 14px;
   line-height: 150%;
-  color: var(--breadcrumb_link);
+  color: var(--white_ffffff, #051769);
   font-family: var(--ROBOTO_SERIF);
 }
 .buttons {
@@ -254,7 +250,7 @@ export default {
   font-weight: 500;
   font-family: var(--ROBOTO_SERIF);
   padding: 10px;
-  color: var(--journalist_btn);
+  color: var(--white_ffffff, #505d96);
   background: transparent;
   border: none;
   border-radius: 4px;
@@ -267,6 +263,12 @@ export default {
   border-radius: 12px;
   padding: 40px;
   background: var(--header_bg);
+}
+.bio-body p {
+  color: var(--white_ffffff, #292929) !important;
+}
+.bio div p span {
+  color: #ffffff !important;
 }
 .bio h1 {
   font-size: 19px;
@@ -298,6 +300,7 @@ export default {
   width: auto;
   height: 123px;
   object-fit: contain;
+  margin-right: 10px;
 }
 .grid {
   display: grid;
@@ -317,6 +320,11 @@ export default {
   line-height: 150%;
   font-family: var(--ROBOTO_SERIF);
   color: var(--news_container_link);
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
 }
 .v-news-card-info {
   justify-content: flex-start !important;

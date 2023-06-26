@@ -33,6 +33,20 @@ export const actions = {
     });
     return res;
   },
+  async postRefreshToken({}, payload) {
+    const res = await this.$axios.$post(
+      `/auth/token/refresh`,
+      { refresh: JSON.parse(localStorage.getItem("refresh_token")) }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${JSON.parse(
+      //       localStorage.getItem("access_token")
+      //     )}`,
+      //   },
+      // }
+    );
+    return res;
+  },
   async postCheckSmsCode({}, payload) {
     const res = await this.$axios.$post(`/auth/check_sms_code`, payload);
     return res;

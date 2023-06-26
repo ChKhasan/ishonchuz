@@ -4,40 +4,26 @@
       <div class="galleries-page-header">
         <h5>{{ $store.state.translations["main.new-uzbekistan"] }}</h5>
       </div>
-      <div class="galleries-page-container">
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
+      <div class="galleries-page-container" v-if="showAll">
+        <div class="galleries-card" v-for="image in galleries" :key="image?.id">
+          <img :src="image?.image" alt="" />
         </div>
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
-        </div>
-        <div class="galleries-card">
-          <img src="../assets/images/galleries.png" alt="" />
+      </div>
+      <div class="galleries-page-container" v-else>
+        <div
+          class="galleries-card"
+          v-for="image in galleries.slice(0, 10)"
+          :key="image?.id"
+        >
+          <img :src="image?.image" alt="" />
         </div>
       </div>
       <div>
-        <div class="btn_container_show_more">
+        <div class="btn_container_show_more" v-if="galleries?.length > 10">
           <div class="right-show-more">
             {{ $store.state.translations["main.more"] }}
           </div>
-          <div class="right-show-more-primary">
+          <div class="right-show-more-primary" @click="showAll = true">
             {{ $store.state.translations["main.see_all"] }}
           </div>
         </div>
@@ -76,6 +62,7 @@ import NewspaperCard from "../components/cards/NewspaperCard.vue";
 export default {
   data() {
     return {
+      showAll: false,
       activeTab: "literature",
       telegram: require("../assets/svg/telegram.svg?raw"),
       facebook: require("../assets/svg/facebook.svg?raw"),
@@ -84,53 +71,18 @@ export default {
       whatsapp: require("../assets/svg/whatsapp.svg?raw"),
     };
   },
-  //   async asyncData({ store, i18n }) {
-  //     const [literatureData, scientificData, articlesData] = await Promise.all([
-  //       store.dispatch("fetchBooks/getBooks", {
-  //         params: {
-  //           type: "literature",
-  //         },
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //       store.dispatch("fetchBooks/getBooks", {
-  //         params: {
-  //           type: "science",
-  //         },
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //       store.dispatch("fetchBooks/getArticles", {
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //     ]);
-  //     const literature = literatureData.results;
-  //     const scientific = scientificData.results;
-  //     const articles = articlesData.results;
-  //     return {
-  //       literature,
-  //       scientific,
-  //       articles,
-  //     };
-  //   },
-  mounted() {
-    if (Object.keys(this.$route.query).length == 0) {
-      this.tabChange("literature");
-    }
-  },
-  methods: {
-    tabChange(name) {
-      this.$router.replace({
-        path: "/galleries",
-        query: {
-          type: name,
+  async asyncData({ store, i18n }) {
+    const [galleriesData] = await Promise.all([
+      store.dispatch("fetchBanners/getGalleries", {
+        headers: {
+          Language: i18n.locale,
         },
-      });
-    },
+      }),
+    ]);
+    const galleries = galleriesData.results;
+    return {
+      galleries,
+    };
   },
   components: {
     BookCard,
@@ -163,6 +115,8 @@ export default {
 }
 .galleries-card {
   height: 456px;
+  border-radius: 6px;
+  overflow: hidden;
 }
 /* .galleries-card {
   grid-column-start: 1;

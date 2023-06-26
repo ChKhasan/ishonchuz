@@ -4,18 +4,12 @@
       <div class="menu-list-container">
         <ul>
           <li v-for="category in categories" :key="category?.id">
-            <a-dropdown
-              :trigger="['click']"
-              v-if="category?.children?.length > 0"
-            >
+            <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
                 {{ category?.title }} <span v-html="drop"></span>
               </a>
               <a-menu slot="overlay" class="dropdown-board">
-                <a-menu-item
-                  :key="index"
-                  v-for="(child, index) in category?.children"
-                >
+                <a-menu-item :key="index" v-for="(child, index) in category?.children">
                   <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
                     child?.title
                   }}</nuxt-link>
@@ -70,7 +64,7 @@
               </a>
               <a-menu slot="overlay" class="dropdown-board">
                 <a-menu-item key="0">
-                  <nuxt-link :to="localePath('/')">{{
+                  <nuxt-link :to="localePath('/galleries')">{{
                     $store.state.translations["main.new-uzbekistan"]
                   }}</nuxt-link>
                 </a-menu-item>
@@ -153,10 +147,7 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item
-                class="form-item mb-0 w-100"
-                label="Номер телефона"
-              >
+              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
                 <the-mask
                   v-model="formSms.phone_number"
                   class="w-100 disabled"
@@ -185,9 +176,7 @@
                 ></span>
                 <span
                   class="sms_timer"
-                  v-if="
-                    !responseTypes.smsCodeError && !responseTypes.smsCodeSuccess
-                  "
+                  v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
                   >{{ smsTimer }}</span
                 >
                 <span class="error_code" v-if="responseTypes.smsCodeError"
@@ -387,7 +376,7 @@ export default {
     onSubmit() {
       this.formSms = {
         ...this.formSms,
-        phone_number: `${this.form.phone_number}`,
+        phone_number: `998${this.form.phone_number}`,
       };
       this.$refs.ruleFormAuth.validate((valid) => {
         if (valid) {
@@ -417,10 +406,7 @@ export default {
     },
     async __SEND_NUMBER(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postSendSmsCode",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchAuth/postSendSmsCode", dataForm);
         this.visible = false;
         this.visibleSms = true;
         this.form.phone_number = "";
@@ -442,10 +428,7 @@ export default {
     },
     async __CHECK_SMS_CODE(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postCheckSmsCode",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchAuth/postCheckSmsCode", dataForm);
         if (data.correct) {
           this.responseTypes.smsCodeSuccess = true;
           this.responseTypes.smsCodeError = false;
@@ -480,10 +463,7 @@ export default {
     },
     async __LOGIN_REGISTER(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchAuth/postLoginRegister",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchAuth/postLoginRegister", dataForm);
         this.responseTypes.smsCodeSuccess = true;
         this.visibleSms = false;
         localStorage.setItem("access_token", JSON.stringify(data.access));
@@ -495,6 +475,7 @@ export default {
         console.log(e);
       }
     },
+
     handleOkSearch() {
       this.visibleSearch = false;
     },

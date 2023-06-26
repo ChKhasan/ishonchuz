@@ -1,44 +1,47 @@
 <template>
   <div class="home-page all-news-page">
     <div class="container_xl">
-      <div class="home-page-grid">
-        <div>
+      <div class="home-page-grid row">
+        <div class="col-9 p-0 home-page-left">
           <div class="all-news-page-container">
-            <h3>
-              “Toshkent” jumlasi bo’yicha qidiruv natijasi - <span>2323</span> ta maqola
-              topildi
-            </h3>
-            <div class="all-news-page-grid">
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
-              <HNewsCard />
+            <h3>Barcha yangliklar</h3>
+            <div class="all-news-page-grid" v-if="showAll">
+              <AllNewsCard
+                v-if="showAll"
+                v-for="newsItem in news"
+                :key="newsItem?.id"
+                :news="newsItem"
+              />
+            </div>
+            <div class="all-news-page-grid" v-else>
+              <AllNewsCard
+                v-for="newsItem in news.slice(0, 11)"
+                :key="newsItem?.id"
+                :news="newsItem"
+              />
+            </div>
+            <div class="btn_container_show_more mt-4">
+              <div class="right-show-more">
+                {{ $store.state.translations["main.more"] }}
+              </div>
+              <div class="right-show-more-primary" @click="showAll = true">
+                {{ $store.state.translations["main.see_all"] }}
+              </div>
             </div>
           </div>
         </div>
-        <div class="home-page-right">
+        <div class="home-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
-              <img src="../assets/images/Снимок экрана (926).png" alt="" />
+              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
             </div>
           </div>
-          <TitleComp :link="false" />
-
+          <TitleComp :link="false" title="Barcha yangliklar" />
           <div class="right-news-list">
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
-            <RightNewsCard />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
-            <img src="../assets/images/Снимок экрана (926).png" alt="" />
+            <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
           </div>
         </div>
       </div>
@@ -49,14 +52,50 @@
 <script>
 import TitleComp from "../components/Title-comp.vue";
 import HNewsCard from "../components/cards/HNewsCard.vue";
+import AllNewsCard from "../components/cards/AllNewsCard.vue";
 import RightNewsCard from "../components/cards/RightNewsCard.vue";
 
 export default {
+  data() {
+    return {
+      showAll: false,
+    };
+  },
+  async asyncData({ store, i18n }) {
+    const [newsData, importantNewsData, bannersData] = await Promise.all([
+      store.dispatch("fetchNews/getNews", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+
+      store.dispatch("fetchNews/getNews", {
+        params: { important: true, page_size: 6 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+    ]);
+    const news = newsData.results;
+    const importantNews = importantNewsData.results;
+    const banners = bannersData.results;
+    return {
+      news,
+      importantNews,
+      banners,
+    };
+  },
   components: {
     TitleComp,
     HNewsCard,
     RightNewsCard,
     TitleComp,
+    AllNewsCard,
   },
 };
 </script>
@@ -81,5 +120,8 @@ export default {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 30px;
+}
+.all-news-page-container {
+  width: 90%;
 }
 </style>

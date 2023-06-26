@@ -4,19 +4,26 @@
       <h3 class="journalists-page-title">
         {{ $store.state.translations["main.journalists"] }} <span>(523) </span>
       </h3>
-      <div class="journalists_container">
-        <JournalistsCard />
-        <JournalistsCard />
-        <JournalistsCard />
-        <JournalistsCard />
-        <JournalistsCard />
+      <div class="journalists_container" v-if="showAll">
+        <JournalistsCard
+          v-for="journalist in journalists"
+          :journalist="journalist"
+          :key="journalist?.id"
+        />
+      </div>
+      <div class="journalists_container" v-else>
+        <JournalistsCard
+          v-for="journalist in journalists?.slice(0, 9)"
+          :journalist="journalist"
+          :key="journalist?.id"
+        />
       </div>
       <div class="">
-        <div class="btn_container_show_more">
+        <div class="btn_container_show_more" v-if="journalists?.length > 9">
           <div class="right-show-more">
             {{ $store.state.translations["main.more"] }}
           </div>
-          <div class="right-show-more-primary">
+          <div class="right-show-more-primary" @click="showAll = true">
             {{ $store.state.translations["main.see_all"] }}
           </div>
         </div>
@@ -54,6 +61,7 @@ import JournalistsCard from "@/components/cards/JournalistsCard.vue";
 export default {
   data() {
     return {
+      showAll: false,
       telegram: require("@/assets/svg/telegram.svg?raw"),
       facebook: require("@/assets/svg/facebook.svg?raw"),
       twitter: require("@/assets/svg/twitter.svg?raw"),
@@ -61,74 +69,19 @@ export default {
       whatsapp: require("@/assets/svg/whatsapp.svg?raw"),
     };
   },
-  // async mounted() {
-  //   const [newsData, topNewsData, simpleNewsData] = await Promise.all([
-  //     this.$store.dispatch("fetchNews/getNews", {
-  //       params: { last_news: true, page_size: 3 },
-  //       headers: {
-  //         Language: this.$i18n.locale,
-  //       },
-  //     }),
-  //     this.$store.dispatch("fetchNews/getNews", {
-  //       params: { top: true, page_size: 1 },
-  //       headers: {
-  //         Language: this.$i18n.locale,
-  //       },
-  //     }),
-  //     this.$store.dispatch("fetchNews/getNews", {
-  //       headers: {
-  //         Language: this.$i18n.locale,
-  //       },
-  //     }),
-  //     this.$store.dispatch("fetchCategories/getCategoriesBySlug", {
-  //       id: this.$route.params.index,
-  //       header: {
-  //         headers: {
-  //           Language: this.$i18n.locale,
-  //         },
-  //       },
-  //     }),
-  //   ]);
-  // },
-  //   async asyncData({ store, params, i18n }) {
-  //     const [newsData, topNewsData, simpleNewsData, categoriesData] = await Promise.all([
-  //       store.dispatch("fetchNews/getNews", {
-  //         params: { last_news: true, page_size: 3 },
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //       store.dispatch("fetchNews/getNews", {
-  //         params: { top: true, page_size: 1 },
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //       store.dispatch("fetchNews/getNews", {
-  //         headers: {
-  //           Language: i18n.locale,
-  //         },
-  //       }),
-  //       store.dispatch("fetchCategories/getCategoriesBySlug", {
-  //         id: params.index,
-  //         header: {
-  //           headers: {
-  //             Language: i18n.locale,
-  //           },
-  //         },
-  //       }),
-  //     ]);
-  //     const news = newsData.results;
-  //     const topNews = topNewsData.results;
-  //     const simpleNews = simpleNewsData.results;
-  //     const categories = categoriesData;
-  //     return {
-  //       news,
-  //       topNews,
-  //       simpleNews,
-  //       categories,
-  //     };
-  //   },
+
+  async asyncData({ store, params, i18n }) {
+    const [journalistsData] = await Promise.all([
+      store.dispatch("fetchJournalists/getJournalists", {
+        params: { last_news: true, page_size: 3 },
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+    ]);
+    const journalists = journalistsData.results;
+    return { journalists };
+  },
   components: { JournalistsCard },
 };
 </script>
@@ -142,14 +95,14 @@ export default {
   grid-gap: 30px;
 }
 .journalists-page-title {
-  color: var(--dark-blue-100, #051769);
+  color: var(--white_ffffff, #051769);
   font-size: 26px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 700;
   line-height: 150%;
 }
 .journalists-page-title span {
-  color: var(--dark-blue-60, #6974a5);
+  color: var(--blue_0192FF, #6974a5);
   font-size: 26px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 700;

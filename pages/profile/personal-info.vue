@@ -235,6 +235,16 @@ export default {
         console.log(e);
       }
     },
+    async __REFRESH_TOKEN() {
+      try {
+        console.log("asdasdasdqwe2q421434");
+        const data = await this.$store.dispatch("fetchAuth/postRefreshToken");
+        localStorage.setItem("access_token", JSON.stringify(data.access));
+        localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
+        this.$store.commit("chackAuth");
+        this.__GET_PROFILE_DATA();
+      } catch (e) {}
+    },
     async __GET_PROFILE_DATA() {
       try {
         const data = await this.$store.dispatch("fetchAuth/getProfileInfo");
@@ -244,7 +254,31 @@ export default {
         this.form.email = data?.email;
         this.form.phone_number = data?.phone_number;
       } catch (e) {
-        console.log(e);
+        if (e.response.status == 401) {
+          console.log("referesahdaSDASD");
+          this.__REFRESH_TOKEN();
+        } else {
+          this.logOut();
+        }
+      }
+    },
+    async logOut() {
+      const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLogOut", {
+          refresh_token: refreshToken,
+        });
+        this.$router.push("/");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.$router.push("/");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.$store.commit("chackAuth");
+        }
       }
     },
     middlewareAuth() {

@@ -120,6 +120,7 @@ h6 {
   --black_000000: #000000;
   --gray_B4B9D2: #b4b9d2;
   --blue_0192FF: #0192ff;
+  --black_111111: #111111;
 }
 .ant-modal-body {
   background: var(--header_bg);
