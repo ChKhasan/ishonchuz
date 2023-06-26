@@ -347,7 +347,7 @@ ul {
   position: relative;
   overflow: hidden;
   transition: 0.3s;
-  height: 46px;
+  height: 45px;
   border-radius: 4px;
   /* background: var(--light-bue-100, #0192ff); */
 }

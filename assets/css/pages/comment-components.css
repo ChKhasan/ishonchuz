@@ -191,4 +191,9 @@
   .comments-list {
     margin-bottom: 63px;
   }
+  .comment-form textarea {
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.24px;
+  }
 }

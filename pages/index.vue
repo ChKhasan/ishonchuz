@@ -546,6 +546,7 @@ export default {
   .home-page-right-drop h5 {
     font-size: 14px;
     padding: 0;
+    text-transform: uppercase;
   }
   .block1 {
     margin-bottom: 16px;

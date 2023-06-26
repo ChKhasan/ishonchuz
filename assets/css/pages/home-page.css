@@ -380,6 +380,7 @@ h6 {
   .home-page-right-drop h5 {
     font-size: 14px;
     padding: 0;
+    text-transform: uppercase;
   }
   .block1 {
     margin-bottom: 16px;
@@ -506,5 +507,14 @@ h6 {
   .news-breadcrumb a span {
     margin-left: 8px;
     margin-right: 8px;
+  }
+  .footer-menu ul {
+    display: none;
+  }
+  .footer-menu ul:last-child {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    grid-gap: 16px;
   }
 }

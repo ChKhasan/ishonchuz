@@ -2,7 +2,7 @@
   <div class="home-page all-news-page">
     <div class="container_xl">
       <div class="home-page-grid row">
-        <div class="col-9 p-0 home-page-left">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="all-news-page-container">
             <h3>Barcha yangliklar</h3>
             <div class="all-news-page-grid" v-if="showAll">
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0">
+        <div class="home-page-right all-news-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
               <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
@@ -103,6 +103,8 @@ export default {
 @import "../assets/css/pages/home-page.css";
 .all-news-page {
   padding-top: 28px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .all-news-page-container h3 {
   font-family: var(--ROBOTO_SERIF);
@@ -123,5 +125,21 @@ export default {
 }
 .all-news-page-container {
   width: 90%;
+}
+@media screen and (max-width: 1024px) {
+  .all-news-right {
+    display: none;
+  }
+  .all-news-page-container h3 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%;
+  }
+  .all-news-page-container {
+    width: 100%;
+  }
+  .all-news-page-grid {
+    grid-gap: 16px;
+  }
 }
 </style>

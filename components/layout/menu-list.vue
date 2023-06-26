@@ -369,6 +369,7 @@ export default {
   },
 
   methods: {
+   
     submit() {
       this.$router.push(`/search/${this.searchValue}`);
       this.visibleSearch = false;

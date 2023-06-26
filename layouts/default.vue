@@ -8,7 +8,7 @@
         rubCurrency: rubCurrency,
       }"
     />
-    <MobileHeader />
+    <MobileHeader  :categories="categories"/>
     <div class="layout_back"></div>
     <Nuxt />
     <Footer :categories="categories" />

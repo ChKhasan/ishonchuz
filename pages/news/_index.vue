@@ -770,6 +770,17 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .new-category-title h2 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+    margin-bottom: 14px;
+  }
+  .news-container-header {
+    margin-top: 20px;
   }
 }
 </style>

@@ -89,4 +89,36 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+@media screen and (max-width: 1024px) {
+  .all-news-card {
+    grid-template-columns: 96px auto;
+    padding: 0;
+    grid-gap: 15px;
+    padding: 0;
+    padding-bottom: 10px;
+    background: var(--black_111111, transparent);
+    border-bottom: 1px solid var(--black-5, #e7e7e7);
+  }
+  .all-news-card-img {
+    height: 63px;
+    background-color: gray;
+  }
+  .all-news-card-body a {
+    font-size: 14px;
+    line-height: 145%;
+  }
+  .all-news-card-info > span {
+    text-align: right;
+    font-size: 10px;
+    line-height: 130%;
+    letter-spacing: 0.2px;
+  }
+  .all-news-card-info {
+    margin-top: 11px;
+  }
+  .all-news-card-info span svg {
+    width: 14px;
+    height: 14px;
+  }
+}
 </style>

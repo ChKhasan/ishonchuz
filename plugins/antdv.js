@@ -1,11 +1,11 @@
 import Vue from "vue";
 import {
-//   Checkbox,
+  //   Checkbox,
   Switch,
   Input,
-//   Select,
-//   Pagination,
-//   Slider,
+  //   Select,
+  //   Pagination,
+  //   Slider,
   Rate,
   FormModel,
   Carousel,
@@ -15,7 +15,7 @@ import {
   Modal,
   // Popconfirm,
   // Radio,
-//   Icon,
+  //   Icon,
   Spin,
   Dropdown,
   // Menu,
@@ -28,6 +28,7 @@ import {
   // Skeleton,
   // Empty,
   // Alert,
+  Drawer,
 } from "ant-design-vue";
 // const { info, success, error, warning, confirm } = Modal;
 Vue.prototype.$notification = notification;
@@ -37,6 +38,7 @@ Vue.prototype.$notification = notification;
 // Vue.use(Slider);
 // Vue.use(Select);
 Vue.use(Switch);
+Vue.use(Drawer);
 // Vue.use(Pagination);
 Vue.use(Input);
 Vue.use(Rate);
