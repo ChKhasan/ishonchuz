@@ -218,7 +218,7 @@
               {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">
-            banner
+       
               <img :src="banners[0]?.image" alt="" />
             </div>
           </div>
