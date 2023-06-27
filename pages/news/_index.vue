@@ -54,6 +54,9 @@
               </div>
               <span>Foto: Ishonch.uz</span>
             </div> -->
+            <div class="mt-4 news_banner">
+              <img :src="news?.image" alt="" />
+            </div>
             <div class="news-container-body" v-html="news?.text">
               <!-- <p class="news-container-text" v-html="news?.text"></p> -->
               <!-- <div class="article-card">
@@ -460,6 +463,12 @@ export default {
 @import "../../assets/css/pages/comment-components.css";
 .news-page {
   padding-top: 28px;
+}
+.news_banner {
+  width: 100%;
+}
+.news_banner img {
+  width: 100%;
 }
 .new-category-title h2 {
   font-family: var(--ROBOTO_SERIF);

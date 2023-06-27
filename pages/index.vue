@@ -286,7 +286,7 @@ export default {
       spaceBetween: 10,
       effect: "fade",
       autoplay: {
-        delay: 3000,
+        delay: 6000,
       },
       thumbs: {
         swiper: swiper,
