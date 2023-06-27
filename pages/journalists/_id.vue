@@ -86,6 +86,7 @@
                 Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
                 qilib olar, har safar yangi jilva kasb etar edi
               </p>-->
+              <h2>Diplom va Sertifikatlar</h2>
               <img
                 :src="image?.image"
                 alt=""
@@ -268,6 +269,9 @@ export default {
 }
 .bio-body p {
   color: var(--white_ffffff, #292929) !important;
+}
+.bio-body {
+  margin-bottom: 40px;
 }
 .bio div p span {
   color: #ffffff !important;
