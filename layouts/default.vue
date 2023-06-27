@@ -2,13 +2,14 @@
   <div class="default-layout" :class="{ 'dark-theme': !$store.state.theme }">
     <Header
       :categories="categories"
+      :banners="banners"
       :currency="{
         usdCurrency: usdCurrency,
         eurCurrency: eurCurrency,
         rubCurrency: rubCurrency,
       }"
     />
-    <MobileHeader  :categories="categories"/>
+    <MobileHeader :categories="categories" />
     <div class="layout_back"></div>
     <Nuxt />
     <Footer :categories="categories" />
@@ -26,6 +27,7 @@ export default {
       rubCurrency: {},
       eurCurrency: {},
       usdCurrency: {},
+      banners: {},
     };
   },
   // async mounted() {
@@ -47,6 +49,7 @@ export default {
     const [
       categoriesData,
       translationsData,
+      bannersData,
       // rubCurrencyData,
       // eurCurrencyData,
       // usdCurrencyData,
@@ -57,6 +60,11 @@ export default {
         },
       }),
       this.$store.dispatch("fetchTranslations/getTranslations", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
+      this.$store.dispatch("fetchBanners/getBanners", {
         headers: {
           Language: this.$i18n.locale,
         },
@@ -72,6 +80,8 @@ export default {
       // ),
     ]);
     this.categories = categoriesData.results;
+    this.banners = bannersData.results;
+console.log(this.banners);
     // this.rubCurrency = rubCurrencyData?.data;
     // this.usdCurrency = usdCurrencyData?.data;
     // this.eurCurrency = eurCurrencyData?.data;

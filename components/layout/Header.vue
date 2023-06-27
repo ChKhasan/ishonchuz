@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <div class="header">
-      <HeaderBanner />
+      <HeaderBanner :banners="banners"/>
       <div class="container_xl">
         <div class="header-container">
           <div class="logo_block">
@@ -62,7 +62,7 @@
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
-  props: ["categories", "currency"],
+  props: ["categories", "currency","banners"],
   data() {
     return {
       logo: require("../../assets/svg/logo.svg?raw"),

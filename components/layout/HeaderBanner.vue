@@ -1,10 +1,12 @@
 <template lang="html">
   <div class="container_xl header-banner">
-    <img src="../../assets/images/Component 11.png" alt="" />
+    <img :src="banners[2]?.image" alt="" />
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["banners"],
+};
 </script>
 <style lang="css">
 .header-banner {
