@@ -155,7 +155,7 @@
         </div>
         <div class="home-page-right col-3 p-0 clear">
           <div class="block1">
-            <div class="home-page-right-title">
+            <div class="home-page-right-title" style="cursor: pointer" @click="$router.push('newspaper')">
               {{ $store.state.translations["main.newspaper"] }}
             </div>
             <div
