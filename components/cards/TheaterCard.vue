@@ -15,6 +15,7 @@
         <p>KUN <span>09-19</span></p>
         <p>SOAT <span>15:00; 22:00.</span></p>
       </div>
+      <span></span>
     </div>
     <div class="qr_code">
       <div></div>
@@ -69,7 +70,7 @@ export default {};
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #ffffff;
   left: -24.5px;
-  bottom: -5.5px;
+  bottom: -12.5px;
 }
 .theater-card-info::before {
   display: flex;
@@ -81,7 +82,7 @@ export default {};
   border: 1px solid rgba(0, 0, 0, 0.08);
   background: #ffffff;
   right: -24.5px;
-  bottom: -5.5px;
+  bottom: -12.5px;
 }
 .theater-card-info div {
   display: flex;
@@ -105,10 +106,27 @@ export default {};
 .qr_code {
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 20px;
 }
 .qr_code div {
   width: 100%;
   height: 52px;
   background: gray;
+}
+.theater-card-info > span {
+  margin: 0 auto;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.theater-card-info > span::after {
+  position: absolute;
+  content: "";
+  bottom: 0;
+  width: 80%;
+  display: flex;
+  border-bottom: 1px dashed #e7e7e7;
 }
 </style>
