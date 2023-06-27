@@ -4,7 +4,7 @@
       <div class="profile-grid">
         <ProfileMenu />
         <div class="profile-saved">
-          <h3>Mening javonim</h3>
+          <h3 class="profile-saved_title">Mening javonim</h3>
           <ul class="library_tab">
             <li
               :class="{
@@ -144,7 +144,7 @@ export default {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
 }
-.profile-saved h2 {
+.profile-saved_title {
   color: var(--black, #020105);
   font-size: 22px;
   font-family: var(--ROBOTO_SERIF);

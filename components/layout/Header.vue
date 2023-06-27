@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <div class="header">
-      <HeaderBanner :banners="banners"/>
+      <HeaderBanner :banners="banners" />
       <div class="container_xl">
         <div class="header-container">
           <div class="logo_block">
@@ -56,15 +56,30 @@
       </div>
     </div>
     <MenuList :categories="categories" />
+    <div class="to_top_btn" v-show="scY > 300" @click="toTop">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="injected-svg"
+        data-src="https://static.elfsight.com/icons/app-back-to-top-arrow-2.svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <path
+          d="M15.47 14.328a.615.615 0 0 0 .853 0 .577.577 0 0 0 0-.832l-3.896-3.824a.615.615 0 0 0-.854 0l-3.896 3.824a.578.578 0 0 0 0 .832.615.615 0 0 0 .853 0L12 10.92l3.47 3.408z"
+        ></path>
+      </svg>
+    </div>
   </div>
 </template>
 <script>
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
-  props: ["categories", "currency","banners"],
+  props: ["categories", "currency", "banners"],
   data() {
     return {
+      scTimer: 0,
+      scY: 0,
       logo: require("../../assets/svg/logo.svg?raw"),
       darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       sun: require("../../assets/svg/sun.svg?raw"),
@@ -87,8 +102,24 @@ export default {
       color: true,
     };
   },
-  mounted() {},
+  mounted() {
+    window.addEventListener("scroll", this.handleScroll);
+  },
   methods: {
+    handleScroll: function () {
+      if (this.scTimer) return;
+      this.scTimer = setTimeout(() => {
+        this.scY = window.scrollY;
+        clearTimeout(this.scTimer);
+        this.scTimer = 0;
+      }, 100);
+    },
+    toTop: function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
     onChange(checked) {
       console.log(`a-switch to ${checked}`);
     },
@@ -100,6 +131,17 @@ export default {
 };
 </script>
 <style lang="css">
+.to_top_btn {
+  display: flex;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: gray;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  cursor: pointer;
+}
 .header {
   background: var(--header_bg);
 }

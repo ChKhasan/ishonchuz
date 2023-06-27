@@ -341,35 +341,25 @@ export default {
     };
   },
   mounted() {
-    var header = this.$refs.navScroll;
-    var sticky = header.offsetTop;
-    window.addEventListener("scroll", () => {
-      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if (scrollTop > this.lastScrollTop && window.pageYOffset >= sticky) {
-        header.classList.add("sticky");
-        header.style.top = "-128px";
-      } else if (window.pageYOffset < sticky) {
-        header.classList.remove("sticky");
-      } else if (document.documentElement.scrollTop == 0) {
-        header.style.top = "0";
-      } else {
-        header.style.top = "0";
-      }
-      this.lastScrollTop = scrollTop;
-    });
+    // var header = this.$refs.navScroll;
+    // var sticky = header.offsetTop;
     // window.addEventListener("scroll", () => {
     //   let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    //   if (window.pageYOffset >= sticky) {
+    //   if (scrollTop > this.lastScrollTop && window.pageYOffset >= sticky) {
     //     header.classList.add("sticky");
-    //   } else {
+    //     header.style.top = "-128px";
+    //   } else if (window.pageYOffset < sticky) {
     //     header.classList.remove("sticky");
+    //   } else if (document.documentElement.scrollTop == 0) {
+    //     header.style.top = "0";
+    //   } else {
+    //     header.style.top = "0";
     //   }
     //   this.lastScrollTop = scrollTop;
     // });
   },
 
   methods: {
-   
     submit() {
       this.$router.push(`/search/${this.searchValue}`);
       this.visibleSearch = false;

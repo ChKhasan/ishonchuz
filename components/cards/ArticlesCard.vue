@@ -18,11 +18,12 @@ export default {
 <style lang="css">
 .articles-card {
   border-radius: 14px;
-  background: var(--black-1, #f9f9f9);
+  background: var(--black_111111, #f9f9f9);
   padding: 40px 43px 43px 50px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 }
 .articles-header h3 {
   color: var(--light-bue-100, #0192ff);
@@ -40,7 +41,7 @@ export default {
   margin-top: 10px;
 }
 .articles-body p {
-  color: var(--black-50, #707070);
+  color: var(--gray_cfcfcf, #707070);
   font-size: 14px;
   font-family: var(--ROBOTO_SERIF);
   line-height: 145%;
@@ -51,7 +52,7 @@ export default {
   text-overflow: ellipsis;
 }
 .articles-footer p {
-  color: var(--black-40, #888);
+  color: var(--gray_f9f9f9, #888);
   font-size: 16px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 500;
@@ -62,7 +63,7 @@ export default {
   display: flex;
 }
 .articles-footer span {
-  color: #000;
+  color: var(--white_ffffff, #000);
   font-size: 16px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 500;

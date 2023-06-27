@@ -1,7 +1,7 @@
 <template>
   <div class="home-page all-news-page">
     <div class="container_xl">
-      <div class="home-page-grid row">
+      <div class="home-page-grid row mx-0">
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="all-news-page-container">
             <h3>Barcha yangliklar</h3>

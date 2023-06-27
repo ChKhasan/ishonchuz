@@ -13,29 +13,4 @@
   color: var(--text_color);
   margin-bottom: 20px;
 }
-.library_tab {
-  display: flex;
-}
-.library_tab li {
-  margin-right: 16px;
-}
-.library_tab li a,
-.library_tab li span {
-  padding: 7.5px 10px;
-  border-radius: 3px;
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  text-transform: capitalize;
-  color: var(--tab_btn);
-  cursor: pointer;
-}
-.news-menu-active-categry a,
-.news-menu-active-categry span {
-  font-weight: 500 !important;
-  color: var(--active_tab_color) !important;
-  background: var(--active_tab_bg);
-  cursor: pointer;
-}
+

@@ -44,6 +44,7 @@ export default {
   mounted() {
     this.$store.commit("chackAuth");
     this.$store.commit("reloadStore");
+    this.$store.commit("changeTheme",'first');
   },
   async fetch() {
     const [
@@ -81,7 +82,7 @@ export default {
     ]);
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
-console.log(this.banners);
+    console.log(this.banners);
     // this.rubCurrency = rubCurrencyData?.data;
     // this.usdCurrency = usdCurrencyData?.data;
     // this.eurCurrency = eurCurrencyData?.data;

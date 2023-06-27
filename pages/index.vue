@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
     <div class="container_xl">
-      <div class="home-page-grid row">
+      <div class="home-page-grid row mx-0">
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="home-carousel">
             <div class="world">
@@ -199,9 +199,9 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board" v-if="dropVal == 2">
                   <ul>
-                    <!-- <li>{{ $store.state.translations["main.theatres"] }}</li> -->
-                    <li>{{ $store.state.translations["main.libraries"] }}</li>
-                    <li>
+                    <li @click="$router.push('/theater')">{{ $store.state.translations["main.Ytheatres"] }}</li>
+                    <li @click="$router.push('/concert')">{{ $store.state.translations["main.concert"] }}</li>
+                    <li @click="$router.push('/presentations')">
                       {{ $store.state.translations["main.presentations"] }}
                     </li>
                   </ul>
@@ -218,7 +218,6 @@
               {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">
-       
               <img :src="banners[0]?.image" alt="" />
             </div>
           </div>

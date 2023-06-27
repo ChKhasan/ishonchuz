@@ -9,7 +9,20 @@ export const state = () => ({
 
 export const mutations = {
   changeTheme(state, payload) {
-    state.theme = payload;
+    if (
+      JSON.parse(localStorage.getItem("theme")) != false &&
+      JSON.parse(localStorage.getItem("theme")) != true
+    ) {
+      localStorage.setItem("theme", true);
+      state.theme = JSON.parse(localStorage.getItem("theme"));
+    } else {
+      if (payload == "first") {
+        state.theme = JSON.parse(localStorage.getItem("theme"));
+      } else {
+        localStorage.setItem("theme", payload);
+        state.theme = JSON.parse(localStorage.getItem("theme"));
+      }
+    }
   },
   getTranslations(state, payload) {
     state.translations = payload;
