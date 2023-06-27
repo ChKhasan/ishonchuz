@@ -1,24 +1,26 @@
 <template lang="html">
-  <div class="theater-card">
-    <div class="theater-card-image">
-      <img src="../../assets/images/teater.png" alt="" />
-    </div>
-    <div class="theater-card-title">
-      <h4>Ummon guruhi - yirik gala konserti 2023</h4>
-    </div>
-    <div class="theater-card-info">
-      <div>
-        <p>YIL <span>2023</span></p>
-        <p>OY <span>SENTABR</span></p>
+  <div style="overflow: hidden;">
+    <div class="theater-card">
+      <div class="theater-card-image">
+        <img src="../../assets/images/teater.png" alt="" />
       </div>
-      <div>
-        <p>KUN <span>09-19</span></p>
-        <p>SOAT <span>15:00; 22:00.</span></p>
+      <div class="theater-card-title">
+        <h4>Ummon guruhi - yirik gala konserti 2023</h4>
       </div>
-      <span></span>
-    </div>
-    <div class="qr_code">
-      <div></div>
+      <div class="theater-card-info">
+        <div>
+          <p>YIL <span>2023</span></p>
+          <p>OY <span>SENTABR</span></p>
+        </div>
+        <div>
+          <p>KUN <span>09-19</span></p>
+          <p>SOAT <span>15:00; 22:00.</span></p>
+        </div>
+        <span></span>
+      </div>
+      <div class="qr_code">
+        <div></div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,8 +34,7 @@ export default {};
   background: var(--white, #fff);
   padding: 12px;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  border: 1px solid #d9d9d9;
 }
 .theater-card-image {
   height: 177px;
@@ -46,19 +47,23 @@ export default {};
 }
 .theater-card-title {
   margin-top: 9px;
-  padding-bottom: 8px;
-  border-bottom: 7px solid var(--light-bue-100, #0192ff);
+  padding-left: 2px;
+  padding-right: 2px;
 }
 .theater-card-title h4 {
   color: var(--dark-blue-100, #051769);
   font-size: 18px;
   font-family: "Allerta Stencil", sans-serif;
   text-transform: uppercase;
+  border-bottom: 7px solid var(--light-bue-100, #0192ff);
+  padding-bottom: 8px;
 }
 .theater-card-info {
   margin-top: 12px;
   position: relative;
   padding-bottom: 27px;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 .theater-card-info::after {
   display: flex;
@@ -67,7 +72,7 @@ export default {};
   width: 25px;
   border-radius: 50%;
   height: 25px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid #d9d9d9;
   background: #ffffff;
   left: -24.5px;
   bottom: -12.5px;
@@ -79,7 +84,7 @@ export default {};
   width: 25px;
   border-radius: 50%;
   height: 25px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid #d9d9d9;
   background: #ffffff;
   right: -24.5px;
   bottom: -12.5px;
@@ -107,6 +112,7 @@ export default {};
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
+  padding-bottom: 8px;
 }
 .qr_code div {
   width: 100%;
