@@ -170,9 +170,14 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board">
                   <ul>
-                    <li>Teatrlar</li>
-                    <li>Kutubxona</li>
-                    <li>Ko’rgazmalar</li>
+                    <li @click="$router.push('/library?type=literature')">Adabiyot</li>
+                    <li @click="$router.push('/library?type=scientific')">
+                      Ilmiy ishlar
+                    </li>
+                    <li @click="$router.push('/library?type=articles')">Maqolalar</li>
+                    <li @click="$router.push('/library?type=articles')">
+                      Kasaba faollari uchun  qo’llanmalar
+                    </li>
                   </ul>
                 </div>
               </Transition>
