@@ -14,7 +14,7 @@
             </NuxtLink>
           </div>
           <div class="right">
-            <button class="butn">
+            <button class="butn" @click="visibleSearch = true">
               <img src="@/assets/images/search.svg" alt="" />
             </button>
             <button class="butn">
@@ -105,6 +105,131 @@
         </div>
       </div>
     </div>
+    <a-modal
+      class="search-modal"
+      :body-style="{ padding: '0' }"
+      v-model="visibleSearch"
+      centered
+      :closable="false"
+      width="337px"
+      @ok="handleOkSearch"
+    >
+      <div class="search-block">
+        <input
+          type="text"
+          v-model="searchValue"
+          @keyup.enter="submit"
+          placeholder="Yangilikda qatnashgan so’zni kiriting"
+        />
+        <span v-html="searchInput"></span>
+      </div>
+    </a-modal>
+    <a-modal
+      :body-style="{ padding: '0' }"
+      v-model="visible"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOk"
+    >
+      <div class="vmodal-container">
+        <div class="vmodal-header">
+          <h2>Profilga kirish</h2>
+          <span @click="handleOk" v-html="mClose"></span>
+        </div>
+        <div class="vmodal-body">
+          <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
+            <a-form-model-item
+              class="form-item mb-0 w-100 auth-form"
+              label="Номер телефона"
+              prop="phone_number"
+            >
+              <the-mask
+                v-model="form.phone_number"
+                class="w-100"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+            </a-form-model-item>
+          </a-form-model>
+        </div>
+        <div class="vmodal-footer">
+          <div class="auth-btn" @click="onSubmit()">Kirish</div>
+        </div>
+      </div>
+    </a-modal>
+    <a-modal
+      :body-style="{ padding: '0' }"
+      v-model="visibleSms"
+      centered
+      :closable="false"
+      width="670px"
+      @ok="handleOkSms"
+    >
+      <div class="vmodal-container">
+        <div class="vmodal-header">
+          <h2>Profilga kirish</h2>
+          <span @click="handleOkSms" v-html="mClose"></span>
+        </div>
+        <div class="vmodal-body">
+          <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
+            <div class="modal-form-grid">
+              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
+                <the-mask
+                  v-model="formSms.phone_number"
+                  class="w-100 disabled"
+                  :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                  placeholder="+998 (__) ___ __ __"
+                />
+              </a-form-model-item>
+              <a-form-model-item
+                class="form-item mb-0 w-100 auth-form"
+                label="SMS-kod"
+                prop="code"
+                :class="{
+                  sms_code_success: responseTypes.smsCodeSuccess,
+                  sms_code_error: responseTypes.smsCodeError,
+                }"
+              >
+                <a-input
+                  v-model="formSms.code"
+                  class="w-100"
+                  placeholder="SMS kodni tering"
+                />
+                <span
+                  class="sms_success_icon"
+                  v-if="responseTypes.smsCodeSuccess"
+                  v-html="smsSuccess"
+                ></span>
+                <span
+                  class="sms_timer"
+                  v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
+                  >{{ smsTimer }}</span
+                >
+                <span class="error_code" v-if="responseTypes.smsCodeError"
+                  >Xato kiritildi!</span
+                >
+              </a-form-model-item>
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                label="Name"
+                prop="name"
+                v-if="responseTypes.userResponse"
+              >
+                <a-input
+                  v-model="formName.full_name"
+                  class="w-100"
+                  placeholder="SMS kodni tering"
+                />
+              </a-form-model-item>
+            </div>
+          </a-form-model>
+        </div>
+        <div class="vmodal-footer">
+          <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
+        </div>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -113,10 +238,63 @@ export default {
   props: ["categories"],
   data() {
     return {
+      visible: false,
+      visibleSearch: false,
+      visibleSms: false,
+      searchValue: "",
       dropVal: false,
       drawerVisible: false,
+      dropShow: false,
+      smsTimer: 45,
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
+      searchInput: require("../../assets/svg/search-input.svg?raw"),
+      search: require("../../assets/svg/search.svg?raw"),
+      user: require("../../assets/svg/user.svg?raw"),
       menu: require("../../assets/svg/menu.svg?raw"),
+      drop: require("../../assets/svg/dropdown.svg?raw"),
+      mClose: require("../../assets/svg/modal-close.svg?raw"),
+      smsSuccess: require("../../assets/svg/success.svg?raw"),
+      formName: {
+        phone_number: "",
+        code: "",
+        full_name: "",
+      },
+      responseTypes: {
+        smsCodeError: false,
+        smsCodeSuccess: false,
+        userResponse: false,
+      },
+      rulesName: {
+        phone_number: [
+          {
+            required: true,
+            message: "Please input Activity name",
+            trigger: "blur",
+          },
+        ],
+      },
+      form: {
+        phone_number: "",
+      },
+      rules: {
+        phone_number: [
+          { required: true, message: "Number is reqiured", trigger: "change" },
+          { min: 9, message: "Length should be 9", trigger: "change" },
+        ],
+      },
+      formSms: {
+        phone_number: "",
+        code: "",
+      },
+      rulesSms: {
+        code: [
+          {
+            required: true,
+            message: "Sms code is required",
+            trigger: "change",
+          },
+        ],
+      },
     };
   },
   computed: {
@@ -125,12 +303,115 @@ export default {
     },
   },
   methods: {
+    handleOkSearch() {
+      this.visibleSearch = false;
+    },
+    submit() {
+      this.$router.push(`/search/${this.searchValue}`);
+      this.visibleSearch = false;
+    },
     dropAction(val) {
       console.log(":asdasdasds");
       if (val != this.dropVal) {
         this.dropVal = val;
       } else {
         this.dropVal = false;
+      }
+    },
+    handleOk() {
+      this.visible = false;
+    },
+    handleOkSms() {
+      this.visibleSms = false;
+    },
+    onSubmit() {
+      this.formSms = {
+        ...this.formSms,
+        phone_number: `998${this.form.phone_number}`,
+      };
+      this.$refs.ruleFormAuth.validate((valid) => {
+        if (valid) {
+          this.__SEND_NUMBER(this.form);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    onSubmitSms() {
+      // this.formSms.phone_number = this.form.phone_number;
+      const data = {
+        ...this.formSms,
+        full_name: this.formName.full_name,
+      };
+      this.$refs.ruleFormSms.validate((valid) => {
+        if (valid) {
+          this.responseTypes.smsCodeSuccess
+            ? this.__LOGIN_REGISTER(data)
+            : this.__CHECK_SMS_CODE(this.formSms);
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    async __SEND_NUMBER(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postSendSmsCode", dataForm);
+        this.visible = false;
+        this.visibleSms = true;
+        this.form.phone_number = "";
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async __CHECK_SMS_CODE(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postCheckSmsCode", dataForm);
+        if (data.correct) {
+          this.responseTypes.smsCodeSuccess = true;
+          this.responseTypes.smsCodeError = false;
+
+          if (data.tokens) {
+            this.responseTypes.userResponse = false;
+            await localStorage.setItem(
+              "access_token",
+              JSON.stringify(data.tokens.access)
+            );
+            await localStorage.setItem(
+              "refresh_token",
+              JSON.stringify(data.tokens.refresh)
+            );
+            this.$store.commit("chackAuth");
+            this.visibleSms = false;
+            this.$router.push("/profile/personal-info");
+          } else {
+            this.responseTypes.userResponse = true;
+          }
+        } else {
+          this.responseTypes.smsCodeSuccess = false;
+          this.responseTypes.smsCodeError = true;
+        }
+      } catch (e) {
+        if (e.response.status == 403) {
+          this.responseTypes.smsCodeSuccess = false;
+          this.responseTypes.smsCodeError = true;
+        }
+        console.log(e);
+      }
+    },
+    async __LOGIN_REGISTER(dataForm) {
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLoginRegister", dataForm);
+        this.responseTypes.smsCodeSuccess = true;
+        this.visibleSms = false;
+        localStorage.setItem("access_token", JSON.stringify(data.access));
+        localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
+        this.$store.commit("chackAuth");
+        // this.$router.push("/profile/personal-info");
+      } catch (e) {
+        this.responseTypes.smsCodeError = true;
+        console.log(e);
       }
     },
   },
@@ -141,6 +422,40 @@ export default {
     "$route.path"() {
       this.drawerVisible = false;
       console.log("asdasdas");
+    },
+    visibleSms(val) {
+      if (val) {
+        this.smsTimer = 45;
+        const smInterval = setInterval(() => {
+          if (this.smsTimer > 0) {
+            this.smsTimer--;
+          }
+          if (this.smsTimer == 0) {
+            clearInterval(smInterval);
+          }
+        }, 1000);
+      } else {
+        this.formName.full_name = "";
+        this.formSms = {
+          phone_number: "",
+          code: "",
+        };
+      }
+    },
+    smsTimer(val) {
+      if (val == 0 && this.visibleSms) this.__SEND_NUMBER(this.form);
+    },
+    "formSms.code"(val) {
+      if (val.length < 6) {
+        (this.responseTypes.smsCodeError = false),
+          (this.responseTypes.smsCodeSuccess = false);
+      }
+    },
+    smsCodeSuccess(val) {
+      if (val) this.smsCodeError = false;
+    },
+    smsCodeError(val) {
+      if (val) this.smsCodeSuccess = false;
     },
   },
 };

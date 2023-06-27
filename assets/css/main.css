@@ -384,3 +384,9 @@ ul {
     display: none;
   }
 }
+.mejs__mediaelement {
+  width: 100% !important;
+}
+.mejs__video {
+  width: 100% !important;
+}
