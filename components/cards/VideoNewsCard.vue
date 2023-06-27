@@ -11,8 +11,14 @@
         allowfullscreen
       >
       </iframe> -->
-      <LazyYoutube @change="changeVideo" ref="lazyVideo" :src="news?.video" />
-      <span> {{$store.state.translations['main.analysis']}} </span>
+      <LazyYoutube
+        v-if="news?.video"
+        @change="changeVideo"
+        ref="lazyVideo"
+        :src="news?.video"
+      />
+      <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+      <span> {{ $store.state.translations["main.analysis"] }} </span>
       <div v-if="videoShow">
         <div @click="handleClick('playVideo')" v-html="video"></div>
       </div>

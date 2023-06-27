@@ -1,7 +1,7 @@
 <template lang="html">
-  <div class="v-news-card" @click="$router.push(localePath(`/news/${news?.slug}`))">
+  <div class="v-news-card">
     <div class="v-news-card-img">
-      <iframe
+      <!-- <iframe
         width="420"
         height="315"
         ref="youtubeVid"
@@ -10,7 +10,8 @@
         frameborder="0"
         allowfullscreen
       >
-      </iframe>
+      </iframe> -->
+      <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
       <img v-else :src="news?.image" alt="" />
       <img
         v-if="!news?.video && !news?.image"

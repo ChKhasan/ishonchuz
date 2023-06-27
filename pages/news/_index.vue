@@ -56,7 +56,8 @@
             </div> -->
             <div class="news_video mt-4" v-if="news?.video">
               <!-- <video :src="news?.video"></video> -->
-              <iframe width="420" height="315" :src="news?.video"> </iframe>
+              <!-- <iframe width="420" height="315" :src="news?.video"> </iframe> -->
+              <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
             </div>
             <div class="mt-4 news_banner" v-if="news?.image">
               <img :src="news?.image" alt="" />
@@ -477,8 +478,10 @@ export default {
 .news_video {
   width: 100%;
 }
-.news_video iframe {
+.news_video iframe,
+.vlt-wrapper {
   width: 100% !important;
+  max-width: 100% !important;
 }
 .new-category-title h2 {
   font-family: var(--ROBOTO_SERIF);
