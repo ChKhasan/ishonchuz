@@ -189,6 +189,7 @@ export default {
   height: 270px;
   border-radius: 50%;
   margin-bottom: 35px;
+  object-fit: cover;
 }
 .name {
   font-size: 22px;
@@ -313,6 +314,7 @@ export default {
 }
 .article {
   padding-left: 24px;
+  padding: 14px;
   border-left: 1px solid var(--black-5, #e7e7e7);
 }
 .articles .name {

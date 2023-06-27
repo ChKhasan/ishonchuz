@@ -195,7 +195,7 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board" v-if="dropVal == 2">
                   <ul>
-                    <li>{{ $store.state.translations["main.theatres"] }}</li>
+                    <!-- <li>{{ $store.state.translations["main.theatres"] }}</li> -->
                     <li>{{ $store.state.translations["main.libraries"] }}</li>
                     <li>
                       {{ $store.state.translations["main.presentations"] }}
