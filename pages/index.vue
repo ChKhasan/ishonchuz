@@ -155,7 +155,11 @@
         </div>
         <div class="home-page-right col-3 p-0 clear">
           <div class="block1">
-            <div class="home-page-right-title" style="cursor: pointer" @click="$router.push('newspaper')">
+            <div
+              class="home-page-right-title"
+              style="cursor: pointer"
+              @click="$router.push('newspaper')"
+            >
               {{ $store.state.translations["main.newspaper"] }}
             </div>
             <div
@@ -206,7 +210,11 @@
             </div>
           </div>
           <div class="block2">
-            <div class="home-page-right-title" style="text-align: center">
+            <div
+              class="home-page-right-title"
+              style="text-align: center; cursor: pointer"
+              @click="$router.push('/about')"
+            >
               {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">

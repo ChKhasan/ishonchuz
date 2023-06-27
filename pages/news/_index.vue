@@ -586,16 +586,12 @@ export default {
   padding-bottom: 160px;
   border-bottom: 1px solid var(--news_container_br);
 }
-.news-container-body p,
-.news-container-body span,
-.news-container-body li {
-  color: var(--text_color) !important;
-  background-color: transparent !important;
-}
+
 .news-container-body img {
   width: 100%;
 }
-.news-container-body h1 {
+.news-container-body h1,
+.news-container-body::v-deep h1 {
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 600;
@@ -621,10 +617,31 @@ export default {
   text-align: right;
   color: #051769;
 }
-.article-card-text p {
-  font-family: var(--ROBOTO_SERIF);
+.news-container-body p,
+.news-container-body span,
+.news-container-body li {
+  color: var(--text_color) !important;
+  background-color: transparent !important;
+  font-family: var(--ROBOTO_SERIF) !important;
+  font-weight: 400 !important;
+  font-size: 19px !important;
+  line-height: 170%;
+  color: #1e2e78;
+}
+.news-container-body strong {
+  color: var(--dark-blue-90, #1e2e78) !important;
+  font-size: 19px !important;
+  font-family: var(--ROBOTO_SERIF) !important;
+
   font-style: italic;
+  line-height: 170%;
+}
+.article-card-text p,
+.news-container-body li {
+  font-family: var(--ROBOTO_SERIF) !important;
   font-weight: 400;
+  font-style: italic;
+
   font-size: 19px;
   line-height: 170%;
   color: #1e2e78;
