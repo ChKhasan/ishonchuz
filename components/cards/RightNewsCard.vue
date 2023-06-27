@@ -2,7 +2,7 @@
   <div class="right-news-card">
     <div
       class="right-news-text"
-      :class="{ 'right-news-text-active': $store.state.viewNews.includes(news?.id) }"
+      :class="{ 'right-news-text-active': !$store.state.viewNews.includes(news?.id) }"
     >
       <nuxt-link :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}

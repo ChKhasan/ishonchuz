@@ -192,7 +192,7 @@
                 <a-input
                   v-model="formName.full_name"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  placeholder="Ismingizni kiriting..."
                 />
               </a-form-model-item>
             </div>
