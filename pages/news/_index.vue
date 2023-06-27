@@ -54,12 +54,12 @@
               </div>
               <span>Foto: Ishonch.uz</span>
             </div> -->
-            <div class="mt-4 news_banner">
-              <img :src="news?.image" alt="" />
-            </div>
-            <div class="news_video">
+            <div class="news_video mt-4" v-if="news?.video">
               <!-- <video :src="news?.video"></video> -->
               <iframe width="420" height="315" :src="news?.video"> </iframe>
+            </div>
+            <div class="mt-4 news_banner" v-if="news?.image">
+              <img :src="news?.image" alt="" />
             </div>
             <div class="news-container-body" v-html="news?.text">
               <!-- <p class="news-container-text" v-html="news?.text"></p> -->
