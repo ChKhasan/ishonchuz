@@ -206,6 +206,7 @@ export default {
   color: var(--breadcrumb_text);
   margin-bottom: 60px;
 }
+
 .socials {
   display: flex;
   align-items: center;
@@ -278,6 +279,7 @@ export default {
   color: var(--active_tab_color);
   margin-bottom: 8px;
 }
+.bio::v-deep h2,
 .bio h3,
 .bio h4,
 .bio h2 {
@@ -288,6 +290,8 @@ export default {
   color: var(--active_tab_color);
   margin-bottom: 8px;
 }
+.bio::v-deep p,
+.bio::v-deep span,
 .bio p,
 .bio span {
   font-size: 16px;
