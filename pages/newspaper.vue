@@ -6,27 +6,26 @@
         <ul class="library_tab">
           <li
             :class="{
-              'news-menu-active-categry': $route.query.type == 'literature',
+              'news-menu-active-categry': $route.query.type == 'all',
             }"
-            class="news-menu-active-categry"
           >
-            <span @click="tabChange('literature')">{{
+            <span @click="tabChange('all')">{{
               $store.state.translations["main.see_all"]
             }}</span>
           </li>
           <li
             :class="{
-              'news-menu-active-categry': $route.query.type == 'scientific',
+              'news-menu-active-categry': $route.query.type == 'uz',
             }"
           >
-            <span @click="tabChange('scientific')">O’zbek tili</span>
+            <span @click="tabChange('uz')">O’zbek tili</span>
           </li>
           <li
             :class="{
-              'news-menu-active-categry': $route.query.type == 'articles',
+              'news-menu-active-categry': $route.query.type == 'ru',
             }"
           >
-            <span @click="tabChange('articles')">{{
+            <span @click="tabChange('ru')">{{
               $store.state.translations["main.russian"]
             }}</span>
           </li>
@@ -98,7 +97,7 @@ export default {
   },
   mounted() {
     if (Object.keys(this.$route.query).length == 0) {
-      this.tabChange("literature");
+      this.tabChange("all");
     }
   },
   methods: {

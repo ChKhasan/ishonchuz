@@ -603,6 +603,10 @@ export default {
 .news-container-body img {
   width: 100%;
 }
+.news-container-body figure {
+  width: 100% !important;
+  margin-left: 0 !important;
+}
 .news-container-body h1,
 .news-container-body::v-deep h1 {
   font-family: var(--ROBOTO_SERIF);

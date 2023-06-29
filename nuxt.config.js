@@ -47,6 +47,9 @@ export default {
     },
     baseURL: "https://ishonch.pythonanywhere.com/api",
   },
+  loading: {
+    color: "#0192ff",
+  },
   router: {
     middleware: ["auth"],
   },

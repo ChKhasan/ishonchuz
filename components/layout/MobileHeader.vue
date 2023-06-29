@@ -17,7 +17,14 @@
             <button class="butn" @click="visibleSearch = true">
               <img src="@/assets/images/search.svg" alt="" />
             </button>
-            <button class="butn">
+            <button
+              class="butn"
+              @click="
+                $store.state.auth
+                  ? $router.push('/profile/personal-info')
+                  : (authMobilVisible = !authMobilVisible)
+              "
+            >
               <img src="@/assets/images/person.svg" alt="" />
             </button>
             <button class="butn" @click="drawerVisible = !drawerVisible">
@@ -125,6 +132,7 @@
       </div>
     </a-modal>
     <a-modal
+      class="auth-modal-web"
       :body-style="{ padding: '0' }"
       v-model="visible"
       centered
@@ -160,6 +168,7 @@
     </a-modal>
     <a-modal
       :body-style="{ padding: '0' }"
+      class="auth-modal-web"
       v-model="visibleSms"
       centered
       :closable="false"
@@ -230,6 +239,77 @@
         </div>
       </div>
     </a-modal>
+    <div class="auth_modal_mobile" :class="{ 'h-100vh': authMobilVisible }">
+      <div class="auth_mobile_body">
+        <span class="auth-logo" v-html="logo"> </span>
+        <h3>Telefon raqamingizni kiritng</h3>
+        <p>Tasdiqlash kodini SMS orqali yuboramiz</p>
+        <div class="auth-form-mobile w-100">
+          <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
+            <a-form-model-item
+              class="form-item-mobile mb-0 w-100 auth-form"
+              prop="phone_number"
+            >
+              <the-mask
+                v-if="visibleSms"
+                v-model="formSms.phone_number"
+                class="w-100 disabled"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+              <the-mask
+                v-else
+                v-model="form.phone_number"
+                class="w-100"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+            </a-form-model-item>
+            <a-form-model-item
+              v-if="visibleSms"
+              class="form-item-mobile mb-0 w-100 auth-form"
+              prop="code"
+              :class="{
+                sms_code_success: responseTypes.smsCodeSuccess,
+                sms_code_error: responseTypes.smsCodeError,
+              }"
+            >
+              <a-input
+                v-model="formSms.code"
+                class="w-100"
+                placeholder="SMS kodni tering"
+              />
+              <span
+                class="sms_success_icon"
+                v-if="responseTypes.smsCodeSuccess"
+                v-html="smsSuccess"
+              ></span>
+              <span
+                class="sms_timer"
+                v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
+                >{{ smsTimer }}</span
+              >
+              <span class="error_code" v-if="responseTypes.smsCodeError"
+                >Xato kiritildi!</span
+              >
+            </a-form-model-item>
+            <a-form-model-item
+              class="form-item mb-0 w-100"
+              label="Name"
+              prop="name"
+              v-if="responseTypes.userResponse"
+            >
+              <a-input
+                v-model="formName.full_name"
+                class="w-100"
+                placeholder="SMS kodni tering"
+              />
+            </a-form-model-item>
+          </a-form-model>
+          <div class="auth_btn_mobile" @click="onSubmitModel">Kirish</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -238,6 +318,7 @@ export default {
   props: ["categories"],
   data() {
     return {
+      authMobilVisible: false,
       visible: false,
       visibleSearch: false,
       visibleSms: false,
@@ -246,6 +327,8 @@ export default {
       drawerVisible: false,
       dropShow: false,
       smsTimer: 45,
+      logo: require("../../assets/svg/logo.svg?raw"),
+      darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
       searchInput: require("../../assets/svg/search-input.svg?raw"),
       search: require("../../assets/svg/search.svg?raw"),
@@ -338,6 +421,13 @@ export default {
         }
       });
     },
+    onSubmitModel() {
+      if (this.visibleSms) {
+        this.onSubmitSms();
+      } else {
+        this.onSubmit();
+      }
+    },
     onSubmitSms() {
       // this.formSms.phone_number = this.form.phone_number;
       const data = {
@@ -405,6 +495,7 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLoginRegister", dataForm);
         this.responseTypes.smsCodeSuccess = true;
         this.visibleSms = false;
+        this.authMobilVisible = false;
         localStorage.setItem("access_token", JSON.stringify(data.access));
         localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
         this.$store.commit("chackAuth");
@@ -479,6 +570,7 @@ export default {
 .banner {
   width: 100%;
 }
+
 .bottom {
   padding: 16px 0;
   display: flex;
@@ -510,11 +602,97 @@ export default {
   transition: 0.3s;
   overflow: hidden;
 }
+.auth_modal_mobile {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  background: #fff;
+  padding: 0;
+  transition: 0.3s;
+  overflow: hidden;
+}
+.auth_mobile_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  padding-top: 68px;
+}
+.auth_mobile_body h3 {
+  color: var(--black-100, #000);
+  text-align: center;
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  margin-bottom: 10px;
+}
+.auth_mobile_body p {
+  color: var(--black-40, #888);
+  text-align: center;
+  font-size: 12px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.24px;
+}
 .drawer_menu-body {
   padding: 20px;
 }
+.auth_btn_mobile {
+  margin-top: 20px;
+  border-radius: 8px;
+  background: #0192ff;
+  padding: 16px 0;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.auth-logo {
+  height: 24px;
+  margin-bottom: 30px;
+}
 .h-100vh {
   height: 100vh !important;
+}
+.auth-form-mobile {
+  margin-top: 47px;
+}
+
+.form-item-mobile input {
+  border-radius: 4px;
+  background: var(--black-1, #f9f9f9);
+  height: 56px;
+  border: none;
+  padding-left: 16px;
+  color: var(--black-30, #a0a0a0);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  color: #000;
+}
+.form-item-mobile {
+  margin-bottom: 20px !important;
+}
+.form-item-mobile input:focus {
+  outline: none;
+}
+@media screen and (max-width: 576px) {
+  .auth-modal-web {
+    display: none;
+  }
 }
 @media screen and (max-width: 1024px) {
   .wrap {

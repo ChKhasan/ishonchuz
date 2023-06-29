@@ -57,17 +57,7 @@
     </div>
     <MenuList :categories="categories" />
     <div class="to_top_btn" v-show="scY > 300" @click="toTop">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        class="injected-svg"
-        data-src="https://static.elfsight.com/icons/app-back-to-top-arrow-2.svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-      >
-        <path
-          d="M15.47 14.328a.615.615 0 0 0 .853 0 .577.577 0 0 0 0-.832l-3.896-3.824a.615.615 0 0 0-.854 0l-3.896 3.824a.578.578 0 0 0 0 .832.615.615 0 0 0 .853 0L12 10.92l3.47 3.408z"
-        ></path>
-      </svg>
+      <span v-html="drop"></span>
     </div>
   </div>
 </template>
@@ -136,11 +126,47 @@ export default {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background: gray;
+  background: #ffffff;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
   position: fixed;
   right: 30px;
   bottom: 30px;
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.to_top_btn:hover {
+  -webkit-animation: swing 0.5s ease;
+  animation: swing 0.5s ease;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+@keyframes swing {
+  0% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  33% {
+    -webkit-transform: translateY(5px);
+    transform: translateY(5px);
+  }
+  66% {
+    -webkit-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+.to_top_btn svg {
+  fill: var(--blue_0192FF, #0192ff);
+  transform: rotate(180deg);
+  width: 20px;
+  height: 30px;
+}
+.to_top_btn svg path {
+  fill: var(--blue_0192FF, #0192ff);
 }
 .header {
   background: var(--header_bg);

@@ -405,7 +405,10 @@ ul {
   background: var(--active_tab_bg);
   cursor: pointer;
 }
-
+.form-item-mobile .ant-form-item-children {
+  display: flex !important;
+  align-items: center !important;
+}
 @media screen and (max-width: 1024px) {
   .header,
   .menu-list {

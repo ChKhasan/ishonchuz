@@ -86,7 +86,7 @@
                 Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
                 qilib olar, har safar yangi jilva kasb etar edi
               </p>-->
-              <h2>Diplom va Sertifikatlar</h2>
+              <h2 v-if="image?.image">Diplom va Sertifikatlar</h2>
               <img
                 :src="image?.image"
                 alt=""
