@@ -9,9 +9,56 @@
       <div class="container">
         <div class="bottom">
           <div class="left">
+            <button
+              class="butn"
+              @click="profileMenu = !profileMenu"
+              v-if="$route.path.includes('profile')"
+            >
+              <span v-html="menu" v-if="!drawerVisible"></span>
+              <span v-else
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <g id="close-line">
+                    <path
+                      id="Vector"
+                      d="M10 8.66671L14.6667 4L16 5.33333L11.3334 10L16 14.6667L14.6667 16L10 11.3334L5.33333 16L4 14.6667L8.66671 10L4 5.33333L5.33333 4L10 8.66671Z"
+                      fill="#6974A5"
+                    />
+                  </g></svg
+              ></span>
+            </button>
+            <button v-else class="butn" @click="drawerVisible = !drawerVisible">
+              <span v-html="menu" v-if="!drawerVisible"></span>
+              <span v-else
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <g id="close-line">
+                    <path
+                      id="Vector"
+                      d="M10 8.66671L14.6667 4L16 5.33333L11.3334 10L16 14.6667L14.6667 16L10 11.3334L5.33333 16L4 14.6667L8.66671 10L4 5.33333L5.33333 4L10 8.66671Z"
+                      fill="#6974A5"
+                    />
+                  </g></svg
+              ></span>
+            </button>
+          </div>
+          <div class="center">
             <NuxtLink to="/">
               <!-- <img src="@/assets/images/logo/brand.svg" alt="" /> -->
-              <span v-html="$store.state.theme ? logo : darkLogo"></span>
+              <span
+                class="mobile-logo"
+                v-html="$store.state.theme ? logo : darkLogo"
+              ></span>
             </NuxtLink>
           </div>
           <div class="right">
@@ -37,25 +84,6 @@
               "
             >
               <img src="@/assets/images/person.svg" alt="" />
-            </button>
-            <button class="butn" @click="drawerVisible = !drawerVisible">
-              <span v-html="menu" v-if="!drawerVisible"></span>
-              <span v-else
-                ><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                >
-                  <g id="close-line">
-                    <path
-                      id="Vector"
-                      d="M10 8.66671L14.6667 4L16 5.33333L11.3334 10L16 14.6667L14.6667 16L10 11.3334L5.33333 16L4 14.6667L8.66671 10L4 5.33333L5.33333 4L10 8.66671Z"
-                      fill="#6974A5"
-                    />
-                  </g></svg
-              ></span>
             </button>
           </div>
         </div>
@@ -404,6 +432,45 @@
         </div>
       </div>
     </div>
+    <div class="profile_menu_mobile profile-menu" :class="{ 'h-100vh': profileMenu }">
+      <ul>
+        <li
+          :class="{
+            'active-profile-menu': $route.name.includes('profile-personal-info'),
+          }"
+        >
+          <nuxt-link :to="localePath('/profile/personal-info')"
+            ><span v-html="userProfile"></span>
+            {{ $store.state.translations["main.my-room"] }}
+          </nuxt-link>
+          <span v-html="dropdown"></span>
+        </li>
+        <li
+          :class="{
+            'active-profile-menu': $route.name.includes('profile-my-board'),
+          }"
+        >
+          <nuxt-link :to="localePath('/profile/my-board')"
+            ><span v-html="star"></span> {{ $store.state.translations["main.my-shelf"] }}
+          </nuxt-link>
+          <span v-html="dropdown"></span>
+        </li>
+        <li
+          :class="{
+            'active-profile-menu': $route.name.includes('profile-saved'),
+          }"
+        >
+          <nuxt-link :to="localePath('/profile/saved')"
+            ><span v-html="comment"></span> {{ $store.state.translations["main.saved"] }}
+          </nuxt-link>
+          <span v-html="dropdown"></span>
+        </li>
+        <li>
+          <div @click="logOut()"><span v-html="exit"></span> Chiqish</div>
+          <span v-html="dropdown"></span>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -412,6 +479,7 @@ export default {
   props: ["categories"],
   data() {
     return {
+      profileMenu: false,
       authMobilVisible: false,
       visible: false,
       visibleSearch: false,
@@ -421,6 +489,10 @@ export default {
       drawerVisible: false,
       dropShow: false,
       smsTimer: 45,
+      userProfile: require("../../assets/svg/profile-user.svg?raw"),
+      star: require("../../assets/svg/profile-star.svg?raw"),
+      comment: require("../../assets/svg/profile-comment.svg?raw"),
+      exit: require("../../assets/svg/exit.svg?raw"),
       logo: require("../../assets/svg/logo.svg?raw"),
       darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
@@ -645,7 +717,7 @@ export default {
     "$route.path"() {
       this.drawerVisible = false;
       this.authMobilVisible = false;
-
+      this.profileMenu = false;
       console.log("asdasdas");
     },
     visibleSms(val) {
@@ -691,6 +763,9 @@ export default {
 .mobile-color-switch {
   display: flex;
   justify-content: center;
+}
+.center svg {
+  height: 20px;
 }
 .mobile-color-switch .color-switch {
   border: 1px solid #eeeeee;
@@ -746,16 +821,26 @@ export default {
   transition: 0.3s;
   overflow: hidden;
 }
-.auth_modal_mobile {
+.profile_menu_mobile {
   position: absolute;
   width: 100%;
   height: 0;
-  background: var(--header_bg);
+  background: var(--black_111111, #ffffff);
   padding: 0;
   transition: 0.3s;
   /* overflow: hidden; */
   overflow: scroll;
   display: none;
+}
+.auth_modal_mobile {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  background: var(--black_111111, #ffffff);
+  padding: 0;
+  transition: 0.3s;
+  /* overflow: hidden; */
+  overflow: scroll;
 }
 .reboot_sms {
   color: var(--white_ffffff, #111);
@@ -830,6 +915,7 @@ export default {
 }
 .h-100vh {
   height: 100vh !important;
+  opacity: 1 !important;
 }
 .auth-form-mobile {
   margin-top: 47px;
@@ -871,6 +957,29 @@ export default {
 @media screen and (max-width: 576px) {
   .auth-modal-web {
     display: none;
+  }
+  .profile_menu_mobile {
+    display: block;
+    opacity: 0;
+  }
+  .profile-menu ul {
+    border-radius: 8px;
+    background: var(--black-1, #f9f9f9);
+    padding: 24px;
+  }
+  .profile-menu {
+    padding: 15px;
+  }
+  .profile-menu ul li {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .profile-menu ul li > span {
+    position: absolute;
+    right: 70px;
+    background: transparent !important;
+    transform: rotate(-90deg);
   }
   .open-modal-web {
     display: none !important;

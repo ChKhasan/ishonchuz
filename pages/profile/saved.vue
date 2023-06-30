@@ -1,6 +1,38 @@
 <template lang="html">
   <div class="profile-page">
     <div class="container_xl">
+      <ul class="library_tab top_tab">
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-personal-info'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/personal-info'))">{{
+            $store.state.translations["main.my-room"]
+          }}</span>
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-my-board'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/my-board'))">
+            {{ $store.state.translations["main.my-shelf"] }}</span
+          >
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-saved'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/saved'))">{{
+            $store.state.translations["main.saved"]
+          }}</span>
+        </li>
+        <li>
+          <span>Chiqish</span>
+        </li>
+      </ul>
       <div class="profile-grid">
         <ProfileMenu />
         <div class="profile-saved">
@@ -33,20 +65,14 @@
               <span>{{ $store.state.translations["main.society"] }}</span>
             </li>
           </ul>
-          <div
-            class="saved-books-grid"
-            v-if="$route.query.type == 'literature'"
-          >
+          <div class="saved-books-grid" v-if="$route.query.type == 'literature'">
             <BookCard
               v-for="book in savedBooks?.literature_books"
               :book="book"
               :key="book?.id"
             />
           </div>
-          <div
-            class="saved-books-grid"
-            v-if="$route.query.type == 'scientific'"
-          >
+          <div class="saved-books-grid" v-if="$route.query.type == 'scientific'">
             <BookCard
               v-for="book in savedBooks?.science_books"
               :book="book"
@@ -112,7 +138,7 @@ export default {
       this.savedBooks = savedData;
       console.log(savedData);
     },
-  
+
     middlewareAuth() {
       if (!localStorage.getItem("access_token")) {
         this.$router.push("/");
@@ -137,13 +163,11 @@ export default {
 };
 </script>
 <style lang="css">
-.profile-page {
-  padding-top: 78px;
-}
 .profile-grid {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
 }
+
 .profile-saved_title {
   color: var(--black, #020105);
   font-size: 22px;
@@ -163,5 +187,30 @@ export default {
   border: 1px solid var(--gray_292929, #e7e7e7);
   background: var(--black_000000, #fff);
   padding: 50px 65px;
+}
+.top_tab {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  margin-bottom: 30px !important;
+  height: 35px;
+}
+@media (max-width: 576px) {
+  .profile-saved {
+    padding: 20px;
+  }
+  .saved-books-grid {
+    margin-top: 20px;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .profile-saved_title {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%;
+  }
 }
 </style>

@@ -6,11 +6,11 @@
     </div>
     <div class="book-card-body">
       <h3>{{ book?.title }}</h3>
-    </div>
-    <div class="book-card-footer">
-      <nuxt-link :to="localePath(`/book/${book.slug}`)"
-        >O’qish <span v-html="drop"></span
-      ></nuxt-link>
+      <div class="book-card-footer">
+        <nuxt-link :to="localePath(`/book/${book.slug}`)"
+          >O’qish <span v-html="drop"></span
+        ></nuxt-link>
+      </div>
     </div>
   </div>
 </template>
@@ -52,8 +52,8 @@ export default {
   display: -webkit-box;
   text-overflow: ellipsis;
 }
-.book-card-body {
-  margin-bottom: 17px;
+.book-card-footer {
+  margin-top: 17px;
 }
 .book-card-footer a {
   font-family: var(--ROBOTO_SERIF);
@@ -72,5 +72,38 @@ export default {
 }
 .book-card-footer a span svg path {
   fill: #0192ff;
+}
+@media (max-width: 576px) {
+  .book-card {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 69px auto;
+    grid-gap: 14px;
+  }
+  .book-card-img {
+    height: 99px;
+    margin-bottom: 0;
+  }
+  .book-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .book-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .book-card-body h3 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+    height: 38px;
+  }
+  .book-card-footer a {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 145%;
+  }
 }
 </style>

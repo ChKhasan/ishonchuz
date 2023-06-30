@@ -167,7 +167,12 @@ ul {
   grid-template-columns: 1fr;
   grid-gap: 12px;
 }
-
+.mobile-logo svg,
+.mobile-logo {
+  height: 20px !important;
+  display: flex;
+  max-height: 20px !important;
+}
 .right-show-more-primary,
 .right-show-more,
 .show-more-count {
@@ -409,6 +414,9 @@ ul {
   display: flex !important;
   align-items: center !important;
 }
+.top_tab {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .header,
   .menu-list {
@@ -420,4 +428,30 @@ ul {
 }
 .mejs__video {
   width: 100% !important;
+}
+.profile-page {
+  padding-top: 78px;
+}
+@media (max-width: 576px) {
+  .web-menu {
+    display: none;
+  }
+  .profile-page {
+    padding-top: 30px;
+  }
+  .library_tab li a,
+  .library_tab li span {
+    white-space: nowrap;
+  }
+  .library_tab {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .top_tab {
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
+    margin-bottom: 30px !important;
+    height: 35px;
+  }
 }

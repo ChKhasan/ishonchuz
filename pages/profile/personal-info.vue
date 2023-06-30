@@ -1,8 +1,42 @@
 <template lang="html">
   <div class="profile-page">
     <div class="container_xl">
+      <ul class="library_tab top_tab">
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-personal-info'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/personal-info'))">{{
+            $store.state.translations["main.my-room"]
+          }}</span>
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-my-board'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/my-board'))">
+            {{ $store.state.translations["main.my-shelf"] }}</span
+          >
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-saved'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/saved'))">{{
+            $store.state.translations["main.saved"]
+          }}</span>
+        </li>
+        <li>
+          <span>Chiqish</span>
+        </li>
+      </ul>
       <div class="profile-grid">
-        <ProfileMenu />
+        <div class="web-menu">
+          <ProfileMenu />
+        </div>
         <div class="profile-settings">
           <h5>Sozlamalar</h5>
           <a-form-model ref="ruleForm" :model="form" :rules="rules">
@@ -358,7 +392,6 @@ export default {
 </script>
 <style lang="css">
 .profile-page {
-  padding-top: 78px;
   padding-bottom: 100px;
 }
 .profile-grid {
@@ -412,5 +445,23 @@ export default {
   position: absolute;
   right: 8px;
   cursor: pointer;
+}
+@media (max-width: 576px) {
+  .profile-settings {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .profile-form-grid {
+    padding-top: 20px;
+    grid-template-columns: 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+  }
+  .profile-settings h5 {
+    font-size: 19px;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

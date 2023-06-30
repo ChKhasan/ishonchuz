@@ -1,6 +1,38 @@
 <template lang="html">
   <div class="profile-page">
     <div class="container_xl">
+      <ul class="library_tab top_tab">
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-personal-info'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/personal-info'))">{{
+            $store.state.translations["main.my-room"]
+          }}</span>
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-my-board'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/my-board'))">
+            {{ $store.state.translations["main.my-shelf"] }}</span
+          >
+        </li>
+        <li
+          :class="{
+            'news-menu-active-categry': $route.name.includes('profile-saved'),
+          }"
+        >
+          <span @click="$router.push(localePath('/profile/saved'))">{{
+            $store.state.translations["main.saved"]
+          }}</span>
+        </li>
+        <li>
+          <span>Chiqish</span>
+        </li>
+      </ul>
       <div class="profile-grid">
         <ProfileMenu />
       </div>
@@ -49,11 +81,15 @@ export default {
 };
 </script>
 <style lang="css">
-.profile-page {
-  padding-top: 78px;
-}
+
 .profile-grid {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
+}
+@media (max-width: 576px) {
+  .profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+
 }
 </style>

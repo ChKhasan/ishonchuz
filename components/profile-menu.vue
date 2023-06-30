@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="profile-menu">
+  <div class="profile-menu web-menu">
     <ul>
       <li
         :class="{
@@ -121,12 +121,12 @@ export default {
 .active-profile-menu a {
   pointer-events: none;
 }
-.profile-menu ul li:hover span,
-.active-profile-menu span {
+.profile-menu ul li:hover div > span,
+.active-profile-menu a span {
   background: #0192ff !important;
 }
-.profile-menu ul li:hover span svg path,
-.active-profile-menu span svg path {
+.profile-menu ul li:hover div > span svg path,
+.active-profile-menu a span svg path {
   fill: #fff !important;
 }
 </style>
