@@ -756,7 +756,7 @@ export default {
   }
   .news-container {
     padding: 5px;
-    background: #ffffff;
+    background: var(--transparent, #ffffff);
   }
   .news-container-character > span {
     margin-right: 13px;

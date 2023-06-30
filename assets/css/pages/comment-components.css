@@ -197,3 +197,11 @@
     letter-spacing: 0.24px;
   }
 }
+@media (max-width: 360px) {
+  .comment-form input {
+    width: 100%;
+  }
+  .swiper-news-mobile {
+    width: 300px !important;
+  }
+}

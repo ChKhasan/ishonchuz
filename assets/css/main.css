@@ -122,6 +122,7 @@ h6 {
   --gray_B4B9D2: #b4b9d2;
   --blue_0192FF: #0192ff;
   --black_111111: #111111;
+  --transparent: transparent;
 }
 .ant-modal-body {
   background: var(--header_bg);
