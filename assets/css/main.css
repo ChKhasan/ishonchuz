@@ -172,6 +172,7 @@ ul {
   height: 20px !important;
   display: flex;
   max-height: 20px !important;
+  width: 120px;
 }
 .right-show-more-primary,
 .right-show-more,

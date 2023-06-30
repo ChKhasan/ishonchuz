@@ -134,6 +134,7 @@ export default {
   cursor: pointer;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 .to_top_btn:hover {
   -webkit-animation: swing 0.5s ease;

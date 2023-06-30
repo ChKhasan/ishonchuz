@@ -403,7 +403,12 @@
                 >{{ smsTimer }}</span
               >
               <span
-                v-if="smsTimer == 0 && formSms.code.length > 0"
+                v-if="
+                  smsTimer == 0 &&
+                  formSms.code.length > 0 &&
+                  !responseTypes.smsCodeError &&
+                  !responseTypes.smsCodeSuccess
+                "
                 @click="formSms.code = ''"
                 class="input_clear"
                 v-html="inputClear"
@@ -561,6 +566,10 @@ export default {
         ],
       },
     };
+  },
+  mounted() {
+    document.body.style.height = "auto";
+    document.body.style.overflow = "auto";
   },
   computed: {
     routerName() {
@@ -737,6 +746,8 @@ export default {
       this.drawerVisible = false;
       this.authMobilVisible = false;
       this.profileMenu = false;
+      document.body.style.height = "auto";
+      document.body.style.overflow = "auto";
       console.log("asdasdas");
     },
     visibleSms(val) {
