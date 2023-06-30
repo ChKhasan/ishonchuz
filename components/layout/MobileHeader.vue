@@ -828,7 +828,7 @@ export default {
 .drawer_scroll {
   height: 100%;
   overflow-y: scroll;
-  padding-bottom: 180px;
+  padding-bottom: 200px;
 }
 .mobile-color-switch {
   display: flex;
