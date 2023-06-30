@@ -31,14 +31,14 @@
           </li>
         </ul>
       </div>
-      <div class="newspaper-page-container">
+      <div class="newspaper-page-container" v-if="newspapers.length > 0">
         <NewspaperCard
           v-for="newspaper in newspapers"
           :key="newspaper?.id"
           :newspaper="newspaper"
         />
       </div>
-      <div>
+      <div v-else>
         <div class="messangers-container">
           <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
           <div class="follow-us-message">
@@ -130,5 +130,11 @@ export default {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 30px;
+}
+@media (max-width: 360px) {
+  .newspaper-page-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+  }
 }
 </style>

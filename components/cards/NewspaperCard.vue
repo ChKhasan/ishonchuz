@@ -6,7 +6,8 @@
     </div>
     <div class="newspaper-body">
       <h3>{{ newspaper?.title }} (O’zbek tilida)</h3>
-      <p>{{ newspaper?.date }}</p>
+      <p class="newspaper-date-web">{{ newspaper?.date }}</p>
+      <p class="newspaper-date-mobile">{{ newspaper?.date.split("|")[1] }}</p>
     </div>
   </div>
 </template>
@@ -42,5 +43,27 @@ export default {
   font-family: var(--ROBOTO_SERIF);
   line-height: 145%;
   margin-top: 3px;
+}
+.newspaper-date-web {
+  display: flex;
+}
+.newspaper-date-mobile {
+  display: none;
+}
+@media (max-width: 360px) {
+  .newspaper-image {
+    height: 216px;
+  }
+  .newspaper-body h3 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 150%;
+  }
+  .newspaper-date-web {
+    display: none;
+  }
+  .newspaper-date-mobile {
+    display: flex;
+  }
 }
 </style>
