@@ -10,7 +10,8 @@
         <div class="bottom">
           <div class="left">
             <NuxtLink to="/">
-              <img src="@/assets/images/logo/brand.svg" alt="" />
+              <!-- <img src="@/assets/images/logo/brand.svg" alt="" /> -->
+              <span v-html="$store.state.theme ? logo : darkLogo"></span>
             </NuxtLink>
           </div>
           <div class="right">
@@ -18,11 +19,21 @@
               <img src="@/assets/images/search.svg" alt="" />
             </button>
             <button
-              class="butn"
+              class="butn open-modal-mobile"
               @click="
                 $store.state.auth
                   ? $router.push('/profile/personal-info')
                   : (authMobilVisible = !authMobilVisible)
+              "
+            >
+              <img src="@/assets/images/person.svg" alt="" />
+            </button>
+            <button
+              class="butn open-modal-web"
+              @click="
+                $store.state.auth
+                  ? $router.push('/profile/personal-info')
+                  : (visible = !visible)
               "
             >
               <img src="@/assets/images/person.svg" alt="" />
@@ -87,22 +98,35 @@
               <!-- </Transition> -->
             </div>
           </div>
+          <span class="mobile-color-switch">
+            <div class="color-switch">
+              <span
+                v-html="sun"
+                @click="$store.commit('changeTheme', true)"
+                :class="{ 'active-color': $store.state.theme }"
+              ></span>
+              <span
+                v-html="moon"
+                @click="$store.commit('changeTheme', false)"
+                :class="{ 'active-color': !$store.state.theme }"
+              ></span></div
+          ></span>
           <div class="drawer_lang">
             <ul>
               <li
-                :class="{ 'active-lang': $i18n.locale == 'ru' }"
+                :class="{ active_lang: $i18n.locale == 'ru' }"
                 @click="$router.push(switchLocalePath('ru'))"
               >
                 Русский
               </li>
               <li
-                :class="{ 'active-lang': $i18n.locale == 'oz' }"
+                :class="{ active_lang: $i18n.locale == 'oz' }"
                 @click="$router.push(switchLocalePath('oz'))"
               >
                 Uzbek
               </li>
               <li
-                :class="{ 'active-lang': $i18n.locale == 'uz' }"
+                :class="{ active_lang: $i18n.locale == 'uz' }"
                 @click="$router.push(switchLocalePath('uz'))"
               >
                 English
@@ -241,11 +265,17 @@
     </a-modal>
     <div class="auth_modal_mobile" :class="{ 'h-100vh': authMobilVisible }">
       <div class="auth_mobile_body">
-        <span class="auth-logo" v-html="logo"> </span>
+        <span class="auth-logo" v-html="$store.state.theme ? logo : darkLogo"></span>
         <h3>Telefon raqamingizni kiritng</h3>
         <p>Tasdiqlash kodini SMS orqali yuboramiz</p>
         <div class="auth-form-mobile w-100">
-          <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
+          <a-form-model
+            v-if="!visibleSms"
+            ref="ruleFormAuth"
+            class="w-100"
+            :model="form"
+            :rules="rules"
+          >
             <a-form-model-item
               class="form-item-mobile mb-0 w-100 auth-form"
               prop="phone_number"
@@ -264,6 +294,57 @@
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
               />
+              <span
+                class="input_clear"
+                @click="formSms.phone_number = ''"
+                v-if="formSms.phone_number.length > 0 && visibleSms"
+                v-html="inputClear"
+              ></span>
+              <span
+                class="input_clear"
+                @click="form.phone_number = ''"
+                v-if="form.phone_number.length > 0 && !visibleSms"
+                v-html="inputClear"
+              ></span>
+            </a-form-model-item>
+          </a-form-model>
+          <a-form-model
+            v-else
+            ref="ruleFormSms"
+            class="w-100"
+            :model="formSms"
+            :rules="rulesMobile"
+          >
+            <a-form-model-item
+              class="form-item-mobile mb-0 w-100 auth-form"
+              prop="phone_number"
+            >
+              <the-mask
+                v-if="visibleSms"
+                v-model="formSms.phone_number"
+                class="w-100 disabled"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+              <the-mask
+                v-else
+                v-model="form.phone_number"
+                class="w-100"
+                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                placeholder="+998 (__) ___ __ __"
+              />
+              <span
+                class="input_clear"
+                @click="formSms.phone_number = ''"
+                v-if="formSms.phone_number.length > 0 && visibleSms"
+                v-html="inputClear"
+              ></span>
+              <span
+                class="input_clear"
+                @click="form.phone_number = ''"
+                v-if="form.phone_number.length > 0 && !visibleSms"
+                v-html="inputClear"
+              ></span>
             </a-form-model-item>
             <a-form-model-item
               v-if="visibleSms"
@@ -286,26 +367,39 @@
               ></span>
               <span
                 class="sms_timer"
-                v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
+                v-if="
+                  !responseTypes.smsCodeError &&
+                  !responseTypes.smsCodeSuccess &&
+                  smsTimer != 0
+                "
                 >{{ smsTimer }}</span
               >
-              <span class="error_code" v-if="responseTypes.smsCodeError"
-                >Xato kiritildi!</span
-              >
+              <span
+                v-if="smsTimer == 0 && formSms.code.length > 0"
+                @click="formSms.code = ''"
+                class="input_clear"
+                v-html="inputClear"
+              ></span>
             </a-form-model-item>
             <a-form-model-item
               class="form-item mb-0 w-100"
-              label="Name"
               prop="name"
               v-if="responseTypes.userResponse"
             >
               <a-input
                 v-model="formName.full_name"
                 class="w-100"
-                placeholder="SMS kodni tering"
+                placeholder="Ismingizni kiritish"
               />
             </a-form-model-item>
           </a-form-model>
+          <div
+            class="reboot_sms"
+            v-if="smsTimer == 0 && visibleSms"
+            @click="__SEND_NUMBER({ phone_number: `${formSms.phone_number}` })"
+          >
+            Qayta jo’natish
+          </div>
           <div class="auth_btn_mobile" @click="onSubmitModel">Kirish</div>
         </div>
       </div>
@@ -337,6 +431,9 @@ export default {
       drop: require("../../assets/svg/dropdown.svg?raw"),
       mClose: require("../../assets/svg/modal-close.svg?raw"),
       smsSuccess: require("../../assets/svg/success.svg?raw"),
+      inputClear: require("../../assets/svg/input-clear.svg?raw"),
+      sun: require("../../assets/svg/sun.svg?raw"),
+      moon: require("../../assets/svg/moon.svg?raw"),
       formName: {
         phone_number: "",
         code: "",
@@ -358,6 +455,19 @@ export default {
       },
       form: {
         phone_number: "",
+      },
+      rulesMobile: {
+        phone_number: [
+          { required: true, message: "Number is reqiured", trigger: "change" },
+          { min: 9, message: "Length should be 9", trigger: "change" },
+        ],
+        code: [
+          {
+            required: true,
+            message: "Sms code is required",
+            trigger: "blur",
+          },
+        ],
       },
       rules: {
         phone_number: [
@@ -421,6 +531,7 @@ export default {
         }
       });
     },
+
     onSubmitModel() {
       if (this.visibleSms) {
         this.onSubmitSms();
@@ -434,6 +545,10 @@ export default {
         ...this.formSms,
         full_name: this.formName.full_name,
       };
+      if (!this.formSms.code) {
+        this.formSms.code = "";
+      }
+      console.log(this.$refs);
       this.$refs.ruleFormSms.validate((valid) => {
         if (valid) {
           this.responseTypes.smsCodeSuccess
@@ -451,6 +566,7 @@ export default {
         this.visible = false;
         this.visibleSms = true;
         this.form.phone_number = "";
+        this.smsTimer = 45;
       } catch (e) {
         console.log(e);
       }
@@ -508,19 +624,28 @@ export default {
   },
   watch: {
     authMobilVisible(val) {
+      this.drawerVisible = false;
       if (val) {
         document.body.style.height = "100vh";
         document.body.style.overflow = "hidden";
       } else {
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
+        this.responseTypes = {
+          smsCodeError: false,
+          smsCodeSuccess: false,
+          userResponse: false,
+        };
       }
     },
     drawerVisible() {
+      this.authMobilVisible = false;
       console.log(this.$route.path);
     },
     "$route.path"() {
       this.drawerVisible = false;
+      this.authMobilVisible = false;
+
       console.log("asdasdas");
     },
     visibleSms(val) {
@@ -563,6 +688,13 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/home-page.css";
+.mobile-color-switch {
+  display: flex;
+  justify-content: center;
+}
+.mobile-color-switch .color-switch {
+  border: 1px solid #eeeeee;
+}
 .heightAuto {
   max-height: 500px !important;
   transition: max-height 0.4s ease-in !important;
@@ -574,7 +706,7 @@ export default {
   left: 0;
   z-index: 99;
   width: 100%;
-  background: white;
+  background: var(--header_bg);
 }
 .banner {
   width: 100%;
@@ -593,8 +725,8 @@ export default {
 }
 .bottom .butn {
   border-radius: 6px;
-  border: 0.75px solid var(--dark-blue-10, #e6e8f0);
-  background: #fff;
+  border: 0.75px solid var(--header_btns_border, #e6e8f0);
+  background: var(--header_btns_bg, #fff);
   padding: 8px;
   display: flex;
   align-items: center;
@@ -602,11 +734,14 @@ export default {
   width: 36px;
   height: 36px;
 }
+.butn span svg path {
+  fill: var(--header_btns_svg);
+}
 .drawer_menu {
   position: absolute;
   width: 100%;
   height: 0;
-  background: #fff;
+  background: var(--header_bg, #fff);
   padding: 0;
   transition: 0.3s;
   overflow: hidden;
@@ -615,11 +750,23 @@ export default {
   position: absolute;
   width: 100%;
   height: 0;
-  background: #fff;
+  background: var(--header_bg);
   padding: 0;
   transition: 0.3s;
   /* overflow: hidden; */
   overflow: scroll;
+  display: none;
+}
+.reboot_sms {
+  color: var(--white_ffffff, #111);
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 .auth_mobile_body {
   display: flex;
@@ -631,7 +778,7 @@ export default {
   height: calc(100% - 45px);
 }
 .auth_mobile_body h3 {
-  color: var(--black-100, #000);
+  color: var(--white_ffffff, #000);
   text-align: center;
   font-size: 16px;
   font-family: var(--ROBOTO_SERIF);
@@ -674,19 +821,27 @@ export default {
   height: 24px;
   margin-bottom: 30px;
 }
-.auth-form-mobile {
-  margin-bottom: 45px;
+.input_clear {
+  position: absolute;
+  right: 10px;
+  display: inline;
+  width: 20px !important;
+  cursor: pointer;
 }
 .h-100vh {
   height: 100vh !important;
 }
 .auth-form-mobile {
   margin-top: 47px;
+  margin-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-item-mobile input {
   border-radius: 4px;
-  background: var(--black-1, #f9f9f9);
+  background: var(--black_414141, #f9f9f9);
   height: 56px;
   border: none;
   padding-left: 16px;
@@ -696,7 +851,7 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: 145%;
-  color: #000;
+  color: var(--white_ffffff, #000);
 }
 .form-item-mobile {
   margin-bottom: 20px !important;
@@ -704,12 +859,33 @@ export default {
 .form-item-mobile input:focus {
   outline: none;
 }
+.auth-modal-web {
+  display: block;
+}
+.open-modal-mobile {
+  display: none !important;
+}
+.open-modal-web {
+  display: none;
+}
 @media screen and (max-width: 576px) {
   .auth-modal-web {
     display: none;
   }
+  .open-modal-web {
+    display: none !important;
+  }
+  .open-modal-mobile {
+    display: flex !important;
+  }
+  .auth_modal_mobile {
+    display: block;
+  }
 }
 @media screen and (max-width: 1024px) {
+  /* .open-modal-web {
+    display: none !important;
+  } */
   .wrap {
     display: block;
     z-index: 1000;
@@ -751,7 +927,7 @@ export default {
     fill: #828bb4 !important;
   }
   .drawer_lang {
-    margin-top: 30px;
+    margin-top: 20px;
     padding-top: 24px;
     padding-right: 19px;
     padding-left: 19px;
@@ -767,15 +943,15 @@ export default {
     border-radius: 72px;
     border: 1px solid var(--light-grey-2, #f5f5f7);
     padding: 8px 16px;
-    color: var(--black, #020105);
+    color: var(--white_ffffff, #020105);
     font-size: 16px;
     font-family: var(--ROBOTO_SERIF);
     line-height: 150%;
   }
   .active_lang {
-    background: var(--white-grey-1, #f5f7fa);
-    border: 1.5px solid var(--light-bue-100, #0192ff);
-    color: var(--light-bue-100, #0192ff);
+    background: var(--header_bg, #f5f7fa) !important;
+    border: 1.5px solid var(--light-bue-100, #0192ff) !important;
+    color: var(--light-bue-100, #0192ff) !important;
   }
 }
 </style>
