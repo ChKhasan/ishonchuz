@@ -678,6 +678,25 @@ export default {
         console.log(e);
       }
     },
+    async logOut() {
+      const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLogOut", {
+          refresh_token: refreshToken,
+        });
+        this.$router.push("/");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.$router.push("/");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.$store.commit("chackAuth");
+        }
+      }
+    },
     async __LOGIN_REGISTER(dataForm) {
       try {
         const data = await this.$store.dispatch("fetchAuth/postLoginRegister", dataForm);
@@ -919,7 +938,7 @@ export default {
 }
 .auth-form-mobile {
   margin-top: 47px;
-  margin-bottom: 80px;
+  margin-bottom: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;

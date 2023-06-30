@@ -239,6 +239,7 @@ h6 {
   color: var(--breadcrumb_text);
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 .news-breadcrumb a span {
   transform: rotate(-90deg);
