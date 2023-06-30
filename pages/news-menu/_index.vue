@@ -205,15 +205,7 @@ export default {
   border-bottom: 1px solid var(--right_drop_border);
 }
 
-.news-menu-page-header h5 {
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 150%;
-  color: var(--text_color);
-  margin-bottom: 20px;
-}
+
 @media screen and (max-width: 1024px) {
   .news-page-right {
     display: none;

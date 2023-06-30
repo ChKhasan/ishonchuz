@@ -1,8 +1,12 @@
-<template>
-  <div class="home-page search-page">
+<template lang="html">
+  <div class="search-page">
     <div class="container_xl">
-      <div class="home-page-grid row">
-        <div class="col-9 p-0 home-page-left">
+      <div class="search-page-input" v-if="newsSearch?.length > 0">
+        <input v-model="searchVal" @keyup.enter="searchFunc" placeholder="Search..." />
+        <span @click="searchFunc" v-html="search"></span>
+      </div>
+      <div class="home-page-grid row" v-if="newsSearch?.length > 0">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="search-page-container">
             <h3 v-if="newsSearch?.length > 0">
               “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
@@ -11,11 +15,14 @@
             <h3 v-else>
               “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
             </h3>
-            <div class="search-page-grid">
-              <VNewsCard
-                v-for="news in newsSearch"
-                :key="news?.id"
-                :news="news"
+            <div class="search-page-grid search_web_news">
+              <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
+            </div>
+            <div class="search-page-grid search_mobile_news">
+              <AllNewsCard
+                v-for="newsItem in newsSearch"
+                :key="newsItem?.id"
+                :news="newsItem"
               />
             </div>
             <div class="d-flex justify-content-center">
@@ -23,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0">
+        <div class="search-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
               <img src="../../assets/images/Снимок экрана (926).png" alt="" />
@@ -35,38 +42,48 @@
           />
 
           <div class="right-news-list">
-            <RightNewsCard
-              v-for="news in importantNews"
-              :key="news?.id"
-              :news="news"
-            />
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
+
           <div class="right-banner">
             <img src="../../assets/images/Снимок экрана (926).png" alt="" />
           </div>
         </div>
       </div>
-
-      <div>
-        <div class="messangers-container">
-          <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-          <div class="follow-us-message">FOLLOW US!</div>
-          <div class="messanger-icons">
-            <a href="#">
-              <span v-html="telegram"> </span>
-            </a>
-            <a href="#">
-              <span v-html="facebook"> </span>
-            </a>
-            <a href="#">
-              <span v-html="twitter"> </span>
-            </a>
-            <a href="#">
-              <span v-html="instagram"> </span>
-            </a>
-            <a href="#">
-              <span v-html="whatsapp"> </span>
-            </a>
+      <div class="search_empty search-page-container" v-else>
+        <h3>
+          “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
+          <span>{{ newsSearch?.length }}</span> ta maqola topildi
+        </h3>
+        <div class="search_to_back">
+          <div class="btn_container_show_more">
+            <div class="right-show-more">Bosh sahifaga qaytish</div>
+            <div class="right-show-more-primary" @click="$router.push('/')">
+              Bosh sahifaga qaytish
+            </div>
+          </div>
+        </div>
+        <div v-if="newsSearch?.length == 0">
+          <div class="messangers-container">
+            <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
+            <div class="follow-us-message">FOLLOW US!</div>
+            <div class="messanger-icons">
+              <a href="#">
+                <span v-html="telegram"> </span>
+              </a>
+              <a href="#">
+                <span v-html="facebook"> </span>
+              </a>
+              <a href="#">
+                <span v-html="twitter"> </span>
+              </a>
+              <a href="#">
+                <span v-html="instagram"> </span>
+              </a>
+              <a href="#">
+                <span v-html="whatsapp"> </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -78,6 +95,7 @@
 import TitleComp from "../../components/Title-comp.vue";
 import VNewsCard from "../../components/cards/VNewsCard.vue";
 import RightNewsCard from "../../components/cards/RightNewsCard.vue";
+import AllNewsCard from "../../components/cards/AllNewsCard.vue";
 
 export default {
   name: "IndexPage",
@@ -88,6 +106,8 @@ export default {
       twitter: require("../../assets/svg/twitter.svg?raw"),
       instagram: require("../../assets/svg/instagram.svg?raw"),
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
+      search: require("../../assets/svg/search.svg?raw"),
+      // searchVal: "",
     };
   },
   async asyncData({ store, params, i18n }) {
@@ -107,23 +127,51 @@ export default {
     ]);
     const newsSearch = searchData.results;
     const importantNews = importantNewsData.results;
+    const searchVal = params.index;
     return {
       newsSearch,
       importantNews,
+      searchVal,
     };
+  },
+  methods: {
+    searchFunc() {
+      console.log("asdasdasd");
+      this.$router.replace({
+        path: `/search/${this.searchVal}`,
+      });
+      this.$store.dispatch("fetchNews/getNews", {
+        params: { search: this.$route.params.index },
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      });
+    },
   },
   components: {
     TitleComp,
     VNewsCard,
     RightNewsCard,
     TitleComp,
+    AllNewsCard,
   },
 };
 </script>
 <style lang="css">
 @import "../../assets/css/pages/home-page.css";
+.search_empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .search-page {
   padding-top: 28px;
+  padding-bottom: 40px;
+}
+.search_to_back {
+  margin: 0 auto;
+  min-width: 337px;
+  margin-top: 50px;
 }
 .search-page-container h3 {
   font-family: var(--ROBOTO_SERIF);
@@ -142,5 +190,82 @@ export default {
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
   margin-bottom: 68px;
+}
+.search-page-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.search-page-input input {
+  border-radius: 8px;
+  border: 1px solid var(--black_111111, #9ba2c3);
+  background: var(--black_414141, #f9f9f9);
+  padding: 12px 12px 12px 59px;
+  color: var(--white_ffffff, #292929);
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+  min-width: 460px;
+}
+.search-page-input input:focus {
+  outline: none;
+}
+.search-page-input span {
+  position: absolute;
+  left: 12px;
+}
+.search_web_news {
+  display: grid;
+}
+.search_mobile_news {
+  display: none;
+}
+@media (max-width: 360px) {
+  .search-page-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 50px;
+  }
+  .search-page-container h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .search-page {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 576px) {
+  .search-page-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 50px;
+  }
+}
+@media (max-width: 992px) {
+  .search-page-right {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .search-page-right {
+    display: none;
+  }
+  .search-page-input {
+    max-width: 100%;
+    width: 100%;
+  }
+  .search-page-input input {
+    max-width: 100%;
+    width: 100%;
+    min-width: 0px !important;
+  }
+  .search_web_news {
+    display: none;
+  }
+  .search_mobile_news {
+    display: grid;
+  }
 }
 </style>

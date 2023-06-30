@@ -70,4 +70,28 @@ export default {
   margin-left: 15px;
   line-height: 130%;
 }
+@media (max-width: 576px) {
+  .articles-card {
+    border-radius: 14px;
+    padding: 18px;
+  }
+  .articles-header h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .articles-footer p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 145%;
+  }
+  .articles-footer span {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .articles-footer {
+    margin-top: 20px;
+  }
+}
 </style>

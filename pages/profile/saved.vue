@@ -37,7 +37,7 @@
         <ProfileMenu />
         <div class="profile-saved">
           <h3 class="profile-saved_title">Mening javonim</h3>
-          <ul class="library_tab">
+          <ul class="library_tab saved_tab">
             <li
               :class="{
                 'news-menu-active-categry': $route.query.type == 'literature',

@@ -42,7 +42,11 @@
           </div>
           <div class="hidden">
             <div class="block1">
-              <div class="home-page-right-title">
+              <div
+                class="home-page-right-title"
+                style="cursor: pointer"
+                @click="$router.push('newspaper')"
+              >
                 {{ $store.state.translations["main.newspaper"] }}
               </div>
               <div
@@ -55,12 +59,15 @@
                   <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
                 </h5>
                 <Transition name="bounceDrop">
-                  <div class="home-page-right-drop-board">
+                  <div class="home-page-right-drop-board" v-if="dropVal == 1">
                     <ul>
-                      <li>{{ $store.state.translations["main.theatres"] }}</li>
-                      <li>{{ $store.state.translations["main.libraries"] }}</li>
-                      <li>
-                        {{ $store.state.translations["main.presentations"] }}
+                      <li @click="$router.push('/library?type=literature')">Adabiyot</li>
+                      <li @click="$router.push('/library?type=scientific')">
+                        Ilmiy ishlar
+                      </li>
+                      <li @click="$router.push('/library?type=articles')">Maqolalar</li>
+                      <li @click="$router.push('/library?type=articles')">
+                        Kasaba faollari uchun qo’llanmalar
                       </li>
                     </ul>
                   </div>
@@ -79,9 +86,13 @@
                 <Transition name="bounceDrop">
                   <div class="home-page-right-drop-board" v-if="dropVal == 2">
                     <ul>
-                      <li>{{ $store.state.translations["main.theatres"] }}</li>
-                      <li>{{ $store.state.translations["main.libraries"] }}</li>
-                      <li>
+                      <li @click="$router.push('/theater')">
+                        {{ $store.state.translations["main.Ytheatres"] }}
+                      </li>
+                      <li @click="$router.push('/concert')">
+                        {{ $store.state.translations["main.concert"] }}
+                      </li>
+                      <li @click="$router.push('/presentations')">
                         {{ $store.state.translations["main.presentations"] }}
                       </li>
                     </ul>
@@ -199,8 +210,12 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board" v-if="dropVal == 2">
                   <ul>
-                    <li @click="$router.push('/theater')">{{ $store.state.translations["main.Ytheatres"] }}</li>
-                    <li @click="$router.push('/concert')">{{ $store.state.translations["main.concert"] }}</li>
+                    <li @click="$router.push('/theater')">
+                      {{ $store.state.translations["main.Ytheatres"] }}
+                    </li>
+                    <li @click="$router.push('/concert')">
+                      {{ $store.state.translations["main.concert"] }}
+                    </li>
                     <li @click="$router.push('/presentations')">
                       {{ $store.state.translations["main.presentations"] }}
                     </li>

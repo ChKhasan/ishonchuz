@@ -11,9 +11,12 @@
         {{ news?.title }}
       </nuxt-link>
       <div class="all-news-card-info">
-        <!-- <span> <span v-html="comments"></span>{{ news?.comment_count }}</span> -->
+        <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
-        <span><span v-html="date"></span>{{ news?.date }}</span>
+        <span class="all-card-date-web"><span v-html="date"></span>{{ news?.date }}</span>
+        <span class="all-card-date-mobile"
+          ><span v-html="date"></span>{{ news?.date.split("|")[1] }}</span
+        >
       </div>
     </div>
   </div>
@@ -89,6 +92,12 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+.all-card-date-web {
+  display: flex;
+}
+.all-card-date-mobile {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .all-news-card {
     grid-template-columns: 96px auto;
@@ -97,7 +106,7 @@ export default {
     padding: 0;
     padding-bottom: 10px;
     background: var(--black_111111, transparent);
-    border-bottom: 1px solid var(--black-5, #e7e7e7);
+    border-bottom: 1px solid var(--right_drop_border);
   }
   .all-news-card-img {
     height: 63px;
@@ -119,6 +128,25 @@ export default {
   .all-news-card-info span svg {
     width: 14px;
     height: 14px;
+  }
+}
+@media (max-width: 576px) {
+  .all-card-date-web {
+    display: none;
+  }
+  .all-card-date-mobile {
+    display: flex;
+  }
+}
+@media (max-width: 360px) {
+  .all-news-card-info > span {
+    margin-left: 13px;
+  }
+  .all-news-card-info span span {
+    margin-right: 2px;
+  }
+  .all-news-card-info {
+    padding-right: 7px;
   }
 }
 </style>

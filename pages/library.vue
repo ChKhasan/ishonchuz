@@ -36,27 +36,14 @@
           </li>
         </ul>
       </div>
-      <div
-        class="library-page-container"
-        v-if="$route.query.type == 'literature'"
-      >
+      <div class="library-page-container" v-if="$route.query.type == 'literature'">
         <BookCard v-for="book in literature" :key="book.id" :book="book" />
       </div>
-      <div
-        class="library-page-container"
-        v-if="$route.query.type == 'scientific'"
-      >
+      <div class="library-page-container" v-if="$route.query.type == 'scientific'">
         <BookCard v-for="book in scientific" :key="book.id" :book="book" />
       </div>
-      <div
-        class="articles-page-container"
-        v-if="$route.query.type == 'articles'"
-      >
-        <ArticlesCard
-          v-for="article in articles"
-          :key="article.id"
-          :article="article"
-        />
+      <div class="articles-page-container" v-if="$route.query.type == 'articles'">
+        <ArticlesCard v-for="article in articles" :key="article.id" :article="article" />
       </div>
     </div>
   </div>
@@ -129,7 +116,7 @@ export default {
 @import "../assets/css/pages/home-page.css";
 @import "../assets/css/pages/news-menu-page.css";
 
-.library-page-page {
+.library-page {
   padding-top: 28px;
 }
 .library-page-container {
@@ -141,5 +128,15 @@ export default {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 30px;
+}
+@media (max-width: 576px) {
+  .library-page-container {
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+  }
+  .articles-page-container {
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
 }
 </style>

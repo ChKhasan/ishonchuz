@@ -130,4 +130,10 @@ export default {
     height: 146px;
   }
 }
+@media screen and (max-width: 576PX) {
+  .layout_back {
+    display: block;
+    height: 136px;
+  }
+}
 </style>

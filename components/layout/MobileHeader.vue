@@ -89,7 +89,7 @@
         </div>
       </div>
       <div class="drawer_menu" :class="{ 'h-100vh': drawerVisible }">
-        <div>
+        <div class="drawer_scroll">
           <div class="drawer_menu-body">
             <div
               v-for="category in categories"
@@ -124,6 +124,34 @@
                 {{ category?.title }}</nuxt-link
               >
               <!-- </Transition> -->
+            </div>
+            <div
+              class="home-page-right-drop home-page-right-drop-mobile"
+              :class="{ heightAuto: dropVal == 'library' }"
+            >
+              <h5 @click="dropAction('library')">
+                {{ $store.state.translations["main.library"] }}
+                <span
+                  v-html="dropdown"
+                  :class="{ rotate180: dropVal == 'library' }"
+                ></span>
+              </h5>
+              <div class="home-page-right-drop-board">
+                <ul>
+                  <li @click="$router.push(localePath(`/library?type=literature`))">
+                    {{ $store.state.translations["main.literature"] }}
+                  </li>
+                  <li @click="$router.push(localePath(`/library?type=scientific`))">
+                    {{ $store.state.translations["main.science"] }}
+                  </li>
+                  <li @click="$router.push(localePath(`/library?type=articles`))">
+                    {{ $store.state.translations["main.articles"] }}
+                  </li>
+                  <li @click="$router.push(localePath(`/library?type=literature`))">
+                    {{ $store.state.translations["main.kasaba"] }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <span class="mobile-color-switch">
@@ -738,8 +766,15 @@ export default {
         };
       }
     },
-    drawerVisible() {
+    drawerVisible(val) {
       this.authMobilVisible = false;
+      if (val) {
+        document.body.style.height = "100vh";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "auto";
+        document.body.style.overflow = "auto";
+      }
       console.log(this.$route.path);
     },
     "$route.path"() {
@@ -790,6 +825,11 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/home-page.css";
+.drawer_scroll {
+  height: 100%;
+  overflow-y: scroll;
+  padding-bottom: 160px;
+}
 .mobile-color-switch {
   display: flex;
   justify-content: center;

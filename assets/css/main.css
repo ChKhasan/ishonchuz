@@ -331,9 +331,15 @@ ul {
   border-radius: 1111px;
   padding: 20px;
   margin-top: 40px;
+  width: 296px;
+  display: flex;
+  justify-content: space-between;
 }
-.messanger-icons a {
+/* .messanger-icons a {
   margin-right: 30px;
+} */
+.messanger-icons a svg {
+  width: 32px;
 }
 .messanger-icons a:last-child {
   margin-right: 0;
@@ -387,6 +393,11 @@ ul {
 }
 .library_tab {
   display: flex;
+  overflow-x: scroll;
+  flex-wrap: nowrap;
+}
+.library_tab::-webkit-scrollbar {
+  display: none;
 }
 .library_tab li {
   margin-right: 16px;
@@ -418,6 +429,15 @@ ul {
 .top_tab {
   display: none;
 }
+@media (max-width: 768px) {
+  .messangers-container h5 {
+    color: #0192ff;
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 150%;
+  }
+}
 @media screen and (max-width: 1024px) {
   .header,
   .menu-list {
@@ -444,7 +464,7 @@ ul {
   .library_tab li span {
     white-space: nowrap;
   }
-  .library_tab {
+  .saved_tab {
     flex-wrap: wrap;
     gap: 10px;
   }
@@ -454,5 +474,14 @@ ul {
     overflow-x: scroll;
     margin-bottom: 30px !important;
     height: 35px;
+  }
+  .library_tab {
+    height: 32px;
+  }
+  .library_tab li a,
+  .library_tab li span {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 150%;
   }
 }
