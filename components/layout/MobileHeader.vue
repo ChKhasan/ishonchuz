@@ -507,6 +507,15 @@ export default {
     },
   },
   watch: {
+    authMobilVisible(val) {
+      if (val) {
+        document.body.style.height = "100vh";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "auto";
+        document.body.style.overflow = "auto";
+      }
+    },
     drawerVisible() {
       console.log(this.$route.path);
     },
@@ -609,7 +618,8 @@ export default {
   background: #fff;
   padding: 0;
   transition: 0.3s;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow: scroll;
 }
 .auth_mobile_body {
   display: flex;
@@ -617,6 +627,8 @@ export default {
   align-items: center;
   padding: 20px;
   padding-top: 68px;
+  overflow: scroll;
+  height: calc(100% - 45px);
 }
 .auth_mobile_body h3 {
   color: var(--black-100, #000);
@@ -661,6 +673,9 @@ export default {
 .auth-logo {
   height: 24px;
   margin-bottom: 30px;
+}
+.auth-form-mobile {
+  margin-bottom: 45px;
 }
 .h-100vh {
   height: 100vh !important;
