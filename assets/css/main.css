@@ -436,6 +436,16 @@ ul {
 .top_tab {
   display: none;
 }
+
+.mejs__mediaelement {
+  width: 100% !important;
+}
+.mejs__video {
+  width: 100% !important;
+}
+.profile-page {
+  padding-top: 78px;
+}
 @media (max-width: 768px) {
   .messangers-container h5 {
     color: #0192ff;
@@ -450,15 +460,6 @@ ul {
   .menu-list {
     display: none;
   }
-}
-.mejs__mediaelement {
-  width: 100% !important;
-}
-.mejs__video {
-  width: 100% !important;
-}
-.profile-page {
-  padding-top: 78px;
 }
 @media (max-width: 576px) {
   .web-menu {
@@ -491,4 +492,15 @@ ul {
     font-weight: 600;
     line-height: 150%;
   }
+}
+@media (max-width: 360px) {
+  .socials__mobile a svg {
+    height: 24px;
+  }
+  .socials__mobile a {
+    margin-right: 14px;
+  }
+  /* .socials__mobile a span:last-child {
+    margin-right: 0;
+  } */
 }

@@ -46,9 +46,16 @@
               </p>
               <p class="answer">{{ journalists?.experience }}</p>
             </div>
+            <div class="socials__mobile">
+              <a href="#"><span v-html="telegram"></span></a>
+              <a href="#"><span v-html="facebook"></span></a>
+              <a href="#"><span v-html="twitter"></span></a>
+              <a href="#"><span v-html="instagram"></span></a>
+              <a href="#"><span v-html="whatsapp"></span></a>
+            </div>
           </div>
         </div>
-        <div class="col-lg-8 col-xs-12">
+        <div class="col-lg-8 col-xs-12 right">
           <div class="buttons">
             <button
               :class="{ active: handleBio }"
@@ -86,13 +93,15 @@
                 Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
                 qilib olar, har safar yangi jilva kasb etar edi
               </p>-->
-              <h2 v-if="image?.image">Diplom va Sertifikatlar</h2>
-              <img
-                :src="image?.image"
-                alt=""
-                v-for="image in journalists?.images"
-                :key="image?.id"
-              />
+              <h2 v-if="journalists?.images.length > 0">Diplom va Sertifikatlar</h2>
+              <div class="images">
+                <img
+                  :src="image?.image"
+                  alt=""
+                  v-for="image in journalists?.images"
+                  :key="image?.id"
+                />
+              </div>
             </div>
             <div :class="{ show: handleArticles }" class="articles">
               <div class="grid">
@@ -355,5 +364,110 @@ export default {
 .bio.show,
 .articles.show {
   display: block;
+}
+.socials__mobile {
+  display: none;
+}
+@media (max-width: 360px) {
+  .left {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .right {
+    margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .cardo {
+    border-radius: 0;
+    background: transparent;
+    padding: 0;
+  }
+  .pic {
+    max-width: 113px;
+    height: 113px;
+    margin-bottom: 28px;
+    object-fit: cover;
+  }
+  .name {
+    font-size: 16px;
+    line-height: 130%;
+    margin-bottom: 10px;
+  }
+  .status {
+    margin-bottom: 24px;
+  }
+  .socials {
+    display: none;
+  }
+  .socials__mobile {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+  }
+  .second {
+    border-radius: 12px;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 32px;
+  }
+  .second .item {
+    display: flex;
+  }
+  .second .item .answer {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 130%;
+    display: flex;
+    align-items: center;
+  }
+  .second .item .question {
+    margin-bottom: 0;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 130%;
+  }
+  .buttons button {
+    border-radius: 3px;
+    max-height: 35px;
+    display: flex;
+    align-items: center;
+  }
+  .buttons {
+    justify-content: center;
+  }
+  .bio {
+    padding: 0;
+    background: transparent;
+  }
+  .images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
+  .content .name {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 170%;
+  }
+  .content .sub {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 145%;
+  }
+  .bio p,
+  .bio span,
+  .bio p,
+  .bio span {
+    font-size: 14px !important;
+  }
 }
 </style>

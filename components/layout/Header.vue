@@ -13,15 +13,54 @@
             <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
             <li>
               USD
-              <p>11 418.11 <span>7.94</span></p>
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "USD")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'USD')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "USD")["Diff"] }}</span
+                >
+              </p>
             </li>
             <li>
               EUR
-              <p>12 460.11 <span>16.94</span></p>
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "EUR")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'EUR')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "EUR")["Diff"] }}</span
+                >
+              </p>
             </li>
             <li>
               RUB
-              <p>139.11 <span>-0.43</span></p>
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "RUB")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'RUB')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "RUB")["Diff"] }}</span
+                >
+              </p>
             </li>
           </ul>
 
@@ -126,7 +165,7 @@ export default {
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  background: #ffffff;
+  background: var(--gray_292929, #ffffff);
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
   position: fixed;
   right: 30px;
@@ -271,6 +310,9 @@ export default {
   line-height: 130%;
   color: #00c008;
   margin-left: 13px;
+}
+.currency__down {
+  color: #c02600 !important;
 }
 .header-lang {
   display: grid;

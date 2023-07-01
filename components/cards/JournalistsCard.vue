@@ -120,4 +120,37 @@ export default {
 .journalist-card-info p span:last-child {
   margin-left: 6px;
 }
+@media (max-width: 360px) {
+  .journalists-card {
+    padding: 15px;
+  }
+  .journalist-card-image {
+    height: 87px;
+  }
+  .journalist-card-head {
+    display: grid;
+    grid-template-columns: 87px auto;
+    grid-gap: 20px;
+  }
+  .journalist-card-info {
+    display: none;
+  }
+  .journalist-card-title h4 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .journalist-card-title a {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .journalist-card-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+}
 </style>

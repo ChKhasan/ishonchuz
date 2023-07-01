@@ -1,14 +1,6 @@
 <template lang="html">
   <div class="default-layout" :class="{ 'dark-theme': !$store.state.theme }">
-    <Header
-      :categories="categories"
-      :banners="banners"
-      :currency="{
-        usdCurrency: usdCurrency,
-        eurCurrency: eurCurrency,
-        rubCurrency: rubCurrency,
-      }"
-    />
+    <Header :categories="categories" :banners="banners" :currency="currency" />
     <MobileHeader :categories="categories" />
     <!-- <div class="layout_back"></div> -->
     <Nuxt />
@@ -19,15 +11,14 @@
 import Footer from "../components/layout/Footer.vue";
 import Header from "../components/layout/Header.vue";
 import MobileHeader from "@/components/layout/MobileHeader.vue";
-
+import moment from "moment";
 export default {
   data() {
     return {
       categories: [],
-      rubCurrency: {},
-      eurCurrency: {},
-      usdCurrency: {},
+      currency: [],
       banners: {},
+      date: new Date(),
     };
   },
   // async mounted() {
@@ -44,16 +35,15 @@ export default {
   mounted() {
     this.$store.commit("chackAuth");
     this.$store.commit("reloadStore");
-    this.$store.commit("changeTheme",'first');
+    this.$store.commit("changeTheme", "first");
   },
   async fetch() {
+    const date = new Date();
     const [
       categoriesData,
       translationsData,
       bannersData,
-      // rubCurrencyData,
-      // eurCurrencyData,
-      // usdCurrencyData,
+      currencyData,
     ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
@@ -70,22 +60,18 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
-      // this.$axios.$get(
-      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=RUB"
-      // ),
-      // this.$axios.$get(
-      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=EUR"
-      // ),
-      // this.$axios.$get(
-      //   "https://api.currencyapi.com/v3/latest?apikey=ifbmLdDf3iV3UOIIc6lJJHUVANzQNOObWJRhjjzZ&&currencies=UZS&base_currency=USD"
-      // ),
+      this.$axios.$get(
+        `https://cbu.uz/ru/arkhiv-kursov-valyut/json/all/${moment(date).format(
+          "YYYY-MM-DD"
+        )}`
+      ),
     ]);
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
-    console.log(this.banners);
-    // this.rubCurrency = rubCurrencyData?.data;
-    // this.usdCurrency = usdCurrencyData?.data;
-    // this.eurCurrency = eurCurrencyData?.data;
+    this.currency = currencyData;
+    console.log(this.currency);
+    console.log("this.currency");
+
     this.$store.commit("getTranslations", translationsData);
   },
 
@@ -130,7 +116,7 @@ export default {
     height: 146px;
   }
 }
-@media screen and (max-width: 576PX) {
+@media screen and (max-width: 576px) {
   .layout_back {
     display: block;
     height: 136px;

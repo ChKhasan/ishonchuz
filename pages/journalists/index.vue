@@ -1,24 +1,27 @@
 <template>
   <div class="home-page journalists-page">
     <div class="container_xl">
-      <h3 class="journalists-page-title">
-        {{ $store.state.translations["main.journalists"] }} <span>(523) </span>
-      </h3>
-      <div class="journalists_container" v-if="showAll">
-        <JournalistsCard
-          v-for="journalist in journalists"
-          :journalist="journalist"
-          :key="journalist?.id"
-        />
+      <div>
+        <h3 class="journalists-page-title">
+          {{ $store.state.translations["main.journalists"] }}
+          <span>({{ journalists?.length }}) </span>
+        </h3>
+        <div class="journalists_container" v-if="showAll">
+          <JournalistsCard
+            v-for="journalist in journalists"
+            :journalist="journalist"
+            :key="journalist?.id"
+          />
+        </div>
+        <div class="journalists_container" v-else>
+          <JournalistsCard
+            v-for="journalist in journalists?.slice(0, 9)"
+            :journalist="journalist"
+            :key="journalist?.id"
+          />
+        </div>
       </div>
-      <div class="journalists_container" v-else>
-        <JournalistsCard
-          v-for="journalist in journalists?.slice(0, 9)"
-          :journalist="journalist"
-          :key="journalist?.id"
-        />
-      </div>
-      <div class="">
+      <div>
         <div class="btn_container_show_more" v-if="journalists?.length > 9">
           <div class="right-show-more">
             {{ $store.state.translations["main.more"] }}
@@ -111,5 +114,17 @@ export default {
 }
 .journalists-page {
   padding-top: 40px;
+}
+@media (max-width: 360px) {
+  .journalists_container {
+    margin-top: 0;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+  }
+  .journalists-page-title {
+    display: none;
+  }
 }
 </style>

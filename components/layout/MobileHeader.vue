@@ -1145,18 +1145,10 @@ export default {
     font-size: 14px;
     line-height: 130%;
     text-transform: uppercase;
-    color: #000;
+    color: var(--white_ffffff, #000);
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-  }
-  .home-page-right-drop-mobile h5 {
-    color: #000;
-    font-weight: 400;
-  }
- 
-  .home-page-right-drop-mobile h5 span svg path {
-    fill: #828bb4 !important;
   }
   .drawer_lang {
     margin-top: 20px;

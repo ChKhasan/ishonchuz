@@ -95,7 +95,7 @@ export default {
 @import "../assets/css/pages/home-page.css";
 @import "../assets/css/pages/news-menu-page.css";
 .galleries-page-header h5 {
-  color: var(--black-100, #000);
+  color: var(--white_ffffff, #000);
   font-size: 26px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 700;
@@ -141,5 +141,32 @@ export default {
 }
 .galleries-card:nth-child(5n + 5) {
   grid-column: 5 / 7;
+}
+@media (max-width: 1024px) {
+  .galleries-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  .galleries-card {
+    height: auto;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    grid-column: auto;
+  }
+}
+@media (max-width: 360px) {
+  .galleries-page-header {
+    display: flex;
+    justify-content: center;
+  }
+  .galleries-page-header h5 {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+  }
 }
 </style>
