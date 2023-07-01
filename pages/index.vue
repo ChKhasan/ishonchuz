@@ -461,26 +461,7 @@ export default {
   .thumbs {
     display: none;
   }
-  .banner-card {
-    display: flex;
-    flex-direction: column;
-  }
-  .banner-card_text a {
-    font-size: 14px;
-    margin-bottom: 24px;
-    display: flex;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .banner-card-img {
-    height: 172px;
-  }
-  .banner-card_text p {
-    display: none;
-  }
+
   .home-carousel {
     margin-bottom: 64px;
   }
@@ -516,9 +497,7 @@ export default {
     border-radius: 4px;
     overflow: hidden;
   }
-  .banner-card-body {
-    padding: 0;
-  }
+
   .h-news-card-body a {
     font-size: 14px;
     margin-bottom: 12px;
@@ -531,12 +510,7 @@ export default {
     justify-content: flex-end;
     gap: 12px;
   }
-  .banner-card-body_footer > span {
-    margin: 0;
-  }
-  .banner-card-body_footer {
-    gap: 12px;
-  }
+
   .v-news-grid {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -607,7 +581,6 @@ export default {
     gap: 12px;
     border-radius: 6px;
     border: none;
-    background: var(--black-1, #f9f9f9);
   }
   .video-news-card-img {
     height: 180px;

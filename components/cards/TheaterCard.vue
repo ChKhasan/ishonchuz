@@ -1,5 +1,5 @@
 <template lang="html">
-  <div style="overflow: hidden;">
+  <div style="overflow: hidden">
     <div class="theater-card">
       <div class="theater-card-image">
         <img src="../../assets/images/teater.png" alt="" />
@@ -31,10 +31,10 @@ export default {};
 @import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap");
 
 .theater-card {
-  background: var(--white, #fff);
+  background: var(--gray_292929, #fff);
   padding: 12px;
   border-radius: 4px;
-  border: 1px solid #d9d9d9;
+  border: 1px solid var(--black_414141, #d9d9d9);
 }
 .theater-card-image {
   height: 177px;
@@ -43,7 +43,7 @@ export default {};
 .theater-card-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 .theater-card-title {
   margin-top: 9px;
@@ -51,7 +51,7 @@ export default {};
   padding-right: 2px;
 }
 .theater-card-title h4 {
-  color: var(--dark-blue-100, #051769);
+  color: var(--white_ffffff, #051769);
   font-size: 18px;
   font-family: "Allerta Stencil", sans-serif;
   text-transform: uppercase;
@@ -72,8 +72,8 @@ export default {};
   width: 25px;
   border-radius: 50%;
   height: 25px;
-  border: 1px solid #d9d9d9;
-  background: #ffffff;
+  border: 1px solid var(--black_414141, #d9d9d9);
+  background: var(--black_000000, #ffffff);
   left: -24.5px;
   bottom: -12.5px;
 }
@@ -84,8 +84,8 @@ export default {};
   width: 25px;
   border-radius: 50%;
   height: 25px;
-  border: 1px solid #d9d9d9;
-  background: #ffffff;
+  border: 1px solid var(--black_414141, #d9d9d9);
+  background: var(--black_000000, #ffffff);
   right: -24.5px;
   bottom: -12.5px;
 }
@@ -104,7 +104,7 @@ export default {};
   margin-right: 12px;
 }
 .theater-card-info div p span {
-  color: var(--dark-blue-100, #051769);
+  color: var(--white_ffffff, #051769);
   font-size: 18px;
   line-height: 91%;
 }
@@ -133,6 +133,12 @@ export default {};
   bottom: 0;
   width: 80%;
   display: flex;
-  border-bottom: 1px dashed #e7e7e7;
+  border-bottom: 1px dashed var(--black_414141, #e7e7e7);
+}
+@media (max-width: 360px) {
+  .theater-card-image {
+    height: 166px;
+    width: 100%;
+  }
 }
 </style>

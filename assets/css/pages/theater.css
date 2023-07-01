@@ -1,0 +1,34 @@
+.theater-page {
+    padding-top: 20px;
+  }
+  .theater-page-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+  }
+  .theater_title {
+    margin-bottom: 40px;
+  }
+  .theater_title h3 {
+    color: var(--white_ffffff, #000);
+    font-size: 26px;
+    font-family: var(--ROBOTO_SERIF);
+    font-weight: 700;
+    line-height: 150%;
+  }
+  @media (max-width: 768px) {
+    .theater-page-container {
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+    }
+  }
+  @media (max-width: 360px) {
+    .theater_title {
+      margin-bottom: 26px;
+    }
+    .theater_title h3 {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 130%;
+    }
+  }

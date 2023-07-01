@@ -18,7 +18,7 @@
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span> {{ $store.state.translations["main.analysis"] }} </span>
+      <span> {{ news?.category?.title }} </span>
     </div>
     <div class="v-news-card-body">
       <nuxt-link :to="localePath(`/news/${news?.slug}`)">

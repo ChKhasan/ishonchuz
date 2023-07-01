@@ -19,7 +19,7 @@
           </div>
           <div class="news-container">
             <div class="news-container-tag">
-              <span class="tag">{{ $store.state.translations["main.analysis"] }}</span>
+              <span class="tag">{{ news?.category?.title }}</span>
               <div class="news-container-messangers-mobile">
                 <a href="#"><span v-html="telegram"></span></a>
                 <a href="#"><span v-html="facebook"></span></a>
@@ -113,9 +113,7 @@
               </div> -->
             </div>
             <div class="news-container-links">
-              <a href="#">#Xotinqizlar</a>
-              <a href="#">#bolalar</a>
-              <a href="#">#openbudget</a>
+              <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
             </div>
           </div>
         </div>
@@ -797,6 +795,7 @@ export default {
   }
   .news-container-body {
     padding-bottom: 50px;
+    overflow: hidden;
   }
   .comment-form {
     padding: 20px 24px;

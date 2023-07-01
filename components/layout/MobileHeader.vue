@@ -94,8 +94,12 @@
             <div
               v-for="category in categories"
               :key="category?.id"
-              class="home-page-right-drop home-page-right-drop-mobile"
-              :class="{ heightAuto: dropVal == category?.id }"
+              class="home-page-right-drop-mobile"
+              :class="{
+                heightAuto: dropVal == category?.id,
+                active_menu: dropVal == category?.id,
+                disactive_menu: dropVal != false && dropVal != category?.id,
+              }"
             >
               <h5 v-if="category?.children?.length > 0" @click="dropAction(category?.id)">
                 {{ category?.title }}
@@ -126,8 +130,12 @@
               <!-- </Transition> -->
             </div>
             <div
-              class="home-page-right-drop home-page-right-drop-mobile"
-              :class="{ heightAuto: dropVal == 'library' }"
+              class="home-page-right-drop-mobile"
+              :class="{
+                heightAuto: dropVal == 'library',
+                active_menu: dropVal == 'library',
+                disactive_menu: dropVal != false && dropVal != 'library',
+              }"
             >
               <h5 @click="dropAction('library')">
                 {{ $store.state.translations["main.library"] }}
@@ -149,6 +157,35 @@
                   </li>
                   <li @click="$router.push(localePath(`/library?type=literature`))">
                     {{ $store.state.translations["main.kasaba"] }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div
+              class="home-page-right-drop-mobile"
+              :class="{
+                heightAuto: dropVal == 'others',
+                active_menu: dropVal == 'others',
+                disactive_menu: dropVal != false && dropVal != 'others',
+              }"
+            >
+              <h5 @click="dropAction('others')">
+                {{ $store.state.translations["main.others"] }}
+                <span
+                  v-html="dropdown"
+                  :class="{ rotate180: dropVal == 'others' }"
+                ></span>
+              </h5>
+              <div class="home-page-right-drop-board">
+                <ul>
+                  <li @click="$router.push('/galleries')">
+                    {{ $store.state.translations["main.new-uzbekistan"] }}
+                  </li>
+                  <li @click="$router.push('/')">
+                    {{ $store.state.translations["main.communist"] }}
+                  </li>
+                  <li @click="$router.push('/journalists')">
+                    {{ $store.state.translations["main.journalists"] }}
                   </li>
                 </ul>
               </div>
@@ -825,6 +862,14 @@ export default {
 
 <style scoped>
 @import "../../assets/css/pages/home-page.css";
+
+.active_menu h5 {
+  color: #0192ff !important;
+}
+.disactive_menu h5,
+.disactive_menu a {
+  color: #828bb4 !important;
+}
 .drawer_scroll {
   height: 100%;
   overflow-y: scroll;
@@ -846,7 +891,7 @@ export default {
 }
 .wrap {
   display: none;
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   z-index: 99;
@@ -1073,7 +1118,12 @@ export default {
     background: transparent;
     padding: 10px;
     border: none;
-    max-height: 40px;
+    max-height: 35px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .home-page-right-drop-mobile:last-child {
+    margin-bottom: 0;
   }
   .home-page-right-drop-mobile .home-page-right-drop-board ul li {
     padding: 10px;
@@ -1089,20 +1139,23 @@ export default {
   .home-page-right-drop-mobile .home-page-right-drop-board ul {
     margin-left: 16px;
   }
-  .home-page-right-drop-mobile a {
+  .home-page-right-drop-mobile a,
+  .home-page-right-drop-mobile h5 {
     font-family: var(--ROBOTO_SERIF);
     font-size: 14px;
     line-height: 130%;
     text-transform: uppercase;
-    color: #828bb4;
+    color: #000;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
   }
   .home-page-right-drop-mobile h5 {
-    color: #828bb4;
+    color: #000;
+    font-weight: 400;
   }
-  .home-page-right-drop-mobile span svg path {
+ 
+  .home-page-right-drop-mobile h5 span svg path {
     fill: #828bb4 !important;
   }
   .drawer_lang {
@@ -1111,8 +1164,8 @@ export default {
     padding-right: 19px;
     padding-left: 19px;
     padding-bottom: 24px;
-    border-top: 1px solid var(--black-5, #e7e7e7);
-    border-bottom: 1px solid var(--black-5, #e7e7e7);
+    border-top: 1px solid var(--black_414141, #e7e7e7);
+    border-bottom: 1px solid var(--black_414141, #e7e7e7);
   }
   .drawer_lang ul {
     display: flex;

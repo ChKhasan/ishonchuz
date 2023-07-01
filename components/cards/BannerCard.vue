@@ -4,7 +4,7 @@
       <div class="banner-card-img">
         <img v-if="topNews?.image" :src="topNews.image" alt="" />
         <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
-        <span>{{ $store.state.translations["main.society"] }}</span>
+        <span>{{ topNews?.category?.title }}</span>
       </div>
       <div class="banner-card-body">
         <div class="banner-card_text">
@@ -125,5 +125,65 @@ export default {
 }
 .banner-card-body_footer > span > span {
   margin-right: 7px;
+}
+@media (max-width: 1024px) {
+  .banner-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .banner-card_text a {
+    font-size: 14px;
+    margin-bottom: 24px;
+    display: flex;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .banner-card-img {
+    height: 172px;
+  }
+  .banner-card_text p {
+    display: none;
+  }
+  .banner-card {
+    display: flex;
+    flex-direction: column;
+  }
+  .banner-card_text a {
+    font-size: 14px;
+    margin-bottom: 24px;
+    display: flex;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .banner-card-img {
+    height: 172px;
+  }
+  .banner-card_text p {
+    display: none;
+  }
+  .banner-card-body {
+    padding: 0;
+  }
+  .banner-card-body_footer > span {
+    margin: 0;
+  }
+  .banner-card-body_footer {
+    gap: 12px;
+  }
+  .banner-card-body {
+    padding: 0;
+  }
+  .banner-card-body_footer > span {
+    margin: 0;
+  }
+  .banner-card-body_footer {
+    gap: 12px;
+  }
 }
 </style>

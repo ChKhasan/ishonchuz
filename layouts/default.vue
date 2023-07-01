@@ -10,7 +10,7 @@
       }"
     />
     <MobileHeader :categories="categories" />
-    <div class="layout_back"></div>
+    <!-- <div class="layout_back"></div> -->
     <Nuxt />
     <Footer :categories="categories" />
   </div>

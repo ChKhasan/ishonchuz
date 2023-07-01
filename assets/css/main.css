@@ -175,6 +175,9 @@ ul {
   max-height: 20px !important;
   width: 120px;
 }
+.home-page-right-drop-mobile h5 span svg path {
+  fill: #828bb4;
+}
 .right-show-more-primary,
 .right-show-more,
 .show-more-count {
@@ -193,6 +196,9 @@ ul {
   justify-content: center;
   border: 1px solid var(--right_show_more_border);
   cursor: pointer;
+}
+.active_menu h5 span svg path {
+  fill: #0192ff !important;
 }
 .right-show-more-primary {
   background: #0192ff;
