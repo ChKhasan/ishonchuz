@@ -148,6 +148,16 @@ h6 {
     max-width: 1440px;
   }
 }
+@media (max-width: 992px) {
+  .container_xl {
+    padding: 0 30px;
+  }
+}
+@media (max-width: 576px) {
+  .container_xl {
+    padding: 0 20px;
+  }
+}
 .vmodal-container {
   background: var(--modal_bg);
 }
@@ -462,6 +472,18 @@ ul {
   }
 }
 @media (max-width: 576px) {
+  
+  .profile-menu ul li > span svg path {
+    fill: var(--white_ffffff, #000);
+  }
+  .auth-form .has-error .ant-form-explain,
+  .error_code,
+  .ant-form-explain {
+    left: 0;
+    font-size: 14px;
+    top: 110%;
+    text-align: left !important;
+  }
   .web-menu {
     display: none;
   }

@@ -745,6 +745,8 @@ export default {
   .news-container-tag {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    grid-gap: 10px;
   }
   .news-page-right {
     display: none;

@@ -6,7 +6,7 @@
           <img class="banner" src="@/assets/images/header.jpg" alt="" />
         </a>
       </div>
-      <div class="container">
+      <div class="container_xl">
         <div class="bottom">
           <div class="left">
             <button
@@ -329,7 +329,11 @@
                 ></span>
                 <span
                   class="sms_timer"
-                  v-if="!responseTypes.smsCodeError && !responseTypes.smsCodeSuccess"
+                  v-if="
+                    !responseTypes.smsCodeError &&
+                    !responseTypes.smsCodeSuccess &&
+                    smsTimer != 0
+                  "
                   >{{ smsTimer }}</span
                 >
                 <span class="error_code" v-if="responseTypes.smsCodeError"
@@ -350,6 +354,13 @@
               </a-form-model-item>
             </div>
           </a-form-model>
+          <div
+            class="reboot_sms"
+            v-if="smsTimer == 0 && visibleSms"
+            @click="__SEND_NUMBER({ phone_number: `${formSms.phone_number}` })"
+          >
+            Qayta jo’natish
+          </div>
         </div>
         <div class="vmodal-footer">
           <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
@@ -478,6 +489,9 @@
                 class="input_clear"
                 v-html="inputClear"
               ></span>
+              <span class="error_code" v-if="responseTypes.smsCodeError"
+                >Xato kiritildi!</span
+              >
             </a-form-model-item>
             <a-form-model-item
               class="form-item mb-0 w-100"
@@ -607,7 +621,7 @@ export default {
           {
             required: true,
             message: "Sms code is required",
-            trigger: "blur",
+            trigger: "change",
           },
         ],
       },
@@ -842,7 +856,17 @@ export default {
       }
     },
     smsTimer(val) {
-      if (val == 0 && this.visibleSms) this.__SEND_NUMBER(this.form);
+      if (val == 45) {
+        this.smsTimer = 45;
+        const smInterval = setInterval(() => {
+          if (this.smsTimer > 0) {
+            this.smsTimer--;
+          }
+          if (this.smsTimer == 0) {
+            clearInterval(smInterval);
+          }
+        }, 1000);
+      }
     },
     "formSms.code"(val) {
       if (val.length < 6) {
@@ -940,7 +964,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 0;
-  background: var(--black_111111, #ffffff);
+  background: var(--black_000000, #ffffff);
   padding: 0;
   transition: 0.3s;
   /* overflow: hidden; */
@@ -957,6 +981,9 @@ export default {
   /* overflow: hidden; */
   overflow: scroll;
 }
+.auth_modal_mobile::-webkit-scrollbar {
+  display: none;
+}
 .reboot_sms {
   color: var(--white_ffffff, #111);
   font-size: 16px;
@@ -967,6 +994,9 @@ export default {
   display: flex;
   align-items: center;
   cursor: pointer;
+  justify-content: center;
+  width: 100%;
+  margin-top: 29px;
 }
 .auth_mobile_body {
   display: flex;
@@ -976,6 +1006,9 @@ export default {
   padding-top: 68px;
   overflow: scroll;
   height: calc(100% - 45px);
+}
+.auth_mobile_body::-webkit-scrollbar {
+  display: none;
 }
 .auth_mobile_body h3 {
   color: var(--white_ffffff, #000);
@@ -1073,13 +1106,16 @@ export default {
   .auth-modal-web {
     display: none;
   }
+  .reboot_sms {
+    margin-top: 0;
+  }
   .profile_menu_mobile {
     display: block;
     opacity: 0;
   }
   .profile-menu ul {
     border-radius: 8px;
-    background: var(--black-1, #f9f9f9);
+    background: var(--black_111111, #f9f9f9);
     padding: 24px;
   }
   .profile-menu {
@@ -1092,7 +1128,7 @@ export default {
   }
   .profile-menu ul li > span {
     position: absolute;
-    right: 70px;
+    right: 10px;
     background: transparent !important;
     transform: rotate(-90deg);
   }
