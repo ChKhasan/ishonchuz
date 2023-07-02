@@ -100,6 +100,39 @@
                 </Transition>
               </div>
             </div>
+            <div class="audio__container">
+              <TitleComp :link="false" title="Ishonch FM" />
+              <div class="audio__player">
+                <div class="audio__name">
+                  <h6>
+                    {{ audioList[currentAudio]?.name }}
+                  </h6>
+                </div>
+                <audio-player
+                  ref="audioPlayerMobile"
+                  :audio-list="audioList.map((elm) => elm.url)"
+                  :before-play="handleBeforePlayMobile"
+                  theme-color="#051769"
+                  :isLoop="false"
+                  :currentPlayIndex="currentAudio"
+                  :progress-end="($event) => processEnd($event)"
+                />
+              </div>
+              <div class="audio__list">
+                <ul>
+                  <li
+                    v-for="(audio, index) in audioList"
+                    :key="audio?.id"
+                    @click="currentAudioIndexMobile(index)"
+                  >
+                    <p :class="{ audio__active: currentAudio == index }">
+                      {{ audio?.name }}
+                    </p>
+                    <span>14:32</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <div class="block2">
               <div class="home-page-right-title" style="text-align: center">
                 {{ $store.state.translations["main.about_us"] }}
@@ -224,6 +257,40 @@
               </Transition>
             </div>
           </div>
+          <div class="audio__container audio_web">
+            <TitleComp :link="false" title="Ishonch FM" />
+            <div class="audio__player">
+              <div class="audio__name">
+                <h6>
+                  {{ audioList[currentAudio]?.name }}
+                </h6>
+              </div>
+              <audio-player
+                class="audio_web"
+                ref="audioPlayer"
+                :audio-list="audioList.map((elm) => elm.url)"
+                :before-play="handleBeforePlay"
+                theme-color="#051769"
+                :isLoop="false"
+                :currentPlayIndex="currentAudio"
+                :progress-end="($event) => processEnd($event)"
+              />
+            </div>
+            <div class="audio__list">
+              <ul>
+                <li
+                  v-for="(audio, index) in audioList"
+                  :key="audio?.id"
+                  @click="currentAudioIndex(index)"
+                >
+                  <p :class="{ audio__active: currentAudio == index }">
+                    {{ audio?.name }}
+                  </p>
+                  <span>14:32</span>
+                </li>
+              </ul>
+            </div>
+          </div>
           <div class="block2">
             <div
               class="home-page-right-title"
@@ -293,7 +360,11 @@ export default {
   data() {
     return {
       dropVal: false,
+      isPlaying: false,
       dropdown: require("../assets/svg/dropdown.svg?raw"),
+      currentAudioName: "",
+      currentAudio: 0,
+      audioList: [],
     };
   },
   mounted() {
@@ -336,6 +407,7 @@ export default {
       redactorNewsData,
       importantNewsData,
       bannersData,
+      audioData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { last_news: true, page_size: 6 },
@@ -378,6 +450,11 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchAudio/getAudio", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
@@ -386,6 +463,15 @@ export default {
     const redactorNews = redactorNewsData.results;
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
+    const audio = audioData.results;
+    const audioList = audio.map((item) => {
+      return {
+        ...item,
+        name: item.title,
+        url: item.file,
+      };
+    });
+    console.log(audio);
     return {
       news,
       topNews,
@@ -394,9 +480,46 @@ export default {
       redactorNews,
       importantNews,
       banners,
+      audio,
+      audioList,
     };
   },
   methods: {
+    async currentAudioIndex(index) {
+      this.$refs.audioPlayer.pause();
+      this.currentAudio = index;
+      this.$refs.audioPlayer.currentPlayIndex = await index;
+      setTimeout(() => {
+        this.$refs.audioPlayer.play();
+      }, 200);
+    },
+    async currentAudioIndexMobile(index) {
+      this.$refs.audioPlayerMobile.pause();
+      this.currentAudio = index;
+      this.$refs.audioPlayerMobile.currentPlayIndex = await index;
+      setTimeout(() => {
+        this.$refs.audioPlayerMobile.play();
+      }, 200);
+    },
+    processEnd(e) {
+      console.log(e, "asdasdasd");
+    },
+    handleBeforePlay(next) {
+      // There are a few things you can do here...
+      this.currentAudioName = this.audioList[
+        this.$refs.audioPlayer.currentPlayIndex
+      ].name;
+      this.currentAudio = this.$refs.audioPlayer.currentPlayIndex;
+      next(); // Start playing
+    },
+   handleBeforePlayMobile (next) {
+      // There are a few things you can do here...
+      this.currentAudioName = this.audioList[
+        this.$refs.audioPlayerMobile.currentPlayIndex
+      ].name;
+      this.currentAudio = this.$refs.audioPlayerMobile.currentPlayIndex;
+      next(); // Start playing
+    },
     dropAction(val) {
       if (val != this.dropVal) {
         this.dropVal = val;
@@ -450,6 +573,203 @@ export default {
 }
 .hidden {
   display: none;
+}
+.audio__container {
+  border-radius: 4px;
+  background: var(--gray_292929, #f9f9f9);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.audio__player {
+  padding-top: 23px;
+  padding-bottom: 27px;
+}
+.audio__name {
+  overflow: hidden;
+  margin-bottom: 16px;
+  position: relative;
+}
+.audio__name::after {
+  content: "";
+  right: 0;
+  top: 0;
+  z-index: 100;
+  background: linear-gradient(
+    270deg,
+    var(--gray_292929, #f9f9f9) 28.24%,
+    var(--gray_292929, rgba(249, 249, 249, 0.95)) 65.53%,
+    var(--gray_292929, rgba(249, 249, 249, 0)) 100%
+  );
+
+  position: absolute;
+  transform: matrix(1, 0, 0, -1, 0, 0);
+  width: 37px;
+  height: 100%;
+}
+/* .anim-left {
+    left: 0;
+    z-index: 100;
+    background: linear-gradient(
+      270deg,
+      #f0f8ff 36.73%,
+      rgba(240, 248, 255, 0) 88.16%
+    );
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+  }
+  .anim-right {
+    right: 0;
+    z-index: 100;
+    background: linear-gradient(
+      270deg,
+      #f0f8ff 36.73%,
+      rgba(240, 248, 255, 0) 88.16%
+    );
+
+    transform: matrix(1, 0, 0, -1, 0, 0);
+  } */
+@keyframes sliderText {
+  0% {
+    transform: translateX(100%);
+  }
+
+  25% {
+    transform: translateX(50%);
+  }
+
+  50% {
+    transform: translateX(0);
+  }
+
+  75% {
+    transform: translateX(-50%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.audio__name h6 {
+  color: var(--white_ffffff, #051769);
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  white-space: nowrap;
+  animation: sliderText 20s infinite linear;
+}
+.audio__list ul {
+  max-height: 312px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: scroll;
+  margin-right: -20px;
+  padding-right: 18px;
+}
+.audio__list ul::-webkit-scrollbar {
+  width: 3px;
+}
+
+/* Track */
+.audio__list ul::-webkit-scrollbar-track {
+  border-radius: 16px;
+  background: var(--black_414141, #eee);
+}
+
+/* Handle */
+.audio__list ul::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: var(--black_111111, #82c9ff);
+}
+
+/* Handle on hover */
+.audio__list ul::-webkit-scrollbar-thumb:hover {
+  background: #b30000;
+}
+.audio__list ul li {
+  border-bottom: 1px solid var(--black_414141, #eee);
+  padding-top: 4px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+.audio__play-prev,
+.audio__play-next,
+.audio__play-start,
+.audio__play-icon,
+.audio-player .audio__play-rate,
+.audio__play-volume {
+  color: var(--white_ffffff, #051769) !important;
+}
+.audio-player .audio__play-volume-icon-wrap .audio__play-volume-wrap .audio__play-volume {
+  background-color: var(--white_ffffff, #051769) !important;
+}
+.audio__list ul li:hover p {
+  color: var(--light-bue-100, #0192ff);
+}
+.audio__list ul li p {
+  color: var(--white_ffffff, #000);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  transition: 0.3s;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+}
+.audio__active {
+  color: var(--light-bue-100, #0192ff) !important;
+}
+.audio__list ul li span {
+  color: var(--black-40, #888);
+  text-align: right;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: 0.24px;
+  margin-top: 4px;
+  display: block;
+  width: 100%;
+}
+.audio__progress {
+  background-color: #0192ff !important;
+}
+.audio-player .audio__progress-point:after {
+  background-color: #0192ff !important;
+}
+.audio-player .audio__progress-point {
+  width: 13px !important;
+  height: 13px !important;
+  box-shadow: none !important;
+  background-color: #0192ff !important;
+  margin-top: -6.5px !important;
+}
+.audio-player .audio__play-rate {
+  margin-left: auto !important;
+}
+.audio-player .audio__play-volume-icon-wrap {
+  margin-left: auto !important;
+}
+.audio-player .audio__current-time,
+.audio-player .audio__duration {
+  color: var(--black-40, #888) !important;
+  text-align: right;
+  font-size: 12px !important;
+  font-family: var(--ROBOTO_SERIF);
+
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.24px;
 }
 @media screen and (max-width: 1024px) {
   .hidden {
@@ -658,6 +978,17 @@ export default {
   }
   .home-carousel {
     padding-top: 140px;
+  }
+}
+@media (max-width: 576px) {
+  .audio__name h6 {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%;
+  }
+  .audio_web {
+    display: none;
   }
 }
 </style>

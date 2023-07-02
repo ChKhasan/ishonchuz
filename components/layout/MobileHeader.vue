@@ -12,7 +12,7 @@
             <button
               class="butn"
               @click="profileMenu = !profileMenu"
-              v-if="$route.path.includes('profile')"
+              v-if="$route.name.includes('profile')"
             >
               <span v-html="menu" v-if="!drawerVisible"></span>
               <span v-else

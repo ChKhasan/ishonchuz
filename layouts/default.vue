@@ -69,9 +69,6 @@ export default {
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
     this.currency = currencyData;
-    console.log(this.currency);
-    console.log("this.currency");
-
     this.$store.commit("getTranslations", translationsData);
   },
 

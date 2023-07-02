@@ -12,7 +12,7 @@ export default {
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      { rel: "icon", type: "image/x-icon", href: "/favicon1.ico" },
       {
         rel: "stylesheet",
         href:
@@ -27,6 +27,7 @@ export default {
     { src: "~plugins/antdv.js" },
     { src: "~plugins/lazy-youtube.js", ssr: false },
     { src: "~plugins/v-mask.js", ssr: false },
+    { src: "~plugins/vue-aplayer.js", ssr: false },
     { src: "~/plugins/client-only.js", mode: "client" },
   ],
   components: true,
