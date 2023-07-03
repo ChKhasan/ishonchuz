@@ -4,8 +4,7 @@
       <div class="book row">
         <div class="news-breadcrumb">
           <nuxt-link :to="localePath('/')"
-            >{{ $store.state.translations["main.home"] }}
-            <span v-html="dropdown"></span
+            >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
           ></nuxt-link>
           <nuxt-link :to="localePath(`/library`)"
             >{{ $store.state.translations["main.libraries"]
@@ -29,9 +28,7 @@
             disabled
           />
           <p v-html="book?.short_desc"></p>
-          <h5>
-            {{ `${book?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so’m
-          </h5>
+          <h5>{{ `${book?.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, " ") }} so’m</h5>
           <div class="book-btns">
             <div class="btn_container btn_container_primary">
               <div class="primary_btn">
@@ -91,9 +88,7 @@
                   <input
                     type="text"
                     v-model="form.full_name"
-                    :placeholder="
-                      $store.state.translations['news.comment_input_place']
-                    "
+                    :placeholder="$store.state.translations['news.comment_input_place']"
                   />
                   <a-rate v-model="form.stars" />
                 </div>
@@ -102,9 +97,7 @@
                 <textarea
                   rows="5"
                   v-model="form.text"
-                  :placeholder="
-                    $store.state.translations['news.comment_textarea_place']
-                  "
+                  :placeholder="$store.state.translations['news.comment_textarea_place']"
                 ></textarea>
               </a-form-model-item>
 
@@ -276,10 +269,7 @@ export default {
     },
     async __POST_COMMENT(dataForm) {
       try {
-        const data = await this.$store.dispatch(
-          "fetchNews/postNewsComment",
-          dataForm
-        );
+        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
         this.$notification["success"]({
           message: "Success",
           description: "Комментарий отправлен успешно.",
@@ -436,5 +426,101 @@ export default {
 .success_btn {
   top: 0;
   position: absolute;
+}
+@media (max-width: 576px) {
+  .book-body .anticon svg {
+    width: 16px !important;
+  }
+  .book-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 22px;
+  }
+  /* .book-btns {
+    display: none;
+  } */
+  .news-breadcrumb {
+    display: none !important;
+  }
+  .comment-form {
+    padding: 20px 24px;
+  }
+  .book-image img {
+    width: 60%;
+  }
+  .book-image {
+    padding-top: 18px;
+    padding-bottom: 34px;
+    width: 50%;
+  }
+  .book-body h3 {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+
+  .book-body p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.24px;
+  }
+  .book-body h5 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+    margin-top: 10px;
+  }
+  .book-desc {
+    margin-top: 36px;
+  }
+  .book-btns .primary_btn,
+  .book-btns .outline_btn {
+    padding: 10px 30px;
+    width: initial !important;
+    white-space: nowrap;
+  }
+  .book-btns .btn_container {
+    width: auto !important;
+  }
+  .book-btns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .book-body {
+    width: 100%;
+  }
+  .book-desc h4 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .book-desc > div > p {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.24px;
+  }
+  .book-desc > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 20px;
+  }
+  .comment-form h5,
+  .general-assessment h5 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+    margin-bottom: 15px;
+  }
+  .send-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 </style>

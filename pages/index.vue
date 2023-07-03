@@ -191,10 +191,7 @@
             :title="$store.state.translations['main.photo_repartee']"
           />
           <div class="news-images-grid">
-            <NewsImagesCard />
-            <NewsImagesCard />
-            <NewsImagesCard />
-            <NewsImagesCard />
+            <NewsImagesCard v-for="news in photoNews" :key="news?.id" :news="news" />
           </div>
         </div>
         <div class="home-page-right col-3 p-0 clear">
@@ -326,7 +323,11 @@
           />
 
           <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            <RightNewsCard
+              v-for="news in importantNews.slice(0, 2)"
+              :key="news?.id"
+              :news="news"
+            />
           </div>
           <div class="btn_container_show_more">
             <div class="right-show-more">
@@ -408,6 +409,7 @@ export default {
       importantNewsData,
       bannersData,
       audioData,
+      photoNewsData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { last_news: true, page_size: 6 },
@@ -455,6 +457,11 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchNews/getPhotoNews", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const news = newsData.results;
     const topNews = topNewsData.results;
@@ -464,6 +471,7 @@ export default {
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
     const audio = audioData.results;
+    const photoNews = photoNewsData.results;
     const audioList = audio.map((item) => {
       return {
         ...item,
@@ -482,6 +490,7 @@ export default {
       banners,
       audio,
       audioList,
+      photoNews,
     };
   },
   methods: {
@@ -512,7 +521,7 @@ export default {
       this.currentAudio = this.$refs.audioPlayer.currentPlayIndex;
       next(); // Start playing
     },
-   handleBeforePlayMobile (next) {
+    handleBeforePlayMobile(next) {
       // There are a few things you can do here...
       this.currentAudioName = this.audioList[
         this.$refs.audioPlayerMobile.currentPlayIndex

@@ -2,19 +2,33 @@
   <div style="overflow: hidden">
     <div class="theater-card">
       <div class="theater-card-image">
-        <img src="../../assets/images/teater.png" alt="" />
+        <img v-if="theater?.image" :src="theater?.image" alt="" />
+        <img v-else src="../../assets/images/teater.png" alt="" />
       </div>
       <div class="theater-card-title">
-        <h4>Ummon guruhi - yirik gala konserti 2023</h4>
+        <h4>{{ theater?.title }}</h4>
       </div>
       <div class="theater-card-info">
         <div>
-          <p>YIL <span>2023</span></p>
-          <p>OY <span>SENTABR</span></p>
+          <p>
+            YIL <span>{{ theater?.from_date.split("-")[0] }}</span>
+          </p>
+          <p>
+            OY <span>{{ moonth[theater?.from_date.split("-")[1] * 1 - 1] }}</span>
+          </p>
         </div>
         <div>
-          <p>KUN <span>09-19</span></p>
-          <p>SOAT <span>15:00; 22:00.</span></p>
+          <p>
+            KUN
+            <span
+              >{{ theater?.from_date.split("-")[2] }}-{{
+                theater?.to_date.split("-")[2]
+              }}</span
+            >
+          </p>
+          <p>
+            SOAT <span>{{ theater?.hours }}.</span>
+          </p>
         </div>
         <span></span>
       </div>
@@ -25,7 +39,31 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  props: ["theater"],
+  data() {
+    return {
+      moonth: [
+        "Yanvar",
+        "Fevral",
+        "Mart",
+        "Aprel",
+        "May",
+        "Iyun",
+        "Iyul",
+        "Avgust",
+        "Sentyabr",
+        "Oktyabr",
+        "Noyabr",
+        "Dekabr",
+      ],
+    };
+  },
+  mounted() {
+    const date = new Date();
+    console.log(date);
+  },
+};
 </script>
 <style lang="css">
 @import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap");
@@ -57,6 +95,11 @@ export default {};
   text-transform: uppercase;
   border-bottom: 7px solid var(--light-bue-100, #0192ff);
   padding-bottom: 8px;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
 }
 .theater-card-info {
   margin-top: 12px;

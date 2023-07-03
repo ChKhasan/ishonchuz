@@ -1,21 +1,27 @@
 <template lang="html">
   <div class="news-images-card">
-    <nuxt-link :to="localePath('/')">
+    <nuxt-link :to="localePath(`/photo_news/${news?.slug}`)">
       <div class="news-images-card-img">
-        <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
         <div>
-          <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
-          <div><img src="../../assets/images/Снимок экрана (925).png" alt="" /></div>
+          <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
+        </div>
+        <div>
+          <div>
+            <img v-if="news?.images[1]?.image" :src="news?.images[1]?.image" alt="" />
+          </div>
+          <div>
+            <img v-if="news?.images[2]?.image" :src="news?.images[2]?.image" alt="" />
+          </div>
         </div>
       </div>
       <div class="news-images-card-body">
         <p>
-          Si Szinpinning aytishicha, Rossiyaning yadro qurolidan foydalanishini bo‘lmaydi…
+          {{ news?.title }}
         </p>
         <div class="news-images-card-info">
-          <span> <span v-html="comments"></span> 0</span>
-          <span><span v-html="view"></span>1232</span>
-          <span><span v-html="date"></span>12:32 | 23.12.2023</span>
+          <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
+          <span v-if="news?.views"><span v-html="view"></span>{{ news?.views }}</span>
+          <span><span v-html="date"></span>{{ news?.date }}</span>
         </div>
       </div>
     </nuxt-link>
@@ -23,6 +29,7 @@
 </template>
 <script>
 export default {
+  props: ["news"],
   data() {
     return {
       comments: require("../../assets/svg/comments.svg?raw"),
@@ -47,6 +54,7 @@ export default {
   grid-template-columns: 2fr 1fr;
   grid-gap: 8px;
   position: relative;
+  height: 210px;
 }
 .news-images-card-img div {
   display: grid;
