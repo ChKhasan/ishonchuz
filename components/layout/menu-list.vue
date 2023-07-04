@@ -49,7 +49,7 @@
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="3">
-                  <nuxt-link :to="localePath('/library?type=literature')">{{
+                  <nuxt-link :to="localePath('/library?type=manuals')">{{
                     $store.state.translations["main.kasaba"]
                   }}</nuxt-link>
                 </a-menu-item>

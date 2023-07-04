@@ -8,8 +8,8 @@
         <nuxt-link :to="localePath('/')"
           >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
         ></nuxt-link>
-        <nuxt-link :to="localePath(`/library?type=articles`)"
-          >{{ $store.state.translations["main.articles"] }} <span v-html="dropdown"></span
+        <nuxt-link :to="localePath(`/library?type=manuals`)"
+          >{{ $store.state.translations["main.manuals"] }} <span v-html="dropdown"></span
         ></nuxt-link>
         <nuxt-link :to="localePath('/')" style="pointer-events: none"
           >{{ article?.title }} <span v-html="dropdown"></span

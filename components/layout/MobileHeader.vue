@@ -155,7 +155,7 @@
                   <li @click="$router.push(localePath(`/library?type=articles`))">
                     {{ $store.state.translations["main.articles"] }}
                   </li>
-                  <li @click="$router.push(localePath(`/library?type=literature`))">
+                  <li @click="$router.push(localePath(`/library?type=manuals`))">
                     {{ $store.state.translations["main.kasaba"] }}
                   </li>
                 </ul>

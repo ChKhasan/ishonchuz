@@ -17,4 +17,16 @@ export const actions = {
     });
     return res;
   },
+  async getArticlesBySlug({}, payload) {
+    const res = await this.$axios.$get(`/articles/${payload.id}`, {
+      ...payload.header,
+    });
+    return res;
+  },
+  async getBooksBySlug({}, payload) {
+    const res = await this.$axios.$get(`/books/${payload.id}`, {
+      ...payload.header,
+    });
+    return res;
+  },
 };

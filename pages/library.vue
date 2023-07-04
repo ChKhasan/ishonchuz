@@ -52,7 +52,7 @@
         <ArticlesCard v-for="article in articles" :key="article.id" :article="article" />
       </div>
       <div class="articles-page-container" v-if="$route.query.type == 'manuals'">
-        <ArticlesCard v-for="manual in manuals" :key="manual.id" :article="manual" />
+        <ManualsCard v-for="manual in manuals" :key="manual.id" :article="manual" />
       </div>
     </div>
   </div>
@@ -60,6 +60,7 @@
 <script>
 import BookCard from "../components/cards/BookCard.vue";
 import ArticlesCard from "../components/cards/ArticlesCard.vue";
+import ManualsCard from "../components/cards/ManualsCard.vue";
 
 export default {
   data() {
@@ -127,6 +128,7 @@ export default {
   components: {
     BookCard,
     ArticlesCard,
+    ManualsCard,
   },
 };
 </script>
