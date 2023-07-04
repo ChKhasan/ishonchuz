@@ -16,11 +16,13 @@
             </p>
             <p>
               {{ $store.state.translations["main.footer_adress"] }}:
-              <span>Toshkent shahri, Buxoro ko‘chasi, 24-uy</span>
+              <span>{{ $store.state.siteInfo["adres"] }}</span>
             </p>
             <p>
               {{ $store.state.translations["main.footer_email"] }}:
-              <a href="#">ishonch1991@yandex.uz</a>
+              <a :href="`mailto:${$store.state.siteInfo['email']}`">{{
+                $store.state.siteInfo["email"]
+              }}</a>
             </p>
           </div>
           <div class="footer-menu">
@@ -69,19 +71,43 @@
               </li>
             </ul>
             <ul>
-              <li>{{ $store.state.translations["main.about_site"] }}</li>
+              <li @click="$router.push(localePath('/about-site'))">
+                {{ $store.state.translations["main.about_site"] }}
+              </li>
               <li>{{ $store.state.translations["main.reklama"] }}</li>
               <li>{{ $store.state.translations["main.contact"] }}</li>
-              <li>{{ $store.state.translations["main.about_us"] }}</li>
+              <li @click="$router.push(localePath('/about'))">
+                {{ $store.state.translations["main.about_us"] }}
+              </li>
             </ul>
           </div>
         </div>
         <div class="footer-messangers">
-          <a href="#"><span v-html="telegram"></span></a>
-          <a href="#"><span v-html="facebook"></span></a>
-          <a href="#"><span v-html="twitter"></span></a>
-          <a href="#"><span v-html="instagram"></span></a>
-          <a href="#"><span v-html="whatsapp"></span></a>
+          <a
+            v-if="$store.state.siteInfo['telegram']"
+            :href="$store.state.siteInfo['telegram']"
+            ><span v-html="telegram"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['facebook']"
+            :href="$store.state.siteInfo['facebook']"
+            ><span v-html="facebook"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['twitter']"
+            :href="$store.state.siteInfo['twitter']"
+            ><span v-html="twitter"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['instagram']"
+            :href="$store.state.siteInfo['instagram']"
+            ><span v-html="instagram"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['whatsapp']"
+            :href="$store.state.siteInfo['whatsapp']"
+            ><span v-html="whatsapp"></span
+          ></a>
         </div>
       </div>
     </div>

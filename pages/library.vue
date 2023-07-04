@@ -31,8 +31,14 @@
               $store.state.translations["main.articles"]
             }}</span>
           </li>
-          <li>
-            <span>{{ $store.state.translations["main.kasaba"] }}</span>
+          <li
+            :class="{
+              'news-menu-active-categry': $route.query.type == 'manuals',
+            }"
+          >
+            <span @click="tabChange('manuals')">{{
+              $store.state.translations["main.kasaba"]
+            }}</span>
           </li>
         </ul>
       </div>
@@ -44,6 +50,9 @@
       </div>
       <div class="articles-page-container" v-if="$route.query.type == 'articles'">
         <ArticlesCard v-for="article in articles" :key="article.id" :article="article" />
+      </div>
+      <div class="articles-page-container" v-if="$route.query.type == 'manuals'">
+        <ArticlesCard v-for="manual in manuals" :key="manual.id" :article="manual" />
       </div>
     </div>
   </div>
@@ -59,36 +68,45 @@ export default {
     };
   },
   async asyncData({ store, i18n }) {
-    const [literatureData, scientificData, articlesData] = await Promise.all([
-      store.dispatch("fetchBooks/getBooks", {
-        params: {
-          type: "literature",
-        },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBooks/getBooks", {
-        params: {
-          type: "science",
-        },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBooks/getArticles", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-    ]);
+    const [literatureData, scientificData, articlesData, manualsData] = await Promise.all(
+      [
+        store.dispatch("fetchBooks/getBooks", {
+          params: {
+            type: "literature",
+          },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchBooks/getBooks", {
+          params: {
+            type: "science",
+          },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchBooks/getArticles", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchBooks/getManuals", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+      ]
+    );
     const literature = literatureData.results;
     const scientific = scientificData.results;
     const articles = articlesData.results;
+    const manuals = manualsData.results;
     return {
       literature,
       scientific,
       articles,
+      manuals,
     };
   },
   mounted() {

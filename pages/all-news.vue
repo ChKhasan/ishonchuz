@@ -20,7 +20,7 @@
                 :news="newsItem"
               />
             </div>
-            <div class="btn_container_show_more mt-4">
+            <div class="btn_container_show_more mt-4" v-if="news.length > 11 && !showAll">
               <div class="right-show-more">
                 {{ $store.state.translations["main.more"] }}
               </div>

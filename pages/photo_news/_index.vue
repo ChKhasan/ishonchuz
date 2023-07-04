@@ -23,11 +23,31 @@
                 news?.category?.title
               }}</span>
               <div class="news-container-messangers-mobile">
-                <a href="#"><span v-html="telegram"></span></a>
-                <a href="#"><span v-html="facebook"></span></a>
-                <a href="#"><span v-html="twitter"></span></a>
-                <a href="#"><span v-html="instagram"></span></a>
-                <a href="#"><span v-html="whatsapp"></span></a>
+                <a
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
             </div>
             <div class="news-container-head">
@@ -36,11 +56,31 @@
                 <span><span v-html="date"></span>{{ news?.date }}</span>
               </div>
               <div class="news-container-messangers">
-                <a href="#"><span v-html="telegram"></span></a>
-                <a href="#"><span v-html="facebook"></span></a>
-                <a href="#"><span v-html="twitter"></span></a>
-                <a href="#"><span v-html="instagram"></span></a>
-                <a href="#"><span v-html="whatsapp"></span></a>
+                <a
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
             </div>
             <div class="news-container-header">
@@ -496,14 +536,7 @@ export default {
   width: 100% !important;
   max-width: 100% !important;
 }
-.new-category-title h2 {
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 700;
-  font-size: 26px;
-  line-height: 150%;
-  color: var(--text_color_nav);
-}
+
 .news-container {
   padding: 60px 70px;
   background: var(--card_bg);
@@ -832,12 +865,7 @@ export default {
     padding-left: 0;
     padding-right: 0;
   }
-  .new-category-title h2 {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 130%;
-    margin-bottom: 14px;
-  }
+
   .news-container-header {
     margin-top: 20px;
   }

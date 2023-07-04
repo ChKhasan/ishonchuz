@@ -74,6 +74,11 @@
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
+                  <a href="https://ishonch.uz/" >{{
+                    $store.state.translations["main.archive"]
+                  }}</a>
+                </a-menu-item>
+                <a-menu-item key="3">
                   <nuxt-link :to="localePath('/journalists')">{{
                     $store.state.translations["main.journalists"]
                   }}</nuxt-link>

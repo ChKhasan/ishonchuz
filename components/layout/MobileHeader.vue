@@ -1185,6 +1185,7 @@ export default {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    font-weight: 400;
   }
   .drawer_lang {
     margin-top: 20px;

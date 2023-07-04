@@ -32,9 +32,9 @@
         </div>
         <span></span>
       </div>
-      <div class="qr_code">
+      <!-- <div class="qr_code">
         <div></div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -104,11 +104,11 @@ export default {
 .theater-card-info {
   margin-top: 12px;
   position: relative;
-  padding-bottom: 27px;
+  /* padding-bottom: 27px; */
   padding-left: 2px;
   padding-right: 2px;
 }
-.theater-card-info::after {
+/* .theater-card-info::after {
   display: flex;
   position: absolute;
   content: "";
@@ -131,7 +131,7 @@ export default {
   background: var(--black_000000, #ffffff);
   right: -24.5px;
   bottom: -12.5px;
-}
+} */
 .theater-card-info div {
   display: flex;
   margin-bottom: 8px;
@@ -162,7 +162,7 @@ export default {
   height: 52px;
   background: gray;
 }
-.theater-card-info > span {
+/* .theater-card-info > span {
   margin: 0 auto;
   position: absolute;
   bottom: 0;
@@ -177,7 +177,7 @@ export default {
   width: 80%;
   display: flex;
   border-bottom: 1px dashed var(--black_414141, #e7e7e7);
-}
+} */
 @media (max-width: 360px) {
   .theater-card-image {
     height: 166px;

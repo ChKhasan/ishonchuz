@@ -7,6 +7,10 @@ export const actions = {
     const res = await this.$axios.$get(`/articles`, { ...payload });
     return res;
   },
+  async getManuals({}, payload) {
+    const res = await this.$axios.$get(`/manuals`, { ...payload });
+    return res;
+  },
   async getBooksBySlug({}, payload) {
     const res = await this.$axios.$get(`/books/${payload.id}`, {
       ...payload.header,

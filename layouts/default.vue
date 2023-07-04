@@ -21,12 +21,6 @@ export default {
       date: new Date(),
     };
   },
-  // async mounted() {
-  //   const [categoriesData] = await Promise.all([
-  //     this.$store.dispatch("fetchCategories/getCategories", {}),
-  //   ]);
-  //   this.categories = categoriesData.results;
-  // },
   computed: {
     targetLang() {
       return this.$i18n.locale;
@@ -44,6 +38,7 @@ export default {
       translationsData,
       bannersData,
       currencyData,
+      siteInfoData,
     ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
@@ -65,10 +60,17 @@ export default {
           "YYYY-MM-DD"
         )}`
       ),
+      this.$store.dispatch("fetchSiteInfo/getSiteInfo", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
     ]);
+    const siteInfo = siteInfoData;
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
     this.currency = currencyData;
+    this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getTranslations", translationsData);
   },
 

@@ -31,6 +31,7 @@
           </li>
         </ul>
       </div>
+
       <div class="newspaper-page-container" v-if="newspapers.length > 0">
         <NewspaperCard
           v-for="newspaper in newspapers"
@@ -38,6 +39,7 @@
           :newspaper="newspaper"
         />
       </div>
+
       <div v-else>
         <div class="messangers-container">
           <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
@@ -45,21 +47,31 @@
             {{ $store.state.translations["main.follow"] }}
           </div>
           <div class="messanger-icons">
-            <a href="#">
-              <span v-html="telegram"> </span>
-            </a>
-            <a href="#">
-              <span v-html="facebook"> </span>
-            </a>
-            <a href="#">
-              <span v-html="twitter"> </span>
-            </a>
-            <a href="#">
-              <span v-html="instagram"> </span>
-            </a>
-            <a href="#">
-              <span v-html="whatsapp"> </span>
-            </a>
+            <a
+              v-if="$store.state.siteInfo['telegram']"
+              :href="$store.state.siteInfo['telegram']"
+              ><span v-html="telegram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['facebook']"
+              :href="$store.state.siteInfo['facebook']"
+              ><span v-html="facebook"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['twitter']"
+              :href="$store.state.siteInfo['twitter']"
+              ><span v-html="twitter"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['instagram']"
+              :href="$store.state.siteInfo['instagram']"
+              ><span v-html="instagram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['whatsapp']"
+              :href="$store.state.siteInfo['whatsapp']"
+              ><span v-html="whatsapp"></span
+            ></a>
           </div>
         </div>
       </div>
@@ -82,9 +94,15 @@ export default {
       whatsapp: require("../assets/svg/whatsapp.svg?raw"),
     };
   },
-  async asyncData({ store, i18n }) {
+  computed: {
+    routerQuery() {
+      return this.$route.query.type;
+    },
+  },
+  async asyncData({ store, i18n, query }) {
     const [newspapersData] = await Promise.all([
       store.dispatch("fetchNewspapers/getNewspapers", {
+        params: { language: query.type != "all" ? query.type : "" },
         headers: {
           Language: i18n.locale,
         },
@@ -110,6 +128,19 @@ export default {
       });
     },
   },
+  watch: {
+    async routerQuery(val) {
+      const [newspapersData] = await Promise.all([
+        this.$store.dispatch("fetchNewspapers/getNewspapers", {
+          params: { language: val != "all" ? val : "" },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.newspapers = newspapersData.results;
+    },
+  },
   components: {
     BookCard,
     ArticlesCard,
@@ -130,6 +161,12 @@ export default {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 30px;
+}
+@media (max-width: 576px) {
+  .newspaper-page-container {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+  }
 }
 @media (max-width: 360px) {
   .newspaper-page-container {

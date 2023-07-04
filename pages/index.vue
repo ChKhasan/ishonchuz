@@ -167,20 +167,30 @@
               :title="$store.state.translations['main.active_topics']"
             />
 
-            <div class="right-news-list">
+            <div class="right-news-list" v-if="showAll">
               <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
             </div>
-            <div class="btn_container_show_more">
+            <div class="right-news-list" v-else>
+              <RightNewsCard
+                v-for="news in importantNews.slice(0, 6)"
+                :key="news?.id"
+                :news="news"
+              />
+            </div>
+            <div
+              class="btn_container_show_more"
+              v-if="importantNews.length > 6 && !showAll"
+            >
               <div class="right-show-more">
                 {{ $store.state.translations["main.see_all"] }}
               </div>
-              <div class="right-show-more-primary">
+              <div class="right-show-more-primary" @click="showAll = true">
                 {{ $store.state.translations["main.see_all"] }}
               </div>
             </div>
           </div>
           <TitleComp
-            link="all-news"
+            link="video-news"
             :title="$store.state.translations['main.video_gallery']"
           />
           <div class="video-news-grid">
@@ -322,18 +332,24 @@
             :title="$store.state.translations['main.active_topics']"
           />
 
-          <div class="right-news-list">
+          <div class="right-news-list" v-if="showAll">
+            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+          </div>
+          <div class="right-news-list" v-else>
             <RightNewsCard
-              v-for="news in importantNews.slice(0, 2)"
+              v-for="news in importantNews.slice(0, 6)"
               :key="news?.id"
               :news="news"
             />
           </div>
-          <div class="btn_container_show_more">
+          <div
+            class="btn_container_show_more"
+            v-if="importantNews.length > 6 && !showAll"
+          >
             <div class="right-show-more">
               {{ $store.state.translations["main.see_all"] }}
             </div>
-            <div class="right-show-more-primary">
+            <div class="right-show-more-primary" @click="showAll = true">
               {{ $store.state.translations["main.see_all"] }}
             </div>
           </div>
@@ -360,6 +376,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      showAll: false,
       dropVal: false,
       isPlaying: false,
       dropdown: require("../assets/svg/dropdown.svg?raw"),
@@ -442,7 +459,7 @@ export default {
         },
       }),
       store.dispatch("fetchNews/getNews", {
-        params: { important: true, page_size: 6 },
+        params: { important: true },
         headers: {
           Language: i18n.locale,
         },
@@ -695,7 +712,7 @@ export default {
 
 /* Handle on hover */
 .audio__list ul::-webkit-scrollbar-thumb:hover {
-  background: #b30000;
+  background: rgb(130, 201, 255, 0.5);
 }
 .audio__list ul li {
   border-bottom: 1px solid var(--black_414141, #eee);

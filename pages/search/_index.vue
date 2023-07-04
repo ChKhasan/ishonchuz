@@ -15,18 +15,42 @@
             <h3 v-else>
               “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
             </h3>
-            <div class="search-page-grid search_web_news">
+            <div class="search-page-grid search_web_news" v-if="showAll">
               <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
             </div>
-            <div class="search-page-grid search_mobile_news">
+            <div class="search-page-grid search_web_news" v-else>
+              <VNewsCard
+                v-for="news in newsSearch.slice(0, 18)"
+                :key="news?.id"
+                :news="news"
+              />
+            </div>
+            <div class="search-page-grid search_mobile_news" v-if="showAll">
               <AllNewsCard
                 v-for="newsItem in newsSearch"
                 :key="newsItem?.id"
                 :news="newsItem"
               />
             </div>
+            <div class="search-page-grid search_mobile_news" v-else>
+              <AllNewsCard
+                v-for="newsItem in newsSearch.slice(0, 18)"
+                :key="newsItem?.id"
+                :news="newsItem"
+              />
+            </div>
             <div class="d-flex justify-content-center">
-              <!-- <div class="show-more-count">{{ $store.state.translations["main.more"] }}</div> -->
+              <div
+                class="btn_container_show_more w-100"
+                v-if="newsSearch?.length > 18 && !showAll"
+              >
+                <div class="right-show-more">
+                  {{ $store.state.translations["main.more"] }}
+                </div>
+                <div class="right-show-more-primary" @click="showAll = true">
+                  {{ $store.state.translations["main.see_all"] }}
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -68,21 +92,31 @@
             <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
             <div class="follow-us-message">FOLLOW US!</div>
             <div class="messanger-icons">
-              <a href="#">
-                <span v-html="telegram"> </span>
-              </a>
-              <a href="#">
-                <span v-html="facebook"> </span>
-              </a>
-              <a href="#">
-                <span v-html="twitter"> </span>
-              </a>
-              <a href="#">
-                <span v-html="instagram"> </span>
-              </a>
-              <a href="#">
-                <span v-html="whatsapp"> </span>
-              </a>
+              <a
+            v-if="$store.state.siteInfo['telegram']"
+            :href="$store.state.siteInfo['telegram']"
+            ><span v-html="telegram"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['facebook']"
+            :href="$store.state.siteInfo['facebook']"
+            ><span v-html="facebook"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['twitter']"
+            :href="$store.state.siteInfo['twitter']"
+            ><span v-html="twitter"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['instagram']"
+            :href="$store.state.siteInfo['instagram']"
+            ><span v-html="instagram"></span
+          ></a>
+          <a
+            v-if="$store.state.siteInfo['whatsapp']"
+            :href="$store.state.siteInfo['whatsapp']"
+            ><span v-html="whatsapp"></span
+          ></a>
             </div>
           </div>
         </div>
@@ -101,6 +135,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      showAll: false,
       telegram: require("../../assets/svg/telegram.svg?raw"),
       facebook: require("../../assets/svg/facebook.svg?raw"),
       twitter: require("../../assets/svg/twitter.svg?raw"),

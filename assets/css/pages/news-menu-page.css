@@ -1,7 +1,5 @@
 .news-menu-page-header {
-  padding-bottom: 12px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid var(--right_drop_border);
+  padding-bottom: 16px;
 }
 
 .news-menu-page-header h5 {
@@ -11,7 +9,7 @@
   font-size: 26px;
   line-height: 150%;
   color: var(--text_color);
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 @media (max-width: 576px) {
   .news-menu-page-header h5 {

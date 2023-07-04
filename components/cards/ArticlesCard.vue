@@ -1,5 +1,9 @@
 <template lang="html">
-  <div class="articles-card">
+  <div
+    class="articles-card"
+    @click="$router.push(localePath(`/library-inner/${article?.slug}`))"
+  >
+    <!-- <span> <span class="articles__tag">Maqola</span></span> -->
     <div class="articles-header">
       <h3>{{ article?.title }}</h3>
     </div>
@@ -24,6 +28,20 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+}
+.articles__tag {
+  color: var(--white_ffffff, #111);
+  font-size: 12px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 1.68px;
+  text-transform: uppercase;
+  padding: 7px 12px;
+  background: var(--gray_292929, #eee);
+  display: inline-flex;
+  margin-bottom: 14px;
 }
 .articles-header h3 {
   color: var(--light-bue-100, #0192ff);

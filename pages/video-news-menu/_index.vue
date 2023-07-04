@@ -2,10 +2,8 @@
   <div class="home-page news-menu-page">
     <div class="container_xl">
       <div class="news-menu-page-header">
-        <h5>
-          {{ categories?.parent?.title ? categories?.parent?.title : categories?.title }}
-        </h5>
-        <ul class="library_tab" v-if="categories?.parent?.children?.length > 0">
+        <h5>{{ categories?.parent?.title }}</h5>
+        <ul class="library_tab">
           <li
             v-for="child in categories?.parent?.children"
             :key="child?.id"
@@ -26,7 +24,7 @@
           </div>
           <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
             <VNewsCard
-              v-for="item in categories?.video_news.slice(0, 3)"
+              v-for="item in categories?.video_news"
               :key="item?.id"
               :news="item"
             />
@@ -36,22 +34,17 @@
             v-if="categories?.news?.length > 1"
           >
             <HNewsCard
-              v-for="news in categories?.news
-                .filter((item, index) => index != 0)
-                .slice(0, 20)"
+              v-for="news in categories?.news.filter((item, index) => index != 0)"
               :key="news?.id"
               :news="news"
             />
           </div>
           <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
-          <div
-            class="btn_container_show_more"
-            v-if="categories?.news.length - 1 > 20 && !showAll"
-          >
+          <div class="btn_container_show_more" v-if="categories?.news?.length > 20">
             <div class="right-show-more">
               {{ $store.state.translations["main.more"] }}
             </div>
-            <div class="right-show-more-primary" @click="showAll = true">
+            <div class="right-show-more-primary">
               {{ $store.state.translations["main.see_all"] }}
             </div>
           </div>
@@ -60,30 +53,30 @@
             <div class="follow-us-message">FOLLOW US!</div>
             <div class="messanger-icons">
               <a
-            v-if="$store.state.siteInfo['telegram']"
-            :href="$store.state.siteInfo['telegram']"
-            ><span v-html="telegram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['facebook']"
-            :href="$store.state.siteInfo['facebook']"
-            ><span v-html="facebook"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['twitter']"
-            :href="$store.state.siteInfo['twitter']"
-            ><span v-html="twitter"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['instagram']"
-            :href="$store.state.siteInfo['instagram']"
-            ><span v-html="instagram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['whatsapp']"
-            :href="$store.state.siteInfo['whatsapp']"
-            ><span v-html="whatsapp"></span
-          ></a>
+                v-if="$store.state.siteInfo['telegram']"
+                :href="$store.state.siteInfo['telegram']"
+                ><span v-html="telegram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['facebook']"
+                :href="$store.state.siteInfo['facebook']"
+                ><span v-html="facebook"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['twitter']"
+                :href="$store.state.siteInfo['twitter']"
+                ><span v-html="twitter"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['instagram']"
+                :href="$store.state.siteInfo['instagram']"
+                ><span v-html="instagram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['whatsapp']"
+                :href="$store.state.siteInfo['whatsapp']"
+                ><span v-html="whatsapp"></span
+              ></a>
             </div>
           </div>
         </div>
@@ -111,7 +104,6 @@ import VNewsCard from "../../components/cards/VNewsCard.vue";
 export default {
   data() {
     return {
-      showAll: false,
       telegram: require("../../assets/svg/telegram.svg?raw"),
       facebook: require("../../assets/svg/facebook.svg?raw"),
       twitter: require("../../assets/svg/twitter.svg?raw"),
@@ -217,7 +209,6 @@ export default {
 .news-menu_news-list {
   margin-bottom: 80px;
 }
-
 @media screen and (max-width: 1024px) {
   .news-page-right {
     display: none;

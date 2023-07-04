@@ -19,11 +19,31 @@
                 <p class="status">Jurnalist</p>
               </div>
               <div class="socials">
-                <a href="#"><span v-html="telegram"></span></a>
-                <a href="#"><span v-html="facebook"></span></a>
-                <a href="#"><span v-html="twitter"></span></a>
-                <a href="#"><span v-html="instagram"></span></a>
-                <a href="#"><span v-html="whatsapp"></span></a>
+                <a
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
             </div>
           </div>
@@ -47,11 +67,31 @@
               <p class="answer">{{ journalists?.experience }}</p>
             </div>
             <div class="socials__mobile">
-              <a href="#"><span v-html="telegram"></span></a>
-              <a href="#"><span v-html="facebook"></span></a>
-              <a href="#"><span v-html="twitter"></span></a>
-              <a href="#"><span v-html="instagram"></span></a>
-              <a href="#"><span v-html="whatsapp"></span></a>
+              <a
+                v-if="$store.state.siteInfo['telegram']"
+                :href="$store.state.siteInfo['telegram']"
+                ><span v-html="telegram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['facebook']"
+                :href="$store.state.siteInfo['facebook']"
+                ><span v-html="facebook"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['twitter']"
+                :href="$store.state.siteInfo['twitter']"
+                ><span v-html="twitter"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['instagram']"
+                :href="$store.state.siteInfo['instagram']"
+                ><span v-html="instagram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['whatsapp']"
+                :href="$store.state.siteInfo['whatsapp']"
+                ><span v-html="whatsapp"></span
+              ></a>
             </div>
           </div>
         </div>

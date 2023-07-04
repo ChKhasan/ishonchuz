@@ -5,6 +5,7 @@ export const state = () => ({
   literature: [],
   science: [],
   viewNews: [],
+  siteInfo: {}
 });
 
 export const mutations = {
@@ -26,6 +27,9 @@ export const mutations = {
   },
   getTranslations(state, payload) {
     state.translations = payload;
+  },
+  getSiteInfo(state, payload) {
+    state.siteInfo = payload;
   },
   chackAuth(state, payload) {
     console.log(localStorage.getItem("access_token"));

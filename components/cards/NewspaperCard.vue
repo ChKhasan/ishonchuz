@@ -1,13 +1,22 @@
 <template lang="html">
-  <div class="newspaper-card">
+  <div
+    class="newspaper-card"
+    @click="$router.push(localePath(`/newspaper-inner/${newspaper?.slug}`))"
+  >
     <div class="newspaper-image">
       <img v-if="newspaper?.image" :src="newspaper?.image" alt="" />
       <img v-else src="../../assets/images/gazeta.png" alt="" />
     </div>
     <div class="newspaper-body">
-      <h3>{{ newspaper?.title }} (O’zbek tilida)</h3>
-      <p class="newspaper-date-web">{{ newspaper?.date }}</p>
-      <p class="newspaper-date-mobile">{{ newspaper?.date.split("|")[1] }}</p>
+      <h3>
+        {{ newspaper?.title }} ({{
+          newspaper?.language == "uz" ? "O’zbek tilida" : "Rus tilida"
+        }})
+      </h3>
+      <p class="newspaper-date-web" v-if="newspaper?.date">{{ newspaper?.date }}</p>
+      <p class="newspaper-date-mobile" v-if="newspaper?.date">
+        {{ newspaper?.date.split("|")[1] }}
+      </p>
     </div>
   </div>
 </template>
@@ -17,6 +26,9 @@ export default {
 };
 </script>
 <style lang="css">
+.newspaper-card {
+  cursor: pointer;
+}
 .newspaper-image {
   height: 315px;
 }
