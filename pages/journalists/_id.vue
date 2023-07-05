@@ -149,6 +149,7 @@
                   class="article"
                   v-for="article in journalists?.articles"
                   :key="article?.id"
+                  @click="$router.push(`/library-inner/${article?.slug}`)"
                 >
                   <NuxtLink to="">
                     <div class="content">
@@ -369,6 +370,7 @@ export default {
   padding-left: 24px;
   padding: 14px;
   border-left: 1px solid var(--black-5, #e7e7e7);
+  cursor: pointer;
 }
 .articles .name {
   font-size: 19px;
@@ -409,6 +411,9 @@ export default {
   display: none;
 }
 @media (max-width: 576px) {
+  .articles .name {
+    font-size: 16px;
+  }
   .left,
   .right {
     padding-left: 0;
