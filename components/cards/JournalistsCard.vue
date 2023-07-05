@@ -142,6 +142,7 @@ export default {
   }
   .journalist-card-image {
     height: 87px;
+    width: 100%;
   }
   .journalist-card-head {
     display: grid;
