@@ -37,30 +37,30 @@
           </div>
           <div class="messanger-icons">
             <a
-            v-if="$store.state.siteInfo['telegram']"
-            :href="$store.state.siteInfo['telegram']"
-            ><span v-html="telegram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['facebook']"
-            :href="$store.state.siteInfo['facebook']"
-            ><span v-html="facebook"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['twitter']"
-            :href="$store.state.siteInfo['twitter']"
-            ><span v-html="twitter"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['instagram']"
-            :href="$store.state.siteInfo['instagram']"
-            ><span v-html="instagram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['whatsapp']"
-            :href="$store.state.siteInfo['whatsapp']"
-            ><span v-html="whatsapp"></span
-          ></a>
+              v-if="$store.state.siteInfo['telegram']"
+              :href="$store.state.siteInfo['telegram']"
+              ><span v-html="telegram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['facebook']"
+              :href="$store.state.siteInfo['facebook']"
+              ><span v-html="facebook"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['twitter']"
+              :href="$store.state.siteInfo['twitter']"
+              ><span v-html="twitter"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['instagram']"
+              :href="$store.state.siteInfo['instagram']"
+              ><span v-html="instagram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['whatsapp']"
+              :href="$store.state.siteInfo['whatsapp']"
+              ><span v-html="whatsapp"></span
+            ></a>
           </div>
         </div>
       </div>
@@ -124,6 +124,11 @@ export default {
 }
 .journalists-page {
   padding-top: 40px;
+}
+@media (max-width: 576px) {
+  .journalists_container {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 360px) {
   .journalists_container {

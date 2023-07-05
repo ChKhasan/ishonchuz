@@ -368,7 +368,8 @@ ul {
   border-radius: 1111px;
   padding: 20px;
   margin-top: 40px;
-  width: 296px;
+  /* width: 296px; */
+  gap: 24px;
   display: flex;
   justify-content: space-between;
 }
@@ -471,7 +472,12 @@ ul {
 .top_tab {
   display: none;
 }
-
+.top_tab {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  margin-bottom: 30px !important;
+  height: 35px;
+}
 .mejs__mediaelement {
   width: 100% !important;
 }
@@ -555,8 +561,9 @@ ul {
     display: flex;
     flex-wrap: nowrap !important;
     overflow-x: scroll;
-    margin-bottom: 30px !important;
-    height: 35px;
+    margin-bottom: 0 !important;
+    border-bottom: none;
+    height: auto !important;
   }
 
   .library_tab li a,

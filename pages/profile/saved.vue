@@ -169,7 +169,7 @@ export default {
 }
 
 .profile-saved_title {
-  color: var(--black, #020105);
+  color: var(--white_ffffff, #020105);
   font-size: 22px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 600;
@@ -188,12 +188,7 @@ export default {
   background: var(--black_000000, #fff);
   padding: 50px 65px;
 }
-.top_tab {
-  flex-wrap: nowrap !important;
-  overflow-x: scroll;
-  margin-bottom: 30px !important;
-  height: 35px;
-}
+
 @media (max-width: 576px) {
   .profile-saved {
     padding: 20px;
@@ -206,7 +201,7 @@ export default {
   .profile-grid {
     grid-template-columns: 1fr;
   }
- 
+
   .profile-saved_title {
     font-size: 19px;
     font-weight: 600;

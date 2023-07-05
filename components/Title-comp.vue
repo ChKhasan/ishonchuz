@@ -47,4 +47,32 @@ export default {
 .title-comp a span {
   margin-left: 10px;
 }
+@media screen and (max-width: 1024px) {
+  .title-comp h2 {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .title-comp h2 span {
+    margin: 0;
+  }
+  .title-comp h2 {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .title-comp h2 span {
+    margin: 0;
+  }
+}
+@media (max-width: 360px) {
+  .title-comp h2 {
+    font-size: 13px;
+  }
+  .title-comp a {
+    font-size: 12px;
+  }
+}
 </style>

@@ -358,7 +358,7 @@ export default {
   width: auto;
   height: 123px;
   object-fit: contain;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 .grid {
   display: grid;
@@ -407,6 +407,19 @@ export default {
 }
 .socials__mobile {
   display: none;
+}
+@media (max-width: 576px) {
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .buttons {
+    margin-top: 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 @media (max-width: 360px) {
   .left {

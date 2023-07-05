@@ -1,50 +1,27 @@
 <template>
   <div class="home-page news-menu-page">
     <div class="container_xl">
-      <div class="news-menu-page-header">
-        <h5>{{ categories?.parent?.title }}</h5>
-        <ul class="library_tab">
-          <li
-            v-for="child in categories?.parent?.children"
-            :key="child?.id"
-            :class="{
-              'news-menu-active-categry': $route.params.index == child?.slug,
-            }"
-          >
-            <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
-              child?.title
-            }}</nuxt-link>
-          </li>
-        </ul>
-      </div>
+      <div class="news-menu-page-header"></div>
       <div class="home-page-grid row">
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
-          <div class="" v-if="categories?.news?.length > 0">
-            <BannerCard :topNews="categories?.news[0]" />
+          <div class="" v-if="news?.length > 0">
+            <BannerCard :topNews="news[0]" />
           </div>
-          <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
-            <VNewsCard
-              v-for="item in categories?.video_news"
-              :key="item?.id"
-              :news="item"
-            />
+          <div class="v-news-grid" v-if="news?.length > 1">
+            <VNewsCard v-for="item in news.slice(1, 4)" :key="item?.id" :news="item" />
           </div>
-          <div
-            class="h-news-grid news-menu_news-list"
-            v-if="categories?.news?.length > 1"
-          >
+          <div class="h-news-grid news-menu_news-list" v-if="news?.length > 1">
             <HNewsCard
-              v-for="news in categories?.news.filter((item, index) => index != 0)"
-              :key="news?.id"
-              :news="news"
+              v-for="newsItem in news.slice(4, 24)"
+              :key="newsItem?.id"
+              :news="newsItem"
             />
           </div>
-          <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
-          <div class="btn_container_show_more" v-if="categories?.news?.length > 20">
+          <div class="btn_container_show_more" v-if="news.length > 24 && !showAll">
             <div class="right-show-more">
               {{ $store.state.translations["main.more"] }}
             </div>
-            <div class="right-show-more-primary">
+            <div class="right-show-more-primary" @click="showAll = true">
               {{ $store.state.translations["main.see_all"] }}
             </div>
           </div>
@@ -98,17 +75,18 @@
 </template>
 
 <script>
-import BannerCard from "../../components/cards/BannerCard.vue";
-import HNewsCard from "../../components/cards/HNewsCard.vue";
-import VNewsCard from "../../components/cards/VNewsCard.vue";
+import BannerCard from "../components/cards/BannerCard.vue";
+import HNewsCard from "../components/cards/HNewsCard.vue";
+import VNewsCard from "../components/cards/VNewsCard.vue";
 export default {
   data() {
     return {
-      telegram: require("../../assets/svg/telegram.svg?raw"),
-      facebook: require("../../assets/svg/facebook.svg?raw"),
-      twitter: require("../../assets/svg/twitter.svg?raw"),
-      instagram: require("../../assets/svg/instagram.svg?raw"),
-      whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
+      showAll: false,
+      telegram: require("../assets/svg/telegram.svg?raw"),
+      facebook: require("../assets/svg/facebook.svg?raw"),
+      twitter: require("../assets/svg/twitter.svg?raw"),
+      instagram: require("../assets/svg/instagram.svg?raw"),
+      whatsapp: require("../assets/svg/whatsapp.svg?raw"),
       // news: [],
       // topNews: [],
       // simpleNews: [],
@@ -148,11 +126,11 @@ export default {
       newsData,
       topNewsData,
       simpleNewsData,
-      categoriesData,
+      //   categoriesData,
       bannersData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
-        params: { last_news: true, page_size: 3 },
+        params: { video: true },
         headers: {
           Language: i18n.locale,
         },
@@ -168,14 +146,14 @@ export default {
           Language: i18n.locale,
         },
       }),
-      store.dispatch("fetchCategories/getCategoriesBySlug", {
-        id: params.index,
-        header: {
-          headers: {
-            Language: i18n.locale,
-          },
-        },
-      }),
+      //   store.dispatch("fetchCategories/getCategoriesBySlug", {
+      //     id: params.index,
+      //     header: {
+      //       headers: {
+      //         Language: i18n.locale,
+      //       },
+      //     },
+      //   }),
       store.dispatch("fetchBanners/getBanners", {
         headers: {
           Language: i18n.locale,
@@ -186,13 +164,13 @@ export default {
     const news = newsData.results;
     const topNews = topNewsData.results;
     const simpleNews = simpleNewsData.results;
-    const categories = categoriesData;
+    // const categories = categoriesData;
     const banners = bannersData.results;
     return {
       news,
       topNews,
       simpleNews,
-      categories,
+      //   categories,
       banners,
     };
   },
@@ -204,11 +182,12 @@ export default {
 };
 </script>
 <style lang="css">
-@import "../../assets/css/pages/home-page.css";
-@import "../../assets/css/pages/news-menu-page.css";
+@import "../assets/css/pages/home-page.css";
+@import "../assets/css/pages/news-menu-page.css";
 .news-menu_news-list {
   margin-bottom: 80px;
 }
+
 @media screen and (max-width: 1024px) {
   .news-page-right {
     display: none;

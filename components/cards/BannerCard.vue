@@ -2,8 +2,13 @@
   <nuxt-link :to="localePath(`/news/${topNews?.slug}`)">
     <div class="banner-card">
       <div class="banner-card-img">
-        <img v-if="topNews?.image" :src="topNews.image" alt="" />
-        <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+        <LazyYoutube v-if="topNews?.video" ref="lazyVideo" :src="topNews?.video" />
+        <img v-else :src="topNews.image" alt="" />
+        <img
+          v-if="!topNews?.video && !topNews?.image"
+          src="../../assets/images/Снимок экрана (925).png"
+          alt=""
+        />
         <span>{{ topNews?.category?.title }}</span>
       </div>
       <div class="banner-card-body">
@@ -51,6 +56,7 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   position: relative;
+  display: flex;
 }
 .banner-card-img img {
   width: 100%;

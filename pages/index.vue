@@ -193,6 +193,7 @@
             link="video-news"
             :title="$store.state.translations['main.video_gallery']"
           />
+
           <div class="video-news-grid">
             <VideoNewsCard v-for="news in videoNews" :key="news?.id" :news="news" />
           </div>
@@ -822,15 +823,7 @@ export default {
   .row {
     margin: 0 !important;
   }
-  .title-comp h2 {
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .title-comp h2 span {
-    margin: 0;
-  }
+
   .title-comp a {
     font-size: 14px;
   }

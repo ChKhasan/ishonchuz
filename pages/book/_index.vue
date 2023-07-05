@@ -49,7 +49,7 @@
                 {{ $store.state.translations["main.save"] }}
               </div>
               <Transition>
-                <div class="primary_btn success_btn" v-if="successBtn">
+                <div class="primary_btn success_btn w-100" v-if="successBtn">
                   <span v-html="success"></span>
                 </div>
               </Transition>
@@ -402,7 +402,7 @@ export default {
   margin-top: 80px;
 }
 .book-desc h4 {
-  color: var(--black-100, #000);
+  color: var(--white_ffffff, #000);
   font-size: 22px;
   font-family: var(--ROBOTO_SERIF);
   font-weight: 600;
@@ -426,6 +426,7 @@ export default {
 .success_btn {
   top: 0;
   position: absolute;
+  min-width: 100%;
 }
 @media (max-width: 576px) {
   .book-body .anticon svg {
@@ -521,6 +522,14 @@ export default {
     margin-top: 20px;
     padding-left: 0;
     padding-right: 0;
+  }
+}
+@media (max-width: 360px) {
+  .primary_btn,
+  .outline_btn {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
   }
 }
 </style>

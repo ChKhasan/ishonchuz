@@ -93,30 +93,30 @@
             <div class="follow-us-message">FOLLOW US!</div>
             <div class="messanger-icons">
               <a
-            v-if="$store.state.siteInfo['telegram']"
-            :href="$store.state.siteInfo['telegram']"
-            ><span v-html="telegram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['facebook']"
-            :href="$store.state.siteInfo['facebook']"
-            ><span v-html="facebook"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['twitter']"
-            :href="$store.state.siteInfo['twitter']"
-            ><span v-html="twitter"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['instagram']"
-            :href="$store.state.siteInfo['instagram']"
-            ><span v-html="instagram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['whatsapp']"
-            :href="$store.state.siteInfo['whatsapp']"
-            ><span v-html="whatsapp"></span
-          ></a>
+                v-if="$store.state.siteInfo['telegram']"
+                :href="$store.state.siteInfo['telegram']"
+                ><span v-html="telegram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['facebook']"
+                :href="$store.state.siteInfo['facebook']"
+                ><span v-html="facebook"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['twitter']"
+                :href="$store.state.siteInfo['twitter']"
+                ><span v-html="twitter"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['instagram']"
+                :href="$store.state.siteInfo['instagram']"
+                ><span v-html="instagram"></span
+              ></a>
+              <a
+                v-if="$store.state.siteInfo['whatsapp']"
+                :href="$store.state.siteInfo['whatsapp']"
+                ><span v-html="whatsapp"></span
+              ></a>
             </div>
           </div>
         </div>
@@ -276,6 +276,9 @@ export default {
   .search-page-grid {
     grid-template-columns: 1fr;
     margin-bottom: 50px;
+  }
+  .search_to_back {
+    min-width: 100%;
   }
 }
 @media (max-width: 992px) {

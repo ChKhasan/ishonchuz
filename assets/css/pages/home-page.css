@@ -287,15 +287,7 @@ h6 {
   .row {
     margin: 0 !important;
   }
-  .title-comp h2 {
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .title-comp h2 span {
-    margin: 0;
-  }
+
   .title-comp a {
     font-size: 14px;
   }

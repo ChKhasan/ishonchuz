@@ -120,6 +120,22 @@ export default {
 .journalist-card-info p span:last-child {
   margin-left: 6px;
 }
+@media (max-width: 576px) {
+  .journalists-card {
+    padding: 20px;
+  }
+  .journalist-card-head {
+    grid-template-columns: 1fr;
+  }
+  .journalist-card-info {
+    display: none;
+  }
+  .journalist-card-image {
+    width: 121px;
+    height: 121px;
+    margin: 0 auto;
+  }
+}
 @media (max-width: 360px) {
   .journalists-card {
     padding: 15px;
