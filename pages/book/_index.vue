@@ -1,7 +1,7 @@
 <template>
   <div class="book-page">
     <div class="container_xl">
-      <div class="book row">
+      <div class="book row mx-0">
         <div class="news-breadcrumb">
           <nuxt-link :to="localePath('/')"
             >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
@@ -35,7 +35,7 @@
                 {{ $store.state.translations["main.buy"] }}
               </div>
               <div class="primary_btn">
-                <span>{{ $store.state.translations["main.see_all"] }}</span>
+                {{ $store.state.translations["main.buy"] }}
               </div>
             </div>
             <div
@@ -314,6 +314,7 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
+
 .book-page {
   padding-top: 20px;
 }

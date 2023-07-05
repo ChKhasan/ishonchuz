@@ -2,7 +2,7 @@
   <div class="theater-page">
     <div class="container_xl">
       <div class="theater_title">
-        <h3>Teater</h3>
+        <h3>{{ $store.state.translations["main.Ytheatres"] }}</h3>
       </div>
       <div class="theater-page-container" v-if="showAll">
         <TheaterCard v-for="theater in theaters" :key="theater?.id" :theater="theater" />
@@ -16,8 +16,12 @@
       </div>
       <div class="theater__show" v-if="theaters.length > 8">
         <div class="btn_container_show_more">
-          <div class="right-show-more">Yana ko’rish</div>
-          <div class="right-show-more-primary" @click="showAll = true">Yana ko’rish</div>
+          <div class="right-show-more">
+            {{ $store.state.translations["news.see_again"] }}
+          </div>
+          <div class="right-show-more-primary" @click="showAll = true">
+            {{ $store.state.translations["news.see_again"] }}
+          </div>
         </div>
       </div>
     </div>

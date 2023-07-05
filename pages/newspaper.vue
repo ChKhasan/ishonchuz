@@ -18,7 +18,9 @@
               'news-menu-active-categry': $route.query.type == 'uz',
             }"
           >
-            <span @click="tabChange('uz')">O’zbek tili</span>
+            <span @click="tabChange('uz')">{{
+              $store.state.translations["main.uzb_lang"]
+            }}</span>
           </li>
           <li
             :class="{

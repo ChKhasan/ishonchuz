@@ -18,34 +18,34 @@
             ></nuxt-link>
           </div>
           <div class="news-container">
-            <div class="news-container-tag">
+            <div class="news-container-tag" v-if="news?.category?.title">
               <span class="tag">{{ news?.category?.title }}</span>
               <div class="news-container-messangers-mobile">
                 <a
-            v-if="$store.state.siteInfo['telegram']"
-            :href="$store.state.siteInfo['telegram']"
-            ><span v-html="telegram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['facebook']"
-            :href="$store.state.siteInfo['facebook']"
-            ><span v-html="facebook"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['twitter']"
-            :href="$store.state.siteInfo['twitter']"
-            ><span v-html="twitter"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['instagram']"
-            :href="$store.state.siteInfo['instagram']"
-            ><span v-html="instagram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['whatsapp']"
-            :href="$store.state.siteInfo['whatsapp']"
-            ><span v-html="whatsapp"></span
-          ></a>
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
             </div>
             <div class="news-container-head">
@@ -55,30 +55,30 @@
               </div>
               <div class="news-container-messangers">
                 <a
-            v-if="$store.state.siteInfo['telegram']"
-            :href="$store.state.siteInfo['telegram']"
-            ><span v-html="telegram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['facebook']"
-            :href="$store.state.siteInfo['facebook']"
-            ><span v-html="facebook"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['twitter']"
-            :href="$store.state.siteInfo['twitter']"
-            ><span v-html="twitter"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['instagram']"
-            :href="$store.state.siteInfo['instagram']"
-            ><span v-html="instagram"></span
-          ></a>
-          <a
-            v-if="$store.state.siteInfo['whatsapp']"
-            :href="$store.state.siteInfo['whatsapp']"
-            ><span v-html="whatsapp"></span
-          ></a>
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
             </div>
             <div class="news-container-header">

@@ -69,12 +69,12 @@
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <nuxt-link :to="localePath('/')">{{
-                    $store.state.translations["main.communist"]
+                  <nuxt-link :to="localePath(`/news-menu/${columnist?.slug}`)">{{
+                    columnist?.title
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <a href="https://ishonch.uz/" >{{
+                  <a href="https://ishonch.uz/">{{
                     $store.state.translations["main.archive"]
                   }}</a>
                 </a-menu-item>
@@ -285,7 +285,7 @@
 </template>
 <script>
 export default {
-  props: ["categories"],
+  props: ["categories", "columnist"],
   data() {
     return {
       searchValue: "",

@@ -1,7 +1,12 @@
 <template lang="html">
   <div class="default-layout" :class="{ 'dark-theme': !$store.state.theme }">
-    <Header :categories="categories" :banners="banners" :currency="currency" />
-    <MobileHeader :categories="categories" />
+    <Header
+      :categories="categories"
+      :banners="banners"
+      :currency="currency"
+      :columnist="columnist"
+    />
+    <MobileHeader :categories="categories" :columnist="columnist" />
     <!-- <div class="layout_back"></div> -->
     <Nuxt />
     <Footer :categories="categories" />
@@ -19,6 +24,7 @@ export default {
       currency: [],
       banners: {},
       date: new Date(),
+      columnist: {},
     };
   },
   computed: {
@@ -39,6 +45,7 @@ export default {
       bannersData,
       currencyData,
       siteInfoData,
+      columnistData,
     ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
@@ -65,11 +72,17 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
+      this.$store.dispatch("fetchCategories/getColumnist", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
     ]);
     const siteInfo = siteInfoData;
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
     this.currency = currencyData;
+    this.columnist = columnistData;
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getTranslations", translationsData);
   },

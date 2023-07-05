@@ -76,7 +76,7 @@
               :class="{ 'active-color': !$store.state.theme }"
             ></span>
           </div>
-          <div class="weather-drop">
+          <div class="weather-drop" @click="visible = true">
             <span v-html="cloud"></span>
             <p>+20C Toshkent</p>
             <span v-html="drop"></span>
@@ -94,22 +94,113 @@
         </div>
       </div>
     </div>
-    <MenuList :categories="categories" />
+    <MenuList :categories="categories" :columnist="columnist" />
     <div class="to_top_btn" v-show="scY > 300" @click="toTop">
       <span v-html="drop"></span>
     </div>
+    <a-modal
+      :body-style="{ padding: '0' }"
+      v-model="visible"
+      centered
+      :closable="false"
+      width="858px"
+      @ok="handleOk"
+    >
+      <div class="weather__container">
+        <div class="weather__body">
+          <div class="weather__current">
+            <div class="weather__currentText">
+              <h4>Tashkent</h4>
+              <p>yakshanba, 15-mart</p>
+              <h1><span>+20</span>C</h1>
+            </div>
+            <div class="weather__currentSvg">
+              <span v-html="lightSun"></span>
+            </div>
+          </div>
+          <div class="weather__time">
+            <ul>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+              <li>
+                Hozir
+                <p><span>+20</span> C</p>
+                <span v-html="lightSun"></span>
+              </li>
+            </ul>
+          </div>
+          <div class="weather__days">
+            <ul>
+              <li>
+                Dushanba, 16
+                <span v-html="lightSun"></span>
+                <p><span>+20</span> <span>+20</span></p>
+              </li>
+            </ul>
+            <ul>
+              <li>
+                Dushanba, 16
+                <span v-html="lightSun"></span>
+                <p><span>+20</span> <span>+20</span></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="weather__list"></div>
+      </div>
+    </a-modal>
   </div>
 </template>
 <script>
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
 export default {
-  props: ["categories", "currency", "banners"],
+  props: ["categories", "currency", "banners", "columnist"],
   data() {
     return {
       scTimer: 0,
       scY: 0,
+      visible: false,
       logo: require("../../assets/svg/logo.svg?raw"),
+      lightSun: require("../../assets/svg/light-sun.svg?raw"),
       darkLogo: require("../../assets/svg/dark-logo.svg?raw"),
       sun: require("../../assets/svg/sun.svg?raw"),
       moon: require("../../assets/svg/moon.svg?raw"),
@@ -135,6 +226,9 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
+    handleOk() {
+      this.visible = true;
+    },
     handleScroll: function () {
       if (this.scTimer) return;
       this.scTimer = setTimeout(() => {
@@ -181,6 +275,158 @@ export default {
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
 }
+.weather__container {
+  height: 400px;
+  background: #ffffff;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+}
+.weather__current div h4 {
+  color: var(--dark-blue-80, #374587);
+  font-size: 22px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+}
+.weather__current div p {
+  color: var(--dark-blue-80, #374587);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+.weather__current div h1 {
+  color: var(--light-bue-100, #0192ff);
+  font-size: 80px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+}
+.weather__current div h1 span {
+  position: relative;
+  margin-right: 36px;
+}
+.weather__current div h1 span::after {
+  content: "o";
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  width: 5px;
+  height: 5px;
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 150%;
+}
+.weather__current {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.weather__currentSvg {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.weather__current div svg {
+  width: 166px;
+  height: 166px;
+}
+.weather__time {
+  padding: 10px 13px;
+  border-radius: 12px;
+  background: var(--black-1, #f9f9f9);
+}
+.weather__time ul {
+  display: flex;
+  justify-content: space-between;
+}
+.weather__time ul li {
+  color: var(--dark-blue-80, #374587);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  display: flex;
+  flex-direction: column;
+}
+.weather__time ul li p,
+.weather__time ul li p span {
+  color: var(--dark-blue-100, #051769);
+  font-size: 16px;
+  line-height: 150%;
+  position: relative;
+}
+.weather__time ul li p span {
+  padding-right: 3px;
+}
+.weather__time ul li p span::after {
+  content: "o";
+  position: absolute;
+  color: var(--dark-blue-100, #051769);
+  font-size: 12px;
+  line-height: 150%;
+  top: -4px;
+  right: -2px;
+  width: 5px;
+  height: 5px;
+}
+.weather__days {
+  padding: 16px 20px;
+  border-radius: 12px;
+  background: var(--black-1, #f9f9f9);
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.weather__days ul {
+  display: flex;
+  flex-direction: column;
+}
+.weather__days ul:first-child {
+  padding-right: 25px;
+  border-right: 1px solid #e7e7e7;
+}
+.weather__days ul:last-child {
+  padding-left: 25px;
+}
+.weather__days ul li {
+  color: var(--black-80, #292929);
+  font-size: 14px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.weather__days ul li p {
+  color: var(--dark-blue-80, #374587);
+  font-size: 16px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.weather__days ul li p span {
+  position: relative;
+  margin-right: 6px;
+}
+.weather__days ul li p span::after {
+  content: "o";
+  position: absolute;
+  color: var(--dark-blue-80, #374587);
+  font-size: 12px;
+  font-family: var(--ROBOTO_SERIF);
+  top: -7px;
+  right: -5px;
+  width: 5px;
+  height: 5px;
+}
 @keyframes swing {
   0% {
     -webkit-transform: translateY(0);
@@ -213,6 +459,7 @@ export default {
 }
 .weather-drop {
   display: flex;
+  cursor: pointer;
 }
 .weather-drop p {
   font-family: var(--ROBOTO_SERIF);
