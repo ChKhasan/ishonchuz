@@ -29,7 +29,7 @@
             $store.state.translations["main.saved"]
           }}</span>
         </li>
-        <li>
+        <li @click="logOut">
           <span>Chiqish</span>
         </li>
       </ul>

@@ -29,6 +29,7 @@ export default {
     { src: "~plugins/v-mask.js", ssr: false },
     { src: "~plugins/vue-aplayer.js", ssr: false },
     { src: "~/plugins/client-only.js", mode: "client" },
+    "./plugins/mask.js",
   ],
   components: true,
   i18n: {

@@ -29,7 +29,7 @@
             $store.state.translations["main.saved"]
           }}</span>
         </li>
-        <li>
+        <li @click="logOut">
           <span>Chiqish</span>
         </li>
       </ul>
@@ -63,6 +63,25 @@ export default {
         this.$router.push("/");
       } else {
         this.loading = false;
+      }
+    },
+    async logOut() {
+      const refreshToken = JSON.parse(localStorage.getItem("refresh_token"));
+      try {
+        const data = await this.$store.dispatch("fetchAuth/postLogOut", {
+          refresh_token: refreshToken,
+        });
+        this.$router.push("/");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
+      } catch (e) {
+        if (e.response.status == 401) {
+          this.$router.push("/");
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          this.$store.commit("chackAuth");
+        }
       }
     },
   },

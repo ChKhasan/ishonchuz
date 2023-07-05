@@ -389,20 +389,34 @@
               class="form-item-mobile mb-0 w-100 auth-form"
               prop="phone_number"
             >
-              <the-mask
+              <input
+                v-if="visibleSms"
+                v-model="formSms.phone_number"
+                class="w-100 disabled"
+                v-mask="'+998 (##) ### ## ##'"
+                placeholder="+998 (__) ___ __ __"
+              />
+              <!-- <the-mask
                 v-if="visibleSms"
                 v-model="formSms.phone_number"
                 class="w-100 disabled"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
+              /> -->
+              <input
+                v-else
+                v-model="form.phone_number"
+                class="w-100"
+                v-mask="'+998 (##) ### ## ##'"
+                placeholder="+998 (__) ___ __ __"
               />
-              <the-mask
+              <!-- <the-mask
                 v-else
                 v-model="form.phone_number"
                 class="w-100"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
-              />
+              /> -->
               <span
                 class="input_clear"
                 @click="formSms.phone_number = ''"
@@ -428,18 +442,25 @@
               class="form-item-mobile mb-0 w-100 auth-form"
               prop="phone_number"
             >
-              <the-mask
+              <!-- <the-mask
                 v-if="visibleSms"
                 v-model="formSms.phone_number"
                 class="w-100 disabled"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
+              /> -->
+              <input
+                v-if="visibleSms"
+                v-model="formSms.phone_number"
+                class="w-100 disabled"
+                v-mask="'+998 (##) ### ## ##'"
+                placeholder="+998 (__) ___ __ __"
               />
-              <the-mask
+              <input
                 v-else
-                v-model="form.phone_number"
+                v-mask="'+998 (##) ### ## ##'"
                 class="w-100"
-                :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                v-model="form.phone_number"
                 placeholder="+998 (__) ___ __ __"
               />
               <span
@@ -685,7 +706,7 @@ export default {
     onSubmit() {
       this.formSms = {
         ...this.formSms,
-        phone_number: `998${this.form.phone_number}`,
+        phone_number: `${this.form.phone_number}`,
       };
       this.$refs.ruleFormAuth.validate((valid) => {
         if (valid) {

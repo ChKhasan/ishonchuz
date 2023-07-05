@@ -122,12 +122,19 @@
               label="Номер телефона"
               prop="phone_number"
             >
-              <the-mask
+              <input
+                v-mask="'+998 (##) ### ## ##'"
+                class="w-100"
+                @keyup.enter="onSubmit()"
+                v-model="form.phone_number"
+                placeholder="+998 (__) ___ __ __"
+              />
+              <!-- <the-mask
                 v-model="form.phone_number"
                 class="w-100"
                 :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
                 placeholder="+998 (__) ___ __ __"
-              />
+              /> -->
             </a-form-model-item>
           </a-form-model>
         </div>
@@ -153,10 +160,16 @@
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
               <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
-                <the-mask
+                <!-- <the-mask
                   v-model="formSms.phone_number"
                   class="w-100 disabled"
                   :mask="['+998 (##) ### ## ##', '+998 (##) ### ## ##']"
+                  placeholder="+998 (__) ___ __ __"
+                /> -->
+                <input
+                  v-mask="'+998 (##) ### ## ##'"
+                  class="w-100"
+                  v-model="formSms.phone_number"
                   placeholder="+998 (__) ___ __ __"
                 />
               </a-form-model-item>
@@ -275,6 +288,7 @@
         <input
           type="text"
           v-model="searchValue"
+          :autofocus="visibleSearch"
           @keyup.enter="submit"
           placeholder="Yangilikda qatnashgan so’zni kiriting"
         />
@@ -372,7 +386,7 @@ export default {
     onSubmit() {
       this.formSms = {
         ...this.formSms,
-        phone_number: `998${this.form.phone_number}`,
+        phone_number: `${this.form.phone_number}`,
       };
       this.$refs.ruleFormAuth.validate((valid) => {
         if (valid) {
