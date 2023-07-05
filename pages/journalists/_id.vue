@@ -142,6 +142,34 @@
                   :key="image?.id"
                 />
               </div>
+              <h2 v-if="journalists?.images.length > 0">Mukofotlar</h2>
+              <div class="awards__list">
+                <div
+                  class="awards__card"
+                  v-for="award in journalists?.awards"
+                  :key="award?.id"
+                >
+                  <div class="awards__image">
+                    <img :src="award?.image" alt="" />
+                  </div>
+                  <div class="awards__body" v-html="award?.text"></div>
+                </div>
+              </div>
+              <div class="awards__list_resp">
+                <div class="images">
+                  <img
+                    :src="award?.image"
+                    alt=""
+                    v-for="award in journalists?.awards"
+                    :key="award?.id"
+                  />
+                </div>
+                <div
+                  class="awards__body"
+                  v-for="award in journalists?.awards"
+                  v-html="award?.text"
+                ></div>
+              </div>
             </div>
             <div :class="{ show: handleArticles }" class="articles">
               <div class="grid">
@@ -221,6 +249,28 @@ export default {
 </script>
 
 <style scoped>
+.awards__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 8px;
+}
+.awards__card {
+  display: grid;
+  grid-template-columns: 174px 1fr;
+  grid-gap: 16px;
+}
+.awards__image img {
+  height: 123px;
+  width: 100%;
+  object-fit: contain;
+}
+.awards__body::v-deep p {
+  color: var(--white_ffffff, #292929);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
 .wrap {
   padding: 32px 0 120px 0;
 }
@@ -369,7 +419,7 @@ export default {
 .article {
   padding-left: 24px;
   padding: 14px;
-  border-left: 1px solid var(--black-5, #e7e7e7);
+  border-left: 1px solid var(--gray_292929, #e7e7e7);
   cursor: pointer;
 }
 .articles .name {
@@ -409,6 +459,30 @@ export default {
 }
 .socials__mobile {
   display: none;
+}
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.awards__list_resp {
+  display: none;
+}
+@media (max-width: 992px) {
+  .awards__body::v-deep p {
+    font-size: 14px;
+    line-height: 145%;
+  }
+  .bio img {
+    height: 101px;
+  }
+  .awards__list {
+    display: none;
+  }
+  .awards__list_resp {
+    display: block;
+  }
 }
 @media (max-width: 576px) {
   .articles .name {

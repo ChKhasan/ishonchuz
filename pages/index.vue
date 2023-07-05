@@ -198,7 +198,7 @@
             <VideoNewsCard v-for="news in videoNews" :key="news?.id" :news="news" />
           </div>
           <TitleComp
-            :link="true"
+            link="all-news"
             :title="$store.state.translations['main.photo_repartee']"
           />
           <div class="news-images-grid">
