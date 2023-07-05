@@ -142,7 +142,7 @@
                   :key="image?.id"
                 />
               </div>
-              <h2 v-if="journalists?.images.length > 0">Mukofotlar</h2>
+              <h2 v-if="journalists?.awards.length > 0">Mukofotlar</h2>
               <div class="awards__list">
                 <div
                   class="awards__card"
