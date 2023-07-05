@@ -409,6 +409,16 @@ export default {
   display: none;
 }
 @media (max-width: 576px) {
+  .left,
+  .right {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .bio {
+    padding: 0;
+    background: transparent;
+  }
+
   .images {
     display: flex;
     flex-wrap: wrap;
