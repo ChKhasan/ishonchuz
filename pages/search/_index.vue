@@ -10,44 +10,40 @@
           <div class="search-page-container">
             <h3 v-if="newsSearch?.length > 0">
               “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
-              <span>{{ newsSearch?.length }}</span> ta maqola topildi
+              <span>{{ totalCount }}</span> ta maqola topildi
             </h3>
             <h3 v-else>
               “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
             </h3>
-            <div class="search-page-grid search_web_news" v-if="showAll">
+            <div class="search-page-grid search_web_news">
               <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
             </div>
-            <div class="search-page-grid search_web_news" v-else>
-              <VNewsCard
-                v-for="news in newsSearch.slice(0, 18)"
-                :key="news?.id"
-                :news="news"
-              />
-            </div>
-            <div class="search-page-grid search_mobile_news" v-if="showAll">
+            <div class="search-page-grid search_mobile_news">
               <AllNewsCard
                 v-for="newsItem in newsSearch"
                 :key="newsItem?.id"
                 :news="newsItem"
               />
             </div>
-            <div class="search-page-grid search_mobile_news" v-else>
-              <AllNewsCard
-                v-for="newsItem in newsSearch.slice(0, 18)"
-                :key="newsItem?.id"
-                :news="newsItem"
-              />
-            </div>
+
             <div class="d-flex justify-content-center">
               <div
+                class="spinner mt-4 d-flex justify-content-center w-100"
+                v-if="loading"
+              >
+                <a-spin />
+              </div>
+              <div
                 class="btn_container_show_more w-100"
-                v-if="newsSearch?.length > 18 && !showAll"
+                v-if="
+                  Number(totalCount) / Number(Number($route.query.page) * 18) > 1 &&
+                  !loading
+                "
               >
                 <div class="right-show-more">
                   {{ $store.state.translations["main.more"] }}
                 </div>
-                <div class="right-show-more-primary" @click="showAll = true">
+                <div class="right-show-more-primary" @click="showMore()">
                   {{ $store.state.translations["main.see_all"] }}
                 </div>
               </div>
@@ -136,6 +132,8 @@ export default {
   data() {
     return {
       showAll: false,
+      loading: false,
+      currentPage: 1,
       telegram: require("../../assets/svg/telegram.svg?raw"),
       facebook: require("../../assets/svg/facebook.svg?raw"),
       twitter: require("../../assets/svg/twitter.svg?raw"),
@@ -145,10 +143,20 @@ export default {
       // searchVal: "",
     };
   },
-  async asyncData({ store, params, i18n }) {
+  mounted() {
+    if (Object.keys(this.$route.query).length == 0) {
+      this.$router.replace({
+        path: `/search/${this.$route.params.index}`,
+        query: {
+          page: 1,
+        },
+      });
+    }
+  },
+  async asyncData({ store, params, i18n, query }) {
     const [searchData, importantNewsData] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
-        params: { search: params.index },
+        params: { search: params.index, page_size: 18, page: query.page },
         headers: {
           Language: i18n.locale,
         },
@@ -161,26 +169,66 @@ export default {
       }),
     ]);
     const newsSearch = searchData.results;
+    const totalCount = searchData.count;
     const importantNews = importantNewsData.results;
     const searchVal = params.index;
+
     return {
       newsSearch,
       importantNews,
       searchVal,
+      totalCount,
     };
   },
+
   methods: {
     searchFunc() {
-      console.log("asdasdasd");
-      this.$router.replace({
-        path: `/search/${this.searchVal}`,
-      });
-      this.$store.dispatch("fetchNews/getNews", {
-        params: { search: this.$route.params.index },
-        headers: {
-          Language: this.$i18n.locale,
+      if (this.searchVal.length > 0) {
+        this.$router.replace({
+          path: `/search/${this.searchVal}`,
+          query: {
+            page: 1,
+          },
+        });
+        this.$store.dispatch("fetchNews/getNews", {
+          params: {
+            search: this.$route.params.index,
+            page_size: 18,
+            page: this.$route.query.page,
+          },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        });
+      }
+    },
+    async __GET_NEWS() {
+      this.loading = true;
+      const [searchData] = await Promise.all([
+        this.$store.dispatch("fetchNews/getNews", {
+          params: {
+            search: this.$route.params.index,
+            page_size: 18,
+            page: this.$route.query.page,
+          },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.loading = false;
+      this.newsSearch = [...this.newsSearch, ...searchData.results];
+      this.totalCount = searchData.count;
+    },
+    async showMore() {
+      this.currentPage = Number(this.$route.query.page) + 1;
+      await this.$router.replace({
+        path: `/search/${this.$route.params.index}`,
+        query: {
+          page: this.currentPage,
         },
       });
+      this.__GET_NEWS();
     },
   },
   components: {

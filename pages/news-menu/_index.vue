@@ -47,7 +47,9 @@
           </div>
           <div
             class="btn_container_show_more"
-            v-if="(Number(totalCount) / Number($route.query.page)) * 20 > 1 && !loading"
+            v-if="
+              Number(totalCount) / Number(Number($route.query.page) * 20) > 1 && !loading
+            "
           >
             <div class="right-show-more">
               {{ $store.state.translations["main.more"] }}

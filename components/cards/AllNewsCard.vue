@@ -14,8 +14,9 @@
         <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
         <span class="all-card-date-web"><span v-html="date"></span>{{ news?.date }}</span>
-        <span class="all-card-date-mobile"
-          ><span v-html="date"></span>{{ news?.date.split("|")[1] }}</span
+        <span class="all-card-date-mobile">
+          <!-- <span v-html="date"></span>{{ news?.date.split("|")[1] }}</span> -->
+          <span v-html="date"></span>{{ news?.date }}</span
         >
       </div>
     </div>
