@@ -204,11 +204,62 @@
               >
                 <span></span><img src="../../assets/images/click-01 1.png" alt="" />
               </div>
+              <div
+                :class="{ buy__type__active: buyType == 'apelsin' }"
+                @click="buyType = 'apelsin'"
+              >
+                <span></span
+                ><img src="../../assets/images/apelsin-logo-light.2367a6d 1.png" alt="" />
+              </div>
             </div>
           </div>
           <div class="vmodal-footer__book">
-            <div class="auth-btn">To'lash</div>
+            <div class="auth-btn" @click="visibleError = true">To'lash</div>
             <div class="auth-btn__outline" @click="handleOk()">Bekor qilish</div>
+          </div>
+        </div>
+      </a-modal>
+      <a-modal
+        :body-style="{ padding: '0' }"
+        v-model="visibleSuccess"
+        centered
+        :closable="false"
+        width="670px"
+        @ok="handleOk"
+      >
+        <div class="vmodal-container">
+          <div class="vmodal-header">
+            <h2>To’lov uslubini tanlang</h2>
+            <span @click="handleOk" v-html="mClose"></span>
+          </div>
+          <div class="vmodal-body buy__status__body">
+            <span v-html="successBuy"> </span>
+            <h1 class="buy_status__text">To’lovingiz muvaffaqiyatga amalga oshirildi</h1>
+          </div>
+          <div class="vmodal-footer">
+            <div class="auth-btn w-100" @click="handleOk()">Bosh sahifaga qaytish</div>
+          </div>
+        </div>
+      </a-modal>
+      <a-modal
+        :body-style="{ padding: '0' }"
+        v-model="visibleError"
+        centered
+        :closable="false"
+        width="670px"
+        @ok="handleOk"
+      >
+        <div class="vmodal-container">
+          <div class="vmodal-header">
+            <h2>To’lov uslubini tanlang</h2>
+            <span @click="handleOk" v-html="mClose"></span>
+          </div>
+          <div class="vmodal-body buy__status__body">
+            <span v-html="errorBuy"> </span>
+            <h1 class="buy_status__text">To’lovingiz muvaffaqiyatsiz amalga oshirildi</h1>
+          </div>
+          <div class="vmodal-footer">
+            <div class="auth-btn w-100" @click="handleOk()">Bosh sahifaga qaytish</div>
           </div>
         </div>
       </a-modal>
@@ -226,9 +277,13 @@ export default {
   data() {
     return {
       visible: false,
+      visibleSuccess: false,
+      visibleError: false,
       showAll: false,
       buyType: "payme",
       mClose: require("../../assets/svg/modal-close.svg?raw"),
+      successBuy: require("../../assets/svg/success_buy.svg?raw"),
+      errorBuy: require("../../assets/svg/error_buy.svg?raw"),
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
       success: require("../../assets/svg/success.svg?raw"),
       deleteIcon: require("../../assets/svg/delete-basket.svg?raw"),
@@ -288,6 +343,8 @@ export default {
   methods: {
     handleOk() {
       this.visible = false;
+      this.visibleSuccess = false;
+      this.visibleError = false;
     },
     async __GET_BOOK() {
       const [newsData] = await Promise.all([
@@ -363,6 +420,22 @@ export default {
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
+}
+.buy__status__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.buy_status__text {
+  margin-top: 8px;
+  color: var(--white_ffffff, #000);
+  text-align: center;
+  font-family: var(--ROBOTO_SERIF);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  width: 68%;
 }
 .buy__type {
   display: flex;
@@ -544,6 +617,16 @@ export default {
   min-width: 100%;
 }
 @media (max-width: 576px) {
+  .vmodal-footer__book {
+    flex-direction: column;
+  }
+  .buy__type {
+    flex-wrap: wrap;
+    margin-bottom: 0;
+  }
+  .vmodal-footer__book div {
+    width: 100%;
+  }
   .book-body .anticon svg {
     width: 16px !important;
   }
@@ -637,6 +720,46 @@ export default {
     margin-top: 20px;
     padding-left: 0;
     padding-right: 0;
+  }
+}
+@media (max-width: 468px) {
+  .vmodal-header {
+    padding: 16px 24px;
+  }
+  .vmodal-body {
+    padding: 16px 24px;
+  }
+  .vmodal-footer__book {
+    padding: 0 24px 24px 24px;
+    gap: 10px;
+  }
+  .auth-btn,
+  .auth-btn__outline {
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .vmodal-header h2 {
+    font-size: 18px;
+  }
+  .buy_status__text {
+    font-size: 16px;
+    width: 100%;
+  }
+  .buy__status__body svg {
+    height: 80px;
+  }
+  .buy__type div {
+    width: 80%;
+  }
+  .buy__type {
+    justify-content: center;
+  }
+  .buy__type img {
+    height: 40px;
+  }
+  .ant-modal-content {
+    border-radius: 8px !important;
   }
 }
 @media (max-width: 360px) {
