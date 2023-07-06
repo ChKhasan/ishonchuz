@@ -19,7 +19,7 @@
         </div>
       </div>
       <div>
-        <div class="btn_container_show_more" v-if="galleries?.length > 10">
+        <div class="btn_container_show_more" v-if="galleries?.length > 10 && !showAll">
           <div class="right-show-more">
             {{ $store.state.translations["main.more"] }}
           </div>

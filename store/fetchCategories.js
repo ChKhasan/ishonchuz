@@ -9,7 +9,7 @@ export const actions = {
   },
   async getCategoriesBySlug({}, payload) {
     const res = await this.$axios.$get(`/news/categories/${payload.id}`, {
-      ...payload.header,
+      ...payload.params,
     });
     return res;
   },

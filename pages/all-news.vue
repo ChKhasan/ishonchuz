@@ -15,7 +15,10 @@
             <div class="spinner mt-4 d-flex justify-content-center w-100" v-if="loading">
               <a-spin />
             </div>
-            <div class="btn_container_show_more mt-4" v-if="page_size">
+            <div
+              class="btn_container_show_more mt-4"
+              v-if="(Number(totalCount) / Number($route.query.page)) * 11 > 1 && !loading"
+            >
               <div class="right-show-more">
                 {{ $store.state.translations["main.more"] }}
               </div>
@@ -88,6 +91,7 @@ export default {
       news,
       importantNews,
       banners,
+      totalCount,
     };
   },
   mounted() {

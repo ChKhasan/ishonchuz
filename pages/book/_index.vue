@@ -34,7 +34,7 @@
               <div class="primary_btn">
                 {{ $store.state.translations["main.buy"] }}
               </div>
-              <div class="primary_btn">
+              <div class="primary_btn" @click="visible = true">
                 {{ $store.state.translations["main.buy"] }}
               </div>
             </div>
@@ -175,6 +175,43 @@
           </div>
         </div>
       </div>
+      <a-modal
+        :body-style="{ padding: '0' }"
+        v-model="visible"
+        centered
+        :closable="false"
+        width="670px"
+        @ok="handleOk"
+      >
+        <div class="vmodal-container">
+          <div class="vmodal-header">
+            <h2>To’lov uslubini tanlang</h2>
+            <span @click="handleOk" v-html="mClose"></span>
+          </div>
+          <div class="vmodal-body buy__type__body">
+            <p>To’lov miqdori</p>
+            <h3>100 000 so’m</h3>
+            <div class="buy__type">
+              <div
+                :class="{ buy__type__active: buyType == 'payme' }"
+                @click="buyType = 'payme'"
+              >
+                <span></span><img src="../../assets/images/payme-01 1.png" alt="" />
+              </div>
+              <div
+                :class="{ buy__type__active: buyType == 'click' }"
+                @click="buyType = 'click'"
+              >
+                <span></span><img src="../../assets/images/click-01 1.png" alt="" />
+              </div>
+            </div>
+          </div>
+          <div class="vmodal-footer__book">
+            <div class="auth-btn">To'lash</div>
+            <div class="auth-btn__outline" @click="handleOk()">Bekor qilish</div>
+          </div>
+        </div>
+      </a-modal>
     </div>
   </div>
 </template>
@@ -188,7 +225,10 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      visible: false,
       showAll: false,
+      buyType: "payme",
+      mClose: require("../../assets/svg/modal-close.svg?raw"),
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
       success: require("../../assets/svg/success.svg?raw"),
       deleteIcon: require("../../assets/svg/delete-basket.svg?raw"),
@@ -246,6 +286,9 @@ export default {
     },
   },
   methods: {
+    handleOk() {
+      this.visible = false;
+    },
     async __GET_BOOK() {
       const [newsData] = await Promise.all([
         this.$store.dispatch("fetchBooks/getBooksBySlug", {
@@ -321,7 +364,66 @@ export default {
 .v-leave-active {
   transition: opacity 0.5s ease;
 }
-
+.buy__type {
+  display: flex;
+  justify-content: flex-start;
+  gap: 15px;
+  margin-bottom: 28px;
+}
+.buy__type__body p {
+  color: var(--white_ffffff, #888);
+  font-family: var(--ROBOTO_SERIF);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+}
+.buy__type__body h3 {
+  color: var(--white_ffffff, #000);
+  font-family: var(--ROBOTO_SERIF);
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
+  margin-top: 2px;
+  margin-bottom: 22px;
+}
+.buy__type div {
+  border-radius: 10px;
+  border: 1px solid var(--black-2, #eee);
+  background: var(--transparent, #f9f9f9);
+  padding: 12px;
+  padding-bottom: 9px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.buy__type div span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid #e7e7e7;
+  margin-right: 11px;
+  position: relative;
+}
+.buy__type__active span::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #0192ff;
+}
+.buy__type__active span {
+  border-color: #99d3ff !important;
+}
+.buy__type__active {
+  border: 1.5px solid var(--light-bue-100, #0192ff) !important;
+  background: var(--light-bue-10, #e6f4ff) !important;
+}
 .v-enter-from,
 .v-leave-to {
   opacity: 0;

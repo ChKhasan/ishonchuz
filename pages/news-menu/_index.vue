@@ -42,14 +42,17 @@
             />
           </div>
           <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
+          <div class="spinner mt-4 d-flex justify-content-center w-100" v-if="loading">
+            <a-spin />
+          </div>
           <div
             class="btn_container_show_more"
-            v-if="categories?.news.length - 1 > 20 && !showAll"
+            v-if="(Number(totalCount) / Number($route.query.page)) * 20 > 1 && !loading"
           >
             <div class="right-show-more">
               {{ $store.state.translations["main.more"] }}
             </div>
-            <div class="right-show-more-primary" @click="showAll = true">
+            <div class="right-show-more-primary" @click="showMore()">
               {{ $store.state.translations["main.see_all"] }}
             </div>
           </div>
@@ -115,6 +118,9 @@ export default {
       twitter: require("../../assets/svg/twitter.svg?raw"),
       instagram: require("../../assets/svg/instagram.svg?raw"),
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
+      currentPage: 1,
+      page_size: 11,
+      loading: false,
       // news: [],
       // topNews: [],
       // simpleNews: [],
@@ -149,7 +155,7 @@ export default {
   //     }),
   //   ]);
   // },
-  async asyncData({ store, params, i18n }) {
+  async asyncData({ store, params, i18n, query }) {
     const [
       newsData,
       topNewsData,
@@ -176,7 +182,11 @@ export default {
       }),
       store.dispatch("fetchCategories/getCategoriesBySlug", {
         id: params.index,
-        header: {
+        params: {
+          params: {
+            page_size: 21,
+            page: query.page,
+          },
           headers: {
             Language: i18n.locale,
           },
@@ -194,18 +204,60 @@ export default {
     const simpleNews = simpleNewsData.results;
     const categories = categoriesData;
     const banners = bannersData.results;
+    const totalCount = categoriesData.news_count;
     return {
       news,
       topNews,
       simpleNews,
       categories,
       banners,
+      totalCount,
     };
   },
   components: {
     BannerCard,
     HNewsCard,
     VNewsCard,
+  },
+
+  mounted() {
+    if (Object.keys(this.$route.query).length == 0) {
+      this.$router.replace({
+        path: `/news-menu/${this.$route.params.index}`,
+        query: {
+          page: 1,
+        },
+      });
+    }
+  },
+  methods: {
+    async showMore() {
+      this.currentPage = Number(this.$route.query.page) + 1;
+      await this.$router.replace({
+        path: `/news-menu/${this.$route.params.index}`,
+        query: {
+          page: this.currentPage,
+        },
+      });
+      this.__GET_NEWS();
+    },
+    async __GET_NEWS() {
+      this.loading = true;
+      const [categoriesData] = await Promise.all([
+        this.$store.dispatch("fetchCategories/getCategoriesBySlug", {
+          id: this.$route.params.index,
+          params: {
+            params: { page: this.$route.query.page, page_size: 20 },
+            headers: {
+              Language: this.$i18n.locale,
+            },
+          },
+        }),
+      ]);
+      this.loading = false;
+      this.totalCount = categoriesData.news_count;
+      this.categories.news = [...this.categories.news, ...categoriesData?.news];
+    },
   },
 };
 </script>

@@ -712,10 +712,34 @@ export default {
   color: #ffffff;
   cursor: pointer;
 }
+.auth-btn__outline {
+  background: transparent;
+  border-radius: 4px;
+  padding: 14px 0;
+  width: 201px;
+  display: flex;
+  justify-content: center;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #0192ff;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid var(--light-bue-100, #0192ff);
+}
 .vmodal-footer {
   padding: 0 40px 40px 42px;
   display: flex;
   justify-content: center;
+}
+.vmodal-footer__book {
+  padding: 0 40px 40px 42px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 17px;
 }
 .modal-form-grid {
   display: grid;
