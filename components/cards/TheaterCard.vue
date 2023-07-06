@@ -11,15 +11,17 @@
       <div class="theater-card-info">
         <div>
           <p>
-            YIL <span>{{ theater?.from_date.split("-")[0] }}</span>
+            {{ $store.state.translations["main.year"] }}
+            <span>{{ theater?.from_date.split("-")[0] }}</span>
           </p>
           <p>
-            OY <span>{{ moonth[theater?.from_date.split("-")[1] * 1 - 1] }}</span>
+            {{ $store.state.translations["main.month"] }}
+            <span>{{ moonth[theater?.from_date.split("-")[1] * 1 - 1] }}</span>
           </p>
         </div>
         <div>
           <p>
-            KUN
+            {{ $store.state.translations["main.day"] }}
             <span
               >{{ theater?.from_date.split("-")[2] }}-{{
                 theater?.to_date.split("-")[2]
@@ -27,7 +29,8 @@
             >
           </p>
           <p>
-            SOAT <span>{{ theater?.hours }}.</span>
+            {{ $store.state.translations["main.hour"] }}
+            <span>{{ theater?.hours }}.</span>
           </p>
         </div>
         <span></span>
@@ -145,6 +148,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 12px;
+  text-transform: uppercase;
 }
 .theater-card-info div p span {
   color: var(--white_ffffff, #051769);

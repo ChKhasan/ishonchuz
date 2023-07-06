@@ -50,13 +50,13 @@
           <div class="second">
             <div class="item">
               <p class="question">
-                <img src="@/assets/images/logo/bag.svg" alt="" /> Ish joyi:
+                <img src="@/assets/images/logo/bag.svg" alt="" /> {{ $store.state.translations["main.workspace"] }}:
               </p>
               <p class="answer">{{ journalists?.work_place }}</p>
             </div>
             <div class="item">
               <p class="question">
-                <img src="@/assets/images/logo/target.svg" alt="" /> Tajribasi:
+                <img src="@/assets/images/logo/target.svg" alt="" /> {{ $store.state.translations["main.experience"] }}:
               </p>
               <p class="answer">{{ journalists?.experience }}</p>
             </div>

@@ -8,7 +8,7 @@
       <div class="journalist-card-title">
         <h4>{{ journalist?.full_name }}</h4>
         <nuxt-link :to="localePath(`/journalists/${journalist?.id}`)"
-          >Batafsil <span v-html="dropdown"></span
+          >{{ $store.state.translations["main.moreInfo"] }} <span v-html="dropdown"></span
         ></nuxt-link>
       </div>
     </div>
@@ -30,10 +30,11 @@
               />
             </g></svg
         ></span>
-        Ish joyi: <span>{{ journalist?.work_place }}</span>
+        <!-- main.workspace -->
+        {{ $store.state.translations["main.workspace"] }}: <span>{{ journalist?.work_place }}</span>
       </p>
       <p v-if="journalist?.experience">
-        <span v-html="target"></span>Tajribasi: <span>{{ journalist?.experience }}</span>
+        <span v-html="target"></span>{{ $store.state.translations["main.experience"] }}: <span>{{ journalist?.experience }}</span>
       </p>
     </div>
   </div>

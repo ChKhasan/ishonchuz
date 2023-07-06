@@ -9,7 +9,7 @@
     </div>
     <div class="articles-body" v-html="article?.text"></div>
     <div class="articles-footer">
-      <p>Mualif:</p>
+      <p>{{ $store.state.translations["main.author"] }}:</p>
       <span>{{ article?.author }}</span>
     </div>
   </div>

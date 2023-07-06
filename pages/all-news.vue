@@ -5,26 +5,21 @@
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="all-news-page-container">
             <h3>Barcha yangliklar</h3>
-            <div class="all-news-page-grid" v-if="showAll">
+            <div class="all-news-page-grid">
               <AllNewsCard
-                v-if="showAll"
                 v-for="newsItem in news"
                 :key="newsItem?.id"
                 :news="newsItem"
               />
             </div>
-            <div class="all-news-page-grid" v-else>
-              <AllNewsCard
-                v-for="newsItem in news.slice(0, 11)"
-                :key="newsItem?.id"
-                :news="newsItem"
-              />
+            <div class="spinner mt-4 d-flex justify-content-center w-100" v-if="loading">
+              <a-spin />
             </div>
-            <div class="btn_container_show_more mt-4" v-if="news.length > 11 && !showAll">
+            <div class="btn_container_show_more mt-4" v-if="page_size">
               <div class="right-show-more">
                 {{ $store.state.translations["main.more"] }}
               </div>
-              <div class="right-show-more-primary" @click="showAll = true">
+              <div class="right-show-more-primary" @click="showMore()">
                 {{ $store.state.translations["main.see_all"] }}
               </div>
             </div>
@@ -59,11 +54,15 @@ export default {
   data() {
     return {
       showAll: false,
+      currentPage: 1,
+      page_size: 11,
+      loading: false,
     };
   },
-  async asyncData({ store, i18n }) {
+  async asyncData({ store, i18n, router, route, query }) {
     const [newsData, importantNewsData, bannersData] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
+        params: { page: query.page, page_size: 11 },
         headers: {
           Language: i18n.locale,
         },
@@ -81,6 +80,7 @@ export default {
         },
       }),
     ]);
+    const totalCount = newsData?.count;
     const news = newsData.results;
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
@@ -89,6 +89,42 @@ export default {
       importantNews,
       banners,
     };
+  },
+  mounted() {
+    if (Object.keys(this.$route.query).length == 0) {
+      this.$router.replace({
+        path: "/all-news",
+        query: {
+          page: 1,
+        },
+      });
+    }
+  },
+  methods: {
+    async showMore() {
+      this.currentPage = Number(this.$route.query.page) + 1;
+      await this.$router.replace({
+        path: "/all-news",
+        query: {
+          page: this.currentPage,
+        },
+      });
+      this.__GET_NEWS();
+    },
+    async __GET_NEWS() {
+      this.loading = true;
+      const [newsData] = await Promise.all([
+        this.$store.dispatch("fetchNews/getNews", {
+          params: { page: this.$route.query.page, page_size: this.page_size },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+      this.loading = false;
+      this.totalCount = newsData.count;
+      this.news = [...this.news, ...newsData.results];
+    },
   },
   components: {
     TitleComp,

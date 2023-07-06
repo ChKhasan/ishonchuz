@@ -113,7 +113,7 @@
     </div>
     <div class="footer-bottom">
       <div class="container_xl">
-        <p>2019-2023 - Ishonch.uz</p>
+        <p>{{ $store.state.translations["main.footerBottom_text"] }}</p>
       </div>
     </div>
   </div>

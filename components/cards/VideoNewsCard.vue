@@ -28,7 +28,7 @@
         {{ news?.title }}
       </nuxt-link>
       <div class="video-news-card-info">
-        <span> <span v-html="comments"></span> 0</span>
+        <span> <span v-html="comments"></span> {{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
         <span><span v-html="date"></span>{{ news?.date }}</span>
       </div>

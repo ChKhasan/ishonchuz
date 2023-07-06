@@ -111,14 +111,25 @@
                   book?.comments.length
                 }})
               </h4>
-              <div class="comments-grid">
+              <div class="comments-grid" v-if="showAll">
+                <CommentCard
+                  v-for="comment in book?.comments"
+                  :key="comment?.id"
+                  :comment="comment"
+                />
+              </div>
+              <div class="comments-grid" v-else>
                 <CommentCard
                   v-for="comment in book?.comments.slice(0, 3)"
                   :key="comment?.id"
                   :comment="comment"
                 />
               </div>
-              <div class="show-more-count" v-if="book?.comments.length > 3">
+              <div
+                class="show-more-count"
+                @click="showAll = true"
+                v-if="book?.comments.length > 3 && !showAll"
+              >
                 {{ $store.state.translations["news.see_again"] }} ({{
                   book?.comments.length - 3
                 }})
@@ -177,6 +188,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      showAll: false,
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
       success: require("../../assets/svg/success.svg?raw"),
       deleteIcon: require("../../assets/svg/delete-basket.svg?raw"),

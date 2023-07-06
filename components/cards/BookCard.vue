@@ -8,7 +8,7 @@
       <h3>{{ book?.title }}</h3>
       <div class="book-card-footer">
         <nuxt-link :to="localePath(`/book/${book.slug}`)"
-          >O’qish <span v-html="drop"></span
+          >{{ $store.state.translations["main.reading"] }} <span v-html="drop"></span
         ></nuxt-link>
       </div>
     </div>
