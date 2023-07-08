@@ -5,10 +5,13 @@
       :banners="banners"
       :currency="currency"
       :columnist="columnist"
+      :weather="weather"
     />
     <MobileHeader :categories="categories" :columnist="columnist" />
     <!-- <div class="layout_back"></div> -->
-    <Nuxt />
+    <main style="flex: 1 1 auto">
+      <Nuxt />
+    </main>
     <Footer :categories="categories" />
   </div>
 </template>
@@ -25,6 +28,7 @@ export default {
       banners: {},
       date: new Date(),
       columnist: {},
+      weather: {},
     };
   },
   computed: {
@@ -46,6 +50,7 @@ export default {
       currencyData,
       siteInfoData,
       columnistData,
+      weatherData,
     ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
@@ -77,12 +82,23 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
+      this.$store.dispatch("fetchWeather/getWeathers", {
+        params: {
+          lat: 41.25,
+          lon: 69.25,
+        },
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
     ]);
     const siteInfo = siteInfoData;
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
     this.currency = currencyData;
     this.columnist = columnistData;
+    this.weather = weatherData;
+    console.log(this.weather,"asdsasaf");
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getTranslations", translationsData);
   },
@@ -118,6 +134,9 @@ export default {
 <style lang="css">
 .default-layout {
   background-color: var(--body_color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .layout_back {
   display: none;

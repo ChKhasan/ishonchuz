@@ -77,8 +77,16 @@
             ></span>
           </div>
           <div class="weather-drop" @click="visible = true">
-            <span v-html="cloud"></span>
-            <p>+20C Toshkent</p>
+            <span>
+              <img :src="currentWeather(0)[0]?.image" alt="" />
+            </span>
+            <p>
+              {{
+                currentWeather(0)[0]?.temp > 0
+                  ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                  : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+              }}C {{ regions.find((item) => item.value == activeRegion)?.name }}
+            </p>
             <span v-html="drop"></span>
           </div>
           <ul class="header-lang">
@@ -110,81 +118,102 @@
         <div class="weather__body">
           <div class="weather__current">
             <div class="weather__currentText">
-              <h4>Tashkent</h4>
-              <p>yakshanba, 15-mart</p>
-              <h1><span>+20</span>C</h1>
+              <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
+              <p>
+                {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+              </p>
+              <h1>
+                <span>{{
+                  currentWeather(0)[0]?.temp > 0
+                    ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                    : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                }}</span
+                >C
+              </h1>
             </div>
             <div class="weather__currentSvg">
-              <span v-html="lightSun"></span>
+              <span>
+                <img :src="currentWeather(0)[0]?.image" alt="" />
+              </span>
             </div>
           </div>
           <div class="weather__time">
             <ul>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
-              </li>
-              <li>
-                Hozir
-                <p><span>+20</span> C</p>
-                <span v-html="lightSun"></span>
+              <li v-for="time in currentWeather(0)">
+                {{
+                  moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                    ? "Hozir"
+                    : moment(time?.time).format("HH:mm")
+                }}
+                <p>
+                  <span>{{
+                    time?.temp > 0
+                      ? `+${time?.temp}`.split(".")[0]
+                      : `${time?.temp}`.split(".")[0]
+                  }}</span>
+                  C
+                </p>
+                <span>
+                  <img :src="time?.image" alt="" />
+                </span>
               </li>
             </ul>
           </div>
           <div class="weather__days">
             <ul>
-              <li>
-                Dushanba, 16
-                <span v-html="lightSun"></span>
-                <p><span>+20</span> <span>+20</span></p>
+              <li v-for="(day, index) in otherDays">
+                {{ weeks[moment(currentWeather(index)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(index)[0]?.time).format("DD") }}
+                <div class="weather__info">
+                  <span> <img :src="currentWeather(index)[0]?.image" alt="" /></span>
+                  <p>
+                    <span>{{
+                      currentWeather(index)[0]?.temp > 0
+                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                        : `${
+                            currentWeather(index)[currentWeather(index).length - 1]?.temp
+                          }`.split(".")[0]
+                    }}</span>
+                    <span>+20</span>
+                  </p>
+                </div>
               </li>
             </ul>
             <ul>
-              <li>
-                Dushanba, 16
-                <span v-html="lightSun"></span>
-                <p><span>+20</span> <span>+20</span></p>
+              <li v-for="(day, index) in otherDays">
+                {{ weeks[moment(currentWeather(index + 4)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(index + 4)[0]?.time).format("DD") }}
+                <div class="weather__info">
+                  <span> <img :src="currentWeather(index + 4)[0]?.image" alt="" /></span>
+                  <p>
+                    <span>{{
+                      currentWeather(index + 4)[0]?.temp > 0
+                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                        : `${
+                            currentWeather(index)[currentWeather(index).length - 1]?.temp
+                          }`.split(".")[0]
+                    }}</span>
+                    <span>+20</span>
+                  </p>
+                </div>
               </li>
             </ul>
           </div>
         </div>
-        <div class="weather__list"></div>
+        <div class="weather__list">
+          <h3>Hududlar</h3>
+          <ul>
+            <li
+              v-for="(region, index) in regions"
+              :key="index"
+              :class="{ region__active: activeRegion == region.value }"
+              @click="currentRegionChange(region)"
+            >
+              {{ region.name }} <span></span>
+            </li>
+          </ul>
+        </div>
       </div>
     </a-modal>
   </div>
@@ -192,11 +221,107 @@
 <script>
 import MenuList from "./menu-list.vue";
 import HeaderBanner from "./HeaderBanner.vue";
+import moment from "moment";
 export default {
   props: ["categories", "currency", "banners", "columnist"],
   data() {
     return {
+      weather: {},
+      weeks: {
+        Monday: "Dushanba",
+        Tuesday: "Seshanba",
+        Wednesday: "Chorshanba",
+        Thursday: "Payshanba",
+        Friday: "Juma",
+        Saturday: "Shanba",
+        Sunday: "Yakshanba",
+      },
+      regions: [
+        {
+          name: "Toshkent Shahar",
+          value: "toshkentSh",
+          lat: 41.311081,
+          lon: 69.240562,
+        },
+        {
+          name: "Andijon",
+          value: "andijon",
+          lat: 40.77408090036615,
+          lon: 72.5355339,
+        },
+        {
+          name: "Namangan",
+          value: "namangan",
+          lat: 41.00362870039255,
+          lon: 71.26119519999999,
+        },
+        {
+          name: "Sirdaryo",
+          value: "sirdaryo",
+          lat: 40.50184730033293,
+          lon: 68.7426643,
+        },
+        {
+          name: "Surxandaryo",
+          value: "surxandaryo",
+          lat: 37.95208429997525,
+          lon: 67.12659959999999,
+        },
+        {
+          name: "Qashqadaryo",
+          value: "qashqadaryo",
+          code: "qashqadaryo",
+          lat: 38.563939700062676,
+          lon: 65.5311095,
+        },
+        {
+          name: "Xorazm",
+          value: "xorazm",
+          lat: 41.29028350042324,
+          lon: 60.542853699999995,
+        },
+        {
+          name: "Navoiy",
+          value: "navoiy",
+          lat: 42.00000000048624,
+          lon: 63.999999999999986,
+        },
+        {
+          name: "Buxoro",
+          value: "buxoro",
+          lat: 40.22936600029793,
+          lon: 63.54705839999999,
+        },
+
+        {
+          name: "Qoraqaplog’iston",
+          value: "qoraqaplogiston",
+          lat: 43.77388410053869,
+          lon: 57.6234617,
+        },
+        {
+          name: "Farg’ona",
+          value: "fargona",
+          lat: 40.5000000003327,
+          lon: 71.24999999999999,
+        },
+        {
+          name: "Toshkent vil.",
+          value: "toshkentvil",
+          lat: 41.04968150039766,
+          lon: 69.3711365,
+        },
+        {
+          name: "Jizzax",
+          value: "Jizzax",
+          lat: 40.33190950031129,
+          lon: 67.4551198,
+        },
+      ],
+      otherDays: [1, 2, 3, 4],
       scTimer: 0,
+      activeRegion: "toshkentSh",
+      thisTime: new Date(),
       scY: 0,
       visible: false,
       logo: require("../../assets/svg/logo.svg?raw"),
@@ -225,7 +350,44 @@ export default {
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
+  async fetch() {
+    const [weatherData] = await Promise.all([
+      this.$store.dispatch("fetchWeather/getWeathers", {
+        params: {
+          lat: 41.25,
+          lon: 69.25,
+        },
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
+    ]);
+    this.weather = weatherData;
+  },
   methods: {
+    currentRegionChange(region) {
+      this.activeRegion = region.value;
+      this.__GET_WEATHER(region);
+    },
+    async __GET_WEATHER(region) {
+      const data = await this.$store.dispatch("fetchWeather/getWeathers", {
+        params: {
+          lat: region.lat,
+          lon: region.lon,
+        },
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      });
+      this.weather = data;
+    },
+    currentWeather(index) {
+      const currentW = this.weather[Object.keys(this.weather)[index]].filter(
+        (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
+      );
+      return currentW;
+    },
+    moment,
     handleOk() {
       this.visible = true;
     },
@@ -276,14 +438,15 @@ export default {
   animation-iteration-count: 1;
 }
 .weather__container {
-  height: 400px;
-  background: #ffffff;
+  /* height: 400px; */
+  background: var(--black_000000, #ffffff);
   padding: 20px;
   display: grid;
-  grid-template-columns: 1fr 260px;
+  grid-template-columns: 540px 1fr;
+  grid-gap: 20px;
 }
 .weather__current div h4 {
-  color: var(--dark-blue-80, #374587);
+  color: var(--white_ffffff, #374587);
   font-size: 22px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -291,7 +454,7 @@ export default {
   line-height: 150%;
 }
 .weather__current div p {
-  color: var(--dark-blue-80, #374587);
+  color: var(--white_ffffff, #374587);
   font-size: 14px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -310,6 +473,12 @@ export default {
   position: relative;
   margin-right: 36px;
 }
+.weather__info {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
 .weather__current div h1 span::after {
   content: "o";
   position: absolute;
@@ -330,6 +499,10 @@ export default {
   justify-content: flex-end;
   align-items: flex-end;
 }
+.weather__currentSvg img {
+  width: 166px;
+  height: 166px;
+}
 .weather__current div svg {
   width: 166px;
   height: 166px;
@@ -337,14 +510,21 @@ export default {
 .weather__time {
   padding: 10px 13px;
   border-radius: 12px;
-  background: var(--black-1, #f9f9f9);
+  background: var(--black_111111, #f9f9f9);
 }
 .weather__time ul {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
+  overflow-x: scroll;
+  width: 100%;
+  max-width: 100%;
+}
+.weather__time ul::-webkit-scrollbar {
+  display: none;
 }
 .weather__time ul li {
-  color: var(--dark-blue-80, #374587);
+  color: var(--gray__9ba2c3, #374587);
   font-size: 14px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -355,7 +535,8 @@ export default {
 }
 .weather__time ul li p,
 .weather__time ul li p span {
-  color: var(--dark-blue-100, #051769);
+  white-space: nowrap;
+  color: var(--white_ffffff, #051769);
   font-size: 16px;
   line-height: 150%;
   position: relative;
@@ -377,7 +558,7 @@ export default {
 .weather__days {
   padding: 16px 20px;
   border-radius: 12px;
-  background: var(--black-1, #f9f9f9);
+  background: var(--black_111111, #f9f9f9);
   margin-top: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -385,6 +566,7 @@ export default {
 .weather__days ul {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 .weather__days ul:first-child {
   padding-right: 25px;
@@ -394,7 +576,7 @@ export default {
   padding-left: 25px;
 }
 .weather__days ul li {
-  color: var(--black-80, #292929);
+  color: var(--gray__CDD1E1, #292929);
   font-size: 14px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -405,12 +587,16 @@ export default {
   justify-content: space-between;
 }
 .weather__days ul li p {
-  color: var(--dark-blue-80, #374587);
+  color: var(--white_ffffff, #374587);
   font-size: 16px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+}
+.weather__days ul li img {
+  width: 36px;
+  height: 36px;
 }
 .weather__days ul li p span {
   position: relative;
@@ -419,13 +605,77 @@ export default {
 .weather__days ul li p span::after {
   content: "o";
   position: absolute;
-  color: var(--dark-blue-80, #374587);
+  color: var(--white_ffffff, #374587);
   font-size: 12px;
   font-family: var(--ROBOTO_SERIF);
   top: -7px;
   right: -5px;
   width: 5px;
   height: 5px;
+}
+.weather__list {
+  max-height: 482px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--black_111111, #f9f9f9);
+  overflow: hidden;
+}
+.weather__list h3 {
+  color: var(--blue_0192FF, #000);
+  font-family: var(--ROBOTO_SERIF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+}
+.weather__list ul {
+  display: flex;
+  overflow-y: scroll;
+  height: 100%;
+  flex-direction: column;
+
+  gap: 4px;
+}
+.weather__list ul::-webkit-scrollbar {
+  display: none;
+}
+.weather__list ul li {
+  padding: 8px 12px 8px 10px;
+  color: var(--white_ffffff, #000);
+  font-family: var(--ROBOTO_SERIF);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 145%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+.weather__list ul li:hover {
+  background: var(--gray_292929, #eee);
+}
+.weather__list ul li span {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #b8b8b8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.region__active span {
+  border: 2px solid #0192ff !important;
+}
+.region__active span::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #0192ff;
 }
 @keyframes swing {
   0% {
@@ -460,6 +710,9 @@ export default {
 .weather-drop {
   display: flex;
   cursor: pointer;
+}
+.weather-drop span svg path {
+  fill: var(--white_ffffff, #000);
 }
 .weather-drop p {
   font-family: var(--ROBOTO_SERIF);

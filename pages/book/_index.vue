@@ -196,20 +196,41 @@
                 :class="{ buy__type__active: buyType == 'payme' }"
                 @click="buyType = 'payme'"
               >
-                <span></span><img src="../../assets/images/payme-01 1.png" alt="" />
+                <span></span>
+                <img
+                  v-if="$store.state.theme"
+                  src="../../assets/images/payme-01 1.png"
+                  alt=""
+                />
+                <img v-else src="../../assets/images/payme-light.png" alt="" />
               </div>
               <div
                 :class="{ buy__type__active: buyType == 'click' }"
                 @click="buyType = 'click'"
               >
-                <span></span><img src="../../assets/images/click-01 1.png" alt="" />
+                <span></span>
+                <img
+                  v-if="$store.state.theme"
+                  src="../../assets/images/click-01 1.png"
+                  alt=""
+                />
+                <img v-else src="../../assets/images/click-light.png" alt="" />
               </div>
               <div
                 :class="{ buy__type__active: buyType == 'apelsin' }"
                 @click="buyType = 'apelsin'"
               >
-                <span></span
-                ><img src="../../assets/images/apelsin-logo-light.2367a6d 1.png" alt="" />
+                <span></span>
+                <img
+                  v-if="$store.state.theme"
+                  src="../../assets/images/apelsin-logo-light.2367a6d 1.png"
+                  alt=""
+                />
+                <img
+                  v-else
+                  src="../../assets/images/apelsin-logo-light.2367a6d 2.png"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -463,8 +484,8 @@ export default {
 }
 .buy__type div {
   border-radius: 10px;
-  border: 1px solid var(--black-2, #eee);
-  background: var(--transparent, #f9f9f9);
+  border: 1px solid var(--black_707070, #eee);
+  background: var(--black_414141, #f9f9f9);
   padding: 12px;
   padding-bottom: 9px;
   display: flex;
@@ -478,7 +499,7 @@ export default {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 1px solid #e7e7e7;
+  border: 1px solid var(--black_707070, #e7e7e7);
   margin-right: 11px;
   position: relative;
 }
@@ -491,11 +512,11 @@ export default {
   background: #0192ff;
 }
 .buy__type__active span {
-  border-color: #99d3ff !important;
+  border-color: var(--blue_0192FF, #99d3ff) !important;
 }
 .buy__type__active {
   border: 1.5px solid var(--light-bue-100, #0192ff) !important;
-  background: var(--light-bue-10, #e6f4ff) !important;
+  background: var(--black_414141, #e6f4ff) !important;
 }
 .v-enter-from,
 .v-leave-to {

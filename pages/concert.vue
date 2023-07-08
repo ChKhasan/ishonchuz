@@ -38,13 +38,12 @@ export default {
   },
   async asyncData({ store, i18n }) {
     const [theatersData] = await Promise.all([
-      store.dispatch("fetchConcert/getTheaters", {
+      store.dispatch("fetchConcert/getConcerts", {
         headers: {
           Language: i18n.locale,
         },
       }),
     ]);
-    console.log(theatersData);
     const theaters = theatersData.results;
     return {
       theaters,
