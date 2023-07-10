@@ -346,7 +346,7 @@
     color: var(--light-bue-100, #0192ff) !important;
   }
 }
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 738px) {
   .wrap {
     display: block;
     z-index: 1000;

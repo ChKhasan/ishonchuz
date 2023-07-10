@@ -535,6 +535,7 @@ export default {
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
+  white-space: nowrap;
 }
 .weather__current div h1 span {
   position: relative;

@@ -195,20 +195,68 @@
                 </ul>
               </div>
             </div>
+
+            <div class="mobile_weather__container">
+              <div class="web_drawer__weather__container ">
+                <div class="weather-drop weather-drop__mobile" @click="visible = true">
+                  <span>
+                    <img :src="currentWeather(0)[0]?.image" alt="" />
+                  </span>
+                  <p>
+                    {{ regions.find((item) => item.value == activeRegion)?.name }}
+                  </p>
+                  <span v-html="drop" class="rotate-90"></span>
+                </div>
+                <div class="weather__current">
+                  <div class="webDrawer_weather__currentText">
+                    <h1>
+                      <span>{{
+                        currentWeather(0)[0]?.temp > 0
+                          ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                          : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                      }}</span
+                      >c
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div class="weather__time web_drawer__weather__time">
+                <ul>
+                  <li v-for="time in currentWeather(0)">
+                    {{
+                      moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                        ? "Hozir"
+                        : moment(time?.time).format("HH:mm")
+                    }}
+                    <p>
+                      <span>{{
+                        time?.temp > 0
+                          ? `+${time?.temp}`.split(".")[0]
+                          : `${time?.temp}`.split(".")[0]
+                      }}</span>
+                      C
+                    </p>
+                    <span>
+                      <img :src="time?.image" alt="" />
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <span class="mobile-color-switch">
+              <div class="color-switch">
+                <span
+                  v-html="sun"
+                  @click="$store.commit('changeTheme', true)"
+                  :class="{ 'active-color': $store.state.theme }"
+                ></span>
+                <span
+                  v-html="moon"
+                  @click="$store.commit('changeTheme', false)"
+                  :class="{ 'active-color': !$store.state.theme }"
+                ></span></div
+            ></span>
           </div>
-          <span class="mobile-color-switch">
-            <div class="color-switch">
-              <span
-                v-html="sun"
-                @click="$store.commit('changeTheme', true)"
-                :class="{ 'active-color': $store.state.theme }"
-              ></span>
-              <span
-                v-html="moon"
-                @click="$store.commit('changeTheme', false)"
-                :class="{ 'active-color': !$store.state.theme }"
-              ></span></div
-          ></span>
           <div class="drawer_lang">
             <ul>
               <li
@@ -585,10 +633,12 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
-  props: ["categories"],
+  props: ["categories", "weather"],
   data() {
     return {
+      thisTime: new Date(),
       profileMenu: false,
       authMobilVisible: false,
       visible: false,
@@ -599,6 +649,90 @@ export default {
       drawerVisible: false,
       dropShow: false,
       smsTimer: 45,
+      activeRegion: "toshkentSh",
+
+      regions: [
+        {
+          name: "Toshkent Shahar",
+          value: "toshkentSh",
+          lat: 41.311081,
+          lon: 69.240562,
+        },
+        {
+          name: "Andijon",
+          value: "andijon",
+          lat: 40.77408090036615,
+          lon: 72.5355339,
+        },
+        {
+          name: "Namangan",
+          value: "namangan",
+          lat: 41.00362870039255,
+          lon: 71.26119519999999,
+        },
+        {
+          name: "Sirdaryo",
+          value: "sirdaryo",
+          lat: 40.50184730033293,
+          lon: 68.7426643,
+        },
+        {
+          name: "Surxandaryo",
+          value: "surxandaryo",
+          lat: 37.95208429997525,
+          lon: 67.12659959999999,
+        },
+        {
+          name: "Qashqadaryo",
+          value: "qashqadaryo",
+          code: "qashqadaryo",
+          lat: 38.563939700062676,
+          lon: 65.5311095,
+        },
+        {
+          name: "Xorazm",
+          value: "xorazm",
+          lat: 41.29028350042324,
+          lon: 60.542853699999995,
+        },
+        {
+          name: "Navoiy",
+          value: "navoiy",
+          lat: 42.00000000048624,
+          lon: 63.999999999999986,
+        },
+        {
+          name: "Buxoro",
+          value: "buxoro",
+          lat: 40.22936600029793,
+          lon: 63.54705839999999,
+        },
+
+        {
+          name: "Qoraqaplog’iston",
+          value: "qoraqaplogiston",
+          lat: 43.77388410053869,
+          lon: 57.6234617,
+        },
+        {
+          name: "Farg’ona",
+          value: "fargona",
+          lat: 40.5000000003327,
+          lon: 71.24999999999999,
+        },
+        {
+          name: "Toshkent vil.",
+          value: "toshkentvil",
+          lat: 41.04968150039766,
+          lon: 69.3711365,
+        },
+        {
+          name: "Jizzax",
+          value: "Jizzax",
+          lat: 40.33190950031129,
+          lon: 67.4551198,
+        },
+      ],
       userProfile: require("../../assets/svg/profile-user.svg?raw"),
       star: require("../../assets/svg/profile-star.svg?raw"),
       comment: require("../../assets/svg/profile-comment.svg?raw"),
@@ -682,6 +816,13 @@ export default {
     },
   },
   methods: {
+    moment,
+    currentWeather(index) {
+      const currentW = this.weather[Object.keys(this.weather)[index]].filter(
+        (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
+      );
+      return currentW;
+    },
     handleOkSearch() {
       this.visibleSearch = false;
     },
@@ -913,4 +1054,16 @@ export default {
 <style scoped>
 @import "../../assets/css/pages/home-page.css";
 @import "../../assets/css/pages/header-mobile.css";
+.weather-drop__mobile p {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+}
+.mobile_weather__container {
+  display: flex;
+  gap: 20px;
+  overflow-x: scroll;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>
