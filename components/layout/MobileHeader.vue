@@ -209,7 +209,7 @@
                   <span v-html="drop" class="rotate-90"></span>
                 </div>
                 <div class="weather__current">
-                  <div class="webDrawer_weather__currentText">
+                  <div class="webDrawer_weather__currentText weather__currentText_mobile">
                     <h1>
                       <span>{{
                         currentWeather(0)[0]?.temp > 0
@@ -1378,6 +1378,15 @@ export default {
   /* left: 0; */
   /* top: 0; */
   /* z-index: 1; */
+}
+@media (max-width: 576px) {
+  .current_weather__mobile h1 {
+    color: var(--white_ffffff, #000);
+    font-size: 54px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
 }
 @media (max-width: 540px) {
   .weather__current div h1 span {

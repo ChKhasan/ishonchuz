@@ -421,7 +421,7 @@
                 <span v-html="drop" class="rotate-90"></span>
               </div>
               <div class="weather__current">
-                <div class="webDrawer_weather__currentText">
+                <div class="webDrawer_weather__currentText weather__currentText_mobile">
                   <h1>
                     <span>{{
                       currentWeather(0)[0]?.temp > 0
@@ -1243,13 +1243,7 @@ export default {
   font-weight: 400;
   line-height: 130%;
 }
-.webDrawer_weather__currentText h1 {
-  color: var(--white_ffffff, #000);
-  font-size: 54px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%;
-}
+
 .web_drawer__weather__time {
   padding: 0 !important;
   background: transparent !important;
@@ -1316,6 +1310,17 @@ export default {
   .menu-list-btns div svg {
     width: 24px;
     height: 24px;
+  }
+  .weather__currentText_mobile h1 {
+    color: var(--white_ffffff, #000) !important;
+    font-size: 54px !important;
+    font-weight: 400 !important;
+    line-height: 130%;
+  }
+}
+@media (max-width: 390px) {
+  .weather__currentText_mobile h1 {
+    font-size: 44px !important;
   }
 }
 </style>
