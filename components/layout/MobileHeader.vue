@@ -8,7 +8,39 @@
       </div>
       <div class="container_xl">
         <div class="bottom">
-          <div class="left">
+          <div class="center">
+            <NuxtLink to="/">
+              <!-- <img src="@/assets/images/logo/brand.svg" alt="" /> -->
+              <span
+                class="mobile-logo"
+                v-html="$store.state.theme ? logo : darkLogo"
+              ></span>
+            </NuxtLink>
+          </div>
+          <div class="right">
+            <button class="butn" @click="visibleSearch = true">
+              <img src="@/assets/images/search.svg" alt="" />
+            </button>
+            <button
+              class="butn open-modal-mobile"
+              @click="
+                $store.state.auth
+                  ? $router.push('/profile/personal-info')
+                  : (authMobilVisible = !authMobilVisible)
+              "
+            >
+              <img src="@/assets/images/person.svg" alt="" />
+            </button>
+            <button
+              class="butn open-modal-web"
+              @click="
+                $store.state.auth
+                  ? $router.push('/profile/personal-info')
+                  : (visible = !visible)
+              "
+            >
+              <img src="@/assets/images/person.svg" alt="" />
+            </button>
             <button
               class="butn"
               @click="profileMenu = !profileMenu"
@@ -50,40 +82,6 @@
                     />
                   </g></svg
               ></span>
-            </button>
-          </div>
-          <div class="center">
-            <NuxtLink to="/">
-              <!-- <img src="@/assets/images/logo/brand.svg" alt="" /> -->
-              <span
-                class="mobile-logo"
-                v-html="$store.state.theme ? logo : darkLogo"
-              ></span>
-            </NuxtLink>
-          </div>
-          <div class="right">
-            <button class="butn" @click="visibleSearch = true">
-              <img src="@/assets/images/search.svg" alt="" />
-            </button>
-            <button
-              class="butn open-modal-mobile"
-              @click="
-                $store.state.auth
-                  ? $router.push('/profile/personal-info')
-                  : (authMobilVisible = !authMobilVisible)
-              "
-            >
-              <img src="@/assets/images/person.svg" alt="" />
-            </button>
-            <button
-              class="butn open-modal-web"
-              @click="
-                $store.state.auth
-                  ? $router.push('/profile/personal-info')
-                  : (visible = !visible)
-              "
-            >
-              <img src="@/assets/images/person.svg" alt="" />
             </button>
           </div>
         </div>
