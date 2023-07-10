@@ -18,4 +18,9 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+@media (max-width: 992px) {
+  .header-banner {
+    height: 115px;
+  }
+}
 </style>

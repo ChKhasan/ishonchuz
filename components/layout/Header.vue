@@ -9,7 +9,7 @@
               <span v-html="$store.state.theme ? logo : darkLogo"></span>
             </nuxt-link>
           </div>
-          <ul class="currency-list">
+          <ul class="currency-list currency-list__web">
             <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
             <li>
               USD
@@ -64,7 +64,7 @@
             </li>
           </ul>
 
-          <div class="color-switch">
+          <div class="color-switch color-switch__web">
             <span
               v-html="sun"
               @click="$store.commit('changeTheme', true)"
@@ -76,7 +76,7 @@
               :class="{ 'active-color': !$store.state.theme }"
             ></span>
           </div>
-          <div class="weather-drop" @click="visible = true">
+          <div class="weather-drop weather-drop__web1" @click="visible = true">
             <span>
               <img :src="currentWeather(0)[0]?.image" alt="" />
             </span>
@@ -89,20 +89,53 @@
             </p>
             <span v-html="drop"></span>
           </div>
-          <ul class="header-lang">
-            <li
-              :class="{ 'active-lang': $i18n.locale == lang.code }"
-              v-for="lang in locales"
-              :key="lang.id"
-              @click="$router.push(switchLocalePath(lang.code))"
-            >
-              {{ lang.name }}
-            </li>
-          </ul>
+          <div class="weather-drop__container">
+            <div class="color-switch color-switch__web1">
+              <span
+                v-html="sun"
+                @click="$store.commit('changeTheme', true)"
+                :class="{ 'active-color': $store.state.theme }"
+              ></span>
+              <span
+                v-html="moon"
+                @click="$store.commit('changeTheme', false)"
+                :class="{ 'active-color': !$store.state.theme }"
+              ></span>
+            </div>
+            <div class="weather-drop weather-drop__web2" @click="visible = true">
+              <span>
+                <img :src="currentWeather(0)[0]?.image" alt="" />
+              </span>
+              <p>
+                {{
+                  currentWeather(0)[0]?.temp > 0
+                    ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                    : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                }}C {{ regions.find((item) => item.value == activeRegion)?.name }}
+              </p>
+              <span v-html="drop"></span>
+            </div>
+            <ul class="header-lang">
+              <li
+                :class="{ 'active-lang': $i18n.locale == lang.code }"
+                v-for="lang in locales"
+                :key="lang.id"
+                @click="$router.push(switchLocalePath(lang.code))"
+              >
+                {{ lang.name }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    <MenuList :categories="categories" :columnist="columnist" />
+    <MenuList
+      :categories="categories"
+      :columnist="columnist"
+      :currency="currency"
+      :weather="weather"
+      :regions="regions"
+    />
     <div class="to_top_btn" v-show="scY > 300" @click="toTop">
       <span v-html="drop"></span>
     </div>
@@ -110,32 +143,61 @@
       :body-style="{ padding: '0' }"
       v-model="visible"
       centered
+      class="weather__modal"
       :closable="false"
       width="858px"
       @ok="handleOk"
     >
       <div class="weather__container">
         <div class="weather__body">
-          <div class="weather__current">
-            <div class="weather__currentText">
-              <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
-              <p>
-                {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
-                {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
-              </p>
-              <h1>
-                <span>{{
-                  currentWeather(0)[0]?.temp > 0
-                    ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
-                    : `${currentWeather(0)[0]?.temp}`.split(".")[0]
-                }}</span
-                >C
-              </h1>
+          <div class="weather__spin" v-if="loading">
+            <a-spin />
+          </div>
+          <div class="weather__current__mobile">
+            <div class="weather__current">
+              <div class="weather__currentText">
+                <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
+                <p>
+                  {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
+                  {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+                </p>
+                <h1>
+                  <span>{{
+                    currentWeather(0)[0]?.temp > 0
+                      ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                      : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                  }}</span
+                  >C
+                </h1>
+              </div>
+              <div class="weather__currentSvg">
+                <span>
+                  <img :src="currentWeather(0)[0]?.image" alt="" />
+                </span>
+              </div>
             </div>
-            <div class="weather__currentSvg">
-              <span>
-                <img :src="currentWeather(0)[0]?.image" alt="" />
-              </span>
+            <div class="weather_dropdown__container">
+              <div class="weather_dropdown" @click="weatherDrop = !weatherDrop">
+                <h2>Toshkent</h2>
+                <span v-html="drop" :class="{ rotate180: weatherDrop }"></span>
+              </div>
+              <Transition name="weather_drop_anim">
+                <div class="weather_dropdown__body" v-if="weatherDrop">
+                  <div class="weather__list">
+                    <h3>Hududlar</h3>
+                    <ul>
+                      <li
+                        v-for="(region, index) in regions"
+                        :key="index"
+                        :class="{ region__active: activeRegion == region.value }"
+                        @click="currentRegionChange(region)"
+                      >
+                        {{ region.name }} <span></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Transition>
             </div>
           </div>
           <div class="weather__time">
@@ -201,7 +263,7 @@
             </ul>
           </div>
         </div>
-        <div class="weather__list">
+        <div class="weather__list weather__list__web">
           <h3>Hududlar</h3>
           <ul>
             <li
@@ -227,6 +289,8 @@ export default {
   data() {
     return {
       weather: {},
+      weatherDrop: false,
+      loading: false,
       weeks: {
         Monday: "Dushanba",
         Tuesday: "Seshanba",
@@ -370,6 +434,7 @@ export default {
       this.__GET_WEATHER(region);
     },
     async __GET_WEATHER(region) {
+      this.loading = true;
       const data = await this.$store.dispatch("fetchWeather/getWeathers", {
         params: {
           lat: region.lat,
@@ -379,6 +444,7 @@ export default {
           Language: this.$i18n.locale,
         },
       });
+      this.loading = false;
       this.weather = data;
     },
     currentWeather(index) {
@@ -439,6 +505,7 @@ export default {
 }
 .weather__container {
   /* height: 400px; */
+  border-radius: 16px;
   background: var(--black_000000, #ffffff);
   padding: 20px;
   display: grid;
@@ -473,12 +540,39 @@ export default {
   position: relative;
   margin-right: 36px;
 }
+.weather_dropdown {
+  display: none;
+  position: relative;
+}
+.weather_dropdown__body {
+  position: absolute;
+  top: 100%;
+  /* background: red; */
+  /* padding: 12px 24px; */
+  border-radius: 12px;
+  z-index: 100;
+  width: 100%;
+  display: none;
+}
 .weather__info {
   display: flex;
   align-items: center;
   gap: 3px;
 }
-
+.weather__body {
+  position: relative;
+}
+.weather__spin {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  position: absolute;
+  background: var(--dark_000066, #ffffff66);
+  z-index: 1000;
+}
 .weather__current div h1 span::after {
   content: "o";
   position: absolute;
@@ -494,6 +588,10 @@ export default {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+.weather-drop__web2 {
+  display: none !important;
+}
+
 .weather__currentSvg {
   display: flex;
   justify-content: flex-end;
@@ -627,6 +725,8 @@ export default {
   font-style: normal;
   font-weight: 500;
   line-height: 130%;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
 .weather__list ul {
   display: flex;
@@ -830,5 +930,169 @@ export default {
 }
 .active-lang {
   color: #0192ff !important;
+}
+.color-switch__web1 {
+  display: none;
+}
+@media (max-width: 992px) {
+  .currency-list__web {
+    display: none;
+  }
+  .header-container {
+    padding: 20px 0;
+  }
+  .color-switch__web {
+    display: none;
+  }
+  .color-switch__web1 {
+    display: flex;
+  }
+  .logo_block svg {
+    height: 30px;
+  }
+  .weather-drop__web2 {
+    display: flex !important;
+  }
+  .weather-drop__container {
+    display: flex;
+    gap: 26px;
+    align-items: center;
+  }
+  .weather-drop__web1 {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .weather_dropdown__body {
+    display: block;
+  }
+  .weather__body {
+    width: 100%;
+    max-width: 100%;
+    /* overflow: hidden; */
+  }
+  .currency-list li:last-child {
+    padding-right: 0;
+  }
+  .weather_dropdown__container {
+    display: block;
+  }
+  .header-lang li {
+    font-size: 17px;
+  }
+  .weather__list__web {
+    display: none;
+  }
+  .weather__list {
+    box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.1);
+  }
+  .header-container {
+    padding: 13px 0;
+  }
+  .logo_block svg {
+    height: 23px;
+    width: 156px;
+  }
+  .weather__container {
+    grid-template-columns: 1fr;
+    position: relative;
+    display: flex;
+  }
+  .weather__modal .ant-modal {
+    width: 579px !important;
+  }
+  .weather__current div h4 {
+    display: none;
+  }
+  .weather__current div h1 {
+    font-size: 50px;
+  }
+  .weather__current div h1 span::after {
+    font-size: 32px;
+  }
+  .weather_drop_anim-enter-active {
+    animation: weather-drop-anim 0.5s;
+  }
+  .weather_drop_anim-leave-active {
+    animation: weather-drop-anim 0.5s reverse;
+  }
+  @keyframes weather-drop-anim {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(20px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  .weather_dropdown {
+    display: flex;
+    /* width: 100%; */
+    justify-content: space-between;
+    min-width: 236px;
+    border-radius: 8px;
+    background: var(--black-1, #f9f9f9);
+    padding: 10px;
+  }
+  .weather_dropdown span svg {
+    transition: 0.2s;
+  }
+  .weather_dropdown span svg path {
+    fill: #0192ff;
+  }
+  .weather_dropdown__container {
+    /* margin-left: 40px; */
+    /* display: none; */
+    position: relative;
+    height: 47px;
+  }
+
+  .weather_dropdown h2 {
+    color: var(--light-bue-100, #0192ff);
+    font-family: var(--ROBOTO_SERIF);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    text-transform: uppercase;
+  }
+  .weather__current {
+    display: flex;
+  }
+  .weather__currentSvg img {
+    width: 100px;
+    height: 100px;
+    margin-left: 16px;
+  }
+  .weather__current__mobile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 13px;
+  }
+}
+@media (max-width: 858px) {
+  .weather__modal .ant-modal {
+    width: 100% !important;
+  }
+}
+@media (max-width: 576px) {
+  .weather__modal .ant-modal {
+    width: 100% !important;
+  }
+  .weather__currentSvg img {
+    width: 96px;
+    height: 96px;
+    margin-left: 16px;
+  }
+}
+@media (max-width: 360px) {
+  .weather__modal {
+    display: none !important;
+  }
 }
 </style>

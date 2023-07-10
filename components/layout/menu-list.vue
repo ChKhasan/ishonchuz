@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="menu-list-container">
         <ul>
-          <li v-for="category in categories" :key="category?.id">
+          <li class="menu-list__web1" v-for="category in categories" :key="category?.id">
             <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
                 {{ category?.title }} <span v-html="drop"></span>
@@ -20,7 +20,50 @@
               {{ category?.title }}</nuxt-link
             >
           </li>
-
+          <li
+            class="menu-list__web2"
+            v-for="category in categories.slice(0, 3)"
+            :key="category?.id"
+          >
+            <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
+              <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                {{ category?.title }} <span v-html="drop"></span>
+              </a>
+              <a-menu slot="overlay" class="dropdown-board">
+                <a-menu-item :key="index" v-for="(child, index) in category?.children">
+                  <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
+                    child?.title
+                  }}</nuxt-link>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+            <nuxt-link v-else :to="localePath(`/news-menu/${category?.slug}`)">
+              {{ category?.title }}</nuxt-link
+            >
+          </li>
+          <li
+            class="menu-list__web3"
+            v-for="category in categories
+              .slice(0, 3)
+              .filter((item) => item.children.length > 0)"
+            :key="category?.id"
+          >
+            <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
+              <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
+                {{ category?.title }} <span v-html="drop"></span>
+              </a>
+              <a-menu slot="overlay" class="dropdown-board">
+                <a-menu-item :key="index" v-for="(child, index) in category?.children">
+                  <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
+                    child?.title
+                  }}</nuxt-link>
+                </a-menu-item>
+              </a-menu>
+            </a-dropdown>
+            <nuxt-link v-else :to="localePath(`/news-menu/${category?.slug}`)">
+              {{ category?.title }}</nuxt-link
+            >
+          </li>
           <!-- <li>Xorij <span v-html="drop"></span></li>
           <li @click="$router.push('/news-menu')">{{$store.state.translations['main.analysis']}}</li>
           <li>O'zgacha rakurs</li>
@@ -98,7 +141,25 @@
           >
             <span v-html="user"></span>
           </div>
-          <!-- <div><span v-html="menu"></span></div> -->
+          <div class="web__drawer" @click="webDrawer = !webDrawer">
+            <span v-if="!webDrawer" v-html="menu"></span>
+            <span v-else
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <g id="close-line">
+                  <path
+                    id="Vector"
+                    d="M10 8.66671L14.6667 4L16 5.33333L11.3334 10L16 14.6667L14.6667 16L10 11.3334L5.33333 16L4 14.6667L8.66671 10L4 5.33333L5.33333 4L10 8.66671Z"
+                    fill="#6974A5"
+                  />
+                </g></svg
+            ></span>
+          </div>
         </div>
       </div>
     </div>
@@ -295,13 +356,244 @@
         <span v-html="searchInput"></span>
       </div>
     </a-modal>
+    <div class="web_drawer" :class="{ 'h-100vh': webDrawer }">
+      <div class="web_drawer__body">
+        <div class="web_drawer__container container_xl">
+          <div class="web_drawer__list">
+            <ul v-for="category in categories.filter((item) => item.children.length > 0)">
+              <h5>{{ category?.title }}</h5>
+              <li
+                v-for="child in category?.children"
+                :key="child?.id"
+                @click="$router.push(localePath(`/news-menu/${child?.slug}`))"
+              >
+                {{ child?.title }}
+              </li>
+            </ul>
+            <ul>
+              <h5>
+                {{ $store.state.translations["main.library"] }}
+              </h5>
+              <li @click="$router.push(localePath('/library?type=literature'))">
+                {{ $store.state.translations["main.literature"] }}
+              </li>
+              <li @click="$router.push(localePath('/library?type=scientific'))">
+                {{ $store.state.translations["main.science"] }}
+              </li>
+              <li @click="$router.push(localePath('/library?type=articles'))">
+                {{ $store.state.translations["main.articles"] }}
+              </li>
+              <li @click="$router.push(localePath('/library?type=manuals'))">
+                Qo'llanmalar
+              </li>
+            </ul>
+            <ul class="others__web">
+              <h5>
+                {{ $store.state.translations["main.others"] }}
+              </h5>
+              <li @click="$router.push(localePath('/galleries'))">
+                {{ $store.state.translations["main.new-uzbekistan"] }}
+              </li>
+              <li @click="$router.push(localePath(`/news-menu/${columnist?.slug}`))">
+                {{ columnist?.title }}
+              </li>
+              <li>
+                <a href="https://ishonch.uz/">{{
+                  $store.state.translations["main.archive"]
+                }}</a>
+              </li>
+              <li @click="$router.push(localePath('/journalists'))">
+                {{ $store.state.translations["main.journalists"] }}
+              </li>
+            </ul>
+            <div class="web_drawer__weather__container">
+              <div class="weather-drop weather-drop__web2" @click="visible = true">
+                <span>
+                  <img :src="currentWeather(0)[0]?.image" alt="" />
+                </span>
+                <p>
+                  {{
+                    currentWeather(0)[0]?.temp > 0
+                      ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                      : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                  }}C {{ regions.find((item) => item.value == activeRegion)?.name }}
+                </p>
+                <span v-html="drop" class="rotate-90"></span>
+              </div>
+              <div class="weather__current">
+                <div class="webDrawer_weather__currentText">
+                  <h1>
+                    <span>{{
+                      currentWeather(0)[0]?.temp > 0
+                        ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                        : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                    }}</span
+                    >c
+                  </h1>
+                </div>
+              </div>
+              <div class="weather__time web_drawer__weather__time">
+                <ul>
+                  <li v-for="time in currentWeather(0).slice(0, 3)">
+                    {{
+                      moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                        ? "Hozir"
+                        : moment(time?.time).format("HH:mm")
+                    }}
+                    <p>
+                      <span>{{
+                        time?.temp > 0
+                          ? `+${time?.temp}`.split(".")[0]
+                          : `${time?.temp}`.split(".")[0]
+                      }}</span>
+                      C
+                    </p>
+                    <span>
+                      <img :src="time?.image" alt="" />
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="web_drawer__list web_drawer__not_child">
+            <nuxt-link
+              v-for="category in categories.filter((item) => item.children.length == 0)"
+              :to="`/news-menu/${category?.slug}`"
+              :key="category?.id"
+              >{{ category?.title }}</nuxt-link
+            >
+          </div>
+          <div class="web_drawer__list2">
+            <ul>
+              <h5>
+                {{ $store.state.translations["main.others"] }}
+              </h5>
+              <li @click="$router.push(localePath('/galleries'))">
+                {{ $store.state.translations["main.new-uzbekistan"] }}
+              </li>
+              <li @click="$router.push(localePath(`/news-menu/${columnist?.slug}`))">
+                {{ columnist?.title }}
+              </li>
+              <li>
+                <a href="https://ishonch.uz/">{{
+                  $store.state.translations["main.archive"]
+                }}</a>
+              </li>
+              <li @click="$router.push(localePath('/journalists'))">
+                {{ $store.state.translations["main.journalists"] }}
+              </li>
+            </ul>
+            <div>
+              <nuxt-link
+                v-for="category in categories.filter((item) => item.children.length == 0)"
+                :to="`/news-menu/${category?.slug}`"
+                :key="category?.id"
+                >{{ category?.title }}</nuxt-link
+              >
+            </div>
+          </div>
+          <ul class="currency-list web_drawer__currency">
+            <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
+            <li>
+              USD
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "USD")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'USD')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "USD")["Diff"] }}</span
+                >
+              </p>
+            </li>
+            <li>
+              EUR
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "EUR")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'EUR')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "EUR")["Diff"] }}</span
+                >
+              </p>
+            </li>
+            <li>
+              RUB
+              <p>
+                {{
+                  currency
+                    ?.find((item) => item["Ccy"] == "RUB")
+                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                }}<span
+                  :class="{
+                    currency__down: currency
+                      ?.find((item) => item['Ccy'] == 'RUB')
+                      ['Diff'].includes('-'),
+                  }"
+                  >{{ currency?.find((item) => item["Ccy"] == "RUB")["Diff"] }}</span
+                >
+              </p>
+            </li>
+          </ul>
+        </div>
+        <div class="web_drawer__messangers">
+          <div class="container_xl d-flex justify-content-center">
+            <a
+              v-if="$store.state.siteInfo['telegram']"
+              :href="$store.state.siteInfo['telegram']"
+              ><span v-html="telegram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['facebook']"
+              :href="$store.state.siteInfo['facebook']"
+              ><span v-html="facebook"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['twitter']"
+              :href="$store.state.siteInfo['twitter']"
+              ><span v-html="twitter"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['instagram']"
+              :href="$store.state.siteInfo['instagram']"
+              ><span v-html="instagram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['whatsapp']"
+              :href="$store.state.siteInfo['whatsapp']"
+              ><span v-html="whatsapp"></span
+            ></a>
+          </div>
+        </div>
+        <div class="container_xl web_drawer__text">
+          <p>© 2023 Ishonch.uz. Все права защищены</p>
+          <p>Дизайн - Redfox</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import moment from "moment";
+
 export default {
-  props: ["categories", "columnist"],
+  props: ["categories", "columnist", "currency", "weather", "regions"],
   data() {
     return {
+      activeRegion: "toshkentSh",
+      webDrawer: false,
       searchValue: "",
       visible: false,
       visibleSearch: false,
@@ -309,6 +601,7 @@ export default {
       visibleName: false,
       dropShow: false,
       smsTimer: 45,
+      thisTime: new Date(),
       search: require("../../assets/svg/search.svg?raw"),
       searchInput: require("../../assets/svg/search-input.svg?raw"),
       user: require("../../assets/svg/user.svg?raw"),
@@ -316,6 +609,11 @@ export default {
       drop: require("../../assets/svg/dropdown.svg?raw"),
       mClose: require("../../assets/svg/modal-close.svg?raw"),
       smsSuccess: require("../../assets/svg/success.svg?raw"),
+      telegram: require("../../assets/svg/telegram.svg?raw"),
+      facebook: require("../../assets/svg/facebook.svg?raw"),
+      twitter: require("../../assets/svg/twitter.svg?raw"),
+      instagram: require("../../assets/svg/instagram.svg?raw"),
+      whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
       form: {
         phone_number: "",
       },
@@ -379,6 +677,13 @@ export default {
   },
 
   methods: {
+    moment,
+    currentWeather(index) {
+      const currentW = this.weather[Object.keys(this.weather)[index]].filter(
+        (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
+      );
+      return currentW;
+    },
     submit() {
       this.$router.push(`/search/${this.searchValue}`);
       this.visibleSearch = false;
@@ -503,6 +808,20 @@ export default {
     },
   },
   watch: {
+    "$route.path"() {
+      this.webDrawer = false;
+      document.body.style.height = "auto";
+      document.body.style.overflow = "auto";
+    },
+    webDrawer(val) {
+      if (val) {
+        document.body.style.height = "100vh";
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "auto";
+        document.body.style.overflow = "auto";
+      }
+    },
     visibleSms(val) {
       if (val) {
         this.smsTimer = 45;
@@ -541,6 +860,7 @@ export default {
 };
 </script>
 <style lang="css">
+@import "../../assets/css/pages/header-mobile.css";
 .sticky {
   position: fixed;
   top: 0;
@@ -800,7 +1120,202 @@ export default {
   font-family: var(--ROBOTO_SERIF);
   line-height: 150%;
 }
+.web__drawer {
+  display: none !important;
+}
 .sms_success_icon svg path {
   fill: #00af4c;
+}
+.menu-list__web2 {
+  display: none;
+}
+.menu-list__web3 {
+  display: none;
+}
+.web_drawer__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr 2fr;
+}
+.web_drawer__list2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 30px;
+}
+.web_drawer__list2 div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.web_drawer__list2 div a {
+  color: var(--light-bue-100, #0192ff);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  text-transform: uppercase;
+  padding: 10px;
+  padding-left: 6px;
+}
+.web_drawer__body {
+  overflow-y: scroll;
+  height: calc(100vh - 300px);
+  padding-bottom: 300px;
+}
+.web_drawer__body::-webkit-scrollbar {
+  /* display: none; */
+}
+.web_drawer__list h5,
+.web_drawer__list2 h5 {
+  color: var(--light-bue-100, #0192ff);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  text-transform: uppercase;
+  padding: 10px 6px;
+}
+.web_drawer__list ul li,
+.web_drawer__list2 ul li {
+  color: var(--white_ffffff, #000);
+  padding: 10px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.web_drawer__list ul li a,
+.web_drawer__list2 ul li a {
+  font-size: 16px;
+  color: var(--white_ffffff, #000);
+}
+
+.web_drawer__list ul li:not(:last-child),
+.web_drawer__list2 ul li:not(:last-child) {
+  margin-bottom: 8px;
+}
+.web_drawer__not_child {
+  margin-top: 20px;
+}
+.web_drawer__container {
+  padding-top: 18px;
+}
+.web_drawer__not_child a {
+  color: var(--white_ffffff, #000);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 130%;
+  text-transform: uppercase;
+  padding: 10px 10px 10px 6px;
+}
+.web_drawer__currency {
+  margin-top: 64px;
+}
+.web_drawer__messangers svg {
+  width: 36px;
+  height: 36px;
+}
+.web_drawer__messangers {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--black-5, #e7e7e7);
+  border-bottom: 1px solid var(--black-5, #e7e7e7);
+  padding-top: 26px;
+  padding-bottom: 26px;
+}
+.web_drawer__messangers div {
+  gap: 33px;
+}
+.web_drawer__text {
+  padding-top: 35px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+}
+.web_drawer__text p {
+  color: var(--black-30, #a0a0a0);
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 130%;
+}
+.webDrawer_weather__currentText h1 {
+  color: var(--white_ffffff, #000);
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.web_drawer__weather__time {
+  padding: 0 !important;
+  background: transparent !important;
+}
+.web_drawer__weather__time ul {
+  gap: 12px;
+}
+.web_drawer__weather__time ul li {
+  padding: 0 !important;
+  margin-left: 0px !important;
+}
+.web_drawer__weather__container {
+  display: none;
+}
+@media (max-width: 992px) {
+  .web__drawer {
+    display: flex !important;
+  }
+  .menu-list__web2 {
+    display: flex;
+  }
+  .menu-list__web1 {
+    display: none;
+  }
+}
+@media (max-width: 889px) {
+  .menu-list-btns div {
+    width: 42px;
+    height: 42px;
+  }
+  .menu-list__web3 {
+    display: flex;
+  }
+  .menu-list__web2 {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .web_drawer__not_child {
+    display: none;
+  }
+  .web_drawer__weather__container {
+    display: block;
+  }
+  .web_drawer__list {
+    grid-template-columns: 1fr 1fr 1fr 1.2fr;
+  }
+  .others__web {
+    display: none;
+  }
+  .menu-list__web3 {
+    display: flex;
+  }
+  .menu-list__web2 {
+    display: none;
+  }
+  .menu-list-btns div {
+    width: 42px;
+    height: 42px;
+  }
+  .menu-list-btns div:not(:last-child) {
+    margin-right: 6px;
+  }
+  .menu-list-btns div svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>

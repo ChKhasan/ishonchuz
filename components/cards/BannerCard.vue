@@ -3,6 +3,11 @@
     <div class="banner-card">
       <div class="banner-card-img">
         <LazyYoutube v-if="topNews?.video" ref="lazyVideo" :src="topNews?.video" />
+        <!-- <iframe
+          v-if="topNews?.video"
+          class="responsive-iframe"
+          :src="topNews?.video"
+        ></iframe> -->
         <img v-else :src="topNews.image" alt="" />
         <img
           v-if="!topNews?.video && !topNews?.image"

@@ -629,6 +629,7 @@ export default {
   margin-top: 40px;
   padding-bottom: 160px;
   border-bottom: 1px solid var(--news_container_br);
+  color: var(--white_ffffff, #000);
 }
 
 .news-container-body img {

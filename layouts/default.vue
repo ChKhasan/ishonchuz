@@ -98,7 +98,7 @@ export default {
     this.currency = currencyData;
     this.columnist = columnistData;
     this.weather = weatherData;
-    console.log(this.weather,"asdsasaf");
+    console.log(this.weather, "asdsasaf");
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getTranslations", translationsData);
   },
@@ -137,6 +137,7 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow: hidden;
 }
 .layout_back {
   display: none;

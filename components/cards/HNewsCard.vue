@@ -40,7 +40,7 @@ export default {
   padding-top: 10px;
   padding-bottom: 13px;
   display: grid;
-  grid-template-columns: 1.6fr 2.8fr;
+  grid-template-columns: 169px auto;
   grid-gap: 16px;
   border-bottom: 1px solid var(--right_drop_border);
 }
