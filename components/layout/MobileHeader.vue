@@ -3,7 +3,7 @@
     <div class="position-relative">
       <div class="top">
         <a href="" target="_blank">
-          <img class="banner" src="@/assets/images/header.jpg" alt="" />
+          <img class="banner" :src="banners[2]?.image" alt="" />
         </a>
       </div>
       <div class="container_xl">
@@ -772,114 +772,117 @@
       </div>
     </a-modal>
     <div class="drawer_menu" :class="{ 'h-100vh': visibleWeather }">
-      <div class="weather__container">
-        <div class="weather__body">
-          <div class="weather_dropdown__container">
-            <div class="weather_dropdown" @click="weatherDrop = !weatherDrop">
-              <h2>Toshkent</h2>
-              <span v-html="drop" :class="{ rotate180: weatherDrop }"></span>
+      <div class="drawer_scroll__weather">
+        <div class="weather__container">
+          <div class="weather__body">
+            <div class="weather_dropdown__container">
+              <div class="weather_dropdown" @click="weatherDrop = !weatherDrop">
+                <h2>Toshkent</h2>
+                <span v-html="drop" :class="{ rotate180: weatherDrop }"></span>
+              </div>
+              <Transition name="weather_drop_anim">
+                <div class="weather_dropdown__body" v-if="weatherDrop">
+                  <div class="weather__list">
+                    <h3>Hududlar</h3>
+                    <ul>
+                      <li
+                        v-for="(region, index) in regions"
+                        :key="index"
+                        :class="{ region__active: activeRegion == region.value }"
+                        @click="currentRegionChange(region)"
+                      >
+                        {{ region.name }} <span></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Transition>
             </div>
-            <Transition name="weather_drop_anim">
-              <div class="weather_dropdown__body" v-if="weatherDrop">
-                <div class="weather__list">
-                  <h3>Hududlar</h3>
-                  <ul>
-                    <li
-                      v-for="(region, index) in regions"
-                      :key="index"
-                      :class="{ region__active: activeRegion == region.value }"
-                      @click="currentRegionChange(region)"
-                    >
-                      {{ region.name }} <span></span>
-                    </li>
-                  </ul>
+            <div class="weather__spin" v-if="loading">
+              <a-spin />
+            </div>
+            <div class="weather__current__mobile">
+              <div class="weather__current">
+                <div class="weather__currentSvg">
+                  <span>
+                    <img :src="currentWeather(0)[0]?.image" alt="" />
+                  </span>
+                </div>
+                <div class="weather__currentText">
+                  <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
+                  <p>
+                    {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
+                    {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+                  </p>
+                  <h1>
+                    <span>{{
+                      currentWeather(0)[0]?.temp > 0
+                        ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                        : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                    }}</span
+                    >C
+                  </h1>
                 </div>
               </div>
-            </Transition>
-          </div>
-          <div class="weather__spin" v-if="loading">
-            <a-spin />
-          </div>
-          <div class="weather__current__mobile">
-            <div class="weather__current">
-              <div class="weather__currentSvg">
-                <span>
-                  <img :src="currentWeather(0)[0]?.image" alt="" />
-                </span>
-              </div>
-              <div class="weather__currentText">
-                <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
-                <p>
-                  {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
-                  {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
-                </p>
-                <h1>
-                  <span>{{
-                    currentWeather(0)[0]?.temp > 0
-                      ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
-                      : `${currentWeather(0)[0]?.temp}`.split(".")[0]
-                  }}</span
-                  >C
-                </h1>
-              </div>
             </div>
-          </div>
-          <div class="weather__time">
-            <ul>
-              <li v-for="time in currentWeather(0)">
-                {{
-                  moment(time?.time).format("HH") == moment(thisTime).format("HH")
-                    ? "Hozir"
-                    : moment(time?.time).format("HH:mm")
-                }}
-                <p>
-                  <span>{{
-                    time?.temp > 0
-                      ? `+${time?.temp}`.split(".")[0]
-                      : `${time?.temp}`.split(".")[0]
-                  }}</span>
-                  C
-                </p>
-                <span>
-                  <img :src="time?.image" alt="" />
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div class="weather__days_mobile weather__days">
-            <ul>
-              <li v-for="(day, index) in otherDaysMobile">
-                {{ weeks[moment(currentWeather(index)[0]?.time).format("dddd")] }},
-                {{ moment(currentWeather(index)[0]?.time).format("DD") }}
-                <div class="weather__info">
-                  <span> <img :src="currentWeather(index)[0]?.image" alt="" /></span>
+            <div class="weather__time">
+              <ul>
+                <li v-for="time in currentWeather(0)">
+                  {{
+                    moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                      ? "Hozir"
+                      : moment(time?.time).format("HH:mm")
+                  }}
                   <p>
                     <span>{{
-                      currentWeather(index)[0]?.temp > 0
-                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
-                        : `${
-                            currentWeather(index)[currentWeather(index).length - 1]?.temp
-                          }`.split(".")[0]
+                      time?.temp > 0
+                        ? `+${time?.temp}`.split(".")[0]
+                        : `${time?.temp}`.split(".")[0]
                     }}</span>
-                    <span>+20</span>
+                    C
                   </p>
-                </div>
+                  <span>
+                    <img :src="time?.image" alt="" />
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div class="weather__days_mobile weather__days">
+              <ul>
+                <li v-for="(day, index) in otherDaysMobile">
+                  {{ weeks[moment(currentWeather(index)[0]?.time).format("dddd")] }},
+                  {{ moment(currentWeather(index)[0]?.time).format("DD") }}
+                  <div class="weather__info">
+                    <span> <img :src="currentWeather(index)[0]?.image" alt="" /></span>
+                    <p>
+                      <span>{{
+                        currentWeather(index)[0]?.temp > 0
+                          ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                          : `${
+                              currentWeather(index)[currentWeather(index).length - 1]
+                                ?.temp
+                            }`.split(".")[0]
+                      }}</span>
+                      <span>+20</span>
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="weather__list weather__list__web">
+            <h3>Hududlar</h3>
+            <ul>
+              <li
+                v-for="(region, index) in regions"
+                :key="index"
+                :class="{ region__active: activeRegion == region.value }"
+                @click="currentRegionChange(region)"
+              >
+                {{ region.name }} <span></span>
               </li>
             </ul>
           </div>
-        </div>
-        <div class="weather__list weather__list__web">
-          <h3>Hududlar</h3>
-          <ul>
-            <li
-              v-for="(region, index) in regions"
-              :key="index"
-              :class="{ region__active: activeRegion == region.value }"
-              @click="currentRegionChange(region)"
-            >
-              {{ region.name }} <span></span>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
@@ -889,7 +892,7 @@
 <script>
 import moment from "moment";
 export default {
-  props: ["categories", "weather"],
+  props: ["categories", "weather", "banners"],
   data() {
     return {
       loading: false,
@@ -1417,9 +1420,9 @@ export default {
     padding: 0 !important;
   }
   .weather__container {
-    height: calc(100vh - 150px);
-    overflow-y: scroll;
-    padding-bottom: 100px;
+    /* height: 100%; */
+    /* overflow-y: scroll; */
+    /* padding-bottom: 200px; */
   }
 }
 .weather__days_mobile {
@@ -1430,5 +1433,11 @@ export default {
 }
 .weather__time-mobile {
   background: transparent !important;
+}
+.drawer_scroll__weather {
+  height: 100%;
+  overflow-y: scroll;
+  padding-bottom: 400px;
+  background: var(--black_000000, #ffffff);
 }
 </style>

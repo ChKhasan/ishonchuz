@@ -7,7 +7,7 @@
       :columnist="columnist"
       :weather="weather"
     />
-    <MobileHeader :categories="categories" :columnist="columnist" :weather="weather" />
+    <MobileHeader :categories="categories" :columnist="columnist" :weather="weather" :banners="banners" />
     <!-- <div class="layout_back"></div> -->
     <main style="flex: 1 1 auto">
       <Nuxt />

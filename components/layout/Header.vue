@@ -1037,7 +1037,7 @@ export default {
     justify-content: space-between;
     min-width: 236px;
     border-radius: 8px;
-    background: var(--black-1, #f9f9f9);
+    background: var(--black_111111, #f9f9f9);
     padding: 10px;
   }
   .weather_dropdown span svg {
