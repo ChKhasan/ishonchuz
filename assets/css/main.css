@@ -181,6 +181,8 @@ body::-webkit-scrollbar-thumb:hover {
 }
 .vmodal-container {
   background: var(--modal_bg);
+  overflow: hidden;
+  border-radius: 16px;
 }
 .ant-modal-mask {
   background-color: rgba(0, 0, 0, 0.65) !important;
