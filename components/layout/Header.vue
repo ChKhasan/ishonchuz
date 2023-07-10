@@ -446,6 +446,7 @@ export default {
       });
       this.loading = false;
       this.weather = data;
+      this.weatherDrop = false;
     },
     currentWeather(index) {
       const currentW = this.weather[Object.keys(this.weather)[index]].filter(
@@ -963,6 +964,11 @@ export default {
     display: none;
   }
 }
+@media (max-width: 858px) {
+  .weather__modal .ant-modal {
+    width: 100% !important;
+  }
+}
 @media (max-width: 768px) {
   .weather_dropdown__body {
     display: block;
@@ -1000,7 +1006,7 @@ export default {
     display: flex;
   }
   .weather__modal .ant-modal {
-    width: 579px !important;
+    max-width: 579px !important;
   }
   .weather__current div h4 {
     display: none;
@@ -1074,11 +1080,6 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 13px;
-  }
-}
-@media (max-width: 858px) {
-  .weather__modal .ant-modal {
-    width: 100% !important;
   }
 }
 @media (max-width: 576px) {

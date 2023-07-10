@@ -1104,6 +1104,7 @@ export default {
       });
       this.loading = false;
       this.weather = data;
+      this.weatherDrop = false;
     },
     moment,
     currentWeather(index) {
@@ -1360,10 +1361,11 @@ export default {
   font-style: normal;
   font-weight: 400;
 }
+
 .mobile_weather__container {
   display: flex;
   /* gap: 20px; */
-  overflow-x: scroll;
+  overflow: hidden;
   margin-top: 30px;
   margin-bottom: 30px;
   position: relative;
@@ -1372,16 +1374,24 @@ export default {
   display: none;
 }
 .current_weather__mobile {
-  background: var(--header_bg);
+  background: linear-gradient(var(--header_bg), var(--header_bg), transparent);
   padding-right: 20px;
-  position: sticky;
-  left: 0;
-  top: 0;
-  z-index: 1;
+  /* position: sticky; */
+  /* left: 0; */
+  /* top: 0; */
+  /* z-index: 1; */
 }
 @media (max-width: 540px) {
+  .weather__current div h1 span {
+    margin-right: 21px;
+  }
   .weather_dropdown__container {
     margin-bottom: 10px;
+  }
+  .current_weather__mobile h1 {
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--white_ffffff, #000);
   }
   .weather__modal {
     display: none;
@@ -1437,7 +1447,10 @@ export default {
 .drawer_scroll__weather {
   height: 100%;
   overflow-y: scroll;
-  padding-bottom: 400px;
+  padding-bottom: 200px;
   background: var(--black_000000, #ffffff);
+}
+.web_drawer__weather__time {
+  overflow-x: scroll;
 }
 </style>
