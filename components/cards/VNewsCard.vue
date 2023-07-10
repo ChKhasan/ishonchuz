@@ -28,7 +28,6 @@
         <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
         <span><span v-html="date"></span>{{ news?.date }}</span>
-        {{ news?.id }}
       </div>
     </div>
   </div>
