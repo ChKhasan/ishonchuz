@@ -32,7 +32,7 @@
                   </g></svg
               ></span>
             </button>
-            <button v-else class="butn" @click="drawerVisible = !drawerVisible">
+            <button v-else class="butn" @click="openDrawer()">
               <span v-html="menu" v-if="!drawerVisible"></span>
               <span v-else
                 ><svg
@@ -197,8 +197,11 @@
             </div>
 
             <div class="mobile_weather__container">
-              <div class="web_drawer__weather__container ">
-                <div class="weather-drop weather-drop__mobile" @click="visible = true">
+              <div class="web_drawer__weather__container current_weather__mobile">
+                <div
+                  class="weather-drop weather-drop__mobile"
+                  @click="visibleWeather = true"
+                >
                   <span>
                     <img :src="currentWeather(0)[0]?.image" alt="" />
                   </span>
@@ -629,6 +632,257 @@
         </li>
       </ul>
     </div>
+    <a-modal
+      :body-style="{ padding: '0' }"
+      v-model="visibleWeather"
+      centered
+      class="weather__modal"
+      :closable="false"
+      width="858px"
+      @ok="handleOk"
+    >
+      <div class="weather__container">
+        <div class="weather__body">
+          <div class="weather__spin" v-if="loading">
+            <a-spin />
+          </div>
+          <div class="weather__current__mobile">
+            <div class="weather__current">
+              <div class="weather__currentText">
+                <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
+                <p>
+                  {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
+                  {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+                </p>
+                <h1>
+                  <span>{{
+                    currentWeather(0)[0]?.temp > 0
+                      ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                      : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                  }}</span
+                  >C
+                </h1>
+              </div>
+              <div class="weather__currentSvg">
+                <span>
+                  <img :src="currentWeather(0)[0]?.image" alt="" />
+                </span>
+              </div>
+            </div>
+            <div class="weather_dropdown__container">
+              <div class="weather_dropdown" @click="weatherDrop = !weatherDrop">
+                <h2>Toshkent</h2>
+                <span v-html="drop" :class="{ rotate180: weatherDrop }"></span>
+              </div>
+              <Transition name="weather_drop_anim">
+                <div class="weather_dropdown__body" v-if="weatherDrop">
+                  <div class="weather__list">
+                    <h3>Hududlar</h3>
+                    <ul>
+                      <li
+                        v-for="(region, index) in regions"
+                        :key="index"
+                        :class="{ region__active: activeRegion == region.value }"
+                        @click="currentRegionChange(region)"
+                      >
+                        {{ region.name }} <span></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Transition>
+            </div>
+          </div>
+          <div class="weather__time weather__time-mobile">
+            <ul>
+              <li v-for="time in currentWeather(0)">
+                {{
+                  moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                    ? "Hozir"
+                    : moment(time?.time).format("HH:mm")
+                }}
+                <p>
+                  <span>{{
+                    time?.temp > 0
+                      ? `+${time?.temp}`.split(".")[0]
+                      : `${time?.temp}`.split(".")[0]
+                  }}</span>
+                  C
+                </p>
+                <span>
+                  <img :src="time?.image" alt="" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="weather__days">
+            <ul>
+              <li v-for="(day, index) in otherDays">
+                {{ weeks[moment(currentWeather(index)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(index)[0]?.time).format("DD") }}
+                <div class="weather__info">
+                  <span> <img :src="currentWeather(index)[0]?.image" alt="" /></span>
+                  <p>
+                    <span>{{
+                      currentWeather(index)[0]?.temp > 0
+                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                        : `${
+                            currentWeather(index)[currentWeather(index).length - 1]?.temp
+                          }`.split(".")[0]
+                    }}</span>
+                    <span>+20</span>
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <ul>
+              <li v-for="(day, index) in otherDays">
+                {{ weeks[moment(currentWeather(index + 4)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(index + 4)[0]?.time).format("DD") }}
+                <div class="weather__info">
+                  <span> <img :src="currentWeather(index + 4)[0]?.image" alt="" /></span>
+                  <p>
+                    <span>{{
+                      currentWeather(index + 4)[0]?.temp > 0
+                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                        : `${
+                            currentWeather(index)[currentWeather(index).length - 1]?.temp
+                          }`.split(".")[0]
+                    }}</span>
+                    <span>+20</span>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="weather__list weather__list__web">
+          <h3>Hududlar</h3>
+          <ul>
+            <li
+              v-for="(region, index) in regions"
+              :key="index"
+              :class="{ region__active: activeRegion == region.value }"
+              @click="currentRegionChange(region)"
+            >
+              {{ region.name }} <span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </a-modal>
+    <div class="drawer_menu" :class="{ 'h-100vh': visibleWeather }">
+      <div class="weather__container">
+        <div class="weather__body">
+          <div class="weather_dropdown__container">
+            <div class="weather_dropdown" @click="weatherDrop = !weatherDrop">
+              <h2>Toshkent</h2>
+              <span v-html="drop" :class="{ rotate180: weatherDrop }"></span>
+            </div>
+            <Transition name="weather_drop_anim">
+              <div class="weather_dropdown__body" v-if="weatherDrop">
+                <div class="weather__list">
+                  <h3>Hududlar</h3>
+                  <ul>
+                    <li
+                      v-for="(region, index) in regions"
+                      :key="index"
+                      :class="{ region__active: activeRegion == region.value }"
+                      @click="currentRegionChange(region)"
+                    >
+                      {{ region.name }} <span></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Transition>
+          </div>
+          <div class="weather__spin" v-if="loading">
+            <a-spin />
+          </div>
+          <div class="weather__current__mobile">
+            <div class="weather__current">
+              <div class="weather__currentSvg">
+                <span>
+                  <img :src="currentWeather(0)[0]?.image" alt="" />
+                </span>
+              </div>
+              <div class="weather__currentText">
+                <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
+                <p>
+                  {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
+                  {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+                </p>
+                <h1>
+                  <span>{{
+                    currentWeather(0)[0]?.temp > 0
+                      ? `+${currentWeather(0)[0]?.temp}`.split(".")[0]
+                      : `${currentWeather(0)[0]?.temp}`.split(".")[0]
+                  }}</span
+                  >C
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div class="weather__time">
+            <ul>
+              <li v-for="time in currentWeather(0)">
+                {{
+                  moment(time?.time).format("HH") == moment(thisTime).format("HH")
+                    ? "Hozir"
+                    : moment(time?.time).format("HH:mm")
+                }}
+                <p>
+                  <span>{{
+                    time?.temp > 0
+                      ? `+${time?.temp}`.split(".")[0]
+                      : `${time?.temp}`.split(".")[0]
+                  }}</span>
+                  C
+                </p>
+                <span>
+                  <img :src="time?.image" alt="" />
+                </span>
+              </li>
+            </ul>
+          </div>
+          <div class="weather__days_mobile weather__days">
+            <ul>
+              <li v-for="(day, index) in otherDaysMobile">
+                {{ weeks[moment(currentWeather(index)[0]?.time).format("dddd")] }},
+                {{ moment(currentWeather(index)[0]?.time).format("DD") }}
+                <div class="weather__info">
+                  <span> <img :src="currentWeather(index)[0]?.image" alt="" /></span>
+                  <p>
+                    <span>{{
+                      currentWeather(index)[0]?.temp > 0
+                        ? `+${currentWeather(index)[0]?.temp}`.split(".")[0]
+                        : `${
+                            currentWeather(index)[currentWeather(index).length - 1]?.temp
+                          }`.split(".")[0]
+                    }}</span>
+                    <span>+20</span>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="weather__list weather__list__web">
+          <h3>Hududlar</h3>
+          <ul>
+            <li
+              v-for="(region, index) in regions"
+              :key="index"
+              :class="{ region__active: activeRegion == region.value }"
+              @click="currentRegionChange(region)"
+            >
+              {{ region.name }} <span></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -638,9 +892,15 @@ export default {
   props: ["categories", "weather"],
   data() {
     return {
+      loading: false,
+      visibleWeatherMobile: false,
+      visibleWeather: false,
       thisTime: new Date(),
       profileMenu: false,
       authMobilVisible: false,
+      weatherDrop: false,
+      otherDays: [1, 2, 3, 4],
+      otherDaysMobile: [1, 2, 3, 4, 5, 6, 7, 8],
       visible: false,
       visibleSearch: false,
       visibleSms: false,
@@ -650,7 +910,15 @@ export default {
       dropShow: false,
       smsTimer: 45,
       activeRegion: "toshkentSh",
-
+      weeks: {
+        Monday: "Dushanba",
+        Tuesday: "Seshanba",
+        Wednesday: "Chorshanba",
+        Thursday: "Payshanba",
+        Friday: "Juma",
+        Saturday: "Shanba",
+        Sunday: "Yakshanba",
+      },
       regions: [
         {
           name: "Toshkent Shahar",
@@ -816,6 +1084,24 @@ export default {
     },
   },
   methods: {
+    currentRegionChange(region) {
+      this.activeRegion = region.value;
+      this.__GET_WEATHER(region);
+    },
+    async __GET_WEATHER(region) {
+      this.loading = true;
+      const data = await this.$store.dispatch("fetchWeather/getWeathers", {
+        params: {
+          lat: region.lat,
+          lon: region.lon,
+        },
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      });
+      this.loading = false;
+      this.weather = data;
+    },
     moment,
     currentWeather(index) {
       const currentW = this.weather[Object.keys(this.weather)[index]].filter(
@@ -858,7 +1144,13 @@ export default {
         }
       });
     },
-
+    openDrawer() {
+      if (!this.visibleWeather) {
+        this.drawerVisible = !this.drawerVisible;
+      } else {
+        this.visibleWeather = false;
+      }
+    },
     onSubmitModel() {
       if (this.visibleSms) {
         this.onSubmitSms();
@@ -987,6 +1279,7 @@ export default {
     drawerVisible(val) {
       this.authMobilVisible = false;
       if (val) {
+        // this.visibleWeather = false;
         document.body.style.height = "100vh";
         document.body.style.overflow = "hidden";
       } else {
@@ -1035,6 +1328,11 @@ export default {
         }, 1000);
       }
     },
+    visibleWeather(val) {
+      if (val) {
+        // this.drawerVisible = false;
+      }
+    },
     "formSms.code"(val) {
       if (val.length < 6) {
         (this.responseTypes.smsCodeError = false),
@@ -1061,9 +1359,76 @@ export default {
 }
 .mobile_weather__container {
   display: flex;
-  gap: 20px;
+  /* gap: 20px; */
   overflow-x: scroll;
   margin-top: 30px;
   margin-bottom: 30px;
+  position: relative;
+}
+.mobile_weather__container::-webkit-scrollbar {
+  display: none;
+}
+.current_weather__mobile {
+  background: var(--header_bg);
+  padding-right: 20px;
+  position: sticky;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+@media (max-width: 540px) {
+  .weather_dropdown__container {
+    margin-bottom: 10px;
+  }
+  .weather__modal {
+    display: none;
+  }
+  .weather__current div h4 {
+    display: flex;
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%;
+  }
+  .weather__current div p {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    letter-spacing: 0.24px;
+  }
+  .weather__current div h1 {
+    font-size: 42px;
+  }
+  .weather__current div h1 span::after {
+    font-size: 27px;
+  }
+  .weather__currentSvg img {
+    width: 100%;
+    height: 100%;
+    margin-left: 0;
+  }
+  .weather__currentSvg span {
+    padding: 15px;
+    width: 124px;
+    height: 124px;
+  }
+  .weather__time {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+  .weather__container {
+    height: calc(100vh - 150px);
+    overflow-y: scroll;
+    padding-bottom: 100px;
+  }
+}
+.weather__days_mobile {
+  grid-template-columns: 1fr !important;
+}
+.weather__days_mobile ul {
+  border-right: none;
+}
+.weather__time-mobile {
+  background: transparent !important;
 }
 </style>
