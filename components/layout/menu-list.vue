@@ -859,7 +859,7 @@ export default {
   },
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 @import "../../assets/css/pages/header-mobile.css";
 .sticky {
   position: fixed;
