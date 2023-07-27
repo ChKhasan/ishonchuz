@@ -24,7 +24,7 @@ export default {
   css: [
     "@/assets/css/app.css",
     "ant-design-vue/dist/antd.css",
-    "@/assets/css/pages/header-mobile.css",
+    // "@/assets/css/pages/header-mobile.css",
   ],
 
   plugins: [
