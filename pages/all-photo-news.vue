@@ -17,7 +17,7 @@
             </div>
             <div
               class="btn_container_show_more mt-4"
-              v-if="(Number(totalCount) / (Number($route.query.page) * 11)) > 1 && !loading"
+              v-if="Number(totalCount) / (Number($route.query.page) * 11) > 1 && !loading"
             >
               <div class="right-show-more">
                 {{ $store.state.translations["main.more"] }}
@@ -64,7 +64,7 @@ export default {
   },
   async asyncData({ store, i18n, router, route, query }) {
     const [newsData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchNews/getNews", {
+      store.dispatch("fetchNews/getPhotoNews", {
         params: { page: query.page, page_size: 11 },
         headers: {
           Language: i18n.locale,
@@ -84,8 +84,12 @@ export default {
       }),
     ]);
     const totalCount = newsData?.count;
-    console.log(totalCount);
-    const news = newsData.results;
+    const news = newsData.results.map((item) => {
+      return {
+        ...item,
+        image: item.images.length > 0 ? item.images[0].image : "",
+      };
+    });
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
     return {
@@ -98,7 +102,7 @@ export default {
   mounted() {
     if (Object.keys(this.$route.query).length == 0) {
       this.$router.replace({
-        path: "/all-news",
+        path: "/all-photo-news",
         query: {
           page: 1,
         },
@@ -109,7 +113,7 @@ export default {
     async showMore() {
       this.currentPage = Number(this.$route.query.page) + 1;
       await this.$router.replace({
-        path: "/all-news",
+        path: "/all-photo-news",
         query: {
           page: this.currentPage,
         },

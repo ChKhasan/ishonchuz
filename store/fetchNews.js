@@ -23,6 +23,12 @@ export const actions = {
     });
     return res;
   },
+  async getPhotoNews({}, payload) {
+    const res = await this.$axios.$get(`/photo_reportage`, {
+      ...payload.header,
+    });
+    return res;
+  },
   async postNewsComment({}, data) {
     const res = await this.$axios.$post(`/comments/create`, data);
     return res;
