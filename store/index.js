@@ -5,7 +5,8 @@ export const state = () => ({
   literature: [],
   science: [],
   viewNews: [],
-  siteInfo: {}
+  siteInfo: {},
+  languages: [],
 });
 
 export const mutations = {
@@ -27,6 +28,9 @@ export const mutations = {
   },
   getTranslations(state, payload) {
     state.translations = payload;
+  },
+  getLanguages(state, payload) {
+    state.languages = payload;
   },
   getSiteInfo(state, payload) {
     state.siteInfo = payload;

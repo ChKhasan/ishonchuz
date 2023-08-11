@@ -38,9 +38,9 @@ export default {
   components: true,
   i18n: {
     locales: ["oz", "uz", "ru"],
-    defaultLocale: "oz",
+    defaultLocale: "uz",
     vueI18n: {
-      fallbackLocale: "oz",
+      fallbackLocale: "uz",
     },
   },
 

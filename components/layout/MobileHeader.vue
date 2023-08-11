@@ -258,15 +258,16 @@
                 ></span></div
             ></span>
           </div>
-          <div class="drawer_lang">
+          <div class="drawer_lang" v-if="$store.state.languages.length > 1">
             <ul>
               <li
-                :class="{ active_lang: $i18n.locale == 'ru' }"
-                @click="$router.push(switchLocalePath('ru'))"
+                v-for="lang in $store.state.languages"
+                :class="{ active_lang: $i18n.locale == lang.code }"
+                @click="$router.push(switchLocalePath(lang.code))"
               >
-                Русский
+                {{ lang?.name }}
               </li>
-              <li
+              <!-- <li
                 :class="{ active_lang: $i18n.locale == 'oz' }"
                 @click="$router.push(switchLocalePath('oz'))"
               >
@@ -277,7 +278,7 @@
                 @click="$router.push(switchLocalePath('uz'))"
               >
                 English
-              </li>
+              </li> -->
             </ul>
           </div>
         </div>

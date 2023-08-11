@@ -118,7 +118,7 @@
             <ul class="header-lang">
               <li
                 :class="{ 'active-lang': $i18n.locale == lang.code }"
-                v-for="lang in locales"
+                v-for="lang in $store.state.languages"
                 :key="lang.id"
                 @click="$router.push(switchLocalePath(lang.code))"
               >
@@ -184,7 +184,7 @@
               <Transition name="weather_drop_anim">
                 <div class="weather_dropdown__body" v-if="weatherDrop">
                   <div class="weather__list">
-                    <h3>{{$store.state.translations["others.areas"]}}</h3>
+                    <h3>{{ $store.state.translations["others.areas"] }}</h3>
                     <ul>
                       <li
                         v-for="(region, index) in regions"
@@ -264,7 +264,7 @@
           </div>
         </div>
         <div class="weather__list weather__list__web">
-          <h3>{{$store.state.translations["others.areas"]}}</h3>
+          <h3>{{ $store.state.translations["others.areas"] }}</h3>
           <ul>
             <li
               v-for="(region, index) in regions"
@@ -927,9 +927,8 @@ export default {
   color: #c02600 !important;
 }
 .header-lang {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 19px;
+  display: flex;
+  gap: 19px;
 }
 .header-lang li {
   font-family: var(--ROBOTO_SERIF);

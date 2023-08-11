@@ -7,7 +7,12 @@
       :columnist="columnist"
       :weather="weather"
     />
-    <MobileHeader :categories="categories" :columnist="columnist" :weather="weather" :banners="banners" />
+    <MobileHeader
+      :categories="categories"
+      :columnist="columnist"
+      :weather="weather"
+      :banners="banners"
+    />
     <!-- <div class="layout_back"></div> -->
     <main style="flex: 1 1 auto">
       <Nuxt />
@@ -51,6 +56,7 @@ export default {
       siteInfoData,
       columnistData,
       weatherData,
+      languagesData,
     ] = await Promise.all([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
@@ -91,6 +97,11 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
+      this.$store.dispatch("fetchTranslations/getLanguages", {
+        headers: {
+          Language: this.$i18n.locale,
+        },
+      }),
     ]);
     const siteInfo = siteInfoData;
     this.categories = categoriesData.results;
@@ -98,8 +109,9 @@ export default {
     this.currency = currencyData;
     this.columnist = columnistData;
     this.weather = weatherData;
-    console.log(this.banners, "asdsasaf");
+    console.log(languagesData?.results, "asdsasaf");
     this.$store.commit("getSiteInfo", siteInfo);
+    this.$store.commit("getLanguages", languagesData?.results);
     this.$store.commit("getTranslations", translationsData);
   },
 
