@@ -134,6 +134,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: 26px;
+  z-index: 200;
 }
 .video-news-card_mobile {
   display: none;
