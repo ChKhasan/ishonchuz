@@ -1139,10 +1139,7 @@ export default {
     font-weight: 400;
     line-height: 145%;
   }
-  .banner-card {
-    display: flex;
-    flex-direction: column;
-  }
+
   .audio_web {
     display: none;
   }

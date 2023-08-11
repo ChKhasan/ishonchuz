@@ -233,6 +233,8 @@ export default {
   }
   .banner-card {
     grid-gap: 24px;
+    display: flex;
+    flex-direction: column;
   }
 }
 @media (max-width: 390px) {
