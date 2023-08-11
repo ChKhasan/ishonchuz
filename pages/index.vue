@@ -641,7 +641,7 @@ export default {
     const banners = bannersData.results;
     const audio = audioData.results;
     const photoNews = photoNewsData.results;
-    console.log(photoNewsData);
+    console.log(videoNews);
     const audioList = audio.map((item) => {
       return {
         ...item,

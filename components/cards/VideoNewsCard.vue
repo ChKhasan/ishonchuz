@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="video-news-card">
     <div class="video-news-card-img">
-      <iframe
+      <!-- <iframe
         width="420"
         height="315"
         v-if="news?.video"
@@ -11,16 +11,20 @@
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       >
-      </iframe>
-      <!-- <LazyYoutube
+      </iframe> -->
+      <LazyYoutube
         v-if="news?.video"
         @change="changeVideo"
         ref="lazyVideo"
         :src="news?.video"
-      /> -->
+      />
       <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       <span> {{ $store.state.translations["main.analysis"] }} </span>
-      <div v-if="videoShow">
+      <div
+        class="video-banner"
+        v-if="videoShow"
+        :style="`background-image: url(${news?.youtube_image})`"
+      >
         <div @click="handleClick('playVideo')" v-html="video"></div>
       </div>
     </div>
@@ -70,6 +74,10 @@ export default {
 };
 </script>
 <style lang="css">
+.video-banner {
+  background-position: center;
+  background-size: 100%;
+}
 .video-news-card {
   padding: 10px;
   display: grid;
