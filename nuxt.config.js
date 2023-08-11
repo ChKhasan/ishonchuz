@@ -24,7 +24,7 @@ export default {
   css: [
     "@/assets/css/app.css",
     "ant-design-vue/dist/antd.css",
-    "@/assets/css/pages/header-mobile.css",
+    // "@/assets/css/pages/header-mobile.css",
   ],
 
   plugins: [
@@ -51,7 +51,7 @@ export default {
     init(axios) {
       axios.defaults.withCredentials = true;
     },
-    baseURL: "https://ishonch.pythonanywhere.com/api",
+    baseURL: "https://admin.ishonch.ndc.uz/api",
   },
   loading: {
     color: "#0192ff",

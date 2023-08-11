@@ -98,7 +98,7 @@ export default {
     this.currency = currencyData;
     this.columnist = columnistData;
     this.weather = weatherData;
-    console.log(this.weather, "asdsasaf");
+    console.log(this.banners, "asdsasaf");
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getTranslations", translationsData);
   },

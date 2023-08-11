@@ -25,7 +25,7 @@
               class="butn open-modal-mobile"
               @click="
                 $store.state.auth
-                  ? $router.push('/profile/personal-info')
+                  ? $router.push(localePath('/profile/personal-info'))
                   : (authMobilVisible = !authMobilVisible)
               "
             >
@@ -35,7 +35,7 @@
               class="butn open-modal-web"
               @click="
                 $store.state.auth
-                  ? $router.push('/profile/personal-info')
+                  ? $router.push(localePath('/profile/personal-info'))
                   : (visible = !visible)
               "
             >
@@ -176,10 +176,10 @@
               </h5>
               <div class="home-page-right-drop-board">
                 <ul>
-                  <li @click="$router.push('/galleries')">
+                  <li @click="$router.push(localePath('/galleries'))">
                     {{ $store.state.translations["main.new-uzbekistan"] }}
                   </li>
-                  <li @click="$router.push('/')">
+                  <li @click="$router.push(localePath(`/news-menu/${columnist?.slug}`))">
                     {{ $store.state.translations["main.communist"] }}
                   </li>
                   <li>
@@ -187,7 +187,7 @@
                       $store.state.translations["main.archive"]
                     }}</a>
                   </li>
-                  <li @click="$router.push('/journalists')">
+                  <li @click="$router.push(localePath('/journalists'))">
                     {{ $store.state.translations["main.journalists"] }}
                   </li>
                 </ul>
@@ -598,7 +598,7 @@
             'active-profile-menu': $route.name.includes('profile-personal-info'),
           }"
         >
-          <nuxt-link :to="localePath('/profile/personal-info')"
+          <nuxt-link :to="localePath(localePath('/profile/personal-info'))"
             ><span v-html="userProfile"></span>
             {{ $store.state.translations["main.my-room"] }}
           </nuxt-link>
@@ -890,7 +890,7 @@
 <script>
 import moment from "moment";
 export default {
-  props: ["categories", "weather", "banners"],
+  props: ["categories", "weather", "banners", "columnist"],
   data() {
     return {
       loading: false,
@@ -1233,13 +1233,13 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogOut", {
           refresh_token: refreshToken,
         });
-        this.$router.push("/");
+        this.$router.push(localePath("/"));
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
         if (e.response.status == 401) {
-          this.$router.push("/");
+          this.$router.push(localePath("/"));
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           this.$store.commit("chackAuth");

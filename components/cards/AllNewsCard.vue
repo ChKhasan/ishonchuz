@@ -16,7 +16,7 @@
         <span class="all-card-date-web"><span v-html="date"></span>{{ news?.date }}</span>
         <span class="all-card-date-mobile">
           <!-- <span v-html="date"></span>{{ news?.date.split("|")[1] }}</span> -->
-          <span v-html="date"></span>{{ news?.date }}</span
+          <span v-html="date"></span>{{ news?.date.split('|')[0] }}</span
         >
       </div>
     </div>

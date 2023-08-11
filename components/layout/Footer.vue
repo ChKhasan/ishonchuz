@@ -25,11 +25,8 @@
               }}</a>
             </p>
           </div>
-          <div class="footer-menu">
+          <div class="footer-menu footer-menu__web">
             <ul>
-              <!-- <li v-for="category in categories.slice(0, 4)" :key="category?.id">
-                <nuxt-link :to="localePath('/')">{{ category?.title }}</nuxt-link>
-              </li> -->
               <li v-for="category in categories.slice(0, 4)" :key="category?.id">
                 <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
                   <a class="" @click="(e) => e.preventDefault()">
@@ -50,9 +47,6 @@
                   {{ category?.title }}</nuxt-link
                 >
               </li>
-              <!-- <li>Xorij</li>
-              <li>{{ $store.state.translations["main.analysis"] }}</li>
-              <li>O’zgacha rakurs</li> -->
             </ul>
             <ul>
               <li
@@ -62,7 +56,6 @@
               >
                 {{ category?.title }}
               </li>
-              <!-- <li>Mehnat huquqi</li> -->
               <li @click="$router.push(`/library`)">
                 {{ $store.state.translations["main.library"] }}
               </li>
@@ -74,8 +67,63 @@
               <li @click="$router.push(localePath('/about-site'))">
                 {{ $store.state.translations["main.about_site"] }}
               </li>
-              <li>{{ $store.state.translations["main.reklama"] }}</li>
+              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
+              <li @click="$router.push(localePath('/contact'))">{{ $store.state.translations["main.contact"] }}</li>
+              <li @click="$router.push(localePath('/about'))">
+                {{ $store.state.translations["main.about_us"] }}
+              </li>
+            </ul>
+          </div>
+          <div class="footer-menu__laptop footer-menu">
+            <ul>
+              <li v-for="category in categories" :key="category?.id">
+                <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
+                  <a class="" @click="(e) => e.preventDefault()">
+                    {{ category?.title }} <span v-html="drop"></span>
+                  </a>
+                  <a-menu slot="overlay" class="dropdown-board">
+                    <a-menu-item
+                      :key="index"
+                      v-for="(child, index) in category?.children"
+                    >
+                      <nuxt-link :to="localePath(`/news-menu/${child?.slug}`)">{{
+                        child?.title
+                      }}</nuxt-link>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+                <nuxt-link v-else :to="localePath(`/news-menu/${category?.slug}`)">
+                  {{ category?.title }}</nuxt-link
+                >
+              </li>
+            </ul>
+            <ul>
+              <li @click="$router.push(localePath('/about-site'))">
+                {{ $store.state.translations["main.about_site"] }}
+              </li>
+              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
+              <li @click="$router.push(localePath('/contact'))">{{ $store.state.translations["main.contact"] }}</li>
+              <li @click="$router.push(`/library`)">
+                {{ $store.state.translations["main.library"] }}
+              </li>
+              <li @click="$router.push(`/library`)">
+                {{ $store.state.translations["main.others"] }}
+              </li>
+              <li @click="$router.push(localePath('/about'))">
+                {{ $store.state.translations["main.about_us"] }}
+              </li>
+            </ul>
+          </div>
+          <div class="footer-menu__mobile footer-menu">
+           
+            <ul>
+              <li @click="$router.push(localePath('/about-site'))">
+                {{ $store.state.translations["main.about_site"] }}
+              </li>
+              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
               <li>{{ $store.state.translations["main.contact"] }}</li>
+              
+             
               <li @click="$router.push(localePath('/about'))">
                 {{ $store.state.translations["main.about_us"] }}
               </li>
@@ -227,9 +275,97 @@ export default {
 .footer-messangers a {
   margin-right: 30px;
 }
+.footer-menu__laptop {
+  display: none;
+}
+.footer-menu__mobile {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
   .footer-body {
     flex-direction: column;
+  }
+  .footer-menu__laptop {
+    display: flex;
+  }
+  .footer-menu__web {
+    display: none;
+  }
+  .footer-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 50px;
+  }
+  .footer-menu ul {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .footer-messangers {
+    display: flex;
+    justify-content: flex-start;
+    gap: 24px;
+    margin: 32px 0;
+    padding: 0;
+  }
+  .footer-messangers a {
+    margin: 0;
+  }
+  .footer-messangers svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-logo {
+    display: flex;
+    justify-content: center;
+  }
+  .footer-info {
+    text-align: center;
+  }
+  .footer-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 0;
+  }
+  .footer-messangers {
+    display: flex;
+    justify-content: center;
+  }
+  .footer-bottom {
+    text-align: center;
+  }
+  .footer-menu {
+    display: none;
+  }
+  .footer-menu__mobile {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .footer-menu__mobile ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 46px;
+  }
+}
+@media (max-width: 576px) {
+  .footer-menu__mobile ul{
+    gap: 16px;
+  }
+}
+@media (max-width: 390px) {
+  .footer-menu__mobile ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+  .footer-menu__mobile ul li {
+    margin-bottom: 0;
   }
 }
 </style>

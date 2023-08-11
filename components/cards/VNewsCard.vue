@@ -127,4 +127,20 @@ export default {
   justify-content: flex-end;
   margin-top: 18px;
 }
+@media (max-width: 1024px) {
+  .v-news-card-body a {
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .v-news-card {
+    padding: 8px;
+  }
+  .v-news-card-info {
+    margin-top: 15px;
+  }
+}
 </style>

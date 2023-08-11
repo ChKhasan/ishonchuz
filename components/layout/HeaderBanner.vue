@@ -1,6 +1,10 @@
 <template lang="html">
-  <div class="container_xl header-banner">
-    <img :src="banners[2]?.image" alt="" />
+  <div class="container_xl">
+    <a :href="banners[2]?.link">
+      <div class="header-banner">
+        <img :src="banners[2]?.image" alt="" />
+      </div>
+    </a>
   </div>
 </template>
 <script>

@@ -2,7 +2,7 @@
   <div class="about-page">
     <div class="container_xl">
       <div class="new-category-title">
-        <h2>Sayt haqida</h2>
+        <h2>{{ $store.state.translations["main.reklama"] }}</h2>
       </div>
 
       <!-- <div class="about-us-container about-site__container">
@@ -77,7 +77,7 @@
       </div> -->
       <div
         class="about-us-container about-site__container"
-        v-html="$store.state.siteInfo['about_site']"
+        v-html="contactInfo?.text_add"
       ></div>
     </div>
   </div>
@@ -87,6 +87,20 @@ export default {
   data() {
     return {
       dropdown: require("../assets/svg/dropdown.svg?raw"),
+    };
+  },
+  async asyncData({ store, i18n }) {
+    const [contactInfoData] = await Promise.all([
+      store.dispatch("fetchContact/getContact", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
+    ]);
+    const contactInfo = contactInfoData;
+    console.log(contactInfo);
+    return {
+      contactInfo,
     };
   },
 };

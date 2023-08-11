@@ -1,22 +1,23 @@
 <template lang="html">
   <div class="video-news-card">
     <div class="video-news-card-img">
-      <!-- <iframe
+      <iframe
         width="420"
         height="315"
+        v-if="news?.video"
         ref="youtubeVid"
         :src="news?.video"
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       >
-      </iframe> -->
-      <LazyYoutube
+      </iframe>
+      <!-- <LazyYoutube
         v-if="news?.video"
         @change="changeVideo"
         ref="lazyVideo"
         :src="news?.video"
-      />
+      /> -->
       <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       <span> {{ $store.state.translations["main.analysis"] }} </span>
       <div v-if="videoShow">
@@ -30,7 +31,12 @@
       <div class="video-news-card-info">
         <span> <span v-html="comments"></span> {{ news?.comment_count }}</span>
         <span><span v-html="view"></span>{{ news?.views }}</span>
-        <span><span v-html="date"></span>{{ news?.date }}</span>
+        <span class="video-news-card_web"
+          ><span v-html="date"></span>{{ news?.date }}</span
+        >
+        <span class="video-news-card_mobile"
+          ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+        >
       </div>
     </div>
   </div>
@@ -58,7 +64,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$refs["lazyVideo"]);
+    // console.log(this.$refs["lazyVideo"]);
+    console.log(document.getElementsByClassName("ytp-gradient-top"));
   },
 };
 </script>
@@ -120,6 +127,9 @@ export default {
   left: 0;
   bottom: 26px;
 }
+.video-news-card_mobile {
+  display: none;
+}
 .video-news-card-body {
   display: flex;
   justify-content: space-between;
@@ -148,7 +158,7 @@ export default {
   font-size: 12px;
   line-height: 130%;
   color: #888888;
-  margin-right: 55px;
+  /* margin-right: 55px; */
 }
 .video-news-card-info > span span {
   margin-right: 7px;
@@ -157,5 +167,38 @@ export default {
   display: flex;
   justify-content: flex-start;
   margin-top: 20px;
+  gap: 32px;
+}
+@media (max-width: 1024px) {
+  .video-news-card-img {
+    height: 307px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .video-news-card-info {
+    justify-content: flex-end;
+  }
+}
+@media (max-width: 768px) {
+  .video-news-card-img {
+    height: 188px;
+  }
+  .video-news-card_mobile {
+    display: flex;
+  }
+  .video-news-card_web {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .video-news-card-img {
+    height: 136px;
+  }
+}
+@media (max-width: 488px) {
+  .video-news-card-img {
+    height: 183px;
+  }
 }
 </style>

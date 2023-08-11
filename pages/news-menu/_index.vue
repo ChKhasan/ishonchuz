@@ -20,7 +20,7 @@
         </ul>
       </div>
       <div class="home-page-grid row">
-        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
+        <div class="col-lg-9 col-md-12 p-0 home-page-left">
           <div class="" v-if="categories?.news?.length > 0">
             <BannerCard :topNews="categories?.news[0]" />
           </div>

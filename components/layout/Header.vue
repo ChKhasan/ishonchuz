@@ -184,7 +184,7 @@
               <Transition name="weather_drop_anim">
                 <div class="weather_dropdown__body" v-if="weatherDrop">
                   <div class="weather__list">
-                    <h3>Hududlar</h3>
+                    <h3>{{$store.state.translations["others.areas"]}}</h3>
                     <ul>
                       <li
                         v-for="(region, index) in regions"
@@ -237,7 +237,7 @@
                             currentWeather(index)[currentWeather(index).length - 1]?.temp
                           }`.split(".")[0]
                     }}</span>
-                    <span>+20</span>
+                    <!-- <span>+20</span> -->
                   </p>
                 </div>
               </li>
@@ -256,7 +256,7 @@
                             currentWeather(index)[currentWeather(index).length - 1]?.temp
                           }`.split(".")[0]
                     }}</span>
-                    <span>+20</span>
+                    <!-- <span>+20</span> -->
                   </p>
                 </div>
               </li>
@@ -264,7 +264,7 @@
           </div>
         </div>
         <div class="weather__list weather__list__web">
-          <h3>Hududlar</h3>
+          <h3>{{$store.state.translations["others.areas"]}}</h3>
           <ul>
             <li
               v-for="(region, index) in regions"
@@ -292,13 +292,13 @@ export default {
       weatherDrop: false,
       loading: false,
       weeks: {
-        Monday: "Dushanba",
-        Tuesday: "Seshanba",
-        Wednesday: "Chorshanba",
-        Thursday: "Payshanba",
-        Friday: "Juma",
-        Saturday: "Shanba",
-        Sunday: "Yakshanba",
+        // Monday: "Dushanba",
+        // Tuesday: "Seshanba",
+        // Wednesday: "Chorshanba",
+        // Thursday: "Payshanba",
+        // Friday: "Juma",
+        // Saturday: "Shanba",
+        // Sunday: "Yakshanba",
       },
       regions: [
         {
@@ -413,6 +413,15 @@ export default {
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
+    this.weeks = {
+      Monday: this.$store.state.translations["others.monday"],
+      Tuesday: this.$store.state.translations["others.tuesday"],
+      Wednesday: this.$store.state.translations["others.wednesday"],
+      Thursday: this.$store.state.translations["others.thursday"],
+      Friday: this.$store.state.translations["others.friday"],
+      Saturday: this.$store.state.translations["others.saturday"],
+      Sunday: this.$store.state.translations["others.sunday"],
+    };
   },
   async fetch() {
     const [weatherData] = await Promise.all([
@@ -427,6 +436,7 @@ export default {
       }),
     ]);
     this.weather = weatherData;
+    console.log(weatherData);
   },
   methods: {
     currentRegionChange(region) {

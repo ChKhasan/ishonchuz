@@ -166,10 +166,7 @@ export default {
 .all-news-page-container {
   width: 90%;
 }
-@media screen and (max-width: 1024px) {
-  .all-news-right {
-    display: none;
-  }
+@media screen and (max-width: 992px) {
   .all-news-page-container h3 {
     font-size: 19px;
     font-weight: 600;
@@ -180,6 +177,14 @@ export default {
   }
   .all-news-page-grid {
     grid-gap: 16px;
+  }
+  .all-news-page-container {
+    width: 100%;
+  }
+}
+@media (max-width: 768px) {
+  .all-news-right {
+    display: none;
   }
 }
 </style>

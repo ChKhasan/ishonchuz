@@ -3,9 +3,9 @@
     <div class="container_xl">
       <div class="home-page-grid row mx-0">
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
-          <div class="new-category-title">
+          <!-- <div class="new-category-title">
             <h2>{{ $store.state.translations["inner.economy"] }}</h2>
-          </div>
+          </div> -->
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
               >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
@@ -51,7 +51,7 @@
               </div>
             </div>
             <div class="news-container-head">
-              <div class="news-container-character">
+              <div class="news-container-character d-flex">
                 <span><span v-html="view"></span>{{ news?.views }}</span>
                 <span><span v-html="date"></span>{{ news?.date }}</span>
               </div>

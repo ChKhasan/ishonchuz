@@ -49,7 +49,7 @@ export default {
 }
 @media screen and (max-width: 1024px) {
   .title-comp h2 {
-    font-size: 14px;
+    font-size: 22px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -67,7 +67,19 @@ export default {
     margin: 0;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 768px) {
+  .title-comp {
+    display: flex;
+    justify-content: space-between;
+  }
+  .title-comp h2 {
+    font-size: 19px;
+  }
+}
+@media (max-width: 390px) {
+  .title-comp {
+    padding-bottom: 15px;
+  }
   .title-comp h2 {
     font-size: 13px;
   }

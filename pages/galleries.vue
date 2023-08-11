@@ -11,11 +11,14 @@
       </div>
       <div class="galleries-page-container" v-else>
         <div
-          class="galleries-card"
           v-for="image in galleries.slice(0, 10)"
+          class="galleries-card"
           :key="image?.id"
         >
-          <img :src="image?.image" alt="" />
+          <div class="galleries-card-img">
+            <img :src="image?.image" alt="" />
+          </div>
+          <p>{{ image?.title }}</p>
         </div>
       </div>
       <div>
@@ -90,6 +93,8 @@ export default {
       }),
     ]);
     const galleries = galleriesData.results;
+    console.log(galleries);
+    console.log(galleriesData);
     return {
       galleries,
     };
@@ -123,7 +128,7 @@ export default {
   grid-gap: 30px;
   margin-bottom: 30px;
 }
-.galleries-card {
+.galleries-card-img {
   height: 456px;
   border-radius: 6px;
   overflow: hidden;
@@ -132,7 +137,7 @@ export default {
   grid-column-start: 1;
   grid-column-end: 4;
 } */
-.galleries-card img {
+.galleries-card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -166,6 +171,10 @@ export default {
     overflow: hidden;
     grid-column: auto;
   }
+}
+.galleries-card p {
+  margin-top: 8px;
+  color: #aaa;
 }
 @media (max-width: 360px) {
   .galleries-page-header {

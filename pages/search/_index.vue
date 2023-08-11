@@ -78,7 +78,7 @@
         <div class="search_to_back">
           <div class="btn_container_show_more">
             <div class="right-show-more">Bosh sahifaga qaytish</div>
-            <div class="right-show-more-primary" @click="$router.push('/')">
+            <div class="right-show-more-primary" @click="$router.push(localePath('/'))">
               Bosh sahifaga qaytish
             </div>
           </div>
@@ -306,29 +306,7 @@ export default {
 .search_mobile_news {
   display: none;
 }
-@media (max-width: 360px) {
-  .search-page-grid {
-    grid-template-columns: 1fr;
-    margin-bottom: 50px;
-  }
-  .search-page-container h3 {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 130%;
-  }
-  .search-page {
-    padding-top: 20px;
-  }
-}
-@media (max-width: 576px) {
-  .search-page-grid {
-    grid-template-columns: 1fr;
-    margin-bottom: 50px;
-  }
-  .search_to_back {
-    min-width: 100%;
-  }
-}
+
 @media (max-width: 992px) {
   .search-page-right {
     display: none;
@@ -337,6 +315,16 @@ export default {
 @media (max-width: 768px) {
   .search-page-right {
     display: none;
+  }
+  .search-page-container h3 {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 150%;
+  }
+  .search-page-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 21px;
+    margin-bottom: 68px;
   }
   .search-page-input {
     max-width: 100%;
@@ -352,6 +340,38 @@ export default {
   }
   .search_mobile_news {
     display: grid;
+  }
+}
+@media (max-width: 576px) {
+  .search-page-grid {
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 18px;
+    margin-bottom: 68px;
+  }
+  .search-page-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 50px;
+  }
+  .search_to_back {
+    min-width: 100%;
+  }
+  .search-page-container h3 {
+    font-size: 19px;
+    line-height: 150%;
+  }
+}
+@media (max-width: 360px) {
+  .search-page-grid {
+    grid-template-columns: 1fr;
+    margin-bottom: 50px;
+  }
+  .search-page-container h3 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .search-page {
+    padding-top: 20px;
   }
 }
 </style>

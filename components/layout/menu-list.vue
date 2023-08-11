@@ -135,7 +135,7 @@
           <div
             @click="
               $store.state.auth
-                ? $router.push('/profile/personal-info')
+                ? $router.push(localePath('/profile/personal-info'))
                 : (visible = true)
             "
           >
@@ -685,7 +685,7 @@ export default {
       return currentW;
     },
     submit() {
-      this.$router.push(`/search/${this.searchValue}`);
+      this.$router.push(localePath(`/search/${this.searchValue}`));
       this.visibleSearch = false;
     },
     onSubmit() {
@@ -760,7 +760,7 @@ export default {
             );
             this.$store.commit("chackAuth");
             this.visibleSms = false;
-            this.$router.push("/profile/personal-info");
+            this.$router.push(localePath("/profile/personal-info"));
           } else {
             this.responseTypes.userResponse = true;
           }
@@ -859,7 +859,7 @@ export default {
   },
 };
 </script>
-<style lang="css">
+<style lang="css" scoped>
 @import "../../assets/css/pages/header-mobile.css";
 .sticky {
   position: fixed;
@@ -868,35 +868,7 @@ export default {
   z-index: 1000;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0.1rem 0.4rem;
 }
-.search-block input {
-  padding: 12px 27px 12px 44px;
-  font-family: var(--ROBOTO_SERIF);
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 145%;
-  color: var(--gray_e7e7e7, #000);
 
-  width: 100%;
-  border: none;
-  background: var(--black_414141, #f9f9f9);
-}
-.search-block input:focus {
-  outline: none;
-}
-.search-block {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-left: 12px;
-  background: var(--black_414141, #f9f9f9);
-}
-.search-block span {
-  position: absolute;
-}
-.search-block input::placeholder {
-  color: #888888;
-}
 .bounce-enter-active {
   animation: bounce-in 0.3s;
 }

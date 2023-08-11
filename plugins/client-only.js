@@ -1,4 +1,1 @@
-export default ({ app }) => {
-  console.log("asdasd");
-  app.router.push("/");
-};
+export default ({ app }) => {};

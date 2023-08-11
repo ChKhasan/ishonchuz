@@ -28,7 +28,10 @@
         <div class="banner-card-body_footer">
           <span> <span v-html="comments"></span> {{ topNews?.comment_count }} </span>
           <span><span v-html="view"></span> {{ topNews?.views }} </span>
-          <span> <span v-html="date"></span>{{ topNews?.date }}</span>
+          <span class="full_date"> <span v-html="date"></span>{{ topNews?.date }}</span>
+          <span class="only_hours">
+            <span v-html="date"></span>{{ topNews?.date.split("|")[0] }}</span
+          >
         </div>
       </div>
     </div>
@@ -68,6 +71,9 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+.only_hours {
+  display: none;
+}
 .banner-card-body {
   padding: 13px 20px;
   display: flex;
@@ -97,7 +103,7 @@ export default {
   line-height: 150%;
   color: var(--text_color);
   overflow: hidden;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   text-overflow: ellipsis;
@@ -114,7 +120,7 @@ export default {
   line-height: 150%;
   color: var(--text_color);
   overflow: hidden;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   text-overflow: ellipsis;
@@ -138,9 +144,15 @@ export default {
   margin-right: 7px;
 }
 @media (max-width: 1024px) {
-  .banner-card {
+  /* .banner-card {
     display: flex;
     flex-direction: column;
+  } */
+  .banner-card {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 362px 1fr;
+    grid-gap: 38px;
   }
   .banner-card_text a {
     font-size: 14px;
@@ -153,18 +165,15 @@ export default {
     text-overflow: ellipsis;
   }
   .banner-card-img {
-    height: 172px;
+    height: 268px;
   }
-  .banner-card_text p {
+  /* .banner-card_text p {
     display: none;
-  }
-  .banner-card {
-    display: flex;
-    flex-direction: column;
-  }
+  } */
+
   .banner-card_text a {
-    font-size: 14px;
-    margin-bottom: 24px;
+    font-size: 22px;
+    margin-bottom: 6px;
     display: flex;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -172,29 +181,77 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* .banner-card_text p {
+    display: none;
+  } */
+  /* .banner-card-body {
+    padding: 0;
+  } */
+  /* .banner-card-body_footer > span {
+    margin: 0;
+  } */
+  .banner-card-body_footer {
+    gap: 12px;
+  }
+  .banner-card-body {
+    padding: 0;
+  }
+  .banner-card-body_footer > span {
+    margin: 0;
+  }
+  .banner-card-body_footer {
+    gap: 12px;
+  }
+}
+@media (max-width: 768px) {
+  .banner-card {
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    grid-gap: 38px;
+  }
+  .full_date {
+    display: none;
+  }
+  .only_hours {
+    display: block;
+  }
   .banner-card-img {
-    height: 172px;
+    height: 214px;
+  }
+  .banner-card_text a {
+    font-size: 19px;
+    line-height: 170%;
   }
   .banner-card_text p {
     display: none;
   }
-  .banner-card-body {
-    padding: 0;
+}
+@media (max-width: 576px) {
+  .banner-card-img {
+    height: 380px;
+  }
+  .banner-card {
+    grid-gap: 24px;
+  }
+}
+@media (max-width: 390px) {
+  .banner-card-img {
+    height: 172px;
+  }
+  .banner-card {
+    grid-gap: 14px;
+  }
+  .banner-card_text a {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+  .banner-card-img span {
+    font-size: 10px;
   }
   .banner-card-body_footer > span {
-    margin: 0;
-  }
-  .banner-card-body_footer {
-    gap: 12px;
-  }
-  .banner-card-body {
-    padding: 0;
-  }
-  .banner-card-body_footer > span {
-    margin: 0;
-  }
-  .banner-card-body_footer {
-    gap: 12px;
+    font-size: 10px;
   }
 }
 </style>

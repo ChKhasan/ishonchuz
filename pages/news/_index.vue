@@ -2,9 +2,9 @@
   <div class="home-page news-page">
     <div class="container_xl">
       <div class="home-page-grid row mx-0">
-        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
+        <div class="col-lg-9 col-md-12 p-0 home-page-left">
           <div class="new-category-title">
-            <h2>{{ $store.state.translations["inner.economy"] }}</h2>
+            <h2>{{ news?.category?.title }}</h2>
           </div>
           <div class="news-breadcrumb" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
@@ -49,9 +49,14 @@
               </div>
             </div>
             <div class="news-container-head">
-              <div class="news-container-character">
+              <div class="news-container-character d-flex">
                 <span><span v-html="view"></span>{{ news?.views }}</span>
-                <span><span v-html="date"></span>{{ news?.date }}</span>
+                <span class="news-date_web"
+                  ><span v-html="date"></span>{{ news?.date }}</span
+                >
+                <span class="news-date_mobile"
+                  ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+                >
               </div>
               <div class="news-container-messangers">
                 <a
@@ -657,6 +662,9 @@ export default {
   align-items: flex-end;
   margin-bottom: 40px;
 }
+.news-date_mobile {
+  display: none;
+}
 .article-card h6 {
   font-family: var(--ROBOTO_SERIF);
   font-style: italic;
@@ -795,9 +803,6 @@ export default {
   .news-container-character > span {
     margin-right: 13px;
   }
-  .news-container-messangers-mobile {
-    display: block;
-  }
   .news-container-messangers-mobile a svg {
     width: 24px;
     height: 24px;
@@ -805,25 +810,7 @@ export default {
   .news-container-messangers-mobile a {
     margin-left: 8px;
   }
-  .news-container-messangers {
-    display: none;
-  }
-  .news-container-header h1 {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 130%;
-  }
-  .news-container-header h6 {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 150%;
-  }
-  .news-container-body p,
-  .news-container-body span,
-  .news-container-body li {
-    font-size: 14px !important;
-    line-height: 145%;
-  }
+
   .news-container-links a {
     font-size: 12px;
     line-height: 130%;
@@ -854,6 +841,64 @@ export default {
 
   .news-container-header {
     margin-top: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .news-container-body p,
+  .news-container-body span,
+  .news-container-body li {
+    font-size: 16px !important;
+    line-height: 145%;
+  }
+  .news-container-header h1 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 130%;
+  }
+  .news-container-header h6 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+}
+@media (max-width: 576px) {
+  .news-container .tag {
+    font-size: 10px;
+  }
+  .news-date_mobile {
+    display: block;
+  }
+  .news-date_web {
+    display: none;
+  }
+  .news-container-body p,
+  .news-container-body span,
+  .news-container-body li {
+    font-size: 14px !important;
+    line-height: 145%;
+  }
+  .news-container-header h1 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%;
+  }
+  .news-container-header h6 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+  }
+}
+@media (max-width: 390px) {
+  .news-container-messangers-mobile {
+    display: block;
+  }
+  .news-container-messangers {
+    display: none;
+  }
+  .news-container-header h1 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 170%;
   }
 }
 </style>

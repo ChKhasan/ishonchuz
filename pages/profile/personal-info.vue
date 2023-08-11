@@ -302,13 +302,13 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogOut", {
           refresh_token: refreshToken,
         });
-        this.$router.push("/");
+        this.$router.push(localePath('/'));
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
         if (e.response.status == 401) {
-          this.$router.push("/");
+          this.$router.push(localePath('/'));
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           this.$store.commit("chackAuth");
@@ -317,7 +317,7 @@ export default {
     },
     middlewareAuth() {
       if (!localStorage.getItem("access_token")) {
-        this.$router.push("/");
+        this.$router.push(localePath('/'));
       } else {
         this.loading = false;
       }

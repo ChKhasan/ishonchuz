@@ -242,6 +242,7 @@ export default {
         },
       }),
     ]);
+    console.log(journalistsData);
     const journalists = journalistsData;
     return { journalists };
   },

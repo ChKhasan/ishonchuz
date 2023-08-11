@@ -14,14 +14,22 @@
           </div>
         </div>
       </div>
+      <div class="news-images-card-img_mobile">
+        <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
+      </div>
       <div class="news-images-card-body">
         <p>
           {{ news?.title }}
         </p>
         <div class="news-images-card-info">
           <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
-          <span v-if="news?.views"><span v-html="view"></span>{{ news?.views }}</span>
-          <span><span v-html="date"></span>{{ news?.date }}</span>
+          <span><span v-html="view"></span>{{ news?.views ? news?.views : 0 }}</span>
+          <span class="news-images-card_web"
+            ><span v-html="date"></span>{{ news?.date }}</span
+          >
+          <span class="news-images-card_mobile"
+            ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+          >
         </div>
       </div>
     </nuxt-link>
@@ -69,6 +77,9 @@ export default {
   height: 100%;
   object-fit: cover;
 }
+.news-images-card-img_mobile {
+  display: none;
+}
 .news-images-card-body {
   display: flex;
   justify-content: space-between;
@@ -82,6 +93,11 @@ export default {
   font-size: 16px;
   line-height: 150%;
   color: var(--text_color);
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
 }
 .news-images-card-info > span {
   font-family: var(--ROBOTO_SERIF);
@@ -90,7 +106,6 @@ export default {
   font-size: 12px;
   line-height: 130%;
   color: #888888;
-  margin-right: 40px;
 }
 .news-images-card-info span span {
   margin-right: 7px;
@@ -99,5 +114,48 @@ export default {
   display: flex;
   justify-content: flex-start;
   margin-top: 20px;
+  gap: 32px;
+}
+.news-images-card_mobile {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .news-images-card-img {
+    height: 182px;
+  }
+  .news-images-card-info {
+    justify-content: flex-end;
+  }
+}
+@media (max-width: 768px) {
+  .news-images-card-body p {
+    height: 45px;
+  }
+  .news-images-card_web {
+    display: none;
+  }
+  .news-images-card_mobile {
+    display: flex;
+  }
+}
+@media (max-width: 576px) {
+  .news-images-card-img_mobile {
+    display: block;
+    height: 138px;
+  }
+  .news-images-card-img_mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .news-images-card-img {
+    display: none;
+  }
+}
+@media (max-width: 488px) {
+  .news-images-card-img_mobile {
+    display: block;
+    height: 172px;
+  }
 }
 </style>

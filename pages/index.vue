@@ -37,155 +37,299 @@
           <div class="h-news-grid">
             <HNewsCard v-for="newsItem in news" :key="newsItem.id" :news="newsItem" />
           </div>
-          <div class="v-news-grid">
+          <div class="v-news-grid for_web">
             <VNewsCard v-for="news in simpleNews" :key="news.id" :news="news" />
           </div>
           <div class="hidden">
-            <div class="block1">
-              <div
-                class="home-page-right-title"
-                style="cursor: pointer"
-                @click="$router.push('newspaper')"
-              >
-                {{ $store.state.translations["main.newspaper"] }}
-              </div>
-              <div
-                class="home-page-right-drop"
-                @click="dropAction(1)"
-                :class="{ heightAuto: dropVal == 1 }"
-              >
-                <h5>
-                  {{ $store.state.translations["main.library"] }}
-                  <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
-                </h5>
-                <Transition name="bounceDrop">
-                  <div class="home-page-right-drop-board" v-if="dropVal == 1">
-                    <ul>
-                      <li @click="$router.push('/library?type=literature')">Adabiyot</li>
-                      <li @click="$router.push('/library?type=scientific')">
-                        Ilmiy ishlar
-                      </li>
-                      <li @click="$router.push('/library?type=articles')">Maqolalar</li>
-                      <li @click="$router.push('/library?type=articles')">
-                        Kasaba faollari uchun qo’llanmalar
-                      </li>
-                    </ul>
-                  </div>
-                </Transition>
-              </div>
-
-              <div
-                class="home-page-right-drop"
-                @click="dropAction(2)"
-                :class="{ heightAuto: dropVal == 2 }"
-              >
-                <h5>
-                  {{ $store.state.translations["main.entertainment"] }}
-                  <span v-html="dropdown" :class="{ rotate180: dropVal == 2 }"></span>
-                </h5>
-                <Transition name="bounceDrop">
-                  <div class="home-page-right-drop-board" v-if="dropVal == 2">
-                    <ul>
-                      <li @click="$router.push('/theater')">
-                        {{ $store.state.translations["main.Ytheatres"] }}
-                      </li>
-                      <li @click="$router.push('/concert')">
-                        {{ $store.state.translations["main.concert"] }}
-                      </li>
-                      <li @click="$router.push('/presentations')">
-                        {{ $store.state.translations["main.presentations"] }}
-                      </li>
-                    </ul>
-                  </div>
-                </Transition>
-              </div>
-            </div>
-            <div class="audio__container">
-              <TitleComp :link="false" title="Ishonch FM" />
-              <div class="audio__player">
-                <div class="audio__name">
-                  <h6>
-                    {{ audioList[currentAudio]?.name }}
-                  </h6>
+            <div class="mobile_hidden">
+              <div class="block1">
+                <div
+                  class="home-page-right-title"
+                  style="cursor: pointer"
+                  @click="$router.push(localePath('newspaper'))"
+                >
+                  {{ $store.state.translations["main.newspaper"] }}
                 </div>
-                <audio-player
-                  ref="audioPlayerMobile"
-                  :audio-list="audioList.map((elm) => elm.url)"
-                  :before-play="handleBeforePlayMobile"
-                  theme-color="#051769"
-                  :isLoop="false"
-                  :currentPlayIndex="currentAudio"
-                  :progress-end="($event) => processEnd($event)"
+                <div
+                  class="home-page-right-drop"
+                  @click="dropAction(1)"
+                  :class="{ heightAuto: dropVal == 1 }"
+                >
+                  <h5>
+                    {{ $store.state.translations["main.library"] }}
+                    <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
+                  </h5>
+                  <Transition name="bounceDrop">
+                    <div class="home-page-right-drop-board" v-if="dropVal == 1">
+                      <ul>
+                        <li @click="$router.push(localePath('/library?type=literature'))">
+                          {{ $store.state.translations["main.literature"] }}
+                        </li>
+                        <li @click="$router.push(localePath('/library?type=scientific'))">
+                          {{ $store.state.translations["main.science"] }}
+                        </li>
+                        <li @click="$router.push(localePath('/library?type=articles'))">
+                          {{ $store.state.translations["main.articles"] }}
+                        </li>
+                        <li @click="$router.push(localePath('/library?type=articles'))">
+                          {{ $store.state.translations["main.kasaba"] }}
+                        </li>
+                      </ul>
+                    </div>
+                  </Transition>
+                </div>
+
+                <div
+                  class="home-page-right-drop"
+                  @click="dropAction(2)"
+                  :class="{ heightAuto: dropVal == 2 }"
+                >
+                  <h5>
+                    {{ $store.state.translations["main.entertainment"] }}
+                    <span v-html="dropdown" :class="{ rotate180: dropVal == 2 }"></span>
+                  </h5>
+                  <Transition name="bounceDrop">
+                    <div class="home-page-right-drop-board" v-if="dropVal == 2">
+                      <ul>
+                        <li @click="$router.push(localePath('/theater'))">
+                          {{ $store.state.translations["main.Ytheatres"] }}
+                        </li>
+                        <li @click="$router.push(localePath('/concert'))">
+                          {{ $store.state.translations["main.concert"] }}
+                        </li>
+                        <li @click="$router.push(localePath('/presentations'))">
+                          {{ $store.state.translations["main.presentations"] }}
+                        </li>
+                      </ul>
+                    </div>
+                  </Transition>
+                </div>
+              </div>
+              <div class="audio__container">
+                <TitleComp
+                  :link="false"
+                  :title="$store.state.translations['others.fm_radio']"
                 />
-              </div>
-              <div class="audio__list">
-                <ul>
-                  <li
-                    v-for="(audio, index) in audioList"
-                    :key="audio?.id"
-                    @click="currentAudioIndexMobile(index)"
-                  >
-                    <p :class="{ audio__active: currentAudio == index }">
-                      {{ audio?.name }}
-                    </p>
-                    <span>14:32</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="block2">
-              <div class="home-page-right-title" style="text-align: center">
-                {{ $store.state.translations["main.about_us"] }}
-              </div>
-              <div class="right-banner">
-                <img src="../assets/images/Снимок экрана (926).png" alt="" />
-              </div>
-            </div>
-            <TitleComp
-              :link="false"
-              :title="$store.state.translations['main.editor_choice']"
-            />
-            <div class="mt-3 mb-5">
-              <div class="flex items-center justify-center">
-                <div class="swiper-banner-right" style="overflow: hidden; width: 337px">
-                  <div class="swiper-wrapper">
-                    <div
-                      class="swiper-slide"
-                      v-for="news in redactorNews"
-                      :key="news?.id"
+                <div class="audio__player">
+                  <div class="audio__name">
+                    <h6>
+                      {{ audioList[currentAudio]?.name }}
+                    </h6>
+                  </div>
+                  <audio-player
+                    ref="audioPlayerMobile"
+                    :audio-list="audioList.map((elm) => elm.url)"
+                    :before-play="handleBeforePlayMobile"
+                    theme-color="#051769"
+                    :isLoop="false"
+                    :currentPlayIndex="currentAudio"
+                    :progress-end="($event) => processEnd($event)"
+                  />
+                </div>
+                <div class="audio__list">
+                  <ul>
+                    <li
+                      v-for="(audio, index) in audioList"
+                      :key="audio?.id"
+                      @click="currentAudioIndexMobile(index)"
                     >
-                      <VNewsCard :news="news" />
+                      <p :class="{ audio__active: currentAudio == index }">
+                        {{ audio?.name }}
+                      </p>
+                      <span>14:32</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="block2">
+                <div class="home-page-right-title" style="text-align: center">
+                  {{ $store.state.translations["main.about_us"] }}
+                </div>
+                <div class="right-banner">
+                  <img src="../assets/images/Снимок экрана (926).png" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="laptop_hidden">
+              <div>
+                <div class="audio__container">
+                  <TitleComp
+                    :link="false"
+                    :title="$store.state.translations['others.fm_radio']"
+                  />
+                  <div class="audio__player">
+                    <div class="audio__name">
+                      <h6>
+                        {{ audioList[currentAudio]?.name }}
+                      </h6>
+                    </div>
+                    <audio-player
+                      ref="audioPlayerMobile"
+                      :audio-list="audioList.map((elm) => elm.url)"
+                      :before-play="handleBeforePlayMobile"
+                      theme-color="#051769"
+                      :isLoop="false"
+                      :currentPlayIndex="currentAudio"
+                      :progress-end="($event) => processEnd($event)"
+                    />
+                  </div>
+                  <div class="audio__list">
+                    <ul>
+                      <li
+                        v-for="(audio, index) in audioList"
+                        :key="audio?.id"
+                        @click="currentAudioIndexMobile(index)"
+                      >
+                        <p :class="{ audio__active: currentAudio == index }">
+                          {{ audio?.name }}
+                        </p>
+                        <span>14:32</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="home-page-right-title" style="text-align: center">
+                  {{ $store.state.translations["main.about_us"] }}
+                </div>
+              </div>
+              <div>
+                <div class="block1">
+                  <div
+                    class="home-page-right-title"
+                    style="cursor: pointer"
+                    @click="$router.push(localePath('newspaper'))"
+                  >
+                    {{ $store.state.translations["main.newspaper"] }}
+                  </div>
+                  <div
+                    class="home-page-right-drop"
+                    @click="dropAction(1)"
+                    :class="{ heightAuto: dropVal == 1 }"
+                  >
+                    <h5>
+                      {{ $store.state.translations["main.library"] }}
+                      <span v-html="dropdown" :class="{ rotate180: dropVal == 1 }"></span>
+                    </h5>
+                    <Transition name="bounceDrop">
+                      <div class="home-page-right-drop-board" v-if="dropVal == 1">
+                        <ul>
+                          <li
+                            @click="$router.push(localePath('/library?type=literature'))"
+                          >
+                            {{ $store.state.translations["main.literature"] }}
+                          </li>
+                          <li
+                            @click="$router.push(localePath('/library?type=scientific'))"
+                          >
+                            {{ $store.state.translations["main.science"] }}
+                          </li>
+                          <li @click="$router.push(localePath('/library?type=articles'))">
+                            {{ $store.state.translations["main.articles"] }}
+                          </li>
+                          <li @click="$router.push(localePath('/library?type=articles'))">
+                            {{ $store.state.translations["main.kasaba"] }}
+                          </li>
+                        </ul>
+                      </div>
+                    </Transition>
+                  </div>
+
+                  <div
+                    class="home-page-right-drop"
+                    @click="dropAction(2)"
+                    :class="{ heightAuto: dropVal == 2 }"
+                  >
+                    <h5>
+                      {{ $store.state.translations["main.entertainment"] }}
+                      <span v-html="dropdown" :class="{ rotate180: dropVal == 2 }"></span>
+                    </h5>
+                    <Transition name="bounceDrop">
+                      <div class="home-page-right-drop-board" v-if="dropVal == 2">
+                        <ul>
+                          <li @click="$router.push(localePath('/theater'))">
+                            {{ $store.state.translations["main.Ytheatres"] }}
+                          </li>
+                          <li @click="$router.push(localePath('/concert'))">
+                            {{ $store.state.translations["main.concert"] }}
+                          </li>
+                          <li @click="$router.push(localePath('/presentations'))">
+                            {{ $store.state.translations["main.presentations"] }}
+                          </li>
+                        </ul>
+                      </div>
+                    </Transition>
+                  </div>
+                </div>
+                <div class="block2">
+                  <div class="right-banner">
+                    <img src="../assets/images/Снимок экрана (926).png" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="topic_grid">
+              <div>
+                <TitleComp
+                  :link="false"
+                  :title="$store.state.translations['main.editor_choice']"
+                />
+                <div class="mt-3 mb-5">
+                  <div class="flex items-center justify-center">
+                    <div
+                      class="swiper-banner-right"
+                      style="overflow: hidden; width: 337px"
+                    >
+                      <div class="swiper-wrapper">
+                        <div
+                          class="swiper-slide"
+                          v-for="news in redactorNews"
+                          :key="news?.id"
+                        >
+                          <VNewsCard :news="news" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="swiper-pagination-banner-right"></div>
+                  </div>
+                  <div>
+                    <div class="right-banner mobile_banner">
+                      <img src="../assets/images/Снимок экрана (926).png" alt="" />
                     </div>
                   </div>
                 </div>
-                <div class="swiper-pagination-banner-right"></div>
               </div>
-              <div></div>
-            </div>
-            <TitleComp
-              :link="false"
-              :title="$store.state.translations['main.active_topics']"
-            />
 
-            <div class="right-news-list" v-if="showAll">
-              <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
-            </div>
-            <div class="right-news-list" v-else>
-              <RightNewsCard
-                v-for="news in importantNews.slice(0, 6)"
-                :key="news?.id"
-                :news="news"
-              />
-            </div>
-            <div
-              class="btn_container_show_more"
-              v-if="importantNews.length > 6 && !showAll"
-            >
-              <div class="right-show-more">
-                {{ $store.state.translations["main.see_all"] }}
-              </div>
-              <div class="right-show-more-primary" @click="showAll = true">
-                {{ $store.state.translations["main.see_all"] }}
+              <div>
+                <TitleComp
+                  :link="false"
+                  :title="$store.state.translations['main.active_topics']"
+                />
+
+                <div class="right-news-list" v-if="showAll">
+                  <RightNewsCard
+                    v-for="news in importantNews"
+                    :key="news?.id"
+                    :news="news"
+                  />
+                </div>
+                <div class="right-news-list" v-else>
+                  <RightNewsCard
+                    v-for="news in importantNews.slice(0, 6)"
+                    :key="news?.id"
+                    :news="news"
+                  />
+                </div>
+                <div
+                  class="btn_container_show_more"
+                  v-if="importantNews.length > 6 && !showAll"
+                >
+                  <div class="right-show-more">
+                    {{ $store.state.translations["main.see_all"] }}
+                  </div>
+                  <div class="right-show-more-primary" @click="showAll = true">
+                    {{ $store.state.translations["main.see_all"] }}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -210,7 +354,7 @@
             <div
               class="home-page-right-title"
               style="cursor: pointer"
-              @click="$router.push('newspaper')"
+              @click="$router.push(localePath('newspaper'))"
             >
               {{ $store.state.translations["main.newspaper"] }}
             </div>
@@ -226,13 +370,17 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board">
                   <ul>
-                    <li @click="$router.push('/library?type=literature')">Adabiyot</li>
-                    <li @click="$router.push('/library?type=scientific')">
-                      Ilmiy ishlar
+                    <li @click="$router.push(localePath('/library?type=literature'))">
+                      {{ $store.state.translations["main.literature"] }}
                     </li>
-                    <li @click="$router.push('/library?type=articles')">Maqolalar</li>
-                    <li @click="$router.push('/library?type=articles')">
-                      Kasaba faollari uchun  qo’llanmalar
+                    <li @click="$router.push(localePath('/library?type=scientific'))">
+                      {{ $store.state.translations["main.science"] }}
+                    </li>
+                    <li @click="$router.push(localePath('/library?type=articles'))">
+                      {{ $store.state.translations["main.articles"] }}
+                    </li>
+                    <li @click="$router.push(localePath('/library?type=articles'))">
+                      {{ $store.state.translations["main.kasaba"] }}
                     </li>
                   </ul>
                 </div>
@@ -251,13 +399,13 @@
               <Transition name="bounceDrop">
                 <div class="home-page-right-drop-board" v-if="dropVal == 2">
                   <ul>
-                    <li @click="$router.push('/theater')">
+                    <li @click="$router.push(localePath('/theater'))">
                       {{ $store.state.translations["main.Ytheatres"] }}
                     </li>
-                    <li @click="$router.push('/concert')">
+                    <li @click="$router.push(localePath('/concert'))">
                       {{ $store.state.translations["main.concert"] }}
                     </li>
-                    <li @click="$router.push('/presentations')">
+                    <li @click="$router.push(localePath('/presentations'))">
                       {{ $store.state.translations["main.presentations"] }}
                     </li>
                   </ul>
@@ -266,7 +414,10 @@
             </div>
           </div>
           <div class="audio__container audio_web">
-            <TitleComp :link="false" title="Ishonch FM" />
+            <TitleComp
+              :link="false"
+              :title="$store.state.translations['others.fm_radio']"
+            />
             <div class="audio__player">
               <div class="audio__name">
                 <h6>
@@ -303,7 +454,7 @@
             <div
               class="home-page-right-title"
               style="text-align: center; cursor: pointer"
-              @click="$router.push('/about')"
+              @click="$router.push(localePath('/about'))"
             >
               {{ $store.state.translations["main.about_us"] }}
             </div>
@@ -397,7 +548,7 @@ export default {
     var swiper2 = new Swiper(".mySwiper2", {
       loop: true,
       spaceBetween: 10,
-      effect: "fade",
+      // effect: "fade",
       autoplay: {
         delay: 6000,
       },
@@ -490,6 +641,7 @@ export default {
     const banners = bannersData.results;
     const audio = audioData.results;
     const photoNews = photoNewsData.results;
+    console.log(photoNewsData);
     const audioList = audio.map((item) => {
       return {
         ...item,
@@ -553,6 +705,7 @@ export default {
       } else {
         this.dropVal = false;
       }
+      console.log(val, this.dropVal);
     },
   },
   components: {
@@ -798,25 +951,40 @@ export default {
   line-height: 130%;
   letter-spacing: 0.24px;
 }
+.mobile_hidden {
+  display: none;
+}
 @media screen and (max-width: 1024px) {
+  .laptop_hidden {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-gap: 20px;
+  }
+  .topic_grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+  }
+  .right-banner {
+    margin-top: 12px !important;
+  }
+  .home-page-right-drop {
+    margin-top: 12px;
+  }
   .hidden {
     display: block;
   }
   .clear {
     display: none;
   }
-  .thumbs {
+  /* .thumbs {
     display: none;
-  }
-
-  .home-carousel {
-    margin-bottom: 64px;
-  }
-  .h-news-grid {
+  } */
+  /* .h-news-grid {
     grid-template-columns: repeat(1, 1fr);
     padding: 0;
     gap: 0;
-  }
+  } */
   .home-page-left {
     padding: 0 !important;
   }
@@ -824,23 +992,13 @@ export default {
     margin: 0 !important;
   }
 
-  .title-comp a {
-    font-size: 14px;
-  }
-  .title-comp {
-    justify-content: space-between;
-  }
-  .h-news-card-img {
+  /* .h-news-card-img {
     min-width: 94px;
     height: 64px;
     border-radius: 4px;
     overflow: hidden;
-  }
+  } */
 
-  .h-news-card-body a {
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
   .h-news-card-info > span {
     font-size: 10px;
     display: flex;
@@ -859,14 +1017,7 @@ export default {
     border-radius: 4px;
     overflow: hidden;
   }
-  .v-news-card-body a {
-    font-size: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+
   .v-news-card-info > span {
     font-size: 10px;
     padding: 0;
@@ -879,25 +1030,23 @@ export default {
   .home-page-right-title {
     text-align: center;
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 16px;
   }
   .home-page-right-drop {
     padding: 12px 16px;
   }
   .home-page-right-drop h5 {
-    font-size: 14px;
+    font-size: 16px;
     padding: 0;
     text-transform: uppercase;
   }
   .block1 {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .right-banner {
     height: 480px;
   }
-  .swiper-banner-right {
-    width: 100% !important;
-  }
+
   .right-news-list {
     margin: 24px 0;
   }
@@ -910,22 +1059,18 @@ export default {
   .hidden {
     margin-bottom: 34px;
   }
-  .video-news-grid,
+  /* .video-news-grid,
   .news-images-grid {
     grid-template-columns: repeat(1, 1fr);
     gap: 12px;
-  }
+  } */
   .video-news-card {
     padding: 12px 10px;
     gap: 12px;
     border-radius: 6px;
     border: none;
   }
-  .video-news-card-img {
-    height: 180px;
-    border-radius: 4px;
-    overflow: hidden;
-  }
+
   .video-news-card-body a {
     font-size: 14px;
   }
@@ -947,24 +1092,7 @@ export default {
   .home-page {
     padding-bottom: 80px;
   }
-  .footer-logo {
-    display: flex;
-    justify-content: center;
-  }
-  .footer-info {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 32px;
-    text-align: center;
-  }
-  .footer-info h6 {
-    font-size: 12px;
-  }
-  .footer-info p {
-    font-size: 12;
-    padding-top: 0;
-  }
+
   .footer-menu {
     width: 100%;
     row-gap: 16px;
@@ -975,38 +1103,72 @@ export default {
     font-size: 14px;
     text-align: center;
   }
-  .footer-messangers {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    margin: 32px 0;
-    padding: 0;
+}
+@media (max-width: 768px) {
+  .topic_grid {
+    grid-template-columns: 1fr 1fr;
   }
-  .footer-messangers a {
-    margin: 0;
+  .thumbs {
+    display: none;
   }
-  .footer-messangers svg {
-    width: 24px;
-    height: 24px;
+  .for_web {
+    display: none !important;
   }
-  .footer-bottom {
-    color: #888;
-    text-align: center;
-    font-size: 12px;
-    line-height: 130%;
+  .h-news-grid {
+    margin-bottom: 50px;
   }
-  .home-carousel {
-    padding-top: 140px;
+  .right-banner {
+    height: 295px;
   }
 }
 @media (max-width: 576px) {
+  .v-news-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .swiper-banner-right {
+    width: 276px !important;
+  }
+  .laptop_hidden {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
   .audio__name h6 {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 145%;
   }
+  .banner-card {
+    display: flex;
+    flex-direction: column;
+  }
   .audio_web {
+    display: none;
+  }
+  .banner-card_text p {
+    display: none;
+  }
+  .h-news-grid {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 0;
+    gap: 0;
+  }
+}
+@media (max-width: 500px) {
+  .laptop_hidden {
+    display: none;
+  }
+  .mobile_hidden {
+    display: block;
+  }
+  .topic_grid {
+    grid-template-columns: 1fr;
+  }
+  .swiper-banner-right {
+    width: 100% !important;
+  }
+  .mobile_banner {
     display: none;
   }
 }
