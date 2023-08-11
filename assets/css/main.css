@@ -540,6 +540,9 @@ ul {
   color: #888888;
 }
 @media (max-width: 768px) {
+  .thumbs {
+    display: none;
+  }
   .messangers-container h5 {
     color: #0192ff;
     text-align: center;

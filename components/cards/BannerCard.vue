@@ -213,6 +213,9 @@ export default {
   .full_date {
     display: none;
   }
+  .thumbs {
+    display: none;
+  }
   .only_hours {
     display: block;
   }
