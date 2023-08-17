@@ -31,10 +31,12 @@
             </g></svg
         ></span>
         <!-- main.workspace -->
-        {{ $store.state.translations["main.workspace"] }}: <span>{{ journalist?.work_place }}</span>
+        {{ $store.state.translations["main.workspace"] }}:
+        <span>{{ journalist?.work_place }}</span>
       </p>
       <p v-if="journalist?.experience">
-        <span v-html="target"></span>{{ $store.state.translations["main.experience"] }}: <span>{{ journalist?.experience }}</span>
+        <span v-html="target"></span>{{ $store.state.translations["main.experience"] }}:
+        <span>{{ journalist?.experience }}</span>
       </p>
     </div>
   </div>
@@ -121,7 +123,43 @@ export default {
 .journalist-card-info p span:last-child {
   margin-left: 6px;
 }
-@media (max-width: 576px) {
+@media (max-width: 992px) {
+  .journalist-card-image {
+    height: 100px;
+  }
+  .journalist-card-head {
+    grid-template-columns: 100px auto;
+    grid-gap: 26px;
+  }
+  .journalist-card-title h4 {
+    font-family: var(--ROBOTO_SERIF);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%; /* 20.8px */
+  }
+  .journalist-card-title a {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 130%; /* 20.8px */
+  }
+  .journalist-card-info p,
+  .journalist-card-info p span {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 130%; /* 15.6px */
+  }
+  .journalist-card-info {
+    margin-top: 38px;
+  }
+}
+@media (max-width: 768px) {
+  .journalist-card-image {
+    height: 111px;
+  }
+  .journalist-card-head {
+    grid-template-columns: 111px auto;
+    grid-gap: 18px;
+  }
   .journalists-card {
     padding: 20px;
   }
@@ -132,9 +170,17 @@ export default {
     display: none;
   }
   .journalist-card-image {
-    width: 121px;
-    height: 121px;
+    width: 111px;
     margin: 0 auto;
+  }
+  .journalist-card-title h4 {
+    text-align: center;
+  }
+  .journalist-card-title a {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 55px;
   }
 }
 @media (max-width: 360px) {
@@ -157,12 +203,16 @@ export default {
     font-size: 16px;
     font-weight: 500;
     line-height: 130%;
+    text-align: start;
   }
   .journalist-card-title a {
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%;
+    text-align: start;
+    justify-content: flex-start;
+    margin-top: 24px;
   }
   .journalist-card-title {
     display: flex;

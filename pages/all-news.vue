@@ -4,7 +4,8 @@
       <div class="home-page-grid row mx-0">
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="all-news-page-container">
-            <h3>Barcha yangliklar</h3>
+            <h3>{{ $store.state.translations["main.all_news"] }}</h3>
+
             <div class="all-news-page-grid">
               <AllNewsCard
                 v-for="newsItem in news"
@@ -17,7 +18,7 @@
             </div>
             <div
               class="btn_container_show_more mt-4"
-              v-if="(Number(totalCount) / (Number($route.query.page) * 11)) > 1 && !loading"
+              v-if="Number(totalCount) / (Number($route.query.page) * 11) > 1 && !loading"
             >
               <div class="right-show-more">
                 {{ $store.state.translations["main.more"] }}

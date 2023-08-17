@@ -7,6 +7,7 @@ export const state = () => ({
   viewNews: [],
   siteInfo: {},
   languages: [],
+  translationsChange: false
 });
 
 export const mutations = {
@@ -28,6 +29,9 @@ export const mutations = {
   },
   getTranslations(state, payload) {
     state.translations = payload;
+  },
+  getTranslationsChange(state, payload) {
+    state.translationsChange = payload;
   },
   getLanguages(state, payload) {
     state.languages = payload;

@@ -131,6 +131,7 @@ export default {
       ]);
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
+      this.$store.commit("getTranslationsChange", !this.$store.state.translationsChange);
     },
     "$store.state.theme"(val) {
       if (!val) {

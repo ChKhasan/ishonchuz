@@ -173,6 +173,7 @@ body::-webkit-scrollbar-thumb:hover {
   .container_xl {
     padding: 0 30px;
   }
+
 }
 @media (max-width: 576px) {
   .container_xl {
@@ -446,7 +447,7 @@ ul {
 .library_tab {
   display: flex;
   overflow-x: scroll;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   padding-bottom: 12px;
   padding-top: 8px;
   margin-bottom: 8px !important;
@@ -539,9 +540,18 @@ ul {
 .search-block input::placeholder {
   color: #888888;
 }
+.profile-grid {
+  display: grid;
+  grid-template-columns: 3.3fr 10.7fr;
+  grid-gap: 30px;
+}
 @media (max-width: 768px) {
   .thumbs {
     display: none;
+  }
+  .journalist-mess svg{
+    width: 24px;
+    height: 24px;
   }
   .messangers-container h5 {
     color: #0192ff;
@@ -589,9 +599,7 @@ ul {
     top: 110%;
     text-align: left !important;
   }
-  .web-menu {
-    display: none;
-  }
+
   .profile-page {
     padding-top: 30px;
   }
@@ -603,20 +611,23 @@ ul {
     flex-wrap: wrap;
     gap: 10px;
   }
-  .top_tab {
-    display: flex;
-    flex-wrap: nowrap !important;
-    overflow-x: scroll;
-    margin-bottom: 0 !important;
-    border-bottom: none;
-    height: auto !important;
-  }
+
 
   .library_tab li a,
   .library_tab li span {
     font-size: 12px;
     font-weight: 600;
     line-height: 150%;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  .profile-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .profile-menu {
+    padding: 24px;
   }
 }
 @media (max-width: 360px) {
@@ -629,6 +640,20 @@ ul {
   /* .socials__mobile a span:last-child {
     margin-right: 0;
   } */
+    .web-menu {
+    display: none;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .top_tab {
+    display: flex;
+    flex-wrap: nowrap !important;
+    overflow-x: scroll;
+    margin-bottom: 0 !important;
+    border-bottom: none;
+    height: auto !important;
+  }
 }
 @media screen and (max-width: 1024px) {
   .comment-form {
@@ -637,6 +662,10 @@ ul {
   .home-page-left {
     width: 100%;
     max-width: 100%;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 20px;
   }
 }
 
@@ -653,5 +682,8 @@ ul {
   .header,
   .menu-list {
     display: none;
+  }
+  .profile-grid {
+    grid-template-columns: 2fr 3fr;
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <div class="wrap">
     <div class="container_xl">
-      <div class="row">
-        <div class="col-lg-4 col-xs-12 left">
+      <div class="grid-box">
+        <div class="left">
           <div class="cardo">
             <div class="wrapper">
               <div class="img">
@@ -18,7 +18,7 @@
                 <h4 class="name">{{ journalists?.full_name }}</h4>
                 <p class="status">Jurnalist</p>
               </div>
-              <div class="socials">
+              <div class="socials journalist-mess">
                 <a
                   v-if="$store.state.siteInfo['telegram']"
                   :href="$store.state.siteInfo['telegram']"
@@ -47,16 +47,18 @@
               </div>
             </div>
           </div>
-          <div class="second">
+          <div class="second atr_web">
             <div class="item">
               <p class="question">
-                <img src="@/assets/images/logo/bag.svg" alt="" /> {{ $store.state.translations["main.workspace"] }}:
+                <img src="@/assets/images/logo/bag.svg" alt="" />
+                {{ $store.state.translations["main.workspace"] }}:
               </p>
               <p class="answer">{{ journalists?.work_place }}</p>
             </div>
             <div class="item">
               <p class="question">
-                <img src="@/assets/images/logo/target.svg" alt="" /> {{ $store.state.translations["main.experience"] }}:
+                <img src="@/assets/images/logo/target.svg" alt="" />
+                {{ $store.state.translations["main.experience"] }}:
               </p>
               <p class="answer">{{ journalists?.experience }}</p>
             </div>
@@ -95,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 col-xs-12 right">
+        <div class="right info_web">
           <div class="buttons">
             <button
               :class="{ active: handleBio }"
@@ -113,26 +115,7 @@
           <div class="body">
             <div :class="{ show: handleBio }" class="bio">
               <div class="bio-body" v-html="journalists?.bio"></div>
-              <!-- <h1>Qisqacha biografiyasi</h1>
-              <p>
-                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi mahallasida
-                hunarmand-ishchilar oilasida tavallud topgan. Sheʼrga, soʻzga, adabiyotga
-                muhabbat unda bolaligida oialsidagi muhit sababli paydo boʻlgan boʻlsa
-                ajab emas. Ayniqsa, bunda onasi Xadichabegimning roli katta: – Onamning
-                qanchadan-qancha qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi.
-                Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
-                qilib olar, har safar yangi jilva kasb etar edi
-              </p>
-              <h4>Ta’lim davri</h4>
-              <p>
-                Bilol Alixon Toxirov 1915 yil 1 mart kuni Toshkentning Oʻqchi mahallasida
-                hunarmand-ishchilar oilasida tavallud topgan. Sheʼrga, soʻzga, adabiyotga
-                muhabbat unda bolaligida oialsidagi muhit sababli paydo boʻlgan boʻlsa
-                ajab emas. Ayniqsa, bunda onasi Xadichabegimning roli katta: – Onamning
-                qanchadan-qancha qoʻshiq va afsonalarni bilishiga aqlimiz bovar qilmasdi.
-                Bu sehrli afsona va dostonlar bizga benihoya huzur bagʻishlar, oʻziga rom
-                qilib olar, har safar yangi jilva kasb etar edi
-              </p>-->
+
               <h2 v-if="journalists?.images.length > 0">Diplom va Sertifikatlar</h2>
               <div class="images">
                 <img
@@ -177,7 +160,7 @@
                   class="article"
                   v-for="article in journalists?.articles"
                   :key="article?.id"
-                  @click="$router.push(`/library-inner/${article?.slug}`)"
+                  @click="$router.push(localePath(`/library-inner/${article?.slug}`))"
                 >
                   <NuxtLink to="">
                     <div class="content">
@@ -194,6 +177,139 @@
                     </div>
                   </NuxtLink>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="second atr_mobile">
+          <div class="item">
+            <p class="question">
+              <img src="@/assets/images/logo/bag.svg" alt="" />
+              {{ $store.state.translations["main.workspace"] }}:
+            </p>
+            <p class="answer">{{ journalists?.work_place }}</p>
+          </div>
+          <div class="item">
+            <p class="question">
+              <img src="@/assets/images/logo/target.svg" alt="" />
+              {{ $store.state.translations["main.experience"] }}:
+            </p>
+            <p class="answer">{{ journalists?.experience }}</p>
+          </div>
+          <div class="item">
+            <p class="question">
+              <img src="@/assets/images/logo/lang.svg" alt="" />Tillar
+            </p>
+            <p class="answer">{{ journalists?.experience }}</p>
+          </div>
+          <div class="socials__mobile journalist-mess">
+            <a
+              v-if="$store.state.siteInfo['telegram']"
+              :href="$store.state.siteInfo['telegram']"
+              ><span v-html="telegram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['facebook']"
+              :href="$store.state.siteInfo['facebook']"
+              ><span v-html="facebook"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['twitter']"
+              :href="$store.state.siteInfo['twitter']"
+              ><span v-html="twitter"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['instagram']"
+              :href="$store.state.siteInfo['instagram']"
+              ><span v-html="instagram"></span
+            ></a>
+            <a
+              v-if="$store.state.siteInfo['whatsapp']"
+              :href="$store.state.siteInfo['whatsapp']"
+              ><span v-html="whatsapp"></span
+            ></a>
+          </div>
+        </div>
+      </div>
+      <div class="right info_mobile">
+        <div class="buttons">
+          <button
+            :class="{ active: handleBio }"
+            @click="(handleBio = true), (handleArticles = false)"
+          >
+            Biografiyasi
+          </button>
+          <button
+            :class="{ active: handleArticles }"
+            @click="(handleBio = false), (handleArticles = true)"
+          >
+            Maqolalari
+          </button>
+        </div>
+        <div class="body">
+          <div :class="{ show: handleBio }" class="bio">
+            <div class="bio-body" v-html="journalists?.bio"></div>
+
+            <h2 v-if="journalists?.images.length > 0">Diplom va Sertifikatlar</h2>
+            <div class="images">
+              <img
+                :src="image?.image"
+                alt=""
+                v-for="image in journalists?.images"
+                :key="image?.id"
+              />
+            </div>
+            <h2 v-if="journalists?.awards.length > 0">Mukofotlar</h2>
+            <div class="awards__list">
+              <div
+                class="awards__card"
+                v-for="award in journalists?.awards"
+                :key="award?.id"
+              >
+                <div class="awards__image">
+                  <img :src="award?.image" alt="" />
+                </div>
+                <div class="awards__body" v-html="award?.text"></div>
+              </div>
+            </div>
+            <div class="awards__list_resp">
+              <div class="images">
+                <img
+                  :src="award?.image"
+                  alt=""
+                  v-for="award in journalists?.awards"
+                  :key="award?.id"
+                />
+              </div>
+              <div
+                class="awards__body"
+                v-for="award in journalists?.awards"
+                v-html="award?.text"
+              ></div>
+            </div>
+          </div>
+          <div :class="{ show: handleArticles }" class="articles">
+            <div class="grid">
+              <div
+                class="article"
+                v-for="article in journalists?.articles"
+                :key="article?.id"
+                @click="$router.push(localePath(`/library-inner/${article?.slug}`))"
+              >
+                <NuxtLink to="">
+                  <div class="content">
+                    <h4 class="name">{{ article?.title }}</h4>
+                    <p class="sub" v-html="article?.text"></p>
+                  </div>
+                  <div class="v-news-card-info">
+                    <span><span v-html="comments"></span>0</span>
+                    <span
+                      ><span v-html="view"></span
+                      >{{ article?.views ? article?.views : 0 }}</span
+                    >
+                    <span><span v-html="date"></span>{{ article?.date }}</span>
+                  </div>
+                </NuxtLink>
               </div>
             </div>
           </div>
@@ -279,6 +395,9 @@ export default {
   border-radius: 12px;
   background: var(--black_111111, #f9f9f9);
   padding: 52px 0;
+}
+.info_mobile {
+  display: none;
 }
 .wrapper {
   max-width: 270px;
@@ -470,7 +589,7 @@ export default {
 .awards__list_resp {
   display: none;
 }
-@media (max-width: 992px) {
+/* @media (max-width: 992px) {
   .awards__body::v-deep p {
     font-size: 14px;
     line-height: 145%;
@@ -484,8 +603,83 @@ export default {
   .awards__list_resp {
     display: block;
   }
+} */
+.grid-box {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  grid-gap: 30px;
+}
+.atr_mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bio::v-deep p,
+  .bio::v-deep span,
+  .bio p,
+  .bio span {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 145%; /* 20.3px */
+  }
+  .status {
+    margin-bottom: 26px;
+  }
+  .cardo {
+    padding-top: 30px;
+  }
+  .socials a span svg {
+    width: 24px;
+    height: 24px;
+  }
+  .second {
+    margin-top: 0;
+  }
+  .pic {
+    max-width: 177px;
+    height: 177px;
+  }
+  .grid-box {
+    grid-template-columns: 3fr 4fr;
+    grid-gap: 20px;
+  }
+  .info_mobile {
+    display: block;
+    margin-top: 30px;
+  }
+  .info_web {
+    display: none;
+  }
+  .atr_mobile {
+    display: flex;
+  }
+  .atr_web {
+    display: none;
+  }
+  .name {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%; /* 32.3px */
+  }
+  .bio {
+    padding: 0;
+    background-color: transparent;
+  }
 }
 @media (max-width: 576px) {
+  .atr_web .item{
+    display: flex;
+    justify-content: center   ;
+  }
+  .atr_web .item p {
+    margin-bottom: 0;
+  }
+  .grid-box {
+    grid-template-columns: 1fr;
+  }
+  .atr_mobile {
+    display: none !important;
+  }
   .articles .name {
     font-size: 16px;
   }

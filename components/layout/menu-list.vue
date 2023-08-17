@@ -180,7 +180,7 @@
           <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
             <a-form-model-item
               class="form-item mb-0 w-100 auth-form"
-              label="Номер телефона"
+              :label=" $store.state.translations['main.phone_number']"
               prop="phone_number"
             >
               <input
@@ -220,7 +220,7 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
+              <a-form-model-item class="form-item mb-0 w-100" :label=" $store.state.translations['main.phone_number']">
                 <!-- <the-mask
                   v-model="formSms.phone_number"
                   class="w-100 disabled"

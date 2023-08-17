@@ -105,7 +105,7 @@
                 {{ $store.state.translations["news.leave_comment"] }}
               </div>
             </div>
-            <div class="comments-list">
+            <div class="comments-list comments-web">
               <h4>
                 {{ $store.state.translations["news.comments_title"] }} ({{
                   book?.comments.length
@@ -173,6 +173,36 @@
               >
             </div>
           </div>
+          <div class="comments-list comments-mobile">
+              <h4>
+                {{ $store.state.translations["news.comments_title"] }} ({{
+                  book?.comments.length
+                }})
+              </h4>
+              <div class="comments-grid" v-if="showAll">
+                <CommentCard
+                  v-for="comment in book?.comments"
+                  :key="comment?.id"
+                  :comment="comment"
+                />
+              </div>
+              <div class="comments-grid" v-else>
+                <CommentCard
+                  v-for="comment in book?.comments.slice(0, 3)"
+                  :key="comment?.id"
+                  :comment="comment"
+                />
+              </div>
+              <div
+                class="show-more-count"
+                @click="showAll = true"
+                v-if="book?.comments.length > 3 && !showAll"
+              >
+                {{ $store.state.translations["news.see_again"] }} ({{
+                  book?.comments.length - 3
+                }})
+              </div>
+            </div>
         </div>
       </div>
       <a-modal
@@ -637,7 +667,85 @@ export default {
   position: absolute;
   min-width: 100%;
 }
+.comments-mobile {
+  display: none;
+}
+@media (max-width: 1024px) {
+  .book-body {
+    width: 100%;
+  }
+  .book-desc > div > p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+  }
+  .book-desc h4 {
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 170%; /* 32.3px */
+  }
+  .book-body h5 {
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 170%; /* 32.3px */
+  }
+  .book-body h3 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%; /* 32.3px */
+  }
+  .book-desc > div {
+    grid-template-columns: 1fr;
+  }
+  .send-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+    white-space: nowrap;
+    margin-top: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .book-info {
+    grid-template-columns: 223px 1fr;
+    grid-gap: 20px;
+  }
+  .book-image img {
+    width: 120px;
+  }
+  .book-image {
+    padding-top: 32px;
+    padding-bottom: 56px;
+  }
+}
 @media (max-width: 576px) {
+  .general-assessment {
+    padding: 24px;
+  }
+  .comments-list {
+    margin-top: 40px;
+  }
+  .comment-form {
+    margin-bottom: 0;
+  }
+  .comments-mobile {
+    display: flex;
+  }
+  .comments-web {
+    display: none;
+  }
+  .comment-container-grid {
+    grid-template-columns: 1fr;
+  }
+  .primary_btn,
+  .outline_btn {
+    width: 166px;
+  }
   .vmodal-footer__book {
     flex-direction: column;
   }
@@ -653,7 +761,7 @@ export default {
   }
   .book-info {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 165px 1fr;
     grid-gap: 22px;
   }
   /* .book-btns {
@@ -671,7 +779,7 @@ export default {
   .book-image {
     padding-top: 18px;
     padding-bottom: 34px;
-    width: 50%;
+    width: 100%;
   }
   .book-body h3 {
     margin-bottom: 8px;
@@ -735,7 +843,7 @@ export default {
     margin-bottom: 15px;
   }
   .send-btn {
-    width: 100%;
+    width: 70%;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -744,6 +852,16 @@ export default {
   }
 }
 @media (max-width: 468px) {
+  .book-info {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 22px;
+  }
+  .book-image {
+    padding-top: 18px;
+    padding-bottom: 34px;
+    width: 60%;
+  }
   .vmodal-header {
     padding: 16px 24px;
   }

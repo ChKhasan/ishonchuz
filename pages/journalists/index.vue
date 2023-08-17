@@ -125,6 +125,25 @@ export default {
 .journalists-page {
   padding-top: 40px;
 }
+@media (max-width: 992px) {
+  .journalists_container {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  .journalists-page-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 150%; /* 33px */
+  }
+  .journalists-page {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .journalists_container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
 @media (max-width: 576px) {
   .journalists-page-title {
     font-size: 19px;

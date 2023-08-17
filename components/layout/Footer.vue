@@ -52,14 +52,14 @@
               <li
                 v-for="category in categories.slice(4, 6)"
                 :key="category?.id"
-                @click="$router.push(`/news-menu/${category?.slug}`)"
+                @click="$router.push(localePath(`/news-menu/${category?.slug}`))"
               >
                 {{ category?.title }}
               </li>
-              <li @click="$router.push(`/library`)">
+              <li @click="$router.push(localePath(`/library`))">
                 {{ $store.state.translations["main.library"] }}
               </li>
-              <li @click="$router.push(`/library`)">
+              <li @click="$router.push(localePath(`/library`))">
                 {{ $store.state.translations["main.others"] }}
               </li>
             </ul>
@@ -67,8 +67,12 @@
               <li @click="$router.push(localePath('/about-site'))">
                 {{ $store.state.translations["main.about_site"] }}
               </li>
-              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
-              <li @click="$router.push(localePath('/contact'))">{{ $store.state.translations["main.contact"] }}</li>
+              <li @click="$router.push(localePath('/reklama'))">
+                {{ $store.state.translations["main.reklama"] }}
+              </li>
+              <li @click="$router.push(localePath('/contact'))">
+                {{ $store.state.translations["main.contact"] }}
+              </li>
               <li @click="$router.push(localePath('/about'))">
                 {{ $store.state.translations["main.about_us"] }}
               </li>
@@ -101,12 +105,16 @@
               <li @click="$router.push(localePath('/about-site'))">
                 {{ $store.state.translations["main.about_site"] }}
               </li>
-              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
-              <li @click="$router.push(localePath('/contact'))">{{ $store.state.translations["main.contact"] }}</li>
-              <li @click="$router.push(`/library`)">
+              <li @click="$router.push(localePath('/reklama'))">
+                {{ $store.state.translations["main.reklama"] }}
+              </li>
+              <li @click="$router.push(localePath('/contact'))">
+                {{ $store.state.translations["main.contact"] }}
+              </li>
+              <li @click="$router.push(localePath(`/library`))">
                 {{ $store.state.translations["main.library"] }}
               </li>
-              <li @click="$router.push(`/library`)">
+              <li @click="$router.push(localePath(`/library`))">
                 {{ $store.state.translations["main.others"] }}
               </li>
               <li @click="$router.push(localePath('/about'))">
@@ -115,15 +123,15 @@
             </ul>
           </div>
           <div class="footer-menu__mobile footer-menu">
-           
             <ul>
               <li @click="$router.push(localePath('/about-site'))">
                 {{ $store.state.translations["main.about_site"] }}
               </li>
-              <li @click="$router.push(localePath('/reklama'))">{{ $store.state.translations["main.reklama"] }}</li>
+              <li @click="$router.push(localePath('/reklama'))">
+                {{ $store.state.translations["main.reklama"] }}
+              </li>
               <li>{{ $store.state.translations["main.contact"] }}</li>
-              
-             
+
               <li @click="$router.push(localePath('/about'))">
                 {{ $store.state.translations["main.about_us"] }}
               </li>
@@ -346,7 +354,7 @@ export default {
     width: 100%;
     justify-content: center;
   }
-  .footer-menu__mobile ul{
+  .footer-menu__mobile ul {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -354,12 +362,12 @@ export default {
   }
 }
 @media (max-width: 576px) {
-  .footer-menu__mobile ul{
+  .footer-menu__mobile ul {
     gap: 16px;
   }
 }
 @media (max-width: 390px) {
-  .footer-menu__mobile ul{
+  .footer-menu__mobile ul {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 100%;

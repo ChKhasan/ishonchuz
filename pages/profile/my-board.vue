@@ -101,14 +101,14 @@ export default {
 </script>
 <style lang="css">
 
-.profile-grid {
+/* .profile-grid {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
-}
-@media (max-width: 576px) {
+} */
+/* @media (max-width: 576px) {
   .profile-grid {
     grid-template-columns: 1fr !important;
   }
 
-}
+} */
 </style>

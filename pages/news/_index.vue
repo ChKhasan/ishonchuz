@@ -386,36 +386,10 @@ export default {
       pagination: false,
     });
   },
-  // async mounted() {
-  //   const [newsData, topicNewsData, importantNewsData] = await Promise.all([
-  //     this.$store.dispatch("fetchNews/getNewsBySlug", {
-  //       id: this.$route.params.index,
-  //       header: {
-  //         headers: {
-  //           Language: this.$i18n.locale,
-  //         },
-  //       },
-  //     }),
-  //     this.$store.dispatch("fetchNews/getNews", {
-  //       params: { video: true, page_size: 3 },
-  //       headers: {
-  //         Language: this.$i18n.locale,
-  //       },
-  //     }),
-  //     this.$store.dispatch("fetchNews/getNews", {
-  //       params: { important: true, page_size: 6 },
-  //       headers: {
-  //         Language: this.$i18n.locale,
-  //       },
-  //     }),
-  //   ]);
-  //   this.news = newsData;
-  //   this.topicNews = topicNewsData.results;
-  //   this.importantNews = importantNewsData.results;
-  // },
+
   async asyncData({ store, params, i18n }) {
     const [newsData, topicNewsData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchNews/getNewsBySlug", {
+      store.dispatch("fetchNews/getPhotoNewsBySlug", {
         id: params.index,
         header: {
           headers: {

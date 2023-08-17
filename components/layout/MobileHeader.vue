@@ -321,7 +321,7 @@
           <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
             <a-form-model-item
               class="form-item mb-0 w-100 auth-form"
-              label="Номер телефона"
+              :label="$store.state.translations['main.phone_number']"
               prop="phone_number"
             >
               <the-mask
@@ -355,7 +355,10 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                :label="$store.state.translations['main.phone_number']"
+              >
                 <the-mask
                   v-model="formSms.phone_number"
                   class="w-100 disabled"
@@ -1116,7 +1119,7 @@ export default {
       this.visibleSearch = false;
     },
     submit() {
-      this.$router.push(`/search/${this.searchValue}`);
+      this.$router.push(localePath(`/search/${this.searchValue}`));
       this.visibleSearch = false;
     },
     dropAction(val) {
@@ -1234,13 +1237,13 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogOut", {
           refresh_token: refreshToken,
         });
-        this.$router.push(localePath("/"));
+        this.$router.push(this.localePath("/"));
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
         if (e.response.status == 401) {
-          this.$router.push(localePath("/"));
+          this.$router.push(this.localePath("/"));
           localStorage.removeItem("access_token");
           localStorage.removeItem("refresh_token");
           this.$store.commit("chackAuth");

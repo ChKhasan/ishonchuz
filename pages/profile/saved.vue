@@ -182,10 +182,7 @@ export default {
 };
 </script>
 <style lang="css">
-.profile-grid {
-  display: grid;
-  grid-template-columns: 3.3fr 10.7fr;
-}
+
 
 .profile-saved_title {
   color: var(--white_ffffff, #020105);
@@ -207,7 +204,23 @@ export default {
   background: var(--black_000000, #fff);
   padding: 50px 65px;
 }
-
+@media (max-width: 992px) {
+  .saved-books-grid {
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+  }
+  .profile-saved {
+    padding: 32px 40px;
+  }
+}
+@media (max-width: 992px) {
+  .saved-books-grid {
+    margin-top: 20px;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+  }
+}
 @media (max-width: 576px) {
   .profile-saved {
     padding: 20px;
@@ -217,9 +230,9 @@ export default {
     grid-template-columns: 1fr;
     grid-gap: 16px;
   }
-  .profile-grid {
+  /* .profile-grid {
     grid-template-columns: 1fr;
-  }
+  } */
 
   .profile-saved_title {
     font-size: 19px;

@@ -54,17 +54,18 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogOut", {
           refresh_token: refreshToken,
         });
-        this.$router.push(localePath('/'));
+        this.$router.push(this.localePath("/"));
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
-        if (e.response.status == 401) {
-          this.$router.push(localePath('/'));
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          this.$store.commit("chackAuth");
-        }
+        console.log(e);
+        // if (e.response.status == 401) {
+        //   this.$router.push(this.localePath("/"));
+        //   localStorage.removeItem("access_token");
+        //   localStorage.removeItem("refresh_token");
+        //   this.$store.commit("chackAuth");
+        // }
       }
     },
   },
@@ -128,5 +129,32 @@ export default {
 .profile-menu ul li:hover div > span svg path,
 .active-profile-menu a span svg path {
   fill: #fff !important;
+}
+@media (max-width: 992px) {
+  .profile-menu {
+    padding: 28px;
+  }
+}
+@media (max-width: 576px) {
+  .profile-menu {
+    padding: 20px;
+  }
+  .profile-menu ul a span,
+  .profile-menu ul div span {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+  }
+  .profile-menu ul a,
+  .profile-menu ul div {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%; /* 21px */
+  }
+  .profile-menu ul a span svg,
+  .profile-menu ul div span svg {
+    width: 12px;
+    height: 12px;
+  }
 }
 </style>

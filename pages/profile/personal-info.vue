@@ -111,7 +111,10 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item class="form-item mb-0 w-100" label="Номер телефона">
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                :label="$store.state.translations['main.phone_number']"
+              >
                 <the-mask
                   v-model="formSms.phone_number"
                   class="w-100"
@@ -277,7 +280,12 @@ export default {
         localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
         this.$store.commit("chackAuth");
         this.__GET_PROFILE_DATA();
-      } catch (e) {}
+      } catch (e) {
+        this.$router.push(this.localePath("/"));
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
+      }
     },
     async __GET_PROFILE_DATA() {
       try {
@@ -302,22 +310,20 @@ export default {
         const data = await this.$store.dispatch("fetchAuth/postLogOut", {
           refresh_token: refreshToken,
         });
-        this.$router.push(localePath('/'));
+        this.$router.push(this.localePath("/"));
         localStorage.removeItem("access_token");
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
-        if (e.response.status == 401) {
-          this.$router.push(localePath('/'));
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          this.$store.commit("chackAuth");
-        }
+        this.$router.push(this.localePath("/"));
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        this.$store.commit("chackAuth");
       }
     },
     middlewareAuth() {
       if (!localStorage.getItem("access_token")) {
-        this.$router.push(localePath('/'));
+        this.$router.push(this.localePath("/"));
       } else {
         this.loading = false;
       }
@@ -394,11 +400,11 @@ export default {
 .profile-page {
   padding-bottom: 100px;
 }
-.profile-grid {
+/* .profile-grid {
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
   grid-gap: 30px;
-}
+} */
 .profile-settings {
   padding: 51px 65px;
   border: 1px solid var(--gray_292929, #e7e7e7);
@@ -446,12 +452,31 @@ export default {
   right: 8px;
   cursor: pointer;
 }
+@media (max-width: 992px) {
+  .profile-settings {
+    padding: 32px 40px;
+    border-radius: 8px;
+  }
+  .profile-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .profile-form-grid {
+    padding-top: 20px;
+  }
+}
+@media (max-width: 768px) {
+  .profile-settings h5 {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 170%; /* 32.3px */
+  }
+}
 @media (max-width: 576px) {
   .profile-settings {
     padding: 20px;
     border-radius: 8px;
   }
-  .profile-form-grid {
+  /* .profile-form-grid {
     padding-top: 20px;
     grid-template-columns: 1fr;
     grid-column-gap: 20px;
@@ -459,9 +484,9 @@ export default {
   }
   .profile-settings h5 {
     font-size: 19px;
-  }
-  .profile-grid {
+  } */
+  /* .profile-grid {
     grid-template-columns: 1fr;
-  }
+  } */
 }
 </style>

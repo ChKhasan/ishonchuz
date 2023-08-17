@@ -223,9 +223,10 @@ export default {
   },
 
   mounted() {
+    console.log(this.$route);
     if (Object.keys(this.$route.query).length == 0) {
       this.$router.replace({
-        path: `/news-menu/${this.$route.params.index}`,
+        path: this.$route.path,
         query: {
           page: 1,
         },
