@@ -389,7 +389,7 @@ export default {
 
   async asyncData({ store, params, i18n }) {
     const [newsData, topicNewsData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchNews/getPhotoNewsBySlug", {
+      store.dispatch("fetchNews/getNewsBySlug", {
         id: params.index,
         header: {
           headers: {

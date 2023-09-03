@@ -146,7 +146,9 @@
                   {{ $store.state.translations["main.about_us"] }}
                 </div>
                 <div class="right-banner">
-                  <img src="../assets/images/Снимок экрана (926).png" alt="" />
+                  <a :href="banners[0]?.link">
+                    <img :src="banners[0]?.image" alt="" />
+                  </a>
                 </div>
               </div>
             </div>
@@ -261,8 +263,10 @@
                   </div>
                 </div>
                 <div class="block2">
-                  <div class="right-banner">
-                    <img src="../assets/images/Снимок экрана (926).png" alt="" />
+                  <div class="right-banner" v-if="banners[1]?.image">
+                    <a :href="banners[1]?.link">
+                      <img :src="banners[1]?.image" alt="" />
+                    </a>
                   </div>
                 </div>
               </div>
@@ -292,8 +296,10 @@
                     <div class="swiper-pagination-banner-right"></div>
                   </div>
                   <div>
-                    <div class="right-banner mobile_banner">
-                      <img src="../assets/images/Снимок экрана (926).png" alt="" />
+                    <div class="right-banner mobile_banner" v-if="banners[1]?.image">
+                      <a :href="banners[1]?.link">
+                        <img :src="banners[1]?.image" alt="" />
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -459,7 +465,9 @@
               {{ $store.state.translations["main.about_us"] }}
             </div>
             <div class="right-banner">
-              <img :src="banners[0]?.image" alt="" />
+              <a :href="banners[0]?.link">
+                <img :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <TitleComp
@@ -593,7 +601,7 @@ export default {
         },
       }),
       store.dispatch("fetchNews/getNews", {
-        params: { page_size: 4 },
+        params: { page_size: 6, last_news: false },
         headers: {
           Language: i18n.locale,
         },
@@ -722,6 +730,7 @@ export default {
 </script>
 <style lang="css">
 @import "../assets/css/pages/home-page.css";
+
 .heightAuto {
   max-height: 500px !important;
   transition: max-height 0.4s ease-in !important;
