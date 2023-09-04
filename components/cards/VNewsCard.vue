@@ -12,6 +12,14 @@
       >
       </iframe> -->
       <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
+      <div
+        class="video-banner"
+        v-if="videoShow && news?.video"
+        @click="$router.push(localePath(`/news/${news?.slug}`))"
+        :style="`background-image: url(${news?.youtube_image})`"
+      >
+        <div v-html="video"></div>
+      </div>
       <img v-else :src="news?.image" alt="" />
       <img
         v-if="!news?.video && !news?.image"
@@ -37,14 +45,36 @@ export default {
   props: ["news"],
   data() {
     return {
+      videoShow: true,
       comments: require("../../assets/svg/comments.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
+      video: require("../../assets/svg/video.svg?raw"),
     };
   },
 };
 </script>
 <style lang="css">
+.video-banner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.video-banner div {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.53);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 .v-news-card {
   padding: 10px;
   display: grid;
@@ -88,6 +118,7 @@ export default {
   position: absolute;
   left: 0;
   bottom: 10px;
+  z-index: 100;
 }
 .v-news-card-body {
   display: flex;

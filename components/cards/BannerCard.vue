@@ -3,6 +3,14 @@
     <div class="banner-card">
       <div class="banner-card-img">
         <LazyYoutube v-if="topNews?.video" ref="lazyVideo" :src="topNews?.video" />
+        <div
+          class="video-banner"
+          v-if="topNews?.video"
+          @click="$router.push(localePath(`/news/${topNews?.slug}`))"
+          :style="`background-image: url(${topNews?.youtube_image})`"
+        >
+          <div v-html="video"></div>
+        </div>
         <!-- <iframe
           v-if="topNews?.video"
           class="responsive-iframe"
@@ -45,11 +53,35 @@ export default {
       comments: require("../../assets/svg/comments.svg?raw"),
       view: require("../../assets/svg/view.svg?raw"),
       date: require("../../assets/svg/date.svg?raw"),
+      video: require("../../assets/svg/video.svg?raw"),
     };
+  },
+  mounted() {
+    console.log(this.topNews);
   },
 };
 </script>
 <style lang="css">
+.video-banner {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  top: 0;
+}
+.video-banner div {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.53);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 .banner-card {
   padding: 12px;
   display: grid;
@@ -94,6 +126,7 @@ export default {
   left: 0;
   bottom: 12px;
   background: var(--card_badges_bg);
+  z-index: 100;
 }
 .banner-card_text a {
   font-family: var(--ROBOTO_SERIF);

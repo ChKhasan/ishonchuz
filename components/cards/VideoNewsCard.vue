@@ -23,9 +23,10 @@
       <div
         class="video-banner"
         v-if="videoShow"
+        @click="$router.push(localePath(`/news/${news?.slug}`))"
         :style="`background-image: url(${news?.youtube_image})`"
       >
-        <div @click="handleClick('playVideo')" v-html="video"></div>
+        <div v-html="video"></div>
       </div>
     </div>
     <div class="video-news-card-body">
