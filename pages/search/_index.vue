@@ -53,7 +53,9 @@
         <div class="search-page-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
-              <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+              <a :href="banners[0]?.link">
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <TitleComp
@@ -66,7 +68,9 @@
           </div>
 
           <div class="right-banner">
-            <img src="../../assets/images/Снимок экрана (926).png" alt="" />
+            <a :href="banners[1]?.link">
+              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            </a>
           </div>
         </div>
       </div>
@@ -86,7 +90,9 @@
         <div v-if="newsSearch?.length == 0">
           <div class="messangers-container">
             <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-            <div class="follow-us-message">FOLLOW US!</div>
+            <div class="follow-us-message">
+              {{ $store.state.translations["main.follow-us"] }}
+            </div>
             <div class="messanger-icons">
               <a
                 v-if="$store.state.siteInfo['telegram']"
@@ -154,7 +160,7 @@ export default {
     }
   },
   async asyncData({ store, params, i18n, query }) {
-    const [searchData, importantNewsData] = await Promise.all([
+    const [searchData, importantNewsData, bannersData] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
         params: { search: params.index, page_size: 18, page: query.page },
         headers: {
@@ -167,17 +173,24 @@ export default {
           Language: i18n.locale,
         },
       }),
+      store.dispatch("fetchBanners/getBanners", {
+        headers: {
+          Language: i18n.locale,
+        },
+      }),
     ]);
     const newsSearch = searchData.results;
     const totalCount = searchData.count;
     const importantNews = importantNewsData.results;
     const searchVal = params.index;
+    const banners = bannersData.results;
 
     return {
       newsSearch,
       importantNews,
       searchVal,
       totalCount,
+      banners,
     };
   },
 

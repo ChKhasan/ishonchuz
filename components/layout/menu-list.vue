@@ -685,7 +685,7 @@ export default {
       return currentW;
     },
     submit() {
-      this.$router.push(localePath(`/search/${this.searchValue}`));
+      this.$router.push(this.localePath(`/search/${this.searchValue}`));
       this.visibleSearch = false;
     },
     onSubmit() {
@@ -988,9 +988,7 @@ export default {
 .vmodal-header span svg path {
   stroke: var(--modal_exit_btn);
 }
-.vmodal-body {
-  padding: 36px 40px;
-}
+
 .auth-btn {
   background: #0192ff;
   border-radius: 4px;
@@ -1027,12 +1025,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.vmodal-footer__book {
-  padding: 0 40px 40px 42px;
-  display: flex;
-  justify-content: flex-start;
-  gap: 17px;
-}
+
 .modal-form-grid {
   display: grid;
   grid-template-columns: 1fr;

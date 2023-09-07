@@ -23,8 +23,9 @@
 } */
 .about-us-container,
 .engineers-container {
-  width: 61%;
+  width: 78%;
 }
+
 .about-us-container h2,
 .engineers-container h2 {
   color: var(--gray_f9f9f9, #000);

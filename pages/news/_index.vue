@@ -165,7 +165,9 @@
         <div class="home-page-right col-3 p-0 news-page-right">
           <div class="block2">
             <div class="right-banner">
-              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[0]?.link">
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <TitleComp
@@ -176,7 +178,9 @@
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
-            <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            <a :href="banners[1]?.link">
+              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            </a>
           </div>
         </div>
       </div>
@@ -242,7 +246,7 @@
                 >
               </div>
             </div>
-            <div class="comments-list">
+            <div class="comments-list" v-if="news?.comments.length > 0">
               <h4>
                 {{ $store.state.translations["news.comments_title"] }} ({{
                   news?.comments.length
@@ -271,21 +275,6 @@
                   news?.comments.length - 3
                 }})
               </div>
-            </div>
-            <TitleComp
-              :link="false"
-              :title="$store.state.translations['news.on_subject']"
-            />
-
-            <div class="flex items-center justify-center">
-              <div class="swiper-news-mobile" style="overflow: hidden; width: 337px">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide" v-for="news in topicNews" :key="news?.id">
-                    <VNewsCard :news="news" />
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-pagination-banner-right"></div>
             </div>
           </div>
         </a-form-model>
@@ -326,6 +315,18 @@
             </div>
           </div>
         </div>
+      </div>
+      <TitleComp :link="false" :title="$store.state.translations['news.on_subject']" />
+
+      <div class="flex items-center justify-center container_xl">
+        <div class="swiper-news-mobile" style="overflow: hidden">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
+              <VNewsCard :news="news" />
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination-banner-right"></div>
       </div>
     </div>
   </div>
@@ -377,14 +378,36 @@ export default {
     };
   },
   mounted() {
-    this.$store.commit("viewNewsStore", { id: this.news?.id });
-    const swiperRight = new Swiper(".swiper-news-mobile", {
-      flipEffect: {
-        slideShadows: false,
+    this.$store.dispatch("fetchNews/getNewsBySlug", {
+      id: this.$route.params.index,
+      header: {
+        headers: {
+          Language: this.$i18n.locale,
+        },
       },
+    }),
+      this.$store.commit("viewNewsStore", { id: this.news?.id });
+    const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
+      spaceBetween: 16,
       pagination: false,
+      autoplay: {
+        delay: 40000,
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+      },
     });
+    // const swiperRight = new Swiper(".swiper-news-mobile", {
+    //   flipEffect: {
+    //     slideShadows: false,
+    //   },
+    //   slidesPerView: 1,
+    //   pagination: false,
+    // });
   },
 
   async asyncData({ store, params, i18n }) {

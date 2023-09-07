@@ -60,7 +60,9 @@
           </div>
           <div class="messangers-container">
             <h5>{{ $store.state.translations["main.follow_us_text"] }}</h5>
-            <div class="follow-us-message">FOLLOW US!</div>
+            <div class="follow-us-message">
+              {{ $store.state.translations["main.follow-us"] }}
+            </div>
             <div class="messanger-icons">
               <a
                 v-if="$store.state.siteInfo['telegram']"
@@ -93,12 +95,16 @@
         <div class="home-page-right news-page-right col-3 p-0">
           <div class="block1">
             <div class="right-banner mt-0">
-              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[0]?.link">
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <div class="block2">
             <div class="right-banner">
-              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+              <a :href="banners[1]?.link">
+                <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+              </a>
             </div>
           </div>
         </div>

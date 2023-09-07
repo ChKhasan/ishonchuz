@@ -170,7 +170,9 @@
         <div class="home-page-right col-3 p-0 news-page-right">
           <div class="block2">
             <div class="right-banner">
-              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[0]?.link">
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <TitleComp
@@ -181,7 +183,9 @@
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
-            <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            <a :href="banners[1]?.link">
+              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            </a>
           </div>
         </div>
       </div>
@@ -247,7 +251,7 @@
                 >
               </div>
             </div>
-            <div class="comments-list">
+            <div class="comments-list" v-if="news?.comments.length > 0">
               <h4>
                 {{ $store.state.translations["news.comments_title"] }} ({{
                   news?.comments.length

@@ -153,7 +153,7 @@ export default {
   line-height: 150%;
   color: var(--text_color);
   overflow: hidden;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;
   display: -webkit-box;
   text-overflow: ellipsis;

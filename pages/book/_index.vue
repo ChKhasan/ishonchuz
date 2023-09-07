@@ -670,6 +670,37 @@ export default {
 .comments-mobile {
   display: none;
 }
+.auth-btn {
+  background: #0192ff;
+  border-radius: 4px;
+  padding: 14px 83px;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer;
+}
+.auth-btn__outline {
+  background: transparent;
+  border-radius: 4px;
+  padding: 14px 0;
+  width: 201px;
+  display: flex;
+  justify-content: center;
+  font-family: var(--ROBOTO_SERIF);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: #0192ff;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid var(--light-bue-100, #0192ff);
+}
 @media (max-width: 1024px) {
   .book-body {
     width: 100%;

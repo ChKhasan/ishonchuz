@@ -32,7 +32,9 @@
         <div class="home-page-right all-news-right col-3 p-0">
           <div class="block2">
             <div class="right-banner">
-              <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[0]?.link">
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              </a>
             </div>
           </div>
           <TitleComp :link="false" title="Barcha yangliklar" />
@@ -40,7 +42,9 @@
             <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
           </div>
           <div class="right-banner">
-            <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            <a :href="banners[1]?.link">
+              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+            </a>
           </div>
         </div>
       </div>

@@ -17,7 +17,7 @@
       </div>
       <div class="engineers-container">
         <h2>{{ article?.title }}</h2>
-        <div class="engineers-container" v-html="article?.text"></div>
+        <div class="" v-html="article?.text"></div>
       </div>
     </div>
   </div>

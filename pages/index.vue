@@ -147,7 +147,7 @@
                 </div>
                 <div class="right-banner">
                   <a :href="banners[0]?.link">
-                    <img :src="banners[0]?.image" alt="" />
+                    <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
                   </a>
                 </div>
               </div>
@@ -265,7 +265,7 @@
                 <div class="block2">
                   <div class="right-banner" v-if="banners[1]?.image">
                     <a :href="banners[1]?.link">
-                      <img :src="banners[1]?.image" alt="" />
+                      <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
                     </a>
                   </div>
                 </div>
@@ -466,7 +466,7 @@
             </div>
             <div class="right-banner">
               <a :href="banners[0]?.link">
-                <img :src="banners[0]?.image" alt="" />
+                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
               </a>
             </div>
           </div>
@@ -649,7 +649,6 @@ export default {
     const banners = bannersData.results;
     const audio = audioData.results;
     const photoNews = photoNewsData.results;
-    console.log(videoNews);
     const audioList = audio.map((item) => {
       return {
         ...item,
@@ -657,7 +656,6 @@ export default {
         url: item.file,
       };
     });
-    console.log(audio);
     return {
       news,
       topNews,
