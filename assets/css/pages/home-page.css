@@ -114,12 +114,6 @@ h6 {
 .home-page {
   padding-bottom: 80px;
 }
-.home-page-grid:first-child {
-  /* padding-right: 30px; */
-  /* display: grid;
-  grid-template-columns: 10.7fr 3.37fr;
-  grid-gap: 30px; */
-}
 .home-page-right-title {
   padding: 10px 32px;
   font-family: var(--ROBOTO_SERIF);

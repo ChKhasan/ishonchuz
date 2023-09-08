@@ -7,7 +7,7 @@
       <p>{{ $store.state.translations["main.tg_card_text"] }}</p>
     </div>
     <div class="right-tg-card_footer">
-      <a href="#" class="to-tg-btn"
+      <a :href="$store.state.siteInfo.telegram" class="to-tg-btn"
         ><span v-html="tg"></span> {{ $store.state.translations["main.tg_card_link"] }}</a
       >
     </div>
