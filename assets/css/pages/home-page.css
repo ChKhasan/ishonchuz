@@ -255,6 +255,10 @@ h6 {
   font-weight: 500;
   font-size: 14px;
   line-height: 150%;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: unset;
 }
 .news-breadcrumb a:last-child span {
   display: none;

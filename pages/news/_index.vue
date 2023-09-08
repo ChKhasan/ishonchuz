@@ -316,17 +316,27 @@
           </div>
         </div>
       </div>
-      <TitleComp :link="false" :title="$store.state.translations['news.on_subject']" />
-
-      <div class="flex items-center justify-center container_xl">
-        <div class="swiper-news-mobile" style="overflow: hidden">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
-              <VNewsCard :news="news" />
+      <div>
+        <div class="comment-container-grid">
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['news.on_subject']"
+          />
+          <span></span>
+        </div>
+        <div
+          class="flex items-center justify-center container_xl comment-container-grid mt-3"
+          style="min-width: 0"
+        >
+          <div class="swiper-news-mobile" style="overflow: hidden">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
+                <VNewsCard :news="news" />
+              </div>
             </div>
           </div>
+          <div class="swiper-pagination-banner-right"></div>
         </div>
-        <div class="swiper-pagination-banner-right"></div>
       </div>
     </div>
   </div>
@@ -391,6 +401,9 @@ export default {
       slidesPerView: 1,
       spaceBetween: 16,
       pagination: false,
+      visibilityFullFit: true,
+      autoResize: false,
+      loopedSlides: 3,
       autoplay: {
         delay: 40000,
       },

@@ -162,7 +162,6 @@
   margin-bottom: 28px;
 }
 @media screen and (max-width: 1024px) {
-
   .comment-container-grid {
     display: grid;
     grid-template-columns: 5fr 3fr;
@@ -213,6 +212,11 @@
     font-size: 16px;
     font-weight: 500;
     line-height: 130%; /* 20.8px */
+  }
+}
+@media (max-width: 576px) {
+  .comment-container-grid {
+    grid-template-columns: 1fr;
   }
 }
 @media (max-width: 360px) {
