@@ -15,7 +15,17 @@
       <div
         class="video-banner"
         v-if="videoShow && news?.video"
-        @click="$router.push(localePath(`/news/${news?.slug}`))"
+        @click="
+          $router.push(
+            localePath(
+              `${
+                $route.path.includes('photo_news')
+                  ? `/photo_news/${news?.slug}`
+                  : `news/${news?.slug}`
+              }`
+            )
+          )
+        "
         :style="`background-image: url(${news?.youtube_image})`"
       >
         <div v-html="video"></div>
@@ -29,7 +39,17 @@
       <span> {{ news?.category?.title }} </span>
     </div>
     <div class="v-news-card-body">
-      <nuxt-link :to="localePath(`/news/${news?.slug}`)">
+      <nuxt-link
+        :to="
+          localePath(
+            `${
+              $route.path.includes('photo_news')
+                ? `/photo_news/${news?.slug}`
+                : `news/${news?.slug}`
+            }`
+          )
+        "
+      >
         {{ news?.title }}
       </nuxt-link>
       <div class="v-news-card-info">

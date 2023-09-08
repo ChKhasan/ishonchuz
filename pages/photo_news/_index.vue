@@ -112,56 +112,7 @@
                 :src="image?.image"
               />
             </div>
-            <div class="news-container-body" v-html="news?.text">
-              <!-- <p class="news-container-text" v-html="news?.text"></p> -->
-              <!-- <div class="article-card">
-                  <div class="article-card-text">
-                    <p>
-                      O‘zbekiston kasaba uyushmalari Federatsiyasining viloyat kengashi
-                      tomonidan Sojida Jo‘rayevani o‘z lavozimiga tiklash haqida kiritilgan
-                      taqdimnoma eʼtiborsiz qoldirilgach, fuqarolik ishlari bo‘yicha Jizzax
-                      tumanlararo sudiga daʼvo arizasi yo‘llandi. Lekin 2022 yilning 30
-                      avgustida sudning hal qiluv qaroriga ko‘ra, daʼvo qanoatlantirilmadi.
-                    </p>
-                  </div>
-                  <h6>O‘zbekiston Respublikasi Konstitutsiyasi 124-modda</h6>
-                </div>
-                <h1>Viloyat kengashi</h1>
-                <div class="news-container-desc">
-                  <p class="news-container-text">
-                    Viloyat kengashining mehnat huquq inspektori bilan hamkorlikda ariza
-                    o‘rganildi. Aniqlanishicha, S.Jo‘rayeva Jizzax viloyati xalq taʼlimi
-                    boshqarmasining 2017 yil 18 dekabrdagi buyrug‘iga ko‘ra, Jizzax
-                    shahridagi 16-maktab direktori vazifasiga ishga qabul qilingan. 2022 yil
-                    30 iyundagi buyruqqa asosan u bilan tuzilgan mehnat shartnomasi bekor
-                    qilingan. Buyruq Xalq deputatlari Jizzax shahar kengashining qarori,
-                    ichki tartib-qoidalardan kelib chiqqan holda <span>chiqarilgan</span>.
-                  </p>
-                  <div>...</div>
-                  <p class="news-container-text">
-                    Viloyat kengashining mehnat huquq inspektori bilan hamkorlikda ariza
-                    o‘rganildi. Aniqlanishicha, S.Jo‘rayeva Jizzax viloyati xalq taʼlimi
-                    boshqarmasining 2017 yil 18 dekabrdagi buyrug‘iga ko‘ra, Jizzax
-                    shahridagi 16-maktab direktori vazifasiga ishga qabul qilingan. 2022 yil
-                    30 iyundagi buyruqqa asosan u bilan tuzilgan mehnat shartnomasi bekor
-                    qilingan. Buyruq Xalq deputatlari Jizzax shahar kengashining qarori,
-                    ichki tartib-qoidalardan kelib chiqqan holda <span>chiqarilgan</span>.
-                  </p>
-                </div>
-                <div class="decree-card">
-                  <div>
-                    <p>
-                      O‘zbekiston kasaba uyushmalari Federatsiyasining viloyat kengashi
-                      tomonidan Sojida Jo‘rayevani o‘z lavozimiga tiklash haqida kiritilgan
-                      taqdimnoma eʼtiborsiz qoldirilgach, fuqarolik ishlari bo‘yicha Jizzax
-                      tumanlararo sudiga daʼvo arizasi yo‘llandi.
-                    </p>
-                  </div>
-                  <h6>
-                    <span>O‘zbekiston Respublikasi Prezindenti </span>Shavkat Mirziyoyev
-                  </h6>
-                </div> -->
-            </div>
+            <div class="news-container-body" v-html="news?.text"></div>
             <div class="news-container-links">
               <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
             </div>
@@ -283,21 +234,6 @@
                 }})
               </div>
             </div>
-            <TitleComp
-              :link="false"
-              :title="$store.state.translations['news.on_subject']"
-            />
-
-            <div class="flex items-center justify-center">
-              <div class="swiper-news-mobile" style="overflow: hidden; width: 337px">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide" v-for="news in topicNews" :key="news?.id">
-                    <VNewsCard :news="news" />
-                  </div>
-                </div>
-              </div>
-              <div class="swiper-pagination-banner-right"></div>
-            </div>
           </div>
         </a-form-model>
         <div>
@@ -336,6 +272,28 @@
               >
             </div>
           </div>
+        </div>
+      </div>
+      <div>
+        <div class="comment-container-grid">
+          <TitleComp
+            :link="false"
+            :title="$store.state.translations['news.on_subject']"
+          />
+          <span></span>
+        </div>
+        <div
+          class="flex items-center justify-center container_xl comment-container-grid mt-3"
+          style="min-width: 0"
+        >
+          <div class="swiper-news-mobile" style="overflow: hidden">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
+                <VNewsCard :news="news" />
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination-banner-right"></div>
         </div>
       </div>
     </div>
@@ -389,12 +347,22 @@ export default {
   },
   mounted() {
     this.$store.commit("viewNewsStore", { id: this.news?.id });
-    const swiperRight = new Swiper(".swiper-news-mobile", {
-      flipEffect: {
-        slideShadows: false,
-      },
+    const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
+      spaceBetween: 16,
       pagination: false,
+      visibilityFullFit: true,
+      autoResize: false,
+      loopedSlides: 3,
+      autoplay: {
+        delay: 40000,
+      },
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+      },
     });
   },
   // async mounted() {
