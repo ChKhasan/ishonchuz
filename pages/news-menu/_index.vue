@@ -93,18 +93,20 @@
           </div>
         </div>
         <div class="home-page-right news-page-right col-3 p-0">
-          <div class="block1">
-            <div class="right-banner mt-0">
-              <a :href="banners[0]?.link">
-                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
-              </a>
+          <div style="position: sticky; top: 30px">
+            <div class="block1">
+              <div class="right-banner mt-0">
+                <a :href="banners[0]?.link">
+                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                </a>
+              </div>
             </div>
-          </div>
-          <div class="block2">
-            <div class="right-banner">
-              <a :href="banners[1]?.link">
-                <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
-              </a>
+            <div class="block2">
+              <div class="right-banner">
+                <a :href="banners[1]?.link">
+                  <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
+                </a>
+              </div>
             </div>
           </div>
         </div>

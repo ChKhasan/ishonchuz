@@ -6,7 +6,7 @@
           <div class="all-news-page-container">
             <h3>{{ $store.state.translations["main.all_photo_news"] }}</h3>
             <div class="all-news-page-grid">
-              <AllNewsCard
+              <AllPhotoNewsCard
                 v-for="newsItem in news"
                 :key="newsItem?.id"
                 :news="newsItem"
@@ -28,22 +28,24 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right all-news-right col-3 p-0">
-          <div class="block2">
+        <div class="home-page-right all-news-right col-3 p-0 position-relative">
+          <div style="position: sticky; top: 30px">
+            <div class="block2">
+              <div class="right-banner">
+                <a :href="banners[0]?.link">
+                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                </a>
+              </div>
+            </div>
+            <TitleComp :link="false" title="Barcha yangliklar" />
+            <div class="right-news-list">
+              <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            </div>
             <div class="right-banner">
-              <a :href="banners[0]?.link">
-                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[1]?.link">
+                <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
               </a>
             </div>
-          </div>
-          <TitleComp :link="false" title="Barcha yangliklar" />
-          <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
-          </div>
-          <div class="right-banner">
-            <a :href="banners[1]?.link">
-              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
-            </a>
           </div>
         </div>
       </div>
@@ -54,8 +56,8 @@
 <script>
 import TitleComp from "../components/Title-comp.vue";
 import HNewsCard from "../components/cards/HNewsCard.vue";
-import AllNewsCard from "../components/cards/AllNewsCard.vue";
 import RightNewsCard from "../components/cards/RightNewsCard.vue";
+import AllPhotoNewsCard from "../components/cards/AllPhotoNewsCard.vue";
 
 export default {
   data() {
@@ -144,7 +146,7 @@ export default {
     HNewsCard,
     RightNewsCard,
     TitleComp,
-    AllNewsCard,
+    AllPhotoNewsCard,
   },
 };
 </script>

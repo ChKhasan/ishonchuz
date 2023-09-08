@@ -167,25 +167,27 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0 news-page-right">
-          <div class="block2">
+        <div class="home-page-right col-3 p-0 news-page-right position-relative">
+          <div style="position: sticky; top: 30px">
+            <div class="block2">
+              <div class="right-banner">
+                <a :href="banners[0]?.link">
+                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                </a>
+              </div>
+            </div>
+            <TitleComp
+              :link="false"
+              :title="$store.state.translations['main.active_topics']"
+            />
+            <div class="right-news-list">
+              <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            </div>
             <div class="right-banner">
-              <a :href="banners[0]?.link">
-                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[1]?.link">
+                <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
               </a>
             </div>
-          </div>
-          <TitleComp
-            :link="false"
-            :title="$store.state.translations['main.active_topics']"
-          />
-          <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
-          </div>
-          <div class="right-banner">
-            <a :href="banners[1]?.link">
-              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
-            </a>
           </div>
         </div>
       </div>

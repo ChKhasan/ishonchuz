@@ -29,22 +29,24 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right all-news-right col-3 p-0">
-          <div class="block2">
+        <div class="home-page-right all-news-right col-lg-3 p-0 position-relative">
+          <div style="position: sticky; top: 30px">
+            <div class="block2">
+              <div class="right-banner">
+                <a :href="banners[0]?.link">
+                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                </a>
+              </div>
+            </div>
+            <TitleComp :link="false" title="Barcha yangliklar" />
+            <div class="right-news-list">
+              <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+            </div>
             <div class="right-banner">
-              <a :href="banners[0]?.link">
-                <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+              <a :href="banners[1]?.link">
+                <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
               </a>
             </div>
-          </div>
-          <TitleComp :link="false" title="Barcha yangliklar" />
-          <div class="right-news-list">
-            <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
-          </div>
-          <div class="right-banner">
-            <a :href="banners[1]?.link">
-              <img v-if="banners[1]?.image" :src="banners[1]?.image" alt="" />
-            </a>
           </div>
         </div>
       </div>
