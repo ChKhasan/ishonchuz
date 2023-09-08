@@ -30,13 +30,19 @@
       >
         <div v-html="video"></div>
       </div>
-      <img v-else :src="news?.image" alt="" />
+      <img
+        v-else
+        :src="`${
+          $route.path.includes('photo_news') ? news?.images[0]?.image : news?.image
+        }`"
+        alt=""
+      />
       <img
         v-if="!news?.video && !news?.image"
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span> {{ news?.category?.title }} </span>
+      <span v-if="!$route.path.includes('photo_news')"> {{ news?.category?.title }} </span>
     </div>
     <div class="v-news-card-body">
       <nuxt-link
