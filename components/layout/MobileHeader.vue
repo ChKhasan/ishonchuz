@@ -1119,7 +1119,7 @@ export default {
       this.visibleSearch = false;
     },
     submit() {
-      this.$router.push(localePath(`/search/${this.searchValue}`));
+      this.$router.push(this.localePath(`/search/${this.searchValue}`));
       this.visibleSearch = false;
     },
     dropAction(val) {
