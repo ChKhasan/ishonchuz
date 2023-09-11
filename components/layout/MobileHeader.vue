@@ -1123,7 +1123,6 @@ export default {
       this.visibleSearch = false;
     },
     dropAction(val) {
-      console.log(":asdasdasds");
       if (val != this.dropVal) {
         this.dropVal = val;
       } else {
@@ -1145,7 +1144,6 @@ export default {
         if (valid) {
           this.__SEND_NUMBER(this.form);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -1173,14 +1171,12 @@ export default {
       if (!this.formSms.code) {
         this.formSms.code = "";
       }
-      console.log(this.$refs);
       this.$refs.ruleFormSms.validate((valid) => {
         if (valid) {
           this.responseTypes.smsCodeSuccess
             ? this.__LOGIN_REGISTER(data)
             : this.__CHECK_SMS_CODE(this.formSms);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -1193,7 +1189,6 @@ export default {
         this.form.phone_number = "";
         this.smsTimer = 45;
       } catch (e) {
-        console.log(e);
       }
     },
     async __CHECK_SMS_CODE(dataForm) {
@@ -1228,7 +1223,6 @@ export default {
           this.responseTypes.smsCodeSuccess = false;
           this.responseTypes.smsCodeError = true;
         }
-        console.log(e);
       }
     },
     async logOut() {
@@ -1262,7 +1256,6 @@ export default {
         // this.$router.push("/profile/personal-info");
       } catch (e) {
         this.responseTypes.smsCodeError = true;
-        console.log(e);
       }
     },
   },
@@ -1292,7 +1285,6 @@ export default {
         document.body.style.height = "auto";
         document.body.style.overflow = "auto";
       }
-      console.log(this.$route.path);
     },
     "$route.path"() {
       this.drawerVisible = false;
@@ -1300,7 +1292,6 @@ export default {
       this.profileMenu = false;
       document.body.style.height = "auto";
       document.body.style.overflow = "auto";
-      console.log("asdasdas");
     },
     visibleSms(val) {
       if (val) {

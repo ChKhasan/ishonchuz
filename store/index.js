@@ -7,7 +7,7 @@ export const state = () => ({
   viewNews: [],
   siteInfo: {},
   languages: [],
-  translationsChange: false
+  translationsChange: false,
 });
 
 export const mutations = {
@@ -40,7 +40,6 @@ export const mutations = {
     state.siteInfo = payload;
   },
   chackAuth(state, payload) {
-    console.log(localStorage.getItem("access_token"));
     if (localStorage.getItem("access_token")) {
       state.auth = true;
     } else {
@@ -58,7 +57,6 @@ export const mutations = {
     state[payload.name] = cart;
   },
   viewNewsStore(state, payload) {
-    console.log(payload);
     let cart = JSON.parse(localStorage.getItem("viewNews"));
     if (cart) {
       if (!cart.includes(payload.id)) {

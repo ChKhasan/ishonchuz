@@ -230,7 +230,6 @@ export default {
         });
         this.__GET_PROFILE_DATA();
       } catch (e) {
-        console.log(e);
       }
     },
     onSubmitSms() {
@@ -241,7 +240,6 @@ export default {
         if (valid) {
           this.__UPDATE_NUMBER(data);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -274,7 +272,6 @@ export default {
     },
     async __REFRESH_TOKEN() {
       try {
-        console.log("asdasdasdqwe2q421434");
         const data = await this.$store.dispatch("fetchAuth/postRefreshToken");
         localStorage.setItem("access_token", JSON.stringify(data.access));
         localStorage.setItem("refresh_token", JSON.stringify(data.refresh));
@@ -297,7 +294,6 @@ export default {
         this.form.phone_number = data?.phone_number;
       } catch (e) {
         if (e.response.status == 401) {
-          console.log("referesahdaSDASD");
           this.__REFRESH_TOKEN();
         } else {
           this.logOut();
@@ -340,7 +336,6 @@ export default {
         if (valid) {
           this.__UPDATE_PROFILE(data);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -369,7 +364,6 @@ export default {
       }
     },
     "formSms.phone_number"(val) {
-      console.log(val.length);
       if (val.length == 9) {
         this.__SEND_NUMBER();
       }

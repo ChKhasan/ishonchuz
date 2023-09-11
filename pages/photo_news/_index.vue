@@ -445,12 +445,10 @@ export default {
   methods: {
     submit() {
       this.form.news = this.news.id;
-      console.log(this.form);
       this.$refs.ruleFormComment.validate((valid) => {
         if (valid) {
           this.__POST_COMMENT(this.form);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -472,7 +470,6 @@ export default {
         });
         this.emptyForm();
       } catch (e) {
-        console.log(e);
       }
     },
   },

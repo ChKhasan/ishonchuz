@@ -44,7 +44,6 @@ export default {
         },
       }),
     ]);
-    console.log(theatersData);
     const theaters = theatersData.results;
     return {
       theaters,

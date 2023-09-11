@@ -155,7 +155,6 @@ export default {
         }
       );
       this.savedBooks = savedData;
-      console.log(savedData);
     },
 
     middlewareAuth() {

@@ -693,7 +693,6 @@ export default {
       }, 200);
     },
     processEnd(e) {
-      console.log(e, "asdasdasd");
     },
     handleBeforePlay(next) {
       // There are a few things you can do here...
@@ -717,7 +716,6 @@ export default {
       } else {
         this.dropVal = false;
       }
-      console.log(val, this.dropVal);
     },
   },
   components: {

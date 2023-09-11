@@ -437,7 +437,6 @@ export default {
       }),
     ]);
     this.weather = weatherData;
-    console.log(weatherData);
   },
   methods: {
     currentRegionChange(region) {
@@ -484,7 +483,6 @@ export default {
       });
     },
     onChange(checked) {
-      console.log(`a-switch to ${checked}`);
     },
   },
   watch: {

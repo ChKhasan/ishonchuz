@@ -231,7 +231,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$route);
     if (Object.keys(this.$route.query).length == 0) {
       this.$router.replace({
         path: this.$route.path,

@@ -91,7 +91,6 @@ export default {
       }),
     ]);
     const totalCount = newsData?.count;
-    console.log(totalCount);
     const news = newsData.results;
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;

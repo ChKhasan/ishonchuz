@@ -64,7 +64,6 @@ export default {
   },
   mounted() {
     const date = new Date();
-    console.log(date);
   },
 };
 </script>

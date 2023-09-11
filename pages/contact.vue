@@ -99,7 +99,6 @@ export default {
       }),
     ]);
     const contactInfo = contactInfoData;
-    console.log(contactInfo);
     return {
       contactInfo,
     };

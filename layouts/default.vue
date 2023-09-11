@@ -109,7 +109,6 @@ export default {
     this.currency = currencyData;
     this.columnist = columnistData;
     this.weather = weatherData;
-    console.log(languagesData?.results, "asdsasaf");
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getLanguages", languagesData?.results);
     this.$store.commit("getTranslations", translationsData);

@@ -697,7 +697,6 @@ export default {
         if (valid) {
           this.__SEND_NUMBER(this.form);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -714,7 +713,6 @@ export default {
             ? this.__LOGIN_REGISTER(data)
             : this.__CHECK_SMS_CODE(this.formSms);
         } else {
-          console.log("error submit!!");
           return false;
         }
       });
@@ -726,7 +724,6 @@ export default {
         this.visibleSms = true;
         this.form.phone_number = "";
       } catch (e) {
-        console.log(e);
       }
     },
     async login() {
@@ -787,7 +784,6 @@ export default {
         // this.$router.push("/profile/personal-info");
       } catch (e) {
         this.responseTypes.smsCodeError = true;
-        console.log(e);
       }
     },
 

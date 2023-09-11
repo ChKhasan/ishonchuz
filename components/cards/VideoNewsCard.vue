@@ -62,15 +62,12 @@ export default {
     handleClick(event) {
       this.$refs["lazyVideo"][event]();
       this.videoShow = false;
-      console.log(this.$refs["lazyVideo"]);
     },
     changeVideo(e) {
-      console.log(e);
     },
   },
   mounted() {
     // console.log(this.$refs["lazyVideo"]);
-    console.log(document.getElementsByClassName("ytp-gradient-top"));
   },
 };
 </script>

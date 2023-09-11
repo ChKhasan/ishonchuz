@@ -93,8 +93,6 @@ export default {
       }),
     ]);
     const galleries = galleriesData.results;
-    console.log(galleries);
-    console.log(galleriesData);
     return {
       galleries,
     };
