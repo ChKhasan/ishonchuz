@@ -355,8 +355,8 @@
             <NewsImagesCard v-for="news in photoNews" :key="news?.id" :news="news" />
           </div>
         </div>
-        <div class="home-page-right col-3 p-0 clear" style="position: relative;">
-          <div style="position: sticky; top: 30px;">
+        <div class="home-page-right col-3 p-0 clear" style="position: relative">
+          <div style="position: sticky; top: 30px">
             <div class="block1">
               <div
                 class="home-page-right-title"
@@ -692,8 +692,7 @@ export default {
         this.$refs.audioPlayerMobile.play();
       }, 200);
     },
-    processEnd(e) {
-    },
+    processEnd(e) {},
     handleBeforePlay(next) {
       // There are a few things you can do here...
       this.currentAudioName = this.audioList[
@@ -1174,10 +1173,15 @@ export default {
     grid-template-columns: 1fr;
   }
   .swiper-banner-right {
-    width: 100% !important;
+    width: 470px !important;
   }
   .mobile_banner {
     display: none;
+  }
+}
+@media (max-width: 420px) {
+  .swiper-banner-right {
+    width: 337px !important;
   }
 }
 </style>
