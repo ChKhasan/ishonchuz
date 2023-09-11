@@ -10,6 +10,11 @@
             <nuxt-link :to="localePath('/')"
               >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
             ></nuxt-link>
+            <nuxt-link
+              v-if="news?.category?.parent?.slug"
+              :to="localePath(`/news-menu/${news?.category?.parent?.slug}`)"
+              >{{ news?.category?.parent?.title }} <span v-html="dropdown"></span
+            ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
             ></nuxt-link>

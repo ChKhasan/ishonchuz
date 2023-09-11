@@ -22,7 +22,7 @@
       <div class="home-page-grid row">
         <div class="col-lg-9 col-md-12 p-0 home-page-left">
           <div class="" v-if="categories?.news?.length > 0">
-            <BannerCard :topNews="categories?.news[0]" />
+            <BannerCard :topNews="categories?.first_news" />
           </div>
           <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
             <VNewsCard
@@ -31,15 +31,8 @@
               :news="item"
             />
           </div>
-          <div
-            class="h-news-grid news-menu_news-list"
-            v-if="categories?.news?.length > 1"
-          >
-            <HNewsCard
-              v-for="news in categories?.news.filter((item, index) => index != 0)"
-              :key="news?.id"
-              :news="news"
-            />
+          <div class="h-news-grid news-menu_news-list">
+            <HNewsCard v-for="news in categories?.news" :key="news?.id" :news="news" />
           </div>
           <!-- <div class="right-show-more">{{ $store.state.translations["main.more"] }}</div> -->
           <div class="spinner mt-4 d-flex justify-content-center w-100" v-if="loading">

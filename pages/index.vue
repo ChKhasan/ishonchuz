@@ -595,7 +595,7 @@ export default {
       photoNewsData,
     ] = await Promise.all([
       store.dispatch("fetchNews/getNews", {
-        params: { last_news: true, page_size: 6 },
+        params: { last_news: true, page_size: 6, page: 1 },
         headers: {
           Language: i18n.locale,
         },
@@ -607,7 +607,7 @@ export default {
         },
       }),
       store.dispatch("fetchNews/getNews", {
-        params: { page_size: 6, last_news: false },
+        params: { page_size: 6, page: 2, top: true },
         headers: {
           Language: i18n.locale,
         },
