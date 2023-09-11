@@ -373,7 +373,7 @@ export default {
     line-height: 150%;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .search-page-grid {
     grid-template-columns: 1fr;
     margin-bottom: 50px;

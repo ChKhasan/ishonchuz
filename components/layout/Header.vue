@@ -1197,7 +1197,7 @@ export default {
     margin-left: 16px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .weather__modal {
     display: none !important;
   }

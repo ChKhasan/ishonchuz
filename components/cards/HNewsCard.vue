@@ -138,7 +138,7 @@ export default {
     height: 93px;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .h-news-card {
     grid-template-columns: 96px auto;
   }

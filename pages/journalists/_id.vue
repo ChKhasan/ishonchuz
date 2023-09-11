@@ -704,7 +704,7 @@ export default {
     grid-template-columns: 1fr;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .left {
     padding-left: 0;
     padding-right: 0;

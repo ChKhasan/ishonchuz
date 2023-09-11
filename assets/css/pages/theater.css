@@ -24,7 +24,7 @@
     grid-gap: 20px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .theater_title {
     margin-bottom: 26px;
   }

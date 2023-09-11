@@ -183,7 +183,7 @@ export default {
     margin-top: 55px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .journalists-card {
     padding: 15px;
   }

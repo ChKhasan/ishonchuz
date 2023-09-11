@@ -158,7 +158,7 @@ export default {
     grid-gap: 20px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .journalists_container {
     margin-top: 0;
     margin-bottom: 40px;

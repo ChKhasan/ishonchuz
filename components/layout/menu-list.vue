@@ -1279,7 +1279,7 @@ export default {
     line-height: 130%;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .weather__currentText_mobile h1 {
     font-size: 44px !important;
   }

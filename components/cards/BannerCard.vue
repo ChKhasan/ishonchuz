@@ -272,7 +272,7 @@ export default {
     flex-direction: column;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .banner-card-img {
     height: 172px;
   }

@@ -62,7 +62,7 @@ export default {
 .newspaper-date-mobile {
   display: none;
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .newspaper-image {
     height: 216px;
   }

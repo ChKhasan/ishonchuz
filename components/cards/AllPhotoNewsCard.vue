@@ -139,7 +139,7 @@ export default {
     display: flex;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .all-news-card-info > span {
     margin-left: 13px;
   }

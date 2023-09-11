@@ -76,7 +76,7 @@ export default {
     font-size: 19px;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .title-comp {
     padding-bottom: 15px;
   }

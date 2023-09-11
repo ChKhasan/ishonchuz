@@ -898,7 +898,7 @@ export default {
     line-height: 150%;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .news-container-messangers-mobile {
     display: block;
   }

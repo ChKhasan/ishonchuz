@@ -366,7 +366,7 @@ export default {
     gap: 16px;
   }
 }
-@media (max-width: 390px) {
+@media (max-width: 421px) {
   .footer-menu__mobile ul {
     display: grid;
     grid-template-columns: 1fr 1fr;

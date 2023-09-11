@@ -735,7 +735,7 @@ ul {
     padding: 24px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .socials__mobile a svg {
     height: 24px;
   }

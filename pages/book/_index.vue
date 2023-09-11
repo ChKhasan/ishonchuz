@@ -929,7 +929,7 @@ export default {
     border-radius: 8px !important;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .primary_btn,
   .outline_btn {
     font-size: 14px;

@@ -170,7 +170,7 @@ export default {
     grid-gap: 20px;
   }
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .newspaper-page-container {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 20px;

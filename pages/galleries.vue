@@ -174,7 +174,7 @@ export default {
   margin-top: 8px;
   color: #aaa;
 }
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .galleries-page-header {
     display: flex;
     justify-content: center;

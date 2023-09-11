@@ -181,7 +181,7 @@ export default {
   display: flex;
   border-bottom: 1px dashed var(--black_414141, #e7e7e7);
 } */
-@media (max-width: 360px) {
+@media (max-width: 420px) {
   .theater-card-image {
     height: 166px;
     width: 100%;
