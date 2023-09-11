@@ -42,20 +42,18 @@
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span v-if="!$route.path.includes('photo_news')"> {{ news?.category?.title }} </span>
+      <span v-if="!$route.path.includes('photo_news')">
+        {{ news?.category?.title }}
+      </span>
     </div>
     <div class="v-news-card-body">
       <nuxt-link
-        :to="
-          localePath(
-            `${
-              $route.path.includes('photo_news')
-                ? `/photo_news/${news?.slug}`
-                : `news/${news?.slug}`
-            }`
-          )
-        "
+        v-if="$route.path.includes('photo_news')"
+        :to="localePath(`/photo_news/${news?.slug}`)"
       >
+        {{ news?.title }}
+      </nuxt-link>
+      <nuxt-link v-else :to="localePath(`/news/${news?.slug}`)">
         {{ news?.title }}
       </nuxt-link>
       <div class="v-news-card-info">
