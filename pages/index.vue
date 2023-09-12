@@ -272,17 +272,14 @@
               </div>
             </div>
             <div class="topic_grid">
-              <div>
+              <div class="d-flex flex-column w-100" style="overflow: hidden">
                 <TitleComp
                   :link="false"
                   :title="$store.state.translations['main.editor_choice']"
                 />
                 <div class="mt-3 mb-5">
-                  <div class="flex items-center justify-center">
-                    <div
-                      class="swiper-banner-right"
-                      style="overflow: hidden; width: 337px"
-                    >
+                  <div style="min-width: 0">
+                    <div class="swiper-banner-right" style="overflow: hidden">
                       <div class="swiper-wrapper">
                         <div
                           class="swiper-slide"
@@ -476,8 +473,8 @@
               :title="$store.state.translations['main.editor_choice']"
             />
             <div class="mt-3 mb-5">
-              <div class="flex items-center justify-center">
-                <div class="swiper-banner-right" style="overflow: hidden; width: 337px">
+              <div style="min-width: 0">
+                <div class="swiper-banner-right" style="overflow: hidden">
                   <div class="swiper-wrapper">
                     <div
                       class="swiper-slide"
@@ -536,7 +533,8 @@ import VideoNewsCard from "../components/cards/VideoNewsCard.vue";
 import NewsImagesCard from "../components/cards/NewsImagesCard.vue";
 import RightNewsCard from "../components/cards/RightNewsCard.vue";
 import RightTelegramCard from "../components/cards/RightTelegramCard.vue";
-import Swiper from "swiper/swiper-bundle.js";
+// import Swiper from "swiper/swiper-bundle.js";
+import { Swiper, Pagination } from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
@@ -552,7 +550,6 @@ export default {
     };
   },
   mounted() {
-    document.cookie = "username=John Doe";
     var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,
@@ -575,6 +572,7 @@ export default {
         slideShadows: false,
       },
       slidesPerView: 1,
+      modules: [Pagination],
       pagination: {
         el: ".swiper-pagination-banner-right",
         type: "bullets",
@@ -1136,7 +1134,7 @@ export default {
     grid-template-columns: repeat(1, 1fr);
   }
   .swiper-banner-right {
-    width: 276px !important;
+    /* width: 276px !important; */
   }
   .laptop_hidden {
     display: grid;
@@ -1170,10 +1168,11 @@ export default {
     display: block;
   }
   .topic_grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
   .swiper-banner-right {
-    width: 470px !important;
+    /* width: 470px !important; */
   }
   .mobile_banner {
     display: none;
@@ -1181,7 +1180,7 @@ export default {
 }
 @media (max-width: 420px) {
   .swiper-banner-right {
-    width: 337px !important;
+    /* width: 337px !important; */
   }
 }
 </style>
