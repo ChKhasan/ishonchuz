@@ -8,7 +8,7 @@
   padding: 40px 50px;
   background: var(--card_bg);
   border-radius: 8px;
-  margin-bottom: 68px;
+  /* margin-bottom: 68px; */
 }
 .comment-form h5,
 .general-assessment h5 {
@@ -77,6 +77,7 @@
   padding: 40px;
   background: var(--card_bg);
   border-radius: 8px;
+  height: 100%;
 }
 .general-assessment-mobile {
   display: none;

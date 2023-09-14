@@ -105,36 +105,6 @@
                 {{ $store.state.translations["news.leave_comment"] }}
               </div>
             </div>
-            <div class="comments-list comments-web">
-              <h4>
-                {{ $store.state.translations["news.comments_title"] }} ({{
-                  book?.comments.length
-                }})
-              </h4>
-              <div class="comments-grid" v-if="showAll">
-                <CommentCard
-                  v-for="comment in book?.comments"
-                  :key="comment?.id"
-                  :comment="comment"
-                />
-              </div>
-              <div class="comments-grid" v-else>
-                <CommentCard
-                  v-for="comment in book?.comments.slice(0, 3)"
-                  :key="comment?.id"
-                  :comment="comment"
-                />
-              </div>
-              <div
-                class="show-more-count"
-                @click="showAll = true"
-                v-if="book?.comments.length > 3 && !showAll"
-              >
-                {{ $store.state.translations["news.see_again"] }} ({{
-                  book?.comments.length - 3
-                }})
-              </div>
-            </div>
           </div>
         </a-form-model>
         <div>
@@ -174,35 +144,67 @@
             </div>
           </div>
           <div class="comments-list comments-mobile">
-              <h4>
-                {{ $store.state.translations["news.comments_title"] }} ({{
-                  book?.comments.length
-                }})
-              </h4>
-              <div class="comments-grid" v-if="showAll">
-                <CommentCard
-                  v-for="comment in book?.comments"
-                  :key="comment?.id"
-                  :comment="comment"
-                />
-              </div>
-              <div class="comments-grid" v-else>
-                <CommentCard
-                  v-for="comment in book?.comments.slice(0, 3)"
-                  :key="comment?.id"
-                  :comment="comment"
-                />
-              </div>
-              <div
-                class="show-more-count"
-                @click="showAll = true"
-                v-if="book?.comments.length > 3 && !showAll"
-              >
-                {{ $store.state.translations["news.see_again"] }} ({{
-                  book?.comments.length - 3
-                }})
-              </div>
+            <h4>
+              {{ $store.state.translations["news.comments_title"] }} ({{
+                book?.comments.length
+              }})
+            </h4>
+            <div class="comments-grid" v-if="showAll">
+              <CommentCard
+                v-for="comment in book?.comments"
+                :key="comment?.id"
+                :comment="comment"
+              />
             </div>
+            <div class="comments-grid" v-else>
+              <CommentCard
+                v-for="comment in book?.comments.slice(0, 3)"
+                :key="comment?.id"
+                :comment="comment"
+              />
+            </div>
+            <div
+              class="show-more-count"
+              @click="showAll = true"
+              v-if="book?.comments.length > 3 && !showAll"
+            >
+              {{ $store.state.translations["news.see_again"] }} ({{
+                book?.comments.length - 3
+              }})
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="comment-container-grid">
+        <div class="comments-list comments-web">
+          <h4>
+            {{ $store.state.translations["news.comments_title"] }} ({{
+              book?.comments.length
+            }})
+          </h4>
+          <div class="comments-grid" v-if="showAll">
+            <CommentCard
+              v-for="comment in book?.comments"
+              :key="comment?.id"
+              :comment="comment"
+            />
+          </div>
+          <div class="comments-grid" v-else>
+            <CommentCard
+              v-for="comment in book?.comments.slice(0, 3)"
+              :key="comment?.id"
+              :comment="comment"
+            />
+          </div>
+          <div
+            class="show-more-count"
+            @click="showAll = true"
+            v-if="book?.comments.length > 3 && !showAll"
+          >
+            {{ $store.state.translations["news.see_again"] }} ({{
+              book?.comments.length - 3
+            }})
+          </div>
         </div>
       </div>
       <a-modal
@@ -436,8 +438,7 @@ export default {
           description: "Комментарий отправлен успешно.",
         });
         this.emptyForm();
-      } catch (e) {
-      }
+      } catch (e) {}
     },
     addToBasket(book) {
       this.$store.commit("addToStore", { id: book?.id, name: book?.type });

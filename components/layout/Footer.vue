@@ -138,6 +138,11 @@
             </ul>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container_xl footer-bottom-container">
+        <p>{{ $store.state.translations["main.footerBottom_text"] }}</p>
         <div class="footer-messangers">
           <a
             v-if="$store.state.siteInfo['telegram']"
@@ -167,11 +172,6 @@
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <div class="container_xl">
-        <p>{{ $store.state.translations["main.footerBottom_text"] }}</p>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -192,6 +192,17 @@ export default {
 };
 </script>
 <style lang="css">
+.footer-container {
+  padding-bottom: 32px;
+}
+.footer-messangers a svg {
+  width: 20px;
+  height: 20px;
+}
+.footer-bottom-container {
+  display: flex;
+  justify-content: space-between;
+}
 .footer {
   padding-top: 36px;
   border-top: 1px solid var(--footer_border_top);
@@ -273,15 +284,13 @@ export default {
   padding-bottom: 16px;
   background: var(--body_color);
 }
-.footer-messangers {
-  padding-top: 50px;
-  padding-bottom: 66px;
-}
+
 .footer-messangers span svg path {
   fill: var(--footer_messangers);
 }
-.footer-messangers a {
-  margin-right: 30px;
+.footer-messangers {
+  display: flex;
+  gap: 24px;
 }
 .footer-menu__laptop {
   display: none;
