@@ -38,7 +38,10 @@
                 </a>
               </div>
             </div>
-            <TitleComp :link="false" title="Barcha yangliklar" />
+            <TitleComp
+              :link="false"
+              :title="$store.state.translations['main.all_news']"
+            />
             <div class="right-news-list">
               <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
             </div>

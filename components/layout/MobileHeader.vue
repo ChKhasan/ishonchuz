@@ -44,7 +44,7 @@
             <button
               class="butn"
               @click="profileMenu = !profileMenu"
-              v-if="$route.name.includes('profile')"
+              v-if="$route.name?.includes('profile')"
             >
               <span v-html="menu" v-if="!drawerVisible"></span>
               <span v-else
@@ -599,7 +599,7 @@
       <ul>
         <li
           :class="{
-            'active-profile-menu': $route.name.includes('profile-personal-info'),
+            'active-profile-menu': $route.name?.includes('profile-personal-info'),
           }"
         >
           <nuxt-link :to="localePath(localePath('/profile/personal-info'))"
@@ -610,7 +610,7 @@
         </li>
         <li
           :class="{
-            'active-profile-menu': $route.name.includes('profile-my-board'),
+            'active-profile-menu': $route.name?.includes('profile-my-board'),
           }"
         >
           <nuxt-link :to="localePath('/profile/my-board')"
@@ -620,7 +620,7 @@
         </li>
         <li
           :class="{
-            'active-profile-menu': $route.name.includes('profile-saved'),
+            'active-profile-menu': $route.name?.includes('profile-saved'),
           }"
         >
           <nuxt-link :to="localePath('/profile/saved')"
@@ -1188,8 +1188,7 @@ export default {
         this.visibleSms = true;
         this.form.phone_number = "";
         this.smsTimer = 45;
-      } catch (e) {
-      }
+      } catch (e) {}
     },
     async __CHECK_SMS_CODE(dataForm) {
       try {
