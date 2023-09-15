@@ -639,6 +639,7 @@ export default {
         },
       }),
       store.dispatch("fetchNews/getPhotoNews", {
+        params: { photo_page_size: 4, page_size: 4 },
         headers: {
           Language: i18n.locale,
         },

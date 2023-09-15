@@ -19,13 +19,13 @@ export const actions = {
   },
   async getPhotoNewsBySlug({}, payload) {
     const res = await this.$axios.$get(`/photo_reportage/${payload.id}`, {
-      ...payload.header,
+      ...payload.headers,
     });
     return res;
   },
   async getPhotoNews({}, payload) {
     const res = await this.$axios.$get(`/photo_reportage`, {
-      ...payload.header,
+      ...payload,
     });
     return res;
   },

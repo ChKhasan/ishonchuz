@@ -100,6 +100,7 @@ export default {
   cursor: pointer;
 }
 .v-news-card {
+  height: 100%;
   padding: 10px;
   display: grid;
   grid-template-columns: 1fr;

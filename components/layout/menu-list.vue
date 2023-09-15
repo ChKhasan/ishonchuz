@@ -131,15 +131,29 @@
           </li>
         </ul>
         <div class="menu-list-btns">
-          <div @click="visibleSearch = true"><span v-html="search"></span></div>
-          <div
-            @click="
-              $store.state.auth
-                ? $router.push(localePath('/profile/personal-info'))
-                : (visible = true)
-            "
-          >
-            <span v-html="user"></span>
+          <div>
+            <div class="search-btn" :class="{ activeSearch: visibleSearch }">
+              <input
+                type="text"
+                v-model="searchValue"
+                :autofocus="visibleSearch"
+                @keyup.enter="submit"
+                placeholder="Qidirish"
+              />
+              <span @click="visibleSearch = !visibleSearch" v-html="search"></span>
+            </div>
+          </div>
+          <div>
+            <div
+              class="profile-btn"
+              @click="
+                $store.state.auth
+                  ? $router.push(localePath('/profile/personal-info'))
+                  : (visible = true)
+              "
+            >
+              <span v-html="user"></span>
+            </div>
           </div>
           <div class="web__drawer" @click="webDrawer = !webDrawer">
             <span v-if="!webDrawer" v-html="menu"></span>
@@ -180,7 +194,7 @@
           <a-form-model ref="ruleFormAuth" :model="form" :rules="rules">
             <a-form-model-item
               class="form-item mb-0 w-100 auth-form"
-              :label=" $store.state.translations['main.phone_number']"
+              :label="$store.state.translations['main.phone_number']"
               prop="phone_number"
             >
               <input
@@ -220,7 +234,10 @@
         <div class="vmodal-body">
           <a-form-model ref="ruleFormSms" :model="formSms" :rules="rulesSms">
             <div class="modal-form-grid">
-              <a-form-model-item class="form-item mb-0 w-100" :label=" $store.state.translations['main.phone_number']">
+              <a-form-model-item
+                class="form-item mb-0 w-100"
+                :label="$store.state.translations['main.phone_number']"
+              >
                 <!-- <the-mask
                   v-model="formSms.phone_number"
                   class="w-100 disabled"
@@ -336,7 +353,7 @@
         </div>
       </div>
     </a-modal> -->
-    <a-modal
+    <!-- <a-modal
       class="search-modal"
       :body-style="{ padding: '0' }"
       v-model="visibleSearch"
@@ -355,7 +372,7 @@
         />
         <span v-html="searchInput"></span>
       </div>
-    </a-modal>
+    </a-modal> -->
     <div class="web_drawer" :class="{ 'h-100vh': webDrawer }">
       <div class="web_drawer__body">
         <div class="web_drawer__container container_xl">
@@ -723,8 +740,7 @@ export default {
         this.visible = false;
         this.visibleSms = true;
         this.form.phone_number = "";
-      } catch (e) {
-      }
+      } catch (e) {}
     },
     async login() {
       try {
@@ -942,8 +958,17 @@ export default {
 }
 .menu-list-btns {
   display: flex;
+  /* gap: 16px; */
 }
-.menu-list-btns div {
+.menu-list-btns > div {
+  position: relative;
+}
+
+.search-btn input:focus {
+  outline: none;
+}
+.profile-btn,
+.search-btn {
   background: #ffffff;
   border: 1px solid var(--header_btns_border);
   border-radius: 8px;
@@ -953,14 +978,50 @@ export default {
   margin-right: 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   cursor: pointer;
+  overflow: hidden;
+  transition: 0.3s;
+  right: 0;
 }
-.menu-list-btns div span svg path {
+.menu-list-btns div div span svg path {
   fill: var(--header_btns_svg);
 }
-.menu-list-btns div:last-child {
+.search-btn input {
+  border: none;
+  /* display: none; */
+  margin-left: 13px;
+  padding-right: 13px;
+  width: 300px;
+}
+.search-btn {
+  position: absolute;
+  right: 0;
+}
+
+.search-btn span {
+  width: 100%;
+  height: 100%;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 52px;
+}
+.activeSearch {
+  width: 300px !important;
+  display: flex;
+  justify-content: flex-end !important;
+  position: absolute;
+  right: 0;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.profile-btn {
   margin-right: 0;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .vmodal-header {
   padding: 22px 40px;
