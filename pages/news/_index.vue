@@ -342,7 +342,7 @@
               </div>
             </div>
           </div>
-          <div class="swiper-pagination-banner-right"></div>
+          <div class="swiper-pagination"></div>
         </div>
       </div>
     </div>

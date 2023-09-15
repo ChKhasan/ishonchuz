@@ -112,7 +112,7 @@ h6 {
   margin-bottom: 0;
 }
 .home-page {
-  padding-bottom: 80px;
+  padding-bottom: 20px;
 }
 .home-page-right-title {
   padding: 10px 32px;
@@ -390,7 +390,7 @@ h6 {
     font-size: 14px;
   }
   .home-page {
-    padding-bottom: 80px;
+    padding-bottom: 20px;
   }
   /* .footer-logo {
     display: flex;

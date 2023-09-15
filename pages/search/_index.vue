@@ -9,11 +9,10 @@
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="search-page-container">
             <h3 v-if="newsSearch?.length > 0">
-              “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
-              <span>{{ totalCount }}</span> ta maqola topildi
-            </h3>
-            <h3 v-else>
-              “{{ $route.params.index }}” jumlasi bo’yicha ma’lumotlar topilmadi
+              “{{ $route.params.index }}”
+              {{ $store.state.translations["main.search-text1"] }} -
+              <span>{{ totalCount }}</span>
+              {{ $store.state.translations["main.search-text2"] }}
             </h3>
             <div class="search-page-grid search_web_news">
               <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
@@ -75,15 +74,20 @@
         </div>
       </div>
       <div class="search_empty search-page-container" v-else>
-        <h3>
-          “{{ $route.params.index }}” jumlasi bo’yicha qidiruv natijasi -
-          <span>{{ newsSearch?.length }}</span> ta maqola topildi
+        <h3 v-if="newsSearch?.length > 0">
+          “{{ $route.params.index }}”
+          {{ $store.state.translations["main.search-text1"] }} -
+          <span>{{ totalCount }}</span>
+          {{ $store.state.translations["main.search-text2"] }}
+        </h3>
+        <h3 v-else>
+          “{{ $route.params.index }}” {{ $store.state.translations["main.not-found"] }}
         </h3>
         <div class="search_to_back">
           <div class="btn_container_show_more">
-            <div class="right-show-more">Bosh sahifaga qaytish</div>
+            <div class="right-show-more">{{ $store.state.translations["main.to-home-page"] }}</div>
             <div class="right-show-more-primary" @click="$router.push(localePath('/'))">
-              Bosh sahifaga qaytish
+              {{ $store.state.translations["main.to-home-page"] }}
             </div>
           </div>
         </div>
@@ -146,7 +150,7 @@ export default {
       instagram: require("../../assets/svg/instagram.svg?raw"),
       whatsapp: require("../../assets/svg/whatsapp.svg?raw"),
       search: require("../../assets/svg/search.svg?raw"),
-      // searchVal: "",
+      searchVal: "",
     };
   },
   mounted() {

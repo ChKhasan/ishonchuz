@@ -289,8 +289,8 @@
                           <VNewsCard :news="news" />
                         </div>
                       </div>
+                      <div class="swiper-pagination"></div>
                     </div>
-                    <div class="swiper-pagination-banner-right"></div>
                   </div>
                   <div>
                     <div class="right-banner mobile_banner" v-if="banners[1]?.image">
@@ -484,8 +484,8 @@
                       <VNewsCard :news="news" />
                     </div>
                   </div>
+                  <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination-banner-right"></div>
               </div>
               <div></div>
             </div>
@@ -574,7 +574,7 @@ export default {
       slidesPerView: 1,
       modules: [Pagination],
       pagination: {
-        el: ".swiper-pagination-banner-right",
+        el: ".swiper-pagination",
         type: "bullets",
         clickable: true,
       },
@@ -738,11 +738,24 @@ export default {
 .swiper-banner-right .swiper-slide {
   width: 100% !important;
 }
-.swiper-pagination-banner-right {
+.swiper-pagination {
+  position: static;
   display: flex;
-  justify-content: center;
+  align-items: center;
   margin-top: 10px;
+  justify-content: center;
 }
+.swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background-color: #d9d9d9;
+}
+.swiper-pagination-bullet-active {
+  background-color: #0192ff;
+  width: 8px;
+  height: 8px;
+}
+
 .bounceDrop-enter-active {
   animation: bounceDrop-in 0.3s;
 }
@@ -1099,7 +1112,7 @@ export default {
     font-size: 14px;
   }
   .home-page {
-    padding-bottom: 80px;
+    padding-bottom: 20px;
   }
 
   .footer-menu {

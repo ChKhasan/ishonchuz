@@ -293,7 +293,7 @@
               </div>
             </div>
           </div>
-          <div class="swiper-pagination-banner-right"></div>
+          <div class="swiper-pagination"></div>
         </div>
       </div>
     </div>
@@ -469,8 +469,7 @@ export default {
           description: "Комментарий отправлен успешно.",
         });
         this.emptyForm();
-      } catch (e) {
-      }
+      } catch (e) {}
     },
   },
   components: {

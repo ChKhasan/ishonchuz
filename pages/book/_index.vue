@@ -290,7 +290,7 @@
             <h1 class="buy_status__text">To’lovingiz muvaffaqiyatga amalga oshirildi</h1>
           </div>
           <div class="vmodal-footer">
-            <div class="auth-btn w-100" @click="handleOk()">Bosh sahifaga qaytish</div>
+            <div class="auth-btn w-100" @click="handleOk()">{{ $store.state.translations["main.to-home-page"] }}</div>
           </div>
         </div>
       </a-modal>
@@ -312,7 +312,7 @@
             <h1 class="buy_status__text">To’lovingiz muvaffaqiyatsiz amalga oshirildi</h1>
           </div>
           <div class="vmodal-footer">
-            <div class="auth-btn w-100" @click="handleOk()">Bosh sahifaga qaytish</div>
+            <div class="auth-btn w-100" @click="handleOk()">{{ $store.state.translations["main.to-home-page"] }}</div>
           </div>
         </div>
       </a-modal>
