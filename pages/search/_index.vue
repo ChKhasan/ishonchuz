@@ -15,7 +15,10 @@
               {{ $store.state.translations["main.search-text2"] }}
             </h3>
             <div class="search-page-grid search_web_news">
-              <VNewsCard v-for="news in newsSearch" :key="news?.id" :news="news" />
+              <span v-for="news in newsSearch" :key="news?.id">
+                <NewsImagesCard v-if="news?.is_photo_news" :news="news" />
+                <VNewsCard :news="news" v-else />
+              </span>
             </div>
             <div class="search-page-grid search_mobile_news">
               <AllNewsCard
@@ -85,7 +88,9 @@
         </h3>
         <div class="search_to_back">
           <div class="btn_container_show_more">
-            <div class="right-show-more">{{ $store.state.translations["main.to-home-page"] }}</div>
+            <div class="right-show-more">
+              {{ $store.state.translations["main.to-home-page"] }}
+            </div>
             <div class="right-show-more-primary" @click="$router.push(localePath('/'))">
               {{ $store.state.translations["main.to-home-page"] }}
             </div>
@@ -136,6 +141,7 @@ import TitleComp from "../../components/Title-comp.vue";
 import VNewsCard from "../../components/cards/VNewsCard.vue";
 import RightNewsCard from "../../components/cards/RightNewsCard.vue";
 import AllNewsCard from "../../components/cards/AllNewsCard.vue";
+import NewsImagesCard from "../../components/cards/NewsImagesCard.vue";
 
 export default {
   name: "IndexPage",
@@ -165,7 +171,7 @@ export default {
   },
   async asyncData({ store, params, i18n, query }) {
     const [searchData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchNews/getNews", {
+      store.dispatch("fetchSearch/search", {
         params: { search: params.index, page_size: 18, page: query.page },
         headers: {
           Language: i18n.locale,
@@ -254,7 +260,8 @@ export default {
     RightNewsCard,
     TitleComp,
     AllNewsCard,
-  },
+    NewsImagesCard
+},
 };
 </script>
 <style lang="css">

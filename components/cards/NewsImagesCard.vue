@@ -1,7 +1,10 @@
 <template lang="html">
   <div class="news-images-card">
     <nuxt-link :to="localePath(`/photo_news/${news?.slug}`)">
-      <div class="news-images-card-img">
+      <div class="news-images-card-image" v-if="news?.images.length == 1">
+        <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
+      </div>
+      <div class="news-images-card-img" v-else>
         <div>
           <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
         </div>
@@ -14,6 +17,7 @@
           </div>
         </div>
       </div>
+
       <div class="news-images-card-img_mobile">
         <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div>
@@ -64,18 +68,28 @@ export default {
   position: relative;
   height: 210px;
 }
+.news-images-card-image {
+  height: 210px;
+  width: 100%;
+  overflow: hidden;
+}
 .news-images-card-img div {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 8px;
   overflow: hidden;
 }
+.news-images-card-image img,
 .news-images-card-img img,
 .news-images-card-img div img,
 .news-images-card-img div div img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: 0.3s;
+}
+.news-images-card:hover .news-images-card-image img {
+  transform: scale(1.1);
 }
 .news-images-card-img_mobile {
   display: none;

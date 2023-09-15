@@ -1,7 +1,11 @@
 <template lang="html">
   <div class="all-news-card">
     <nuxt-link :to="localePath(`/news/${news?.slug}`)">
-      <div class="all-news-card-img">
+      <div class="all-news-card-img" v-if="news?.is_photo_news">
+        <img v-if="news?.images?.length > 0" :src="news?.images[0]?.image" alt="" />
+        <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+      </div>
+      <div class="all-news-card-img" v-else>
         <img v-if="news?.image" :src="news?.image" alt="" />
         <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       </div>
@@ -16,7 +20,7 @@
         <span class="all-card-date-web"><span v-html="date"></span>{{ news?.date }}</span>
         <span class="all-card-date-mobile">
           <!-- <span v-html="date"></span>{{ news?.date.split("|")[1] }}</span> -->
-          <span v-html="date"></span>{{ news?.date.split('|')[0] }}</span
+          <span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
         >
       </div>
     </div>
