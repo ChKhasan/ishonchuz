@@ -135,7 +135,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import TitleComp from "../../components/Title-comp.vue";
 import VNewsCard from "../../components/cards/VNewsCard.vue";
@@ -260,8 +259,8 @@ export default {
     RightNewsCard,
     TitleComp,
     AllNewsCard,
-    NewsImagesCard
-},
+    NewsImagesCard,
+  },
 };
 </script>
 <style lang="css">

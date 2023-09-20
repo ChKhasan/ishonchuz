@@ -66,6 +66,7 @@
 </template>
 <script>
 export default {
+  name: "VNews",
   props: ["news"],
   data() {
     return {

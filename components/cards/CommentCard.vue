@@ -36,7 +36,7 @@ export default {
 }
 .comment-card-body {
   padding: 30px 30px 20px 30px;
-  background: var(--card_bg);
+  background: var(--gray_292929, #eee);
   border-radius: 10px;
   display: flex;
   flex-direction: column;

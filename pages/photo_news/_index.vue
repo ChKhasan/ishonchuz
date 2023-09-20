@@ -1,12 +1,12 @@
 <template>
   <div class="home-page news-page">
     <div class="container_xl">
-      <div class="home-page-grid row mx-0">
-        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
-          <!-- <div class="new-category-title">
-            <h2>{{ $store.state.translations["inner.economy"] }}</h2>
-          </div> -->
-          <div class="news-breadcrumb" v-if="news?.category">
+      <div class="row mx-0">
+        <div class="col-lg-9 col-md-12 p-0 home-page-left">
+          <div class="new-category-title">
+            <h2>{{ news?.category?.title }}</h2>
+          </div>
+          <div class="news-breadcrumb mb-0" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
               >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
             ></nuxt-link>
@@ -17,6 +17,31 @@
               >{{ news?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
           </div>
+          <div class="news-container-header">
+            <h1>{{ news?.title }}</h1>
+            <h6>
+              {{ news?.subtitle }}
+            </h6>
+          </div>
+        </div>
+        <div class="home-page-right col-3 p-0 news-page-right position-relative"></div>
+      </div>
+      <div class="home-page-grid row mx-0">
+        <div class="col-lg-9 col-xs-12 p-0 home-page-left">
+          <!-- <div class="new-category-title">
+            <h2>{{ $store.state.translations["inner.economy"] }}</h2>
+          </div> -->
+          <!-- <div class="news-breadcrumb" v-if="news?.category">
+            <nuxt-link :to="localePath('/')"
+              >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
+            ></nuxt-link>
+            <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
+              >{{ news?.category?.title }} <span v-html="dropdown"></span
+            ></nuxt-link>
+            <nuxt-link :to="localePath('/')" style="pointer-events: none"
+              >{{ news?.title }} <span v-html="dropdown"></span
+            ></nuxt-link>
+          </div> -->
           <div class="news-container">
             <div class="news-container-tag">
               <span class="tag" v-if="news?.category?.title">{{
@@ -84,10 +109,10 @@
               </div>
             </div>
             <div class="news-container-header">
-              <h1>{{ news?.title }}</h1>
+              <!-- <h1>{{ news?.title }}</h1>
               <h6>
                 {{ news?.subtitle }}
-              </h6>
+              </h6> -->
             </div>
             <!-- <div class="news-container-banner">
                 <div>
@@ -121,7 +146,7 @@
         <div class="home-page-right col-3 p-0 news-page-right position-relative">
           <div style="position: sticky; top: 30px">
             <div class="block2">
-              <div class="right-banner">
+              <div class="right-banner mt-0">
                 <a :href="banners[0]?.link">
                   <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
                 </a>
@@ -509,7 +534,7 @@ export default {
 
 .news-container {
   padding: 60px 70px;
-  background: var(--card_bg);
+  background: var(--gray_292929,#eee);
   border-radius: 8px;
   padding-bottom: 90px;
 }
@@ -553,10 +578,11 @@ export default {
   fill: var(--footer_messangers);
 }
 .news-container-messangers span {
-  margin-right: 32px;
+  /* margin-right: 32px; */
 }
 .news-container-header {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 .news-container-header h1 {
   font-family: var(--ROBOTO_SERIF);
@@ -757,7 +783,8 @@ export default {
   display: none;
 }
 .news-container-messangers {
-  display: block;
+  display: flex;
+  gap: 32px;
 }
 @media screen and (max-width: 1024px) {
   .news-container-tag {
@@ -780,7 +807,8 @@ export default {
     margin-right: 13px;
   }
   .news-container-messangers-mobile {
-    display: block;
+    display: flex;
+    gap: 32px;
   }
   .news-container-messangers-mobile a svg {
     width: 24px;

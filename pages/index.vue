@@ -37,6 +37,11 @@
           <div class="h-news-grid">
             <HNewsCard v-for="newsItem in news" :key="newsItem.id" :news="newsItem" />
           </div>
+          <TitleComp
+            class="for_web"
+            link="all-news"
+            :title="$store.state.translations['main.mid_news']"
+          />
           <div class="v-news-grid for_web">
             <VNewsCard v-for="news in simpleNews" :key="news.id" :news="news" />
           </div>
@@ -348,7 +353,7 @@
             link="all-photo-news"
             :title="$store.state.translations['main.photo_repartee']"
           />
-          <div class="news-images-grid">
+          <div class="news-images-grid pb-0">
             <NewsImagesCard v-for="news in photoNews" :key="news?.id" :news="news" />
           </div>
         </div>

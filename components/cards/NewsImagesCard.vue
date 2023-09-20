@@ -1,23 +1,9 @@
 <template lang="html">
   <div class="news-images-card">
     <nuxt-link :to="localePath(`/photo_news/${news?.slug}`)">
-      <div class="news-images-card-image" v-if="news?.images.length == 1">
+      <div class="news-images-card-image">
         <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div>
-      <div class="news-images-card-img" v-else>
-        <div>
-          <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
-        </div>
-        <div>
-          <div>
-            <img v-if="news?.images[1]?.image" :src="news?.images[1]?.image" alt="" />
-          </div>
-          <div>
-            <img v-if="news?.images[2]?.image" :src="news?.images[2]?.image" alt="" />
-          </div>
-        </div>
-      </div>
-
       <div class="news-images-card-img_mobile">
         <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div>

@@ -6,7 +6,7 @@
 }
 .comment-form {
   padding: 40px 50px;
-  background: var(--card_bg);
+  background: var(--gray_292929,#eee);
   border-radius: 8px;
   /* margin-bottom: 68px; */
 }
@@ -75,7 +75,7 @@
 }
 .general-assessment {
   padding: 40px;
-  background: var(--card_bg);
+  background: var(--gray_292929,#eee);
   border-radius: 8px;
   height: 100%;
 }
@@ -125,13 +125,13 @@
   padding-left: 10px;
   position: relative;
   z-index: 15;
-  background: var(--card_bg);
+  background: var(--gray_292929,#eee);
 }
 .item-rate .ant-rate {
   padding-right: 10px;
   position: relative;
   z-index: 15;
-  background: var(--card_bg);
+  background: var(--gray_292929,#eee);
 }
 .item-rate span p {
   color: var(--text_color);

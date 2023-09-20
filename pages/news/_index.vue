@@ -1,12 +1,12 @@
 <template>
   <div class="home-page news-page">
     <div class="container_xl">
-      <div class="home-page-grid row mx-0">
+      <div class="row mx-0">
         <div class="col-lg-9 col-md-12 p-0 home-page-left">
           <div class="new-category-title">
             <h2>{{ news?.category?.title }}</h2>
           </div>
-          <div class="news-breadcrumb" v-if="news?.category">
+          <div class="news-breadcrumb mb-0" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
               >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
             ></nuxt-link>
@@ -22,38 +22,35 @@
               >{{ news?.title }} <span v-html="dropdown"></span
             ></nuxt-link>
           </div>
+          <div class="news-container-header">
+            <h1>{{ news?.title }}</h1>
+            <h6>
+              {{ news?.subtitle }}
+            </h6>
+          </div>
+        </div>
+        <div class="home-page-right col-3 p-0 news-page-right position-relative"></div>
+      </div>
+      <div class="home-page-grid row mx-0">
+        <div class="col-lg-9 col-md-12 p-0 home-page-left">
           <div class="news-container">
-            <div class="news-container-tag" v-if="news?.category?.title">
-              <span class="tag">{{ news?.category?.title }}</span>
-              <div class="news-container-messangers-mobile">
-                <a
-                  v-if="$store.state.siteInfo['telegram']"
-                  :href="$store.state.siteInfo['telegram']"
-                  ><span v-html="telegram"></span
-                ></a>
-                <a
-                  v-if="$store.state.siteInfo['facebook']"
-                  :href="$store.state.siteInfo['facebook']"
-                  ><span v-html="facebook"></span
-                ></a>
-                <a
-                  v-if="$store.state.siteInfo['twitter']"
-                  :href="$store.state.siteInfo['twitter']"
-                  ><span v-html="twitter"></span
-                ></a>
-                <a
-                  v-if="$store.state.siteInfo['instagram']"
-                  :href="$store.state.siteInfo['instagram']"
-                  ><span v-html="instagram"></span
-                ></a>
-                <a
-                  v-if="$store.state.siteInfo['whatsapp']"
-                  :href="$store.state.siteInfo['whatsapp']"
-                  ><span v-html="whatsapp"></span
-                ></a>
+            <div
+              class="news-container-tag d-flex justify-content-between align-items-end"
+            >
+              <span class="tag" v-if="news?.category?.title">{{
+                news?.category?.title
+              }}</span>
+              <div class="news-container-character d-flex">
+                <span><span v-html="view"></span>{{ news?.views }}</span>
+                <span class="news-date_web"
+                  ><span v-html="date"></span>{{ news?.date }}</span
+                >
+                <span class="news-date_mobile"
+                  ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+                >
               </div>
             </div>
-            <div class="news-container-head">
+            <!-- <div class="news-container-head">
               <div class="news-container-character d-flex">
                 <span><span v-html="view"></span>{{ news?.views }}</span>
                 <span class="news-date_web"
@@ -90,13 +87,8 @@
                   ><span v-html="whatsapp"></span
                 ></a>
               </div>
-            </div>
-            <div class="news-container-header">
-              <h1>{{ news?.title }}</h1>
-              <h6>
-                {{ news?.subtitle }}
-              </h6>
-            </div>
+            </div> -->
+
             <!-- <div class="news-container-banner">
               <div>
                 <img :src="news?.image" v-if="news?.image" alt="" />
@@ -112,65 +104,45 @@
             <div class="mt-4 news_banner" v-if="news?.image">
               <img :src="news?.image" alt="" />
             </div>
-            <div class="news-container-body" v-html="news?.text">
-              <!-- <p class="news-container-text" v-html="news?.text"></p> -->
-              <!-- <div class="article-card">
-                <div class="article-card-text">
-                  <p>
-                    O‘zbekiston kasaba uyushmalari Federatsiyasining viloyat kengashi
-                    tomonidan Sojida Jo‘rayevani o‘z lavozimiga tiklash haqida kiritilgan
-                    taqdimnoma eʼtiborsiz qoldirilgach, fuqarolik ishlari bo‘yicha Jizzax
-                    tumanlararo sudiga daʼvo arizasi yo‘llandi. Lekin 2022 yilning 30
-                    avgustida sudning hal qiluv qaroriga ko‘ra, daʼvo qanoatlantirilmadi.
-                  </p>
-                </div>
-                <h6>O‘zbekiston Respublikasi Konstitutsiyasi 124-modda</h6>
+            <div class="news-container-body" v-html="news?.text"></div>
+            <div class="d-flex justify-content-between news-container-bottom">
+              <div class="news-container-links">
+                <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
               </div>
-              <h1>Viloyat kengashi</h1>
-              <div class="news-container-desc">
-                <p class="news-container-text">
-                  Viloyat kengashining mehnat huquq inspektori bilan hamkorlikda ariza
-                  o‘rganildi. Aniqlanishicha, S.Jo‘rayeva Jizzax viloyati xalq taʼlimi
-                  boshqarmasining 2017 yil 18 dekabrdagi buyrug‘iga ko‘ra, Jizzax
-                  shahridagi 16-maktab direktori vazifasiga ishga qabul qilingan. 2022 yil
-                  30 iyundagi buyruqqa asosan u bilan tuzilgan mehnat shartnomasi bekor
-                  qilingan. Buyruq Xalq deputatlari Jizzax shahar kengashining qarori,
-                  ichki tartib-qoidalardan kelib chiqqan holda <span>chiqarilgan</span>.
-                </p>
-                <div>...</div>
-                <p class="news-container-text">
-                  Viloyat kengashining mehnat huquq inspektori bilan hamkorlikda ariza
-                  o‘rganildi. Aniqlanishicha, S.Jo‘rayeva Jizzax viloyati xalq taʼlimi
-                  boshqarmasining 2017 yil 18 dekabrdagi buyrug‘iga ko‘ra, Jizzax
-                  shahridagi 16-maktab direktori vazifasiga ishga qabul qilingan. 2022 yil
-                  30 iyundagi buyruqqa asosan u bilan tuzilgan mehnat shartnomasi bekor
-                  qilingan. Buyruq Xalq deputatlari Jizzax shahar kengashining qarori,
-                  ichki tartib-qoidalardan kelib chiqqan holda <span>chiqarilgan</span>.
-                </p>
+              <div class="news-container-messangers">
+                <a
+                  v-if="$store.state.siteInfo['telegram']"
+                  :href="$store.state.siteInfo['telegram']"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['facebook']"
+                  :href="$store.state.siteInfo['facebook']"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['twitter']"
+                  :href="$store.state.siteInfo['twitter']"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['instagram']"
+                  :href="$store.state.siteInfo['instagram']"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  v-if="$store.state.siteInfo['whatsapp']"
+                  :href="$store.state.siteInfo['whatsapp']"
+                  ><span v-html="whatsapp"></span
+                ></a>
               </div>
-              <div class="decree-card">
-                <div>
-                  <p>
-                    O‘zbekiston kasaba uyushmalari Federatsiyasining viloyat kengashi
-                    tomonidan Sojida Jo‘rayevani o‘z lavozimiga tiklash haqida kiritilgan
-                    taqdimnoma eʼtiborsiz qoldirilgach, fuqarolik ishlari bo‘yicha Jizzax
-                    tumanlararo sudiga daʼvo arizasi yo‘llandi.
-                  </p>
-                </div>
-                <h6>
-                  <span>O‘zbekiston Respublikasi Prezindenti </span>Shavkat Mirziyoyev
-                </h6>
-              </div> -->
-            </div>
-            <div class="news-container-links">
-              <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
             </div>
           </div>
         </div>
         <div class="home-page-right col-3 p-0 news-page-right position-relative">
           <div style="position: sticky; top: 30px">
             <div class="block2">
-              <div class="right-banner">
+              <div class="right-banner mt-0">
                 <a :href="banners[0]?.link">
                   <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
                 </a>
@@ -544,7 +516,7 @@ export default {
 
 .news-container {
   padding: 60px 70px;
-  background: var(--card_bg);
+  background: var(--gray_292929, #eee);
   border-radius: 8px;
   padding-bottom: 90px;
 }
@@ -587,11 +559,12 @@ export default {
 .news-container-messangers span svg path {
   fill: var(--footer_messangers);
 }
-.news-container-messangers span {
+/* .news-container-messangers span {
   margin-right: 32px;
-}
+} */
 .news-container-header {
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 .news-container-header h1 {
   font-family: var(--ROBOTO_SERIF);
@@ -779,8 +752,10 @@ export default {
   text-align: right;
   color: #505d96;
 }
-.news-container-links {
+.news-container-bottom {
   margin-top: 16px;
+}
+.news-container-links {
   display: flex;
 }
 .news-container-links a {
@@ -796,7 +771,8 @@ export default {
   display: none;
 }
 .news-container-messangers {
-  display: block;
+  display: flex;
+  gap: 32px;
 }
 @media screen and (max-width: 1024px) {
   .news-container-tag {
