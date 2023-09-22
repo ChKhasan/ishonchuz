@@ -744,7 +744,7 @@ export default {
   width: 100% !important;
 }
 .swiper-pagination {
-  position: static;
+  position: static !important;
   display: flex;
   align-items: center;
   margin-top: 10px;
