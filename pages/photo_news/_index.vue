@@ -49,28 +49,30 @@
               }}</span>
               <div class="news-container-messangers-mobile">
                 <a
-                  v-if="$store.state.siteInfo['telegram']"
-                  :href="$store.state.siteInfo['telegram']"
+                  :href="`https://t.me/share/url?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="telegram"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['facebook']"
-                  :href="$store.state.siteInfo['facebook']"
+                  :href="`https://www.facebook.com/sharer.php?u=${
+                    host + $route.fullPath
+                  }`"
+                  target="_blank"
                   ><span v-html="facebook"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['twitter']"
-                  :href="$store.state.siteInfo['twitter']"
+                  :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="twitter"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['instagram']"
-                  :href="$store.state.siteInfo['instagram']"
+                  :href="`https://www.instagram.com/?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="instagram"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['whatsapp']"
-                  :href="$store.state.siteInfo['whatsapp']"
+                  :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="whatsapp"></span
                 ></a>
               </div>
@@ -82,28 +84,30 @@
               </div>
               <div class="news-container-messangers">
                 <a
-                  v-if="$store.state.siteInfo['telegram']"
-                  :href="$store.state.siteInfo['telegram']"
+                  :href="`https://t.me/share/url?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="telegram"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['facebook']"
-                  :href="$store.state.siteInfo['facebook']"
+                  :href="`https://www.facebook.com/sharer.php?u=${
+                    host + $route.fullPath
+                  }`"
+                  target="_blank"
                   ><span v-html="facebook"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['twitter']"
-                  :href="$store.state.siteInfo['twitter']"
+                  :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="twitter"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['instagram']"
-                  :href="$store.state.siteInfo['instagram']"
+                  :href="`https://www.instagram.com/?url=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="instagram"></span
                 ></a>
                 <a
-                  v-if="$store.state.siteInfo['whatsapp']"
-                  :href="$store.state.siteInfo['whatsapp']"
+                  :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
+                  target="_blank"
                   ><span v-html="whatsapp"></span
                 ></a>
               </div>
@@ -368,6 +372,7 @@ export default {
         news: null,
         stars: 0,
       },
+      host: process.env.HOST_URL,
     };
   },
   mounted() {
@@ -534,7 +539,7 @@ export default {
 
 .news-container {
   padding: 60px 70px;
-  background: var(--gray_292929,#eee);
+  background: var(--gray_292929, #eee);
   border-radius: 8px;
   padding-bottom: 90px;
 }

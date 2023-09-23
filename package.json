@@ -12,6 +12,7 @@
     "@liripeng/vue-audio-player": "^1.5.1",
     "@moefe/vue-aplayer": "^2.0.0-beta.5",
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/i18n": "^7.3.1",
     "@nuxtjs/svg": "^0.4.0",
     "ant-design-vue": "^1.7.8",
@@ -26,6 +27,5 @@
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10",
     "vue-the-mask": "^0.11.1"
-  },
-  "devDependencies": {}
+  }
 }

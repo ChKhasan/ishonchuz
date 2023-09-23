@@ -45,7 +45,7 @@ export default {
   },
 
   buildModules: ["@nuxtjs/svg"],
-  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n"],
+  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n","@nuxtjs/dotenv",],
   axios: {
     credentials: false,
     init(axios) {
