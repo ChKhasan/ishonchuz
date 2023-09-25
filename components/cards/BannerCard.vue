@@ -1,44 +1,44 @@
 <template lang="html">
-  <nuxt-link :to="localePath(`/news/${topNews?.slug}`)">
+  <nuxt-link :to="localePath(`/news/${news?.slug}`)">
     <div class="banner-card">
       <div class="banner-card-img">
-        <LazyYoutube v-if="topNews?.video" ref="lazyVideo" :src="topNews?.video" />
+        <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
         <div
           class="video-banner"
-          v-if="topNews?.video"
-          @click="$router.push(localePath(`/news/${topNews?.slug}`))"
-          :style="`background-image: url(${topNews?.youtube_image})`"
+          v-if="news?.video"
+          @click="$router.push(localePath(`/news/${news?.slug}`))"
+          :style="`background-image: url(${news?.youtube_image})`"
         >
           <div v-html="video"></div>
         </div>
         <!-- <iframe
-          v-if="topNews?.video"
+          v-if="news?.video"
           class="responsive-iframe"
-          :src="topNews?.video"
+          :src="news?.video"
         ></iframe> -->
-        <img v-else :src="topNews.image" alt="" />
+        <img v-else :src="news.image" alt="" />
         <img
-          v-if="!topNews?.video && !topNews?.image"
+          v-if="!news?.video && !news?.image"
           src="../../assets/images/Снимок экрана (925).png"
           alt=""
         />
-        <span>{{ topNews?.category?.title }}</span>
+        <span>{{ news?.category?.title }}</span>
       </div>
       <div class="banner-card-body">
         <div class="banner-card_text">
-          <nuxt-link :to="localePath(`/news/${topNews?.slug}`)">{{
-            topNews?.title
+          <nuxt-link :to="localePath(`/news/${news?.slug}`)">{{
+            news?.title
           }}</nuxt-link>
           <p>
-            {{ topNews?.subtitle }}
+            {{ news?.subtitle }}
           </p>
         </div>
         <div class="banner-card-body_footer">
-          <span> <span v-html="comments"></span> {{ topNews?.comment_count }} </span>
-          <span><span v-html="view"></span> {{ topNews?.views }} </span>
-          <span class="full_date"> <span v-html="date"></span>{{ topNews?.date }}</span>
+          <span> <span v-html="comments"></span> {{ news?.comment_count }} </span>
+          <span><span v-html="view"></span> {{ news?.views }} </span>
+          <span class="full_date"> <span v-html="date"></span>{{ news?.date }}</span>
           <span class="only_hours">
-            <span v-html="date"></span>{{ topNews?.date.split("|")[0] }}</span
+            <span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
           >
         </div>
       </div>
@@ -47,7 +47,7 @@
 </template>
 <script>
 export default {
-  props: ["topNews"],
+  props: ["news"],
   data() {
     return {
       comments: require("../../assets/svg/comments.svg?raw"),

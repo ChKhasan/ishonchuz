@@ -11,7 +11,7 @@
               >
                 <div class="swiper-wrapper">
                   <div class="swiper-slide" v-for="item in topNews" :key="item.id">
-                    <BannerCard :topNews="item" />
+                    <BannerCard :news="item" />
                   </div>
                 </div>
               </div>
@@ -538,8 +538,8 @@ import VideoNewsCard from "../components/cards/VideoNewsCard.vue";
 import NewsImagesCard from "../components/cards/NewsImagesCard.vue";
 import RightNewsCard from "../components/cards/RightNewsCard.vue";
 import RightTelegramCard from "../components/cards/RightTelegramCard.vue";
-// import Swiper from "swiper/swiper-bundle.js";
-import { Swiper, Pagination } from "swiper";
+import Swiper from "swiper/swiper-bundle.js";
+// import { Swiper, Pagination } from "swiper";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
@@ -555,7 +555,7 @@ export default {
     };
   },
   mounted() {
-    var swiper = new Swiper(".mySwiper", {
+      var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,
       freeMode: true,
@@ -577,7 +577,7 @@ export default {
         slideShadows: false,
       },
       slidesPerView: 1,
-      modules: [Pagination],
+      // modules: [Pagination],
       pagination: {
         el: ".swiper-pagination",
         type: "bullets",
