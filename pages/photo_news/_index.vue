@@ -602,7 +602,7 @@ export default {
   margin-top: 20px;
   font-style: normal;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 16px;
   line-height: 150%;
   color: var(--sub_title);
 }
@@ -643,7 +643,7 @@ export default {
 }
 .news-container-body {
   margin-top: 40px;
-  padding-bottom: 160px;
+  padding-bottom: 32px;
   border-bottom: 1px solid var(--news_container_br);
 }
 
@@ -847,7 +847,7 @@ export default {
     letter-spacing: 0.24px;
   }
   .news-container-body {
-    padding-bottom: 50px;
+    padding-bottom: 32px;
     overflow: hidden;
   }
   .comment-form {

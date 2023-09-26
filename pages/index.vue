@@ -359,6 +359,13 @@
         </div>
         <div class="home-page-right col-3 p-0 clear" style="position: relative">
           <div style="position: sticky; top: 30px">
+            <div class="block2 mt-0">
+              <div class="right-banner mt-0">
+                <a :href="banners[0]?.link">
+                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                </a>
+              </div>
+            </div>
             <div class="block1">
               <div
                 class="home-page-right-title"
@@ -459,19 +466,12 @@
                 </ul>
               </div>
             </div>
-            <div class="block2">
-              <div
-                class="home-page-right-title"
-                style="text-align: center; cursor: pointer"
-                @click="$router.push(localePath('/about'))"
-              >
-                {{ $store.state.translations["main.about_us"] }}
-              </div>
-              <div class="right-banner">
-                <a :href="banners[0]?.link">
-                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
-                </a>
-              </div>
+            <div
+              class="home-page-right-title mb-3"
+              style="text-align: center; cursor: pointer"
+              @click="$router.push(localePath('/about'))"
+            >
+              {{ $store.state.translations["main.about_us"] }}
             </div>
             <TitleComp
               :link="false"
@@ -555,7 +555,7 @@ export default {
     };
   },
   mounted() {
-      var swiper = new Swiper(".mySwiper", {
+    var swiper = new Swiper(".mySwiper", {
       spaceBetween: 16,
       slidesPerView: 4,
       freeMode: true,
@@ -1168,6 +1168,7 @@ export default {
   }
 
   .audio_web {
+    margin-bottom: 40px;
     display: none;
   }
   .banner-card_text p {
