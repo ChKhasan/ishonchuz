@@ -26,7 +26,7 @@
           </div>
           <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
             <VNewsCard
-              v-for="item in categories?.video_news.slice(0, 3)"
+              v-for="item in categories?.video_news"
               :key="item?.id"
               :news="item"
             />
