@@ -21,7 +21,7 @@
       </div>
       <div class="home-page-grid row">
         <div class="col-lg-9 col-md-12 p-0 home-page-left">
-          <div class="" v-if="categories?.news?.length > 0">
+          <div class="" v-if="categories?.first_news">
             <BannerCard :news="categories?.first_news" />
           </div>
           <div class="v-news-grid" v-if="categories?.video_news?.length > 0">
@@ -187,7 +187,7 @@ export default {
         id: params.index,
         params: {
           params: {
-            page_size: 21,
+            page_size: 20,
             page: query.page,
           },
           headers: {
