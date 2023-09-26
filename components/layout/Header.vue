@@ -926,7 +926,7 @@ export default {
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 130%;
   color: var(--gray_f9f9f9, #000000);
   margin: 0 10px;
@@ -997,16 +997,20 @@ export default {
   font-family: var(--ROBOTO_SERIF);
   /* font-style: italic; */
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 130%;
   color: #a0a0a0;
   margin-left: 7px;
+  display: flex;
+  align-items: center;
 }
 .currency-list li {
   font-family: var(--ROBOTO_SERIF);
   /* font-style: italic; */
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
   line-height: 130%;
   color: var(--text_color_nav);
 }
