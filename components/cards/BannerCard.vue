@@ -16,7 +16,7 @@
           class="responsive-iframe"
           :src="news?.video"
         ></iframe> -->
-        <img v-else :src="news.image" alt="" />
+        <img v-else :src="news?.image" alt="" />
         <img
           v-if="!news?.video && !news?.image"
           src="../../assets/images/Снимок экрана (925).png"
