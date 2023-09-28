@@ -520,7 +520,7 @@ export default {
   gap: 10px;
 }
 .news-page {
-  padding-top: 28px;
+  padding-top: 20px;
 }
 .news_banner {
   width: 100%;
@@ -544,7 +544,7 @@ export default {
   padding-bottom: 90px;
 }
 .news-container .tag {
-  background: var(--card_badges_bg);
+  background: var(--blue_0192FF, #f9f9f9);
   padding: 7px 12px;
   font-family: var(--ROBOTO_SERIF);
   font-style: normal;
@@ -601,7 +601,7 @@ export default {
   font-family: var(--ROBOTO_SERIF);
   margin-top: 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 16px;
   line-height: 150%;
   color: var(--sub_title);
@@ -832,7 +832,7 @@ export default {
   }
   .news-container-header h6 {
     font-size: 14px;
-    font-weight: 500;
+    /* font-weight: 500; */
     line-height: 150%;
   }
   .news-container-body p,
