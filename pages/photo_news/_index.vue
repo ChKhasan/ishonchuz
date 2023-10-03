@@ -343,6 +343,25 @@ import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
+  head () {
+    return {
+        title: this.news['title'],
+        meta: [
+        {
+          name: "title",
+          content: `${this.news['title']}`,
+        },
+        {
+          name: "keywords",
+          content: this.news?.meta?.meta_keys,
+        },
+        {
+          name: "description",
+          content:this.news?.meta?.meta_deck,
+        },
+      ],
+    }
+},
   data() {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
