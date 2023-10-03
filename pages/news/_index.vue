@@ -306,12 +306,17 @@
           <span></span>
         </div>
         <div
-          class="flex items-center justify-center container_xl comment-container-grid mt-3"
+          class="flex items-center justify-center container_xl mt-3"
           style="min-width: 0"
         >
           <div class="swiper-news-mobile" style="overflow: hidden">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
+              <div
+                class="swiper-slide"
+                style="height: auto"
+                v-for="news in news.other_news"
+                :key="news?.id"
+              >
                 <VNewsCard :news="news" />
               </div>
             </div>
@@ -332,6 +337,25 @@ import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
+  head () {
+    return {
+        title: this.news['title'],
+        meta: [
+        {
+          name: "title",
+          content: `${this.news['title']}`,
+        },
+        {
+          name: "keywords",
+          content: this.news?.meta?.meta_keys,
+        },
+        {
+          name: "description",
+          content:this.news?.meta?.meta_deck,
+        },
+      ],
+    }
+},
   data() {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
@@ -370,8 +394,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.host);
-    console.log(this.$route);
     this.$store.dispatch("fetchNews/getNewsBySlug", {
       id: this.$route.params.index,
       header: {
@@ -393,7 +415,7 @@ export default {
       },
       breakpoints: {
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 30,
         },
       },

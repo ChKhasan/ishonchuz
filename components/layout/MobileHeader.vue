@@ -314,7 +314,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOk" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -334,7 +334,7 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="onSubmit()">Kirish</div>
+          <div class="auth-btn" @click="onSubmit()">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </a-modal>
@@ -349,7 +349,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOkSms" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -421,7 +421,7 @@
           </div>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
+          <div class="auth-btn" @click="onSubmitSms()">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </a-modal>
@@ -591,7 +591,7 @@
           >
             Qayta jo’natish
           </div>
-          <div class="auth_btn_mobile" @click="onSubmitModel">Kirish</div>
+          <div class="auth_btn_mobile" @click="onSubmitModel">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </div>

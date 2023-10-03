@@ -43,41 +43,23 @@
             ></nuxt-link>
           </div> -->
           <div class="news-container">
-            <div class="news-container-tag">
-              <span class="tag" v-if="news?.category?.title">{{
-                news?.category?.title
+            <div
+              class="news-container-tag d-flex justify-content-between align-items-end"
+            >
+              <span class="tag">{{
+                $store.state.translations["main.photo_repartee"]
               }}</span>
-              <div class="news-container-messangers-mobile">
-                <a
-                  :href="`https://t.me/share/url?url=${host + $route.fullPath}`"
-                  target="_blank"
-                  ><span v-html="telegram"></span
-                ></a>
-                <a
-                  :href="`https://www.facebook.com/sharer.php?u=${
-                    host + $route.fullPath
-                  }`"
-                  target="_blank"
-                  ><span v-html="facebook"></span
-                ></a>
-                <a
-                  :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
-                  target="_blank"
-                  ><span v-html="twitter"></span
-                ></a>
-                <a
-                  :href="`https://www.instagram.com/?url=${host + $route.fullPath}`"
-                  target="_blank"
-                  ><span v-html="instagram"></span
-                ></a>
-                <a
-                  :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
-                  target="_blank"
-                  ><span v-html="whatsapp"></span
-                ></a>
+              <div class="news-container-character d-flex">
+                <span><span v-html="view"></span>{{ news?.views }}</span>
+                <span class="news-date_web"
+                  ><span v-html="date"></span>{{ news?.date }}</span
+                >
+                <span class="news-date_mobile"
+                  ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+                >
               </div>
             </div>
-            <div class="news-container-head">
+            <!-- <div class="news-container-head">
               <div class="news-container-character d-flex">
                 <span><span v-html="view"></span>{{ news?.views }}</span>
                 <span><span v-html="date"></span>{{ news?.date }}</span>
@@ -111,23 +93,10 @@
                   ><span v-html="whatsapp"></span
                 ></a>
               </div>
-            </div>
-            <div class="news-container-header">
-              <!-- <h1>{{ news?.title }}</h1>
-              <h6>
-                {{ news?.subtitle }}
-              </h6> -->
-            </div>
-            <!-- <div class="news-container-banner">
-                <div>
-                  <img :src="news?.image" v-if="news?.image" alt="" />
-                  <img v-else src="../../assets/images/Frame 92654103.png" alt="" />
-                </div>
-                <span>Foto: Ishonch.uz</span>
-              </div> -->
+            </div> -->
+            <div class="news-container-header"></div>
+
             <div class="news_video mt-4" v-if="news?.video">
-              <!-- <video :src="news?.video"></video> -->
-              <!-- <iframe width="420" height="315" :src="news?.video"> </iframe> -->
               <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
             </div>
             <div
@@ -142,8 +111,39 @@
               />
             </div>
             <div class="news-container-body" v-html="news?.text"></div>
+            <div class="d-flex justify-content-between news-container-bottom">
             <div class="news-container-links">
               <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
+            </div>
+            <div class="news-container-messangers">
+                <a
+                  :href="`https://t.me/share/url?url=${host + $route.fullPath}`"
+                  target="_blank"
+                  ><span v-html="telegram"></span
+                ></a>
+                <a
+                  :href="`https://www.facebook.com/sharer.php?u=${
+                    host + $route.fullPath
+                  }`"
+                  target="_blank"
+                  ><span v-html="facebook"></span
+                ></a>
+                <a
+                  :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
+                  target="_blank"
+                  ><span v-html="twitter"></span
+                ></a>
+                <a
+                  :href="`https://www.instagram.com/?url=${host + $route.fullPath}`"
+                  target="_blank"
+                  ><span v-html="instagram"></span
+                ></a>
+                <a
+                  :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
+                  target="_blank"
+                  ><span v-html="whatsapp"></span
+                ></a>
+              </div>
             </div>
           </div>
         </div>
@@ -312,12 +312,17 @@
           <span></span>
         </div>
         <div
-          class="flex items-center justify-center container_xl comment-container-grid mt-3"
+          class="flex items-center justify-center container_xl mt-3"
           style="min-width: 0"
         >
           <div class="swiper-news-mobile" style="overflow: hidden">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="news in news.other_news" :key="news?.id">
+              <div
+                class="swiper-slide"
+                style="height: auto"
+                v-for="news in news.other_news"
+                :key="news?.id"
+              >
                 <VNewsCard :news="news" />
               </div>
             </div>
@@ -389,7 +394,7 @@ export default {
       },
       breakpoints: {
         1024: {
-          slidesPerView: 3,
+          slidesPerView: 4,
           spaceBetween: 30,
         },
       },

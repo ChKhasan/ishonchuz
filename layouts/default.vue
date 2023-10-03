@@ -26,6 +26,11 @@ import Header from "../components/layout/Header.vue";
 import MobileHeader from "@/components/layout/MobileHeader.vue";
 import moment from "moment";
 export default {
+  head () {
+    return {
+        title: this.$store.state.siteInfo['title']
+    }
+},
   data() {
     return {
       categories: [],
@@ -116,7 +121,7 @@ export default {
 
   watch: {
     async targetLang() {
-      const [categoriesData, translationsData] = await Promise.all([
+      const [categoriesData, translationsData, siteInfoData] = await Promise.all([
         this.$store.dispatch("fetchCategories/getCategories", {
           headers: {
             Language: this.$i18n.locale,
@@ -127,9 +132,16 @@ export default {
             Language: this.$i18n.locale,
           },
         }),
+        this.$store.dispatch("fetchSiteInfo/getSiteInfo", {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
       ]);
+      const siteInfo = siteInfoData;
       this.categories = categoriesData.results;
       this.$store.commit("getTranslations", translationsData);
+      this.$store.commit("getSiteInfo", siteInfo);
       this.$store.commit("getTranslationsChange", !this.$store.state.translationsChange);
     },
     "$store.state.theme"(val) {

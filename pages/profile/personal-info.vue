@@ -105,7 +105,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOkSms" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -167,7 +167,7 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
+          <div class="auth-btn" @click="onSubmitSms()">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </a-modal>

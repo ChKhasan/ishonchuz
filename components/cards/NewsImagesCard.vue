@@ -4,9 +4,9 @@
       <div class="news-images-card-image">
         <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div>
-      <div class="news-images-card-img_mobile">
+      <!-- <div class="news-images-card-img_mobile">
         <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
-      </div>
+      </div> -->
       <div class="news-images-card-body">
         <p>
           {{ news?.title }}

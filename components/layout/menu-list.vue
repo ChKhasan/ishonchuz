@@ -113,7 +113,7 @@
                 </a-menu-item>
                 <a-menu-item key="1">
                   <nuxt-link :to="localePath(`/news-menu/${columnist?.slug}`)">{{
-                    columnist?.title
+                    $store.state.translations["main.communist"]
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
@@ -138,7 +138,7 @@
                 v-model="searchValue"
                 :autofocus="visibleSearch"
                 @keyup.enter="submit"
-                placeholder="Qidirish"
+                :placeholder="$store.state.translations['main.search']"
               />
               <span @click="visibleSearch = !visibleSearch" v-html="search"></span>
             </div>
@@ -187,7 +187,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOk" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -214,7 +214,7 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="onSubmit()">Kirish</div>
+          <div class="auth-btn" @click="onSubmit()">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </a-modal>
@@ -228,7 +228,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOkSms" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -295,7 +295,7 @@
           </a-form-model>
         </div>
         <div class="vmodal-footer">
-          <div class="auth-btn" @click="onSubmitSms()">Kirish</div>
+          <div class="auth-btn" @click="onSubmitSms()">{{$store.state.translations['main.enter']}}</div>
         </div>
       </div>
     </a-modal>
@@ -309,7 +309,7 @@
     >
       <div class="vmodal-container">
         <div class="vmodal-header">
-          <h2>Profilga kirish</h2>
+          <h2>{{$store.state.translations['main.auth-title']}}</h2>
           <span @click="handleOkName" v-html="mClose"></span>
         </div>
         <div class="vmodal-body">
@@ -993,6 +993,7 @@ export default {
   margin-left: 13px;
   padding-right: 13px;
   width: 300px;
+  background-color: transparent;
 }
 .search-btn {
   position: absolute;
