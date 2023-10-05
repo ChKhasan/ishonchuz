@@ -337,13 +337,13 @@ import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
-  head () {
+  head() {
     return {
-        title: this.news['title'],
-        meta: [
+      title: this.news["title"],
+      meta: [
         {
           name: "title",
-          content: `${this.news['title']}`,
+          content: `${this.news["title"]}`,
         },
         {
           name: "keywords",
@@ -351,16 +351,19 @@ export default {
         },
         {
           name: "description",
-          content:this.news?.meta?.meta_deck,
+          content: this.news?.meta?.meta_deck,
         },
-        { hid: 'description', name: 'description', content:  this.news?.text },
-            { hid: 'og:title', property: 'og:title', content: this.news['title'] },
-            { hid: 'og:url', property: 'og:url', content: this.$route.fullPath },
-            { hid: 'og:description', property: 'og:description', content: this.desc },
-            { hid: 'og:image', property: 'og:image', content: process.env.BASE_URL + this.news?.image},
+        { hid: "description", name: "description", content: "this.news?.text" },
+        { hid: "og:title", property: "og:title", content: this.news["title"] },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+        },
+        { hid: "og:image", property: "og:image", content: +this.news?.image },
       ],
-    }
-},
+    };
+  },
   data() {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
@@ -399,15 +402,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("fetchNews/getNewsBySlug", {
-      id: this.$route.params.index,
-      header: {
-        headers: {
-          Language: this.$i18n.locale,
-        },
-      },
-    }),
-      this.$store.commit("viewNewsStore", { id: this.news?.id });
+    this.$store.commit("viewNewsStore", { id: this.news?.id });
     const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
       spaceBetween: 16,

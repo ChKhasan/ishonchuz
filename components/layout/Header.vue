@@ -159,7 +159,8 @@
                 <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
                 <p>
                   {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
-                  {{ moment(currentWeather(0)[0]?.time).format("DD-MMMM") }}
+                  {{moment(currentWeather(0)[0]?.time).format("DD") }}-
+                  {{ $store.state.translations[`month.${moment(currentWeather(0)[0]?.time).format("MMMM")}`] }}
                 </p>
                 <h1>
                   <span>{{
@@ -299,6 +300,21 @@ export default {
         // Friday: "Juma",
         // Saturday: "Shanba",
         // Sunday: "Yakshanba",
+      },
+
+      months: {
+        January: "",
+        February: "",
+        March: "",
+        April: "",
+        May: "",
+        June: "",
+        July: "",
+        August: "",
+        September: "",
+        October: "",
+        November: "",
+        December: "",
       },
       regions: [],
       otherDays: [1, 2, 3, 4],

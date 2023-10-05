@@ -3,6 +3,7 @@ export default {
     title: "Ishonch",
     htmlAttrs: {
       lang: "en",
+      prefix: "og: https://ogp.me/ns#", 
     },
 
     meta: [
@@ -45,7 +46,12 @@ export default {
   },
 
   buildModules: ["@nuxtjs/svg"],
-  modules: ["bootstrap-vue/nuxt", "@nuxtjs/axios", "@nuxtjs/i18n","@nuxtjs/dotenv",],
+  modules: [
+    "bootstrap-vue/nuxt",
+    "@nuxtjs/axios",
+    "@nuxtjs/i18n",
+    "@nuxtjs/dotenv",
+  ],
   axios: {
     credentials: false,
     init(axios) {
