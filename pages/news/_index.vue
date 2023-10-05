@@ -907,13 +907,17 @@ export default {
     /* font-weight: 500; */
     line-height: 150%;
   }
+  .news-container-bottom {
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
 }
 @media (max-width: 421px) {
   .news-container-messangers-mobile {
     display: block;
   }
   .news-container-messangers {
-    display: none;
+    /* display: none; */
   }
   .news-container-header h1 {
     font-size: 16px;

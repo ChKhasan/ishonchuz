@@ -847,7 +847,7 @@ export default {
     margin-left: 8px;
   }
   .news-container-messangers {
-    display: none;
+    /* display: none; */
   }
   .news-container-header h1 {
     font-size: 16px;
