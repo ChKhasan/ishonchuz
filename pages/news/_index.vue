@@ -360,7 +360,7 @@ export default {
           property: "og:url",
           content: process.env.BASE_URL + "/" + this.$route.fullPath,
         },
-        { hid: "og:image", property: "og:image", content: +this.news?.image },
+        { hid: "og:image", property: "og:image", content: this.news?.image },
       ],
     };
   },

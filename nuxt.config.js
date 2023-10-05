@@ -3,7 +3,7 @@ export default {
     title: "Ishonch",
     htmlAttrs: {
       lang: "en",
-      prefix: "og: https://ogp.me/ns#", 
+      prefix: "og: https://ogp.me/ns#",
     },
 
     meta: [
@@ -65,6 +65,8 @@ export default {
   router: {
     middleware: ["auth"],
   },
+  target: "server",
+  server: { port: 3001, host: "0.0.0.0" },
   build: {
     babel: {
       compact: true,
