@@ -20,6 +20,7 @@
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
+    "nuxt-social-meta": "^1.0.0",
     "swiper": "^9.0.5",
     "v-mask": "^2.3.0",
     "vue": "^2.7.10",
