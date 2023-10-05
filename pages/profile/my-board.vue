@@ -30,7 +30,7 @@
           }}</span>
         </li>
         <li @click="logOut">
-          <span>Chiqish</span>
+          <span>{{$store.state.translations['main.logout']}}</span>
         </li>
       </ul>
       <div class="profile-grid">

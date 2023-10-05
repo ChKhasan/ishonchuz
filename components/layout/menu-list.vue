@@ -263,7 +263,7 @@
                 <a-input
                   v-model="formSms.code"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
                 <span
                   class="sms_success_icon"
@@ -276,7 +276,7 @@
                   >{{ smsTimer }}</span
                 >
                 <span class="error_code" v-if="responseTypes.smsCodeError"
-                  >Xato kiritildi!</span
+                  >{{$store.state.translations['main.error-enter']}}!</span
                 >
               </a-form-model-item>
               <a-form-model-item
@@ -327,9 +327,9 @@
                 <a-input
                   v-model="formName.sms"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
-                <span class="error_code">Xato kiritildi!</span>
+                <span class="error_code">{{$store.state.translations['main.error-enter']}}!</span>
               </a-form-model-item>
               <a-form-model-item
                 class="form-item mb-0 w-100"
@@ -340,7 +340,7 @@
                 <a-input
                   v-model="formName.name"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
               </a-form-model-item>
             </div>

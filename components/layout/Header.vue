@@ -119,7 +119,7 @@
               <li
                 :class="{ 'active-lang': $i18n.locale == lang.code }"
                 v-for="lang in $store.state.languages"
-                :key="lang.id"
+                :key="`${$i18n.locale}${lang.id}`"
                 @click="$router.push(switchLocalePath(lang.code))"
               >
                 {{ lang.name }}
@@ -330,6 +330,11 @@ export default {
       color: true,
     };
   },
+  computed: {
+    targetLang() {
+      return this.$i18n.locale;
+    },
+  },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
     this.weeks = {
@@ -482,104 +487,109 @@ export default {
         behavior: "smooth",
       });
     },
-    onChange(checked) {
-    },
+    onChange(checked) {},
   },
   watch: {
-    "$store.state.translationsChange"(val, val1) {
-      if (val) {
-        this.weeks = {
-          Monday: this.$store.state.translations["others.monday"],
-          Tuesday: this.$store.state.translations["others.tuesday"],
-          Wednesday: this.$store.state.translations["others.wednesday"],
-          Thursday: this.$store.state.translations["others.thursday"],
-          Friday: this.$store.state.translations["others.friday"],
-          Saturday: this.$store.state.translations["others.saturday"],
-          Sunday: this.$store.state.translations["others.sunday"],
-        };
-        this.regions = [
-          {
-            name: this.$store.state.translations["others.tashkent_city"],
-            value: "toshkentSh",
-            lat: 41.311081,
-            lon: 69.240562,
+    async targetLang() {
+      const [translationsData] = await Promise.all([
+        this.$store.dispatch("fetchTranslations/getTranslations", {
+          headers: {
+            Language: this.$i18n.locale,
           },
-          {
-            name: this.$store.state.translations["others.andijan"],
-            value: "andijon",
-            lat: 40.77408090036615,
-            lon: 72.5355339,
-          },
-          {
-            name: this.$store.state.translations["others.namangan"],
-            value: "namangan",
-            lat: 41.00362870039255,
-            lon: 71.26119519999999,
-          },
-          {
-            name: this.$store.state.translations["others.sirdaryo"],
-            value: "sirdaryo",
-            lat: 40.50184730033293,
-            lon: 68.7426643,
-          },
-          {
-            name: this.$store.state.translations["others.surxandaryo"],
-            value: "surxandaryo",
-            lat: 37.95208429997525,
-            lon: 67.12659959999999,
-          },
-          {
-            name: this.$store.state.translations["others.qashqadaryo"],
-            value: "qashqadaryo",
-            code: "qashqadaryo",
-            lat: 38.563939700062676,
-            lon: 65.5311095,
-          },
-          {
-            name: this.$store.state.translations["others.xorazm"],
-            value: "xorazm",
-            lat: 41.29028350042324,
-            lon: 60.542853699999995,
-          },
-          {
-            name: this.$store.state.translations["others.navoiy"],
-            value: "navoiy",
-            lat: 42.00000000048624,
-            lon: 63.999999999999986,
-          },
-          {
-            name: this.$store.state.translations["others.buxoro"],
-            value: "buxoro",
-            lat: 40.22936600029793,
-            lon: 63.54705839999999,
-          },
+        }),
+      ]);
+      this.$store.commit("getTranslations", translationsData);
+      this.weeks = {
+        Monday: this.$store.state.translations["others.monday"],
+        Tuesday: this.$store.state.translations["others.tuesday"],
+        Wednesday: this.$store.state.translations["others.wednesday"],
+        Thursday: this.$store.state.translations["others.thursday"],
+        Friday: this.$store.state.translations["others.friday"],
+        Saturday: this.$store.state.translations["others.saturday"],
+        Sunday: this.$store.state.translations["others.sunday"],
+      };
+      this.regions = [
+        {
+          name: this.$store.state.translations["others.tashkent_city"],
+          value: "toshkentSh",
+          lat: 41.311081,
+          lon: 69.240562,
+        },
+        {
+          name: this.$store.state.translations["others.andijan"],
+          value: "andijon",
+          lat: 40.77408090036615,
+          lon: 72.5355339,
+        },
+        {
+          name: this.$store.state.translations["others.namangan"],
+          value: "namangan",
+          lat: 41.00362870039255,
+          lon: 71.26119519999999,
+        },
+        {
+          name: this.$store.state.translations["others.sirdaryo"],
+          value: "sirdaryo",
+          lat: 40.50184730033293,
+          lon: 68.7426643,
+        },
+        {
+          name: this.$store.state.translations["others.surxandaryo"],
+          value: "surxandaryo",
+          lat: 37.95208429997525,
+          lon: 67.12659959999999,
+        },
+        {
+          name: this.$store.state.translations["others.qashqadaryo"],
+          value: "qashqadaryo",
+          code: "qashqadaryo",
+          lat: 38.563939700062676,
+          lon: 65.5311095,
+        },
+        {
+          name: this.$store.state.translations["others.xorazm"],
+          value: "xorazm",
+          lat: 41.29028350042324,
+          lon: 60.542853699999995,
+        },
+        {
+          name: this.$store.state.translations["others.navoiy"],
+          value: "navoiy",
+          lat: 42.00000000048624,
+          lon: 63.999999999999986,
+        },
+        {
+          name: this.$store.state.translations["others.buxoro"],
+          value: "buxoro",
+          lat: 40.22936600029793,
+          lon: 63.54705839999999,
+        },
 
-          {
-            name: this.$store.state.translations["others.qoraqalpogiston"],
-            value: "qoraqaplogiston",
-            lat: 43.77388410053869,
-            lon: 57.6234617,
-          },
-          {
-            name: this.$store.state.translations["others.fargona"],
-            value: "fargona",
-            lat: 40.5000000003327,
-            lon: 71.24999999999999,
-          },
-          {
-            name: this.$store.state.translations["others.tashkent"],
-            value: "toshkentvil",
-            lat: 41.04968150039766,
-            lon: 69.3711365,
-          },
-          {
-            name: this.$store.state.translations["others.jizzax"],
-            value: "Jizzax",
-            lat: 40.33190950031129,
-            lon: 67.4551198,
-          },
-        ];
-      }
+        {
+          name: this.$store.state.translations["others.qoraqalpogiston"],
+          value: "qoraqaplogiston",
+          lat: 43.77388410053869,
+          lon: 57.6234617,
+        },
+        {
+          name: this.$store.state.translations["others.fargona"],
+          value: "fargona",
+          lat: 40.5000000003327,
+          lon: 71.24999999999999,
+        },
+        {
+          name: this.$store.state.translations["others.tashkent"],
+          value: "toshkentvil",
+          lat: 41.04968150039766,
+          lon: 69.3711365,
+        },
+        {
+          name: this.$store.state.translations["others.jizzax"],
+          value: "Jizzax",
+          lat: 40.33190950031129,
+          lon: 67.4551198,
+        },
+      ];
     },
   },
   components: {

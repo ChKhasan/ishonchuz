@@ -32,7 +32,7 @@
         >
       </li>
       <li>
-        <div @click="logOut()"><span v-html="exit"></span> Chiqish</div>
+        <div @click="logOut()"><span v-html="exit"></span> {{$store.state.translations['main.logout']}}</div>
       </li>
     </ul>
   </div>

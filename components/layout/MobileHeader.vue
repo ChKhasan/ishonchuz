@@ -298,7 +298,7 @@
           type="text"
           v-model="searchValue"
           @keyup.enter="submit"
-          placeholder="Yangilikda qatnashgan so’zni kiriting"
+          :placeholder="$store.state.translations['main.search']"
         />
         <span v-html="searchInput"></span>
       </div>
@@ -378,7 +378,7 @@
                 <a-input
                   v-model="formSms.code"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
                 <span
                   class="sms_success_icon"
@@ -395,7 +395,7 @@
                   >{{ smsTimer }}</span
                 >
                 <span class="error_code" v-if="responseTypes.smsCodeError"
-                  >Xato kiritildi!</span
+                  >{{$store.state.translations['main.error-enter']}}!</span
                 >
               </a-form-model-item>
               <a-form-model-item
@@ -407,7 +407,7 @@
                 <a-input
                   v-model="formName.full_name"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
               </a-form-model-item>
             </div>
@@ -417,7 +417,7 @@
             v-if="smsTimer == 0 && visibleSms"
             @click="__SEND_NUMBER({ phone_number: `${formSms.phone_number}` })"
           >
-            Qayta jo’natish
+            {{$store.state.translations['main.resend']}}
           </div>
         </div>
         <div class="vmodal-footer">
@@ -428,8 +428,8 @@
     <div class="auth_modal_mobile" :class="{ 'h-100vh': authMobilVisible }">
       <div class="auth_mobile_body">
         <span class="auth-logo" v-html="$store.state.theme ? logo : darkLogo"></span>
-        <h3>Telefon raqamingizni kiritng</h3>
-        <p>Tasdiqlash kodini SMS orqali yuboramiz</p>
+        <h3>{{$store.state.translations['main.enter-your-phone']}}</h3>
+        <p>{{$store.state.translations['main.send-sms-code']}}</p>
         <div class="auth-form-mobile w-100">
           <a-form-model
             v-if="!visibleSms"
@@ -541,7 +541,7 @@
               <a-input
                 v-model="formSms.code"
                 class="w-100"
-                placeholder="SMS kodni tering"
+                :placeholder="$store.state.translations['main.enter-sms-code']"
               />
               <span
                 class="sms_success_icon"
@@ -569,7 +569,7 @@
                 v-html="inputClear"
               ></span>
               <span class="error_code" v-if="responseTypes.smsCodeError"
-                >Xato kiritildi!</span
+                >{{$store.state.translations['main.error-enter']}}!</span
               >
             </a-form-model-item>
             <a-form-model-item
@@ -580,7 +580,7 @@
               <a-input
                 v-model="formName.full_name"
                 class="w-100"
-                placeholder="Ismingizni kiritish"
+                :placeholder="$store.state.translations['main.your-name']"
               />
             </a-form-model-item>
           </a-form-model>
@@ -589,7 +589,7 @@
             v-if="smsTimer == 0 && visibleSms"
             @click="__SEND_NUMBER({ phone_number: `${formSms.phone_number}` })"
           >
-            Qayta jo’natish
+            {{$store.state.translations['main.resend']}}
           </div>
           <div class="auth_btn_mobile" @click="onSubmitModel">{{$store.state.translations['main.enter']}}</div>
         </div>
@@ -629,7 +629,7 @@
           <span v-html="dropdown"></span>
         </li>
         <li>
-          <div @click="logOut()"><span v-html="exit"></span> Chiqish</div>
+          <div @click="logOut()"><span v-html="exit"></span> {{$store.state.translations['main.logout']}}</div>
           <span v-html="dropdown"></span>
         </li>
       </ul>

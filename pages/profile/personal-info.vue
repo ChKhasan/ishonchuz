@@ -30,7 +30,7 @@
           }}</span>
         </li>
         <li @click="logOut">
-          <span>Chiqish</span>
+          <span>{{$store.state.translations['main.logout']}}</span>
         </li>
       </ul>
       <div class="profile-grid">
@@ -72,12 +72,12 @@
               </a-form-model-item>
               <a-form-model-item
                 class="form-item mb-0"
-                label="Telefon raqam"
+                :label="$store.state.translations['main.phone_number']"
                 prop="phone_number"
               >
                 <a-input
                   type="text"
-                  placeholder="Telefon raqam"
+                  :placeholder="$store.state.translations['main.phone_number']"
                   v-model="form.phone_number"
                 />
                 <span
@@ -135,7 +135,7 @@
                 <a-input
                   v-model="formSms.code"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
                 <span
                   class="sms_success_icon"
@@ -148,7 +148,7 @@
                   >{{ smsTimer }}</span
                 >
                 <span class="error_code" v-if="responseTypes.smsCodeError"
-                  >Xato kiritildi!</span
+                  >{{$store.state.translations['main.error-enter']}}!</span
                 >
               </a-form-model-item>
               <a-form-model-item
@@ -160,7 +160,7 @@
                 <a-input
                   v-model="formName.full_name"
                   class="w-100"
-                  placeholder="SMS kodni tering"
+                  :placeholder="$store.state.translations['main.enter-sms-code']"
                 />
               </a-form-model-item>
             </div>

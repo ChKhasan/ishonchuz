@@ -30,13 +30,13 @@
           }}</span>
         </li>
         <li @click="logOut">
-          <span>Chiqish</span>
+          <span>{{$store.state.translations['main.logout']}}</span>
         </li>
       </ul>
       <div class="profile-grid">
         <ProfileMenu />
         <div class="profile-saved">
-          <h3 class="profile-saved_title">Mening javonim</h3>
+          <h3 class="profile-saved_title">{{ $store.state.translations["main.my-shelf"] }}</h3>
           <ul class="library_tab saved_tab">
             <li
               :class="{

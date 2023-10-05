@@ -201,6 +201,7 @@ export default {
 }
 .footer-bottom-container {
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
 }
 .footer {
@@ -373,6 +374,10 @@ export default {
 @media (max-width: 576px) {
   .footer-menu__mobile ul {
     gap: 16px;
+  }
+  .footer-messangers a svg {
+    width: 24px;
+    height: 24px;
   }
 }
 @media (max-width: 421px) {
