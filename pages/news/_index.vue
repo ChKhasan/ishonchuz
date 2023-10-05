@@ -353,6 +353,11 @@ export default {
           name: "description",
           content:this.news?.meta?.meta_deck,
         },
+        { hid: 'description', name: 'description', content:  this.news?.text },
+            { hid: 'og:title', property: 'og:title', content: this.news['title'] },
+            { hid: 'og:url', property: 'og:url', content: this.$route.fullPath },
+            { hid: 'og:description', property: 'og:description', content: this.desc },
+            { hid: 'og:image', property: 'og:image', content: process.env.BASE_URL + this.news?.image},
       ],
     }
 },
