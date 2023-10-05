@@ -353,16 +353,16 @@ export default {
           name: "description",
           content: this.news?.meta?.meta_deck,
         },
-        { property: "og:title", content: this.news["title"] },
-        { property: "og:description", content: this.news?.text },
-        { property: "og:type", content: "website" },
+
+        { hid: "og-title", property: "og:title", content: this.news["title"] },
+        // { hid: "og-description", property: "og:description", content: this.news?.text },
+        { hid: "og-type", property: "og:type", content: "website" },
         {
+          hid: "og-url",
           property: "og:url",
           content: process.env.BASE_URL + "/" + this.$route.fullPath,
         },
-        { property: "og:image", content: this.news?.image },
-        { property: "og:image:width", content: "20px" },
-        { property: "og:image:height", content: "20px" },
+        { hid: "og-image", property: "og:image", content: this.news?.image },
       ],
     };
   },
@@ -908,9 +908,9 @@ export default {
     line-height: 150%;
   }
   .news-container-bottom {
-  flex-direction: column !important;
-  align-items: flex-start !important;
-}
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
 }
 @media (max-width: 421px) {
   .news-container-messangers-mobile {
