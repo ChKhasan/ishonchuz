@@ -189,11 +189,11 @@
               </a-form-model-item>
 
               <div class="send-btn" @click="submit()">
-                {{ $store.state.translations["news.leave_comment"] }}
+                {{ $store.state.translations["inner.send-comment"] }}
               </div>
             </div>
             <div class="general-assessment general-assessment-mobile">
-              <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+              <h5>{{ $store.state.translations["inner.comment-title"] }}</h5>
               <div class="main-rate">
                 <a-rate
                   :default-value="Number.parseInt(Number(news?.rating))"
@@ -261,7 +261,7 @@
         </a-form-model>
         <div>
           <div class="general-assessment general-assessment-web">
-            <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+            <h5>{{ $store.state.translations["inner.comment-title"] }}</h5>
             <div class="main-rate">
               <a-rate
                 :default-value="Number.parseInt(Number(news?.rating))"
@@ -355,7 +355,6 @@ export default {
         },
 
         { hid: "og-title", property: "og:title", content: this.news["title"] },
-        // { hid: "og-description", property: "og:description", content: this.news?.text },
         { hid: "og-type", property: "og:type", content: "website" },
         {
           hid: "og-url",

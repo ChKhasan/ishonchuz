@@ -543,6 +543,32 @@ import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
+  head() {
+    return {
+      title: this.$store.state.siteInfo["title"],
+      meta: [
+        {
+          name: "title",
+          content: this.$store.state.siteInfo["title"],
+        },
+        {
+          name: "description",
+          content: this.$store.state.siteInfo["description"],
+        },
+        {
+          hid: "og-title",
+          property: "og:title",
+          content: this.$store.state.siteInfo["title"],
+        },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-url",
+          property: "og:url",
+          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+        },
+      ],
+    };
+  },
   data() {
     return {
       showAll: false,

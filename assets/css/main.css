@@ -450,11 +450,27 @@ ul {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+
 }
-.messangers-container h5 {
-  color: #0192ff;
-  font-family: "Poppins", sans-serif;
+.messangers-banner h5 {
+  color: #FFF;
+  font-family: 'Poppins',sans-serif;
+  font-size: 31px;
+  font-style: normal;
   font-weight: 700;
+  line-height: 150%;
+  margin-bottom: 0;
+  
+}
+.messangers-banner {
+  border-radius: 20px;
+background: #0191FF;
+padding: 50px 92px;
+display: flex;
+gap: 20px;
+align-items: center;
+  width: 100%;
+  max-width: 960px;
 }
 .follow-us-message {
   margin-top: 26px;
@@ -485,12 +501,12 @@ ul {
   bottom: -16px;
 }
 .messanger-icons {
-  border: 1px solid #9ba2c3;
+  /* border: 1px solid #9ba2c3; */
   border-radius: 1111px;
-  padding: 20px;
-  margin-top: 40px;
+  /* padding: 20px; */
+  margin-top: 51px;
   /* width: 296px; */
-  gap: 24px;
+  gap: 43px;
   display: flex;
   justify-content: space-between;
 }
@@ -498,7 +514,7 @@ ul {
   margin-right: 30px;
 } */
 .messanger-icons a svg {
-  width: 32px;
+  /* width: 32px; */
 }
 .messanger-icons a:last-child {
   margin-right: 0;
@@ -660,11 +676,24 @@ ul {
     height: 24px;
   }
   .messangers-container h5 {
-    color: #0192ff;
+    /* color: #0192ff; */
     text-align: center;
-    font-size: 19px;
+    font-size: 23px;
     font-weight: 600;
     line-height: 150%;
+  }
+  .messangers-banner {
+    padding: 37px 0;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+  }
+  .messanger-icons {
+    margin-top: 40px;
+  }
+  .messanger-icons svg {
+    width: 43px;
+    height: 43px;
   }
   .new-category-title h2 {
     font-size: 16px;
@@ -694,6 +723,27 @@ ul {
 }
 
 @media (max-width: 576px) {
+  .messangers-container h5 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .messangers-banner {
+    padding: 27px 0;
+    gap: 11px;
+    border-radius: 11px;
+  }
+  .messangers-banner svg {
+    width: 30px;
+    height: 30px;
+  }
+  .messanger-icons {
+    margin-top: 27px;
+    gap: 19px;
+  }
+  .messanger-icons svg {
+    width: 26px;
+    height: 26px;
+  }
   .profile-menu ul li > span svg path {
     fill: var(--white_ffffff, #000);
   }
@@ -736,6 +786,27 @@ ul {
   }
 }
 @media (max-width: 420px) {
+  .messangers-container h5 {
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .messangers-banner {
+    padding: 16px 0;
+    gap: 6px;
+    border-radius: 6px;
+  }
+  .messangers-banner svg {
+    width: 19px;
+    height: 19px;
+  }
+  .messanger-icons {
+    margin-top: 16px;
+    gap: 11px;
+  }
+  .messanger-icons svg {
+    width: 15px;
+    height: 15px;
+  }
   .socials__mobile a svg {
     height: 24px;
   }

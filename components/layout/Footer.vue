@@ -201,7 +201,6 @@ export default {
 }
 .footer-bottom-container {
   display: flex;
-  flex-direction: column-reverse;
   justify-content: space-between;
 }
 .footer {
@@ -323,7 +322,6 @@ export default {
     display: flex;
     justify-content: flex-start;
     gap: 24px;
-    margin: 32px 0;
     padding: 0;
   }
   .footer-messangers a {
@@ -378,6 +376,12 @@ export default {
   .footer-messangers a svg {
     width: 24px;
     height: 24px;
+  }
+  .footer-bottom-container {
+  flex-direction: column-reverse;
+}
+.footer-messangers {
+    margin: 32px 0;
   }
 }
 @media (max-width: 421px) {

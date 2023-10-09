@@ -102,14 +102,14 @@
               </a-form-model-item>
 
               <div class="send-btn" @click="submit()">
-                {{ $store.state.translations["news.leave_comment"] }}
+                {{ $store.state.translations["inner.send-comment"] }}
               </div>
             </div>
           </div>
         </a-form-model>
         <div>
           <div class="general-assessment">
-            <h5>{{ $store.state.translations["news.leave_comment"] }}</h5>
+            <h5>{{ $store.state.translations["inner.comment-title"] }}</h5>
             <div class="main-rate">
               <a-rate
                 :default-value="Number.parseInt(Number(book?.rating))"
@@ -290,7 +290,9 @@
             <h1 class="buy_status__text">To’lovingiz muvaffaqiyatga amalga oshirildi</h1>
           </div>
           <div class="vmodal-footer">
-            <div class="auth-btn w-100" @click="handleOk()">{{ $store.state.translations["main.to-home-page"] }}</div>
+            <div class="auth-btn w-100" @click="handleOk()">
+              {{ $store.state.translations["main.to-home-page"] }}
+            </div>
           </div>
         </div>
       </a-modal>
@@ -312,7 +314,9 @@
             <h1 class="buy_status__text">To’lovingiz muvaffaqiyatsiz amalga oshirildi</h1>
           </div>
           <div class="vmodal-footer">
-            <div class="auth-btn w-100" @click="handleOk()">{{ $store.state.translations["main.to-home-page"] }}</div>
+            <div class="auth-btn w-100" @click="handleOk()">
+              {{ $store.state.translations["main.to-home-page"] }}
+            </div>
           </div>
         </div>
       </a-modal>
@@ -363,6 +367,30 @@ export default {
         book: null,
         stars: 0,
       },
+    };
+  },
+  head() {
+    return {
+      title: this.book["title"],
+      meta: [
+        {
+          name: "title",
+          content: this.book["title"],
+        },
+        {
+          name: "description",
+          content: this.book["short_desc"],
+        },
+
+        { hid: "og-title", property: "og:title", content: this.book["title"] },
+        { hid: "og-type", property: "og:type", content: "website" },
+        {
+          hid: "og-url",
+          property: "og:url",
+          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+        },
+        { hid: "og-image", property: "og:image", content: this.book?.image },
+      ],
     };
   },
   async mounted() {},

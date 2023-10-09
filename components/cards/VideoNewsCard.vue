@@ -107,6 +107,8 @@ export default {
   z-index: 100;
   width: 100%;
   height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .video-news-card-img > div div {
   width: 84px;
@@ -206,6 +208,11 @@ export default {
 @media (max-width: 488px) {
   .video-news-card-img {
     height: 183px;
+  }
+}
+@media (max-width: 468px) {
+  .video-news-card-img {
+    height: 110px;
   }
 }
 </style>
