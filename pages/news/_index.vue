@@ -351,7 +351,7 @@ export default {
         },
         {
           name: "description",
-          content: this.news?.meta?.meta_deck,
+          content: `${this.news?.meta?.meta_deck} ${this.news?.text}`,
         },
 
         { hid: "og-title", property: "og:title", content: this.news["title"] },
