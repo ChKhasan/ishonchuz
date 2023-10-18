@@ -57,7 +57,7 @@ export default {
     init(axios) {
       axios.defaults.withCredentials = true;
     },
-    baseURL: "https://admin.ishonch.ndc.uz/api",
+    baseURL: "https://admin.ishonch.uz/api",
   },
   loading: {
     color: "#0192ff",

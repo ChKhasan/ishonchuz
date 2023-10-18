@@ -1,5 +1,8 @@
 <template lang="html">
   <div class="default-layout" :class="{ 'dark-theme': !$store.state.theme }">
+    <div class="warn">
+      {{ $store.state.translations["main.warn"] }}
+    </div>
     <Header
       :categories="categories"
       :banners="banners"
@@ -165,6 +168,12 @@ export default {
 }
 .layout_back {
   display: none;
+}
+.warn{
+  background: var(--breadcrumb_link);
+  text-align: center;
+  color: white;
+  padding: 4px 0;
 }
 @media screen and (max-width: 1024px) {
   .layout_back {
