@@ -104,7 +104,7 @@
             <div class="mt-4 news_banner" v-if="news?.image">
               <img :src="news?.image" alt="" />
             </div>
-            <div class="news-container-body" v-html="news?.text?.replaceAll('<o:p></o:p>','<br/>')"></div>
+            <div class="news-container-body" v-html="news?.text?.replaceAll('</p>','</p><br/>')"></div>
             <div class="d-flex justify-content-between news-container-bottom">
               <div class="news-container-links">
                 <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
