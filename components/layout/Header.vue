@@ -76,7 +76,7 @@
               :class="{ 'active-color': !$store.state.theme }"
             ></span>
           </div>
-          <div class="weather-drop weather-drop__web1" @click="visible = true">
+          <div class="weather-drop weather-drop__web1" @click="visible = true" v-if="weather.length > 0">
             <span>
               <img :src="currentWeather(0)[0]?.image" alt="" />
             </span>
@@ -89,7 +89,7 @@
             </p>
             <span v-html="drop"></span>
           </div>
-          <div class="weather-drop__container">
+          <div class="weather-drop__container" v-if="weather.length > 0">
             <div class="color-switch color-switch__web1">
               <span
                 v-html="sun"
@@ -148,7 +148,7 @@
       width="858px"
       @ok="handleOk"
     >
-      <div class="weather__container">
+      <div class="weather__container" v-if="weather.length > 0">
         <div class="weather__body">
           <div class="weather__spin" v-if="loading">
             <a-spin />
@@ -159,8 +159,12 @@
                 <h4>{{ regions.find((item) => item.value == activeRegion)?.name }}</h4>
                 <p>
                   {{ weeks[moment(currentWeather(0)[0]?.time).format("dddd")] }},
-                  {{moment(currentWeather(0)[0]?.time).format("DD") }}-
-                  {{ $store.state.translations[`month.${moment(currentWeather(0)[0]?.time).format("MMMM")}`] }}
+                  {{ moment(currentWeather(0)[0]?.time).format("DD") }}-
+                  {{
+                    $store.state.translations[
+                      `month.${moment(currentWeather(0)[0]?.time).format("MMMM")}`
+                    ]
+                  }}
                 </p>
                 <h1>
                   <span>{{
@@ -480,10 +484,12 @@ export default {
       this.weatherDrop = false;
     },
     currentWeather(index) {
-      const currentW = this.weather[Object.keys(this.weather)[index]].filter(
-        (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
-      );
-      return currentW;
+      if (this.weather.length > 0) {
+        const currentW = this.weather[Object.keys(this.weather)[index]].filter(
+          (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
+        );
+        return currentW;
+      }
     },
     moment,
     handleOk() {

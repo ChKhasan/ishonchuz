@@ -423,7 +423,7 @@
                 {{ $store.state.translations["main.journalists"] }}
               </li>
             </ul>
-            <div class="web_drawer__weather__container">
+            <div class="web_drawer__weather__container" v-if="weather.length > 0">
               <div class="weather-drop weather-drop__web2" @click="visible = true">
                 <span>
                   <img :src="currentWeather(0)[0]?.image" alt="" />
@@ -696,10 +696,12 @@ export default {
   methods: {
     moment,
     currentWeather(index) {
-      const currentW = this.weather[Object.keys(this.weather)[index]].filter(
-        (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
-      );
-      return currentW;
+      if(this.weather.length > 0) {
+        const currentW = this.weather[Object.keys(this.weather)[index]].filter(
+          (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
+        );
+        return currentW;
+      }
     },
     submit() {
       this.$router.push(this.localePath(`/search/${this.searchValue}`));
