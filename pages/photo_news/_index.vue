@@ -882,7 +882,7 @@ export default {
   }
   .news-container-body {
     padding-bottom: 32px;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   .comment-form {
     padding: 20px 24px;
