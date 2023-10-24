@@ -74,8 +74,8 @@ export default {
   router: {
     middleware: ["auth"],
   },
-  target: "server",
-  server: { port: 3001, host: "0.0.0.0" },
+  // target: "server",
+  // server: { port: 3001, host: "0.0.0.0" },
   build: {
     babel: {
       compact: true,

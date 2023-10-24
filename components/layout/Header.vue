@@ -89,7 +89,7 @@
             </p>
             <span v-html="drop"></span>
           </div>
-          <div class="weather-drop__container" v-if="weather.length > 0">
+          <div class="weather-drop__container" >
             <div class="color-switch color-switch__web1">
               <span
                 v-html="sun"
@@ -102,7 +102,7 @@
                 :class="{ 'active-color': !$store.state.theme }"
               ></span>
             </div>
-            <div class="weather-drop weather-drop__web2" @click="visible = true">
+            <div class="weather-drop weather-drop__web2" @click="visible = true" v-if="weather.length > 0">
               <span>
                 <img :src="currentWeather(0)[0]?.image" alt="" />
               </span>
