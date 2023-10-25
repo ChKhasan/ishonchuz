@@ -194,7 +194,7 @@
               </div>
             </div>
 
-            <div class="mobile_weather__container" v-if="weather.length > 0">
+            <div class="mobile_weather__container" v-if="Object.keys(weather).length > 0">
               <div class="web_drawer__weather__container current_weather__mobile">
                 <div
                   class="weather-drop weather-drop__mobile"
@@ -643,7 +643,7 @@
       width="858px"
       @ok="handleOk"
     >
-      <div class="weather__container" v-if="weather.length > 0">
+      <div class="weather__container" v-if="Object.keys(weather).length > 0">
         <div class="weather__body">
           <div class="weather__spin" v-if="loading">
             <a-spin />
@@ -774,7 +774,7 @@
       </div>
     </a-modal>
     <div class="drawer_menu" :class="{ 'h-100vh': visibleWeather }">
-      <div class="drawer_scroll__weather"  v-if="weather.length > 0">
+      <div class="drawer_scroll__weather"  v-if="Object.keys(weather).length > 0">
         <div class="weather__container">
           <div class="weather__body">
             <div class="weather_dropdown__container">
@@ -1111,7 +1111,7 @@ export default {
     },
     moment,
     currentWeather(index) {
-      if(this.weather.length > 0) {
+      if(Object.keys(this.weather).length > 0) {
 
         const currentW = this.weather[Object.keys(this.weather)[index]].filter(
           (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")

@@ -76,7 +76,7 @@
               :class="{ 'active-color': !$store.state.theme }"
             ></span>
           </div>
-          <div class="weather-drop weather-drop__web1" @click="visible = true" v-if="weather.length > 0">
+          <div class="weather-drop weather-drop__web1" @click="visible = true" v-if="Object.keys(weather).length > 0">
             <span>
               <img :src="currentWeather(0)[0]?.image" alt="" />
             </span>
@@ -102,7 +102,7 @@
                 :class="{ 'active-color': !$store.state.theme }"
               ></span>
             </div>
-            <div class="weather-drop weather-drop__web2" @click="visible = true" v-if="weather.length > 0">
+            <div class="weather-drop weather-drop__web2" @click="visible = true" v-if="Object.keys(weather).length > 0">
               <span>
                 <img :src="currentWeather(0)[0]?.image" alt="" />
               </span>
@@ -148,7 +148,7 @@
       width="858px"
       @ok="handleOk"
     >
-      <div class="weather__container" v-if="weather.length > 0">
+      <div class="weather__container" v-if="Object.keys(weather).length > 0">
         <div class="weather__body">
           <div class="weather__spin" v-if="loading">
             <a-spin />
@@ -486,7 +486,7 @@ export default {
       this.weatherDrop = false;
     },
     currentWeather(index) {
-      if (this.weather.length > 0) {
+      if (Object.keys(this.weather).length > 0) {
         const currentW = this.weather[Object.keys(this.weather)[index]].filter(
           (item) => moment(item?.time).format("HH") >= moment(this.thisTime).format("HH")
         );
