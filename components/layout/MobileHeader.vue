@@ -1099,6 +1099,7 @@ export default {
         params: {
           lat: region.lat,
           lon: region.lon,
+          region: region.region
         },
         headers: {
           Language: this.$i18n.locale,

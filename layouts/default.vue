@@ -100,6 +100,7 @@ export default {
         params: {
           lat: 41.25,
           lon: 69.25,
+          region: 'toshkentSh'
         },
         headers: {
           Language: this.$i18n.locale,
