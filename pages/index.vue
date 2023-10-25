@@ -141,7 +141,7 @@
                       <p :class="{ audio__active: currentAudio == index }">
                         {{ audio?.name }}
                       </p>
-                      <span>14:32</span>
+                      <span>{{audio?.duration}}</span>
                     </li>
                   </ul>
                 </div>
@@ -190,7 +190,7 @@
                         <p :class="{ audio__active: currentAudio == index }">
                           {{ audio?.name }}
                         </p>
-                        <span>14:32</span>
+                        <span>{{audio?.duration}}</span>
                       </li>
                     </ul>
                   </div>
@@ -461,7 +461,7 @@
                     <p :class="{ audio__active: currentAudio == index }">
                       {{ audio?.name }}
                     </p>
-                    <span>14:32</span>
+                    <span>{{audio?.duration}}</span>
                   </li>
                 </ul>
               </div>
