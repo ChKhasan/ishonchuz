@@ -19,7 +19,7 @@ export const actions = {
   },
   async getPhotoNewsBySlug({}, payload) {
     const res = await this.$axios.$get(`/photo_reportage/${payload.id}`, {
-      ...payload.headers,
+      ...payload.header,
     });
     return res;
   },

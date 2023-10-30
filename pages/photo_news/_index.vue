@@ -410,6 +410,14 @@ export default {
     };
   },
   mounted() {
+    this.$store.dispatch("fetchNews/getPhotoNewsBySlug", {
+        id: this.$route.params.index,
+        header: {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        },
+      }),
     this.$store.commit("viewNewsStore", { id: this.news?.id });
     const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
