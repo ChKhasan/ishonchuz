@@ -99,23 +99,24 @@
             <div class="news_video mt-4" v-if="news?.video">
               <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
             </div>
-            <div
-              class="mt-4 news_banner photo_news_banner"
-              v-if="news?.images.length > 0"
-            >
-              <img
-                alt=""
-                v-for="image in news?.images"
-                :key="image?.id"
-                :src="image?.image"
-              />
+            <div class="news-container-body">
+              <div v-html="news?.text"></div>
+              <div
+                class="mt-4 news_banner photo_news_banner"
+                v-if="news?.images.length > 0"
+              >
+                <div v-for="image in news?.images" :key="image?.id">
+                  <img loading="lazy" alt="" :src="image?.image" />
+                  <p class="mt-1 img-text">{{ image.title }}</p>
+                </div>
+              </div>
             </div>
-            <div class="news-container-body" v-html="news?.text"></div>
+
             <div class="d-flex justify-content-between news-container-bottom">
-            <div class="news-container-links">
-              <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
-            </div>
-            <div class="news-container-messangers">
+              <div class="news-container-links">
+                <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
+              </div>
+              <div class="news-container-messangers">
                 <a
                   :href="`https://t.me/share/url?url=${host + $route.fullPath}`"
                   target="_blank"
@@ -343,13 +344,13 @@ import Swiper from "swiper/swiper-bundle.js";
 import "swiper/swiper-bundle.min.css";
 export default {
   name: "IndexPage",
-  head () {
+  head() {
     return {
-        title: this.news['title'],
-        meta: [
+      title: this.news["title"],
+      meta: [
         {
           name: "title",
-          content: `${this.news['title']}`,
+          content: `${this.news["title"]}`,
         },
         {
           name: "keywords",
@@ -357,9 +358,8 @@ export default {
         },
         {
           name: "description",
-          content:this.news?.meta?.meta_deck,
+          content: this.news?.meta?.meta_deck,
         },
-
 
         { hid: "og-title", property: "og:title", content: this.news["title"] },
         { hid: "og-type", property: "og:type", content: "website" },
@@ -370,8 +370,8 @@ export default {
         },
         { hid: "og-image", property: "og:image", content: this.news?.images[0]?.image },
       ],
-    }
-},
+    };
+  },
   data() {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
@@ -411,14 +411,14 @@ export default {
   },
   mounted() {
     this.$store.dispatch("fetchNews/getPhotoNewsBySlug", {
-        id: this.$route.params.index,
-        header: {
-          headers: {
-            Language: this.$i18n.locale,
-          },
+      id: this.$route.params.index,
+      header: {
+        headers: {
+          Language: this.$i18n.locale,
         },
-      }),
-    this.$store.commit("viewNewsStore", { id: this.news?.id });
+      },
+    }),
+      this.$store.commit("viewNewsStore", { id: this.news?.id });
     const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
       spaceBetween: 16,
@@ -556,6 +556,12 @@ export default {
 <style lang="css">
 @import "../../assets/css/pages/home-page.css";
 @import "../../assets/css/pages/comment-components.css";
+.img-text {
+  text-align: center !important;
+  font-style: italic !important;
+  font-size: 16px !important;
+  color: grey !important;
+}
 .photo_news_banner {
   display: flex;
   flex-direction: column;
