@@ -104,7 +104,10 @@
             <div class="mt-4 news_banner" v-if="news?.image">
               <img :src="news?.image" alt="" />
             </div>
-            <div class="news-container-body" v-html="news?.text?.replaceAll('</p>','</p><br/>')"></div>
+            <div
+              class="news-container-body"
+              v-html="news?.text?.replaceAll('</p>', '</p><br/>')"
+            ></div>
             <div class="d-flex justify-content-between news-container-bottom">
               <div class="news-container-links">
                 <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
@@ -137,6 +140,20 @@
                   target="_blank"
                   ><span v-html="whatsapp"></span
                 ></a>
+                <a-tooltip placement="top">
+                  <template slot="title">
+                    <span style="white-space: nowrap; font-size: 14px" ref="text">{{
+                      host + $route.fullPath
+                    }}</span>
+                  </template>
+                  <span style="cursor: pointer" @click="copyURL(host + $route.fullPath)"
+                    ><span
+                      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path
+                          d="M13.0605 8.11073L14.4747 9.52494C17.2084 12.2586 17.2084 16.6908 14.4747 19.4244L14.1211 19.778C11.3875 22.5117 6.95531 22.5117 4.22164 19.778C1.48797 17.0443 1.48797 12.6122 4.22164 9.87849L5.63585 11.2927C3.68323 13.2453 3.68323 16.4112 5.63585 18.3638C7.58847 20.3164 10.7543 20.3164 12.7069 18.3638L13.0605 18.0102C15.0131 16.0576 15.0131 12.8918 13.0605 10.9392L11.6463 9.52494L13.0605 8.11073ZM19.778 14.1211L18.3638 12.7069C20.3164 10.7543 20.3164 7.58847 18.3638 5.63585C16.4112 3.68323 13.2453 3.68323 11.2927 5.63585L10.9392 5.98941C8.98653 7.94203 8.98653 11.1079 10.9392 13.0605L12.3534 14.4747L10.9392 15.8889L9.52494 14.4747C6.79127 11.741 6.79127 7.30886 9.52494 4.57519L9.87849 4.22164C12.6122 1.48797 17.0443 1.48797 19.778 4.22164C22.5117 6.95531 22.5117 11.3875 19.778 14.1211Z"
+                        ></path></svg></span
+                  ></span>
+                </a-tooltip>
               </div>
             </div>
           </div>
@@ -481,6 +498,10 @@ export default {
     },
   },
   methods: {
+    async copyURL(name) {
+      await navigator.clipboard.writeText(name);
+      this.$message.success("Copy");
+    },
     submit() {
       this.form.news = this.news.id;
       this.$refs.ruleFormComment.validate((valid) => {

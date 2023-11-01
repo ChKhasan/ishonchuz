@@ -117,7 +117,7 @@
                   }}</nuxt-link>
                 </a-menu-item>
                 <a-menu-item key="2">
-                  <a href="https://ishonch.uz/">{{
+                  <a href="http://ishonch-doverie.uz/">{{
                     $store.state.translations["main.archive"]
                   }}</a>
                 </a-menu-item>
@@ -415,7 +415,7 @@
                 {{ columnist?.title }}
               </li>
               <li>
-                <a href="https://ishonch.uz/">{{
+                <a href="http://ishonch-doverie.uz/">{{
                   $store.state.translations["main.archive"]
                 }}</a>
               </li>
@@ -493,7 +493,7 @@
                 {{ columnist?.title }}
               </li>
               <li>
-                <a href="https://ishonch.uz/">{{
+                <a href="http://ishonch-doverie.uz/">{{
                   $store.state.translations["main.archive"]
                 }}</a>
               </li>

@@ -183,7 +183,7 @@
                     {{ $store.state.translations["main.communist"] }}
                   </li>
                   <li>
-                    <a href="https://ishonch.uz/">{{
+                    <a href="http://ishonch-doverie.uz/">{{
                       $store.state.translations["main.archive"]
                     }}</a>
                   </li>

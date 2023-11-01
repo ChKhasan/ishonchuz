@@ -23,20 +23,22 @@ import {
   // TimePicker,
   // DatePicker,
   notification,
-  // message,
+  message,
   // InputNumber,
   // Skeleton,
   // Empty,
   // Alert,
+  Tooltip,
   Drawer,
 } from "ant-design-vue";
-// const { info, success, error, warning, confirm } = Modal;
+const { info, success, error, warning, confirm } = Modal;
 Vue.prototype.$notification = notification;
-// Vue.prototype.$message = message;
-// Vue.prototype.$confirm = confirm;
+Vue.prototype.$message = message;
+Vue.prototype.$confirm = confirm;
 // Vue.use(Checkbox);
 // Vue.use(Slider);
 // Vue.use(Select);
+Vue.use(Tooltip);
 Vue.use(Switch);
 Vue.use(Drawer);
 // Vue.use(Pagination);

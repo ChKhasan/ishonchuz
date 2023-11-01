@@ -193,6 +193,9 @@ body::-webkit-scrollbar-thumb:hover {
   flex-direction: column;
   align-items: center;
 }
+.ant-tooltip {
+  max-width:  max-content !important;
+}
 .buy_status__text {
   margin-top: 8px;
   color: var(--white_ffffff, #000);
