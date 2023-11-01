@@ -147,10 +147,10 @@
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span style="white-space: nowrap; font-size: 14px" ref="text">{{
-                      host + $route.fullPath
+                      host + $route.fullPath.replace(news?.slug,news?.id)
                     }}</span>
                   </template>
-                  <span style="cursor: pointer" @click="copyURL(host + $route.fullPath)"
+                  <span style="cursor: pointer" @click="copyURL(host + $route.fullPath.replace(news?.slug,news?.id))"
                     ><span
                       ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path
