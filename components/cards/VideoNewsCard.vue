@@ -19,7 +19,7 @@
         :src="news?.video"
       />
       <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
-      <span> {{ $store.state.translations["main.analysis"] }} </span>
+      <span v-if="news?.category?.title"> {{ news?.category?.title }} </span>
       <div
         class="video-banner"
         v-if="videoShow"
