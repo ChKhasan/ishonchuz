@@ -42,7 +42,10 @@
         src="../../assets/images/Снимок экрана (925).png"
         alt=""
       />
-      <span v-if="!$route.path.includes('photo_news')">
+      <span
+        v-if="!$route.path.includes('photo_news')"
+        :class="{ topText: news?.video, bottomText: !news?.video }"
+      >
         {{ news?.category?.title }}
       </span>
     </div>
@@ -143,8 +146,13 @@ export default {
   color: var(--card_badges_color);
   position: absolute;
   left: 0;
-  bottom: 10px;
   z-index: 100;
+}
+.topText {
+  top: 10px;
+}
+.bottomText {
+  bottom: 10px;
 }
 .v-news-card-body {
   display: flex;

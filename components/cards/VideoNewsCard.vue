@@ -133,7 +133,7 @@ export default {
   color: #111111;
   position: absolute;
   left: 0;
-  bottom: 26px;
+  top: 26px;
   z-index: 200;
 }
 .video-news-card_mobile {
