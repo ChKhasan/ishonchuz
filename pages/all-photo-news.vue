@@ -37,7 +37,10 @@
                 </a>
               </div>
             </div>
-            <TitleComp :link="false" :title="$store.state.translations['main.all_news']" />
+            <TitleComp
+              :link="false"
+              :title="$store.state.translations['main.all_news']"
+            />
             <div class="right-news-list">
               <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
             </div>
@@ -118,12 +121,14 @@ export default {
   methods: {
     async showMore() {
       this.currentPage = Number(this.$route.query.page) + 1;
-      await this.$router.replace({
-        path: "/all-photo-news",
-        query: {
-          page: this.currentPage,
-        },
-      });
+      await this.$router.push(
+        this.localePath({
+          path: "/all-photo-news",
+          query: {
+            page: this.currentPage,
+          },
+        })
+      );
       this.__GET_NEWS();
     },
     async __GET_NEWS() {

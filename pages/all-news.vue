@@ -117,12 +117,14 @@ export default {
   methods: {
     async showMore() {
       this.currentPage = Number(this.$route.query.page) + 1;
-      await this.$router.replace({
-        path: "/all-news",
-        query: {
-          page: this.currentPage,
-        },
-      });
+      await this.$router.push(
+        this.localePath({
+          path: "/all-news",
+          query: {
+            page: this.currentPage,
+          },
+        })
+      );
       this.__GET_NEWS();
     },
     async __GET_NEWS() {

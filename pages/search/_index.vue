@@ -302,12 +302,12 @@ export default {
     },
     async showMore() {
       this.currentPage = Number(this.$route.query.page) + 1;
-      await this.$router.replace({
+      await this.$router.push(this.localePath({
         path: `/search/${this.$route.params.index}`,
         query: {
           page: this.currentPage,
         },
-      });
+      }));
       this.__GET_NEWS();
     },
   },
