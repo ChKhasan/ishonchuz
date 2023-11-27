@@ -118,23 +118,23 @@
                   target="_blank"
                   ><span v-html="telegram"></span
                 ></a>
-                <a
+                <!-- <a
                   :href="`https://www.facebook.com/sharer.php?u=${
                     host + $route.fullPath
                   }`"
                   target="_blank"
                   ><span v-html="facebook"></span
-                ></a>
+                ></a> -->
                 <a
                   :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
                   target="_blank"
                   ><span v-html="twitter"></span
                 ></a>
-                <a
+                <!-- <a
                   :href="`https://www.instagram.com/?url=${host + $route.fullPath}`"
                   target="_blank"
                   ><span v-html="instagram"></span
-                ></a>
+                ></a> -->
                 <a
                   :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
                   target="_blank"
