@@ -194,7 +194,7 @@ body::-webkit-scrollbar-thumb:hover {
   align-items: center;
 }
 .ant-tooltip {
-  max-width:  max-content !important;
+  max-width: max-content !important;
 }
 .buy_status__text {
   margin-top: 8px;
@@ -453,25 +453,23 @@ ul {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-
 }
 .messangers-banner h5 {
-  color: #FFF;
-  font-family: 'Poppins',sans-serif;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
   font-size: 31px;
   font-style: normal;
   font-weight: 700;
   line-height: 150%;
   margin-bottom: 0;
-  
 }
 .messangers-banner {
   border-radius: 20px;
-background: #0191FF;
-padding: 50px 92px;
-display: flex;
-gap: 20px;
-align-items: center;
+  background: #0191ff;
+  padding: 50px 92px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
   width: 100%;
   max-width: 960px;
 }
@@ -669,6 +667,17 @@ align-items: center;
   display: grid;
   grid-template-columns: 3.3fr 10.7fr;
   grid-gap: 30px;
+}
+.image-style-align-left {
+  float: left !important;
+  margin: 16px 16px 16px 0;
+}
+.image-style-align-right {
+  float: right !important;
+  margin: 16px 0 16px 16px;
+}
+.image-style-align-right img {
+  float: right !important;
 }
 @media (max-width: 768px) {
   .thumbs {

@@ -714,7 +714,7 @@ export default {
 }
 
 .news-container-body img {
-  width: 100%;
+  max-width: 100%;
 }
 .news-container-body figure {
   width: 100% !important;
