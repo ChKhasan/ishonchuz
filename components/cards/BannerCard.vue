@@ -135,10 +135,10 @@ export default {
   line-height: 150%;
   color: var(--text_color);
   overflow: hidden;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  text-overflow: ellipsis;
+  /* -webkit-line-clamp: 4; */
+  /* -webkit-box-orient: vertical; */
+  /* display: -webkit-box; */
+  /* text-overflow: ellipsis; */
 }
 .banner-card_text a:hover {
   color: #0192ff;
