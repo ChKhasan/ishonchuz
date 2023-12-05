@@ -297,10 +297,18 @@ body::-webkit-scrollbar-thumb:hover {
 .ant-modal-mask {
   background-color: rgba(0, 0, 0, 0.65) !important;
 }
+body:not(:has(.news-container-body)) ul {
+  margin-bottom: 0 !important;
+  list-style: none;
+}
 ul {
   margin-bottom: 0 !important;
   list-style: none;
 }
+.news-container-body ul {
+  list-style: unset;
+}
+
 .rotate180 svg {
   transform: rotate(180deg);
 }
