@@ -687,6 +687,9 @@ ul {
 .image-style-align-right img {
   float: right !important;
 }
+.media > div {
+  width: inherit;
+}
 @media (max-width: 768px) {
   .thumbs {
     display: none;
