@@ -106,7 +106,9 @@
             </div>
             <div
               class="news-container-body"
-              v-html="news?.text?.replaceAll('</p>', '</p><br/>')"
+              v-html="
+                news?.text?.replaceAll('</p>', '</p><br/>').replaceAll('&nbsp;', ' ')
+              "
             ></div>
             <div class="d-flex justify-content-between news-container-bottom">
               <div class="news-container-links">
@@ -143,10 +145,12 @@
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span style="white-space: nowrap; font-size: 14px" ref="text">{{
-                      host + $route.fullPath.replace(news?.slug,news?.id)
+                      host + $route.fullPath.replace(news?.slug, news?.id)
                     }}</span>
                   </template>
-                  <span style="cursor: pointer" @click="copyURL(host + $route.fullPath.replace(news?.slug,news?.id))"
+                  <span
+                    style="cursor: pointer"
+                    @click="copyURL(host + $route.fullPath.replace(news?.slug, news?.id))"
                     ><span
                       ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path
