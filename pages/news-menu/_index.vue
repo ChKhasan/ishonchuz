@@ -261,7 +261,7 @@ export default {
         {
           hid: "og-url",
           property: "og:url",
-          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+          content: process.env.HOST_URL + this.$route.fullPath,
         },
       ],
     };

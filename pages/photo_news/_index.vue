@@ -122,13 +122,13 @@
                   target="_blank"
                   ><span v-html="telegram"></span
                 ></a>
-                <!-- <a
+                <a
                   :href="`https://www.facebook.com/sharer.php?u=${
                     host + $route.fullPath
                   }`"
                   target="_blank"
                   ><span v-html="facebook"></span
-                ></a> -->
+                ></a>
                 <a
                   :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
                   target="_blank"
@@ -147,10 +147,12 @@
                 <a-tooltip placement="top">
                   <template slot="title">
                     <span style="white-space: nowrap; font-size: 14px" ref="text">{{
-                      host + $route.fullPath.replace(news?.slug,news?.id)
+                      host + $route.fullPath.replace(news?.slug, news?.id)
                     }}</span>
                   </template>
-                  <span style="cursor: pointer" @click="copyURL(host + $route.fullPath.replace(news?.slug,news?.id))"
+                  <span
+                    style="cursor: pointer"
+                    @click="copyURL(host + $route.fullPath.replace(news?.slug, news?.id))"
                     ><span
                       ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <path
@@ -195,6 +197,7 @@
                 <div>
                   <input
                     type="text"
+                    maxlength="50"
                     v-model="form.full_name"
                     :placeholder="$store.state.translations['news.comment_input_place']"
                   />
@@ -380,7 +383,7 @@ export default {
         {
           hid: "og-url",
           property: "og:url",
-          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+          content: process.env.HOST_URL + this.$route.fullPath,
         },
         { hid: "og-image", property: "og:image", content: this.news?.images[0]?.image },
       ],

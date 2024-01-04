@@ -196,6 +196,7 @@
                 <div>
                   <input
                     type="text"
+                    maxlength="50"
                     v-model="form.full_name"
                     :placeholder="$store.state.translations['news.comment_input_place']"
                   />
