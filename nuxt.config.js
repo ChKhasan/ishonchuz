@@ -39,9 +39,8 @@ export default {
   plugins: [
     { src: "~plugins/antdv.js" },
     { src: "~plugins/lazy-youtube.js", ssr: false },
-    { src: "~plugins/v-mask.js", ssr: false },
+    // { src: "~plugins/v-mask.js", ssr: false },
     { src: "~plugins/vue-aplayer.js", ssr: false },
-    { src: "~/plugins/client-only.js", mode: "client" },
     { src: "~plugins/google-analitics.js", ssr: false },
     "./plugins/mask.js",
   ],

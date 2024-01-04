@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@liripeng/vue-audio-player": "^1.5.1",
-    "@moefe/vue-aplayer": "^2.0.0-beta.5",
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/i18n": "^7.3.1",
@@ -20,13 +19,11 @@
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
-    "nuxt-social-meta": "^1.0.0",
     "swiper": "^9.0.5",
     "v-mask": "^2.3.0",
     "vue": "^2.7.10",
     "vue-lazytube": "^1.1.1",
     "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10",
-    "vue-the-mask": "^0.11.1"
+    "vue-template-compiler": "^2.7.10"
   }
 }

@@ -120,13 +120,11 @@
                   target="_blank"
                   ><span v-html="telegram"></span
                 ></a>
-                <!-- <a
-                  :href="`https://www.facebook.com/sharer.php?u=${
-                    host + $route.fullPath
-                  }`"
+                <a
+                  :href="`https://www.facebook.com/sharer.php?u=https://ishonch.uz/news/alloning-tarihini-bilasizmi`"
                   target="_blank"
                   ><span v-html="facebook"></span
-                ></a> -->
+                ></a>
                 <a
                   :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
                   target="_blank"
@@ -372,11 +370,16 @@ export default {
         },
         {
           name: "description",
-          content: `${this.news?.meta?.meta_deck} ${this.news?.text}`,
+          content: this.cleanedCkeditorContent,
         },
 
         { hid: "og-title", property: "og:title", content: this.news["title"] },
-        { hid: "og-type", property: "og:type", content: "website" },
+        { hid: "og-title", property: "og:title", content: this.news["title"] },
+        {
+          hid: "og-description",
+          property: "og:description",
+          content: this.cleanedCkeditorContent,
+        },
         {
           hid: "og-url",
           property: "og:url",
@@ -386,6 +389,7 @@ export default {
       ],
     };
   },
+
   data() {
     return {
       dropdown: require("../../assets/svg/dropdown.svg?raw"),
@@ -424,7 +428,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route);
     this.$store.commit("viewNewsStore", { id: this.news?.id });
     const swiper = new Swiper(".swiper-news-mobile", {
       slidesPerView: 1,
@@ -492,6 +495,9 @@ export default {
     };
   },
   computed: {
+    cleanedCkeditorContent() {
+      return this.stripHtmlTags(this.news?.text);
+    },
     rateSumm() {
       const summa =
         this.news?.rating_info["5"] * 5 +
@@ -503,6 +509,9 @@ export default {
     },
   },
   methods: {
+    stripHtmlTags(input) {
+      return input.replace(/<\/?[^>]+(>|$)/g, "");
+    },
     async copyURL(name) {
       await navigator.clipboard.writeText(name);
       this.$message.success("Copy");

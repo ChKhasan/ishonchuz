@@ -3,7 +3,7 @@
     <div class="container_xl">
       <div class="menu-list-container">
         <ul>
-          <li class="menu-list__web1" v-for="category in categories" :key="category?.id">
+          <li class="menu-list__web1" v-for="category in categories" :key="category?.id * 100">
             <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
                 {{ category?.title }} <span v-html="drop"></span>
@@ -46,7 +46,7 @@
             v-for="category in categories
               .slice(0, 3)
               .filter((item) => item.children.length > 0)"
-            :key="category?.id"
+            :key="category?.id * 10"
           >
             <a-dropdown :trigger="['click']" v-if="category?.children?.length > 0">
               <a class="ant-dropdown-link" @click="(e) => e.preventDefault()">
