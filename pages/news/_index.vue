@@ -121,7 +121,9 @@
                   ><span v-html="telegram"></span
                 ></a>
                 <a
-                  :href="`https://www.facebook.com/sharer.php?u=https://ishonch.uz/news/alloning-tarihini-bilasizmi`"
+                  :href="`https://www.facebook.com/sharer.php?u=${
+                    host + $route.fullPath
+                  }`"
                   target="_blank"
                   ><span v-html="facebook"></span
                 ></a>
@@ -373,7 +375,6 @@ export default {
           content: this.cleanedCkeditorContent,
         },
 
-        { hid: "og-title", property: "og:title", content: this.news["title"] },
         { hid: "og-title", property: "og:title", content: this.news["title"] },
         {
           hid: "og-description",
