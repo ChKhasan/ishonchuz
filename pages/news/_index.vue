@@ -125,6 +125,7 @@
                     host + $route.fullPath
                   }`"
                   target="_blank"
+                  rel="noopener noreferrer"
                   ><span v-html="facebook"></span
                 ></a>
                 <a
@@ -384,7 +385,7 @@ export default {
         {
           hid: "og-url",
           property: "og:url",
-          content: process.env.BASE_URL + "/" + this.$route.fullPath,
+          content: process.env.HOST_URL  + this.$route.fullPath,
         },
         { hid: "og-image", property: "og:image", content: this.news?.image },
       ],
