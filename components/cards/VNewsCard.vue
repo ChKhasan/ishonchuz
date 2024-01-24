@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="v-news-card">
+  <div class="v-news-card 123">
     <div class="v-news-card-img">
       <!-- <iframe
         width="420"
@@ -21,7 +21,7 @@
               `${
                 $route.path.includes('photo_news')
                   ? `/photo_news/${news?.slug}`
-                  : `news/${news?.slug}`
+                  : `/news/${news?.slug}`
               }`
             )
           )
