@@ -24,7 +24,7 @@ export default {
  
       {
         src:
-        "https://www.googletagmanager.com/gtag/js?id=G-SK99P6329G",
+        "https://www.googletagmanager.com/gtag/js?id=G-G9H56EQRWX",
         async: true
       },
     ],
