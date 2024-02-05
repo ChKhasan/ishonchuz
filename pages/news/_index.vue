@@ -8,12 +8,14 @@
           </div> -->
           <div class="news-breadcrumb mb-0" v-if="news?.category">
             <nuxt-link :to="localePath('/')"
-              >{{ $store.state.translations["main.home"] }} <span v-html="dropdown"></span
+              >{{ $store.state.translations["main.home"] }}
+              <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link
               v-if="news?.category?.parent?.slug"
               :to="localePath(`/news-menu/${news?.category?.parent?.slug}`)"
-              >{{ news?.category?.parent?.title }} <span v-html="dropdown"></span
+              >{{ news?.category?.parent?.title }}
+              <span v-html="dropdown"></span
             ></nuxt-link>
             <nuxt-link :to="localePath(`/news-menu/${news?.category?.slug}`)"
               >{{ news?.category?.title }} <span v-html="dropdown"></span
@@ -29,7 +31,9 @@
             </h6>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0 news-page-right position-relative"></div>
+        <div
+          class="home-page-right col-3 p-0 news-page-right position-relative"
+        ></div>
       </div>
       <div class="home-page-grid row mx-0">
         <div class="col-lg-9 col-md-12 p-0 home-page-left">
@@ -46,7 +50,8 @@
                   ><span v-html="date"></span>{{ news?.date }}</span
                 >
                 <span class="news-date_mobile"
-                  ><span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
+                  ><span v-html="date"></span
+                  >{{ news?.date.split("|")[0] }}</span
                 >
               </div>
             </div>
@@ -99,7 +104,11 @@
             <div class="news_video mt-4" v-if="news?.video">
               <!-- <video :src="news?.video"></video> -->
               <!-- <iframe width="420" height="315" :src="news?.video"> </iframe> -->
-              <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
+              <LazyYoutube
+                v-if="news?.video"
+                ref="lazyVideo"
+                :src="news?.video"
+              />
             </div>
             <div class="mt-4 news_banner" v-if="news?.image">
               <img :src="news?.image" alt="" />
@@ -107,12 +116,16 @@
             <div
               class="news-container-body"
               v-html="
-                news?.text?.replaceAll('</p>', '</p><br/>').replaceAll('&nbsp;', ' ')
+                news?.text
+                  ?.replaceAll('</p>', '</p><br/>')
+                  .replaceAll('&nbsp;', ' ')
               "
             ></div>
             <div class="d-flex justify-content-between news-container-bottom">
               <div class="news-container-links">
-                <a href="#" v-for="tag in news?.tags" :key="tag?.id">#{{ tag?.title }}</a>
+                <a href="#" v-for="tag in news?.tags" :key="tag?.id"
+                  >#{{ tag?.title }}</a
+                >
               </div>
               <div class="news-container-messangers">
                 <a
@@ -129,7 +142,9 @@
                   ><span v-html="facebook"></span
                 ></a>
                 <a
-                  :href="`https://twitter.com/intent/tweet?url=${host + $route.fullPath}`"
+                  :href="`https://twitter.com/intent/tweet?url=${
+                    host + $route.fullPath
+                  }`"
                   target="_blank"
                   ><span v-html="twitter"></span
                 ></a>
@@ -139,21 +154,34 @@
                   ><span v-html="instagram"></span
                 ></a> -->
                 <a
-                  :href="`https://api.whatsapp.com/send?text=${host + $route.fullPath}`"
+                  :href="`https://api.whatsapp.com/send?text=${
+                    host + $route.fullPath
+                  }`"
                   target="_blank"
                   ><span v-html="whatsapp"></span
                 ></a>
                 <a-tooltip placement="top">
                   <template slot="title">
-                    <span style="white-space: nowrap; font-size: 14px" ref="text">{{
-                      host + $route.fullPath.replace(news?.slug, news?.id)
-                    }}</span>
+                    <span
+                      style="white-space: nowrap; font-size: 14px"
+                      ref="text"
+                      >{{
+                        host + $route.fullPath.replace(news?.slug, news?.id)
+                      }}</span
+                    >
                   </template>
                   <span
                     style="cursor: pointer"
-                    @click="copyURL(host + $route.fullPath.replace(news?.slug, news?.id))"
+                    @click="
+                      copyURL(
+                        host + $route.fullPath.replace(news?.slug, news?.id)
+                      )
+                    "
                     ><span
-                      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           d="M13.0605 8.11073L14.4747 9.52494C17.2084 12.2586 17.2084 16.6908 14.4747 19.4244L14.1211 19.778C11.3875 22.5117 6.95531 22.5117 4.22164 19.778C1.48797 17.0443 1.48797 12.6122 4.22164 9.87849L5.63585 11.2927C3.68323 13.2453 3.68323 16.4112 5.63585 18.3638C7.58847 20.3164 10.7543 20.3164 12.7069 18.3638L13.0605 18.0102C15.0131 16.0576 15.0131 12.8918 13.0605 10.9392L11.6463 9.52494L13.0605 8.11073ZM19.778 14.1211L18.3638 12.7069C20.3164 10.7543 20.3164 7.58847 18.3638 5.63585C16.4112 3.68323 13.2453 3.68323 11.2927 5.63585L10.9392 5.98941C8.98653 7.94203 8.98653 11.1079 10.9392 13.0605L12.3534 14.4747L10.9392 15.8889L9.52494 14.4747C6.79127 11.741 6.79127 7.30886 9.52494 4.57519L9.87849 4.22164C12.6122 1.48797 17.0443 1.48797 19.778 4.22164C22.5117 6.95531 22.5117 11.3875 19.778 14.1211Z"
                         ></path></svg></span
@@ -163,12 +191,18 @@
             </div>
           </div>
         </div>
-        <div class="home-page-right col-3 p-0 news-page-right position-relative">
+        <div
+          class="home-page-right col-3 p-0 news-page-right position-relative"
+        >
           <div style="position: sticky; top: 30px">
             <div class="block2">
               <div class="right-banner mt-0">
                 <a :href="banners[0]?.link">
-                  <img v-if="banners[0]?.image" :src="banners[0]?.image" alt="" />
+                  <img
+                    v-if="banners[0]?.image"
+                    :src="banners[0]?.image"
+                    alt=""
+                  />
                 </a>
               </div>
             </div>
@@ -177,7 +211,11 @@
               :title="$store.state.translations['main.active_topics']"
             />
             <div class="right-news-list">
-              <RightNewsCard v-for="news in importantNews" :key="news?.id" :news="news" />
+              <RightNewsCard
+                v-for="news in importantNews"
+                :key="news?.id"
+                :news="news"
+              />
             </div>
             <div class="right-banner">
               <a :href="banners[1]?.link">
@@ -198,7 +236,9 @@
                     type="text"
                     maxlength="50"
                     v-model="form.full_name"
-                    :placeholder="$store.state.translations['news.comment_input_place']"
+                    :placeholder="
+                      $store.state.translations['news.comment_input_place']
+                    "
                   />
                   <a-rate v-model="form.stars" />
                 </div>
@@ -207,7 +247,9 @@
                 <textarea
                   rows="5"
                   v-model="form.text"
-                  :placeholder="$store.state.translations['news.comment_textarea_place']"
+                  :placeholder="
+                    $store.state.translations['news.comment_textarea_place']
+                  "
                 ></textarea>
               </a-form-model-item>
 
@@ -386,7 +428,7 @@ export default {
         {
           hid: "og-url",
           property: "og:url",
-          content: process.env.HOST_URL  + this.$route.fullPath,
+          content: process.env.HOST_URL + this.$route.fullPath,
         },
         { hid: "og-image", property: "og:image", content: this.news?.image },
       ],
@@ -459,33 +501,34 @@ export default {
   },
 
   async asyncData({ store, params, i18n }) {
-    const [newsData, topicNewsData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchNews/getNewsBySlug", {
-        id: params.index,
-        header: {
+    const [newsData, topicNewsData, importantNewsData, bannersData] =
+      await Promise.all([
+        store.dispatch("fetchNews/getNewsBySlug", {
+          id: params.index,
+          header: {
+            headers: {
+              Language: i18n.locale,
+            },
+          },
+        }),
+        store.dispatch("fetchNews/getNews", {
+          params: { video: true, page_size: 3 },
           headers: {
             Language: i18n.locale,
           },
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        params: { video: true, page_size: 3 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        params: { important: true, page_size: 6 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-    ]);
+        }),
+        store.dispatch("fetchNews/getNews", {
+          params: { important: true, page_size: 6 },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchBanners/getBanners", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+      ]);
     const news = newsData;
     const topicNews = topicNewsData.results;
     const importantNews = importantNewsData.results;
@@ -539,7 +582,10 @@ export default {
     },
     async __POST_COMMENT(dataForm) {
       try {
-        const data = await this.$store.dispatch("fetchNews/postNewsComment", dataForm);
+        const data = await this.$store.dispatch(
+          "fetchNews/postNewsComment",
+          dataForm
+        );
         this.$notification["success"]({
           message: "Success",
           description: "Комментарий отправлен успешно.",
@@ -737,7 +783,10 @@ export default {
   font-weight: 400 !important;
   font-size: 19px !important;
   line-height: 170%;
-  color: #1e2e78;
+}
+.news-container-body a,
+.news-container-body a > * {
+  color: var(--primary) !important;
 }
 .news-container-body strong {
   color: var(--dark-blue-90, #1e2e78) !important;
