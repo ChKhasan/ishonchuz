@@ -430,7 +430,11 @@ export default {
           property: "og:url",
           content: process.env.HOST_URL + this.$route.fullPath,
         },
-        { hid: "og-image", property: "og:image", content: this.news?.image },
+        {
+          hid: "og-image",
+          property: "og:image",
+          content: this.news?.image || this.news?.youtube_image,
+        },
       ],
     };
   },
@@ -533,6 +537,9 @@ export default {
     const topicNews = topicNewsData.results;
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
+
+    console.log(news);
+
     return {
       news,
       topicNews,

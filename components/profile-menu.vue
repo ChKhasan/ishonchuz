@@ -1,38 +1,26 @@
 <template lang="html">
   <div class="profile-menu web-menu">
     <ul>
-      <li
-        :class="{
-          'active-profile-menu': $route.name.includes('profile-personal-info'),
-        }"
-      >
-        <nuxt-link :to="localePath('/profile/personal-info')"
-          ><span v-html="user"></span>
-          {{ $store.state.translations["main.my-room"] }}</nuxt-link
-        >
+      <li :class="{
+        'active-profile-menu': $route.name.includes('profile-personal-info'),
+      }">
+        <nuxt-link :to="localePath('/profile/personal-info')"><span v-html="user"></span>
+          {{ $store.state.translations["main.my-room"] }}</nuxt-link>
       </li>
-      <li
-        :class="{
-          'active-profile-menu': $route.name.includes('profile-my-board'),
-        }"
-      >
-        <nuxt-link :to="localePath('/profile/my-board')"
-          ><span v-html="star"></span>
-          {{ $store.state.translations["main.my-shelf"] }}</nuxt-link
-        >
+      <li :class="{
+        'active-profile-menu': $route.name.includes('profile-my-board'),
+      }">
+        <nuxt-link :to="localePath('/profile/my-board')"><span v-html="star"></span>
+          {{ $store.state.translations["main.my-shelf"] }}</nuxt-link>
       </li>
-      <li
-        :class="{
-          'active-profile-menu': $route.name.includes('profile-saved'),
-        }"
-      >
-        <nuxt-link :to="localePath('/profile/saved')"
-          ><span v-html="comment"></span>
-          {{ $store.state.translations["main.saved"] }}</nuxt-link
-        >
+      <li :class="{
+        'active-profile-menu': $route.name.includes('profile-saved'),
+      }">
+        <nuxt-link :to="localePath('/profile/saved')"><span v-html="comment"></span>
+          {{ $store.state.translations["main.saved"] }}</nuxt-link>
       </li>
       <li>
-        <div @click="logOut()"><span v-html="exit"></span> {{$store.state.translations['main.logout']}}</div>
+        <div @click="logOut()"><span v-html="exit"></span> {{ $store.state.translations['main.logout'] }}</div>
       </li>
     </ul>
   </div>
@@ -77,15 +65,18 @@ export default {
   border-radius: 8px;
   padding: 40px;
 }
+
 .profile-menu ul li a span svg path {
   fill: var(--white_ffffff, #414141);
   transition: 0.3s;
 }
+
 .profile-menu ul {
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 32px;
 }
+
 .profile-menu ul a,
 .profile-menu ul div {
   font-family: var(--ROBOTO_SERIF);
@@ -99,6 +90,7 @@ export default {
   transition: 0.3s;
   cursor: pointer;
 }
+
 .profile-menu ul a span,
 .profile-menu ul div span {
   margin-right: 8px;
@@ -111,46 +103,57 @@ export default {
   justify-content: center;
   transition: 0.3s;
 }
+
 .profile-menu ul div span svg path {
   fill: var(--white_ffffff, #414141);
 }
+
 .profile-menu ul li:hover a,
 .profile-menu ul li:hover div,
 .active-profile-menu a {
   color: #0192ff !important;
 }
+
 .active-profile-menu a {
   pointer-events: none;
 }
-.profile-menu ul li:hover div > span,
+
+.profile-menu ul li:hover div>span,
 .active-profile-menu a span {
   background: #0192ff !important;
 }
-.profile-menu ul li:hover div > span svg path,
+
+.profile-menu ul li:hover div>span svg path,
 .active-profile-menu a span svg path {
   fill: #fff !important;
 }
+
 @media (max-width: 992px) {
   .profile-menu {
     padding: 28px;
   }
 }
+
 @media (max-width: 576px) {
   .profile-menu {
     padding: 20px;
   }
+
   .profile-menu ul a span,
   .profile-menu ul div span {
     width: 24px;
     height: 24px;
     min-width: 24px;
   }
+
   .profile-menu ul a,
   .profile-menu ul div {
     font-size: 14px;
     font-weight: 500;
-    line-height: 150%; /* 21px */
+    line-height: 150%;
+    /* 21px */
   }
+
   .profile-menu ul a span svg,
   .profile-menu ul div span svg {
     width: 12px;
