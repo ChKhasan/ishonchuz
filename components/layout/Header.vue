@@ -16,8 +16,7 @@
               <p>
                 {{
                   currency
-                    ?.find((item) => item["Ccy"] == "USD")
-                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    ?.find((item) => item["Ccy"] == "USD")?.["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}<span
                   :class="{
                     currency__down: currency
@@ -33,8 +32,7 @@
               <p>
                 {{
                   currency
-                    ?.find((item) => item["Ccy"] == "EUR")
-                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    ?.find((item) => item["Ccy"] == "EUR")?.["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}<span
                   :class="{
                     currency__down: currency
@@ -50,8 +48,7 @@
               <p>
                 {{
                   currency
-                    ?.find((item) => item["Ccy"] == "RUB")
-                    ["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                    ?.find((item) => item["Ccy"] == "RUB")?.["Rate"].replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                 }}<span
                   :class="{
                     currency__down: currency
