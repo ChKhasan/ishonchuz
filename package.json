@@ -18,6 +18,7 @@
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.25.3",
+    "indexof": "^0.0.1",
     "nuxt": "^2.15.8",
     "swiper": "^9.0.5",
     "v-mask": "^2.3.0",

@@ -49,7 +49,7 @@ export const mutations = {
   addToStore(state, payload) {
     let cart = JSON.parse(localStorage.getItem(payload.name));
     if (cart.includes(payload.id)) {
-      cart.splice(cart.indexOf(payload.id), 1);
+      cart.splice(cart?.indexOf(payload.id), 1);
     } else {
       cart.push(payload.id);
     }
