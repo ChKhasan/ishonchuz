@@ -21,9 +21,9 @@
                   :class="{
                     currency__down: currency
                       ?.find((item) => item['Ccy'] == 'USD')
-                      ['Diff'].includes('-'),
+                      ?.['Diff'].includes('-'),
                   }"
-                  >{{ currency?.find((item) => item["Ccy"] == "USD")["Diff"] }}</span
+                  >{{ currency?.find((item) => item["Ccy"] == "USD")?.["Diff"] }}</span
                 >
               </p>
             </li>
@@ -37,9 +37,9 @@
                   :class="{
                     currency__down: currency
                       ?.find((item) => item['Ccy'] == 'EUR')
-                      ['Diff'].includes('-'),
+                      ?.['Diff'].includes('-'),
                   }"
-                  >{{ currency?.find((item) => item["Ccy"] == "EUR")["Diff"] }}</span
+                  >{{ currency?.find((item) => item["Ccy"] == "EUR")?.["Diff"] }}</span
                 >
               </p>
             </li>
@@ -53,9 +53,9 @@
                   :class="{
                     currency__down: currency
                       ?.find((item) => item['Ccy'] == 'RUB')
-                      ['Diff'].includes('-'),
+                      ?.['Diff'].includes('-'),
                   }"
-                  >{{ currency?.find((item) => item["Ccy"] == "RUB")["Diff"] }}</span
+                  >{{ currency?.find((item) => item["Ccy"] == "RUB")?.["Diff"] }}</span
                 >
               </p>
             </li>
