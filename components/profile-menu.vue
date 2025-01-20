@@ -47,7 +47,7 @@ export default {
         localStorage.removeItem("refresh_token");
         this.$store.commit("chackAuth");
       } catch (e) {
-        console.log(e);
+        // console.log(e);
         // if (e.response.status == 401) {
         //   this.$router.push(this.localePath("/"));
         //   localStorage.removeItem("access_token");

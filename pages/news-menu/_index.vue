@@ -361,8 +361,6 @@ export default {
     const categories = categoriesData;
     const banners = bannersData.results;
     const totalCount = categoriesData.news_count;
-    console.log(categories);
-    console.log(categories);
     return {
       news,
       topNews,

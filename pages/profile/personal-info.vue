@@ -267,7 +267,7 @@ export default {
         });
         this.smsCodeSend = true;
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async __REFRESH_TOKEN() {

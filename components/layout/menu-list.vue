@@ -753,7 +753,7 @@ export default {
           },
         });
       } catch (error) {
-        console.error(error);
+        // console.error(error);
       }
     },
     async __CHECK_SMS_CODE(dataForm) {
@@ -788,7 +788,7 @@ export default {
           this.responseTypes.smsCodeSuccess = false;
           this.responseTypes.smsCodeError = true;
         }
-        console.log(e);
+        // console.log(e);
       }
     },
     async __LOGIN_REGISTER(dataForm) {

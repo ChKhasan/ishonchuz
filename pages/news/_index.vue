@@ -538,8 +538,6 @@ export default {
     const importantNews = importantNewsData.results;
     const banners = bannersData.results;
 
-    console.log(news);
-
     return {
       news,
       topicNews,
@@ -599,7 +597,7 @@ export default {
         });
         this.emptyForm();
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
   },
