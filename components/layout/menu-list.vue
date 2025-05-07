@@ -510,7 +510,7 @@
               >
             </div>
           </div>
-          <ul class="currency-list web_drawer__currency">
+          <ul class="currency-list web_drawer__currency" v-if="currency?.length">
             <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
             <li>
               USD

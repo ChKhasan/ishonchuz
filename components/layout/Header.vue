@@ -9,7 +9,7 @@
               <span v-html="$store.state.theme ? logo : darkLogo"></span>
             </nuxt-link>
           </div>
-          <ul class="currency-list currency-list__web">
+          <ul class="currency-list currency-list__web" v-if="currency?.length">
             <h6>{{ $store.state.translations["main.currency"] }} UZS</h6>
             <li>
               USD
@@ -60,6 +60,7 @@
               </p>
             </li>
           </ul>
+          <span class="currency-list currency-list__web" style="width: 40%;" v-else></span>
 
           <div class="color-switch color-switch__web">
             <span

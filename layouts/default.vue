@@ -55,12 +55,10 @@ export default {
     this.$store.commit("changeTheme", "first");
   },
   async fetch() {
-    const date = new Date();
     const [
       categoriesData,
       translationsData,
       bannersData,
-      currencyData,
       siteInfoData,
       columnistData,
       weatherData,
@@ -81,11 +79,6 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
-      this.$axios.$get(
-        `https://cbu.uz/ru/arkhiv-kursov-valyut/json/all/${moment(date).format(
-          "YYYY-MM-DD"
-        )}`
-      ),
       this.$store.dispatch("fetchSiteInfo/getSiteInfo", {
         headers: {
           Language: this.$i18n.locale,
@@ -115,12 +108,21 @@ export default {
     const siteInfo = siteInfoData;
     this.categories = categoriesData.results;
     this.banners = bannersData.results;
-    this.currency = currencyData;
     this.columnist = columnistData;
     this.weather = weatherData;
     this.$store.commit("getSiteInfo", siteInfo);
     this.$store.commit("getLanguages", languagesData?.results);
     this.$store.commit("getTranslations", translationsData);
+
+    const date = new Date();
+      try {
+        const currencyData = await this.$axios.$get(
+          `https://cbu.uz/ru/arkhiv-kursov-valyut/json/all/${moment(date).format("YYYY-MM-DD")}`
+        );
+        this.currency = currencyData;
+      } catch (error) {
+        console.error("Error fetching currency data:", error);
+      }
   },
 
   watch: {
