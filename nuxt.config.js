@@ -1,4 +1,5 @@
 const apiBaseUrl = process.env.BASE_URL || "https://admin.ishonch.uz/api";
+const apiOrigin = apiBaseUrl.replace(/\/api\/?$/, "");
 
 export default {
   head: {
@@ -59,15 +60,24 @@ export default {
   modules: [
     "bootstrap-vue/nuxt",
     "@nuxtjs/axios",
+    "@nuxtjs/proxy",
     "@nuxtjs/i18n",
     "@nuxtjs/dotenv",
   ],
   axios: {
+    proxy: true,
     credentials: false,
     init(axios) {
       axios.defaults.withCredentials = true;
     },
     baseURL: apiBaseUrl,
+    browserBaseURL: "/api",
+  },
+  proxy: {
+    "/api/": {
+      target: apiOrigin,
+      changeOrigin: true,
+    },
   },
   loading: {
     color: "#0192ff",
