@@ -612,17 +612,7 @@ export default {
     });
   },
   async asyncData({ store, i18n }) {
-    const [
-      newsData,
-      topNewsData,
-      simpleNewsData,
-      videoNewsData,
-      redactorNewsData,
-      importantNewsData,
-      bannersData,
-      audioData,
-      photoNewsData,
-    ] = await Promise.all([
+    const settled = await Promise.allSettled([
       store.dispatch("fetchNews/getNews", {
         params: { last_news: true, top: false, page_size: 6, page: 1 },
         headers: {
@@ -676,15 +666,32 @@ export default {
         },
       }),
     ]);
-    const news = newsData.results;
-    const topNews = topNewsData.results;
-    const simpleNews = simpleNewsData.results;
-    const videoNews = videoNewsData.results;
-    const redactorNews = redactorNewsData.results;
-    const importantNews = importantNewsData.results;
-    const banners = bannersData.results;
-    const audio = audioData.results;
-    const photoNews = photoNewsData.results;
+    const newsData = settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
+    const topNewsData =
+      settled[1].status === "fulfilled" ? settled[1].value : { results: [] };
+    const simpleNewsData =
+      settled[2].status === "fulfilled" ? settled[2].value : { results: [] };
+    const videoNewsData =
+      settled[3].status === "fulfilled" ? settled[3].value : { results: [] };
+    const redactorNewsData =
+      settled[4].status === "fulfilled" ? settled[4].value : { results: [] };
+    const importantNewsData =
+      settled[5].status === "fulfilled" ? settled[5].value : { results: [] };
+    const bannersData =
+      settled[6].status === "fulfilled" ? settled[6].value : { results: [] };
+    const audioData = settled[7].status === "fulfilled" ? settled[7].value : { results: [] };
+    const photoNewsData =
+      settled[8].status === "fulfilled" ? settled[8].value : { results: [] };
+
+    const news = newsData.results || [];
+    const topNews = topNewsData.results || [];
+    const simpleNews = simpleNewsData.results || [];
+    const videoNews = videoNewsData.results || [];
+    const redactorNews = redactorNewsData.results || [];
+    const importantNews = importantNewsData.results || [];
+    const banners = bannersData.results || [];
+    const audio = audioData.results || [];
+    const photoNews = photoNewsData.results || [];
     const audioList = audio.map((item) => {
       return {
         ...item,

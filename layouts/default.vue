@@ -55,15 +55,7 @@ export default {
     this.$store.commit("changeTheme", "first");
   },
   async fetch() {
-    const [
-      categoriesData,
-      translationsData,
-      bannersData,
-      siteInfoData,
-      columnistData,
-      weatherData,
-      languagesData,
-    ] = await Promise.all([
+    const requests = [
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
           Language: this.$i18n.locale,
@@ -93,7 +85,7 @@ export default {
         params: {
           lat: 41.25,
           lon: 69.25,
-          region: 'toshkentSh'
+          region: "toshkentSh",
         },
         headers: {
           Language: this.$i18n.locale,
@@ -104,15 +96,27 @@ export default {
           Language: this.$i18n.locale,
         },
       }),
-    ]);
-    const siteInfo = siteInfoData;
-    this.categories = categoriesData.results;
-    this.banners = bannersData.results;
-    this.columnist = columnistData;
-    this.weather = weatherData;
-    this.$store.commit("getSiteInfo", siteInfo);
-    this.$store.commit("getLanguages", languagesData?.results);
-    this.$store.commit("getTranslations", translationsData);
+    ];
+    const settled = await Promise.allSettled(requests);
+    const categoriesData =
+      settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
+    const translationsData =
+      settled[1].status === "fulfilled" ? settled[1].value : {};
+    const bannersData =
+      settled[2].status === "fulfilled" ? settled[2].value : { results: [] };
+    const siteInfoData = settled[3].status === "fulfilled" ? settled[3].value : {};
+    const columnistData = settled[4].status === "fulfilled" ? settled[4].value : {};
+    const weatherData = settled[5].status === "fulfilled" ? settled[5].value : {};
+    const languagesData =
+      settled[6].status === "fulfilled" ? settled[6].value : { results: [] };
+
+    this.categories = categoriesData.results || [];
+    this.banners = bannersData.results || [];
+    this.columnist = columnistData || {};
+    this.weather = weatherData || {};
+    this.$store.commit("getSiteInfo", siteInfoData || {});
+    this.$store.commit("getLanguages", languagesData?.results || []);
+    this.$store.commit("getTranslations", translationsData || {});
 
     const date = new Date();
       try {
@@ -127,7 +131,7 @@ export default {
 
   watch: {
     async targetLang() {
-      const [categoriesData, translationsData, siteInfoData] = await Promise.all([
+      const settled = await Promise.allSettled([
         this.$store.dispatch("fetchCategories/getCategories", {
           headers: {
             Language: this.$i18n.locale,
@@ -144,10 +148,15 @@ export default {
           },
         }),
       ]);
-      const siteInfo = siteInfoData;
-      this.categories = categoriesData.results;
-      this.$store.commit("getTranslations", translationsData);
-      this.$store.commit("getSiteInfo", siteInfo);
+      const categoriesData =
+        settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
+      const translationsData =
+        settled[1].status === "fulfilled" ? settled[1].value : {};
+      const siteInfoData = settled[2].status === "fulfilled" ? settled[2].value : {};
+
+      this.categories = categoriesData.results || [];
+      this.$store.commit("getTranslations", translationsData || {});
+      this.$store.commit("getSiteInfo", siteInfoData || {});
       this.$store.commit("getTranslationsChange", !this.$store.state.translationsChange);
     },
     "$store.state.theme"(val) {

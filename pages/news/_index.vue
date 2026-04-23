@@ -45,7 +45,7 @@
                 news?.category?.title
               }}</span>
               <div class="news-container-character d-flex">
-                <span><span v-html="view"></span>{{ news?.views }}</span>
+                <span v-if="news?.views_enabled"><span v-html="view"></span>{{ news?.views }}</span>
                 <span class="news-date_web"
                   ><span v-html="date"></span>{{ news?.date }}</span
                 >

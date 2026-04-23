@@ -35,7 +35,7 @@
         </div>
         <div class="banner-card-body_footer">
           <span> <span v-html="comments"></span> {{ news?.comment_count }} </span>
-          <span><span v-html="view"></span> {{ news?.views }} </span>
+          <span v-if="news?.views_enabled"> <span v-html="view"></span> {{ news?.views }} </span>
           <span class="full_date"> <span v-html="date"></span>{{ news?.date }}</span>
           <span class="only_hours">
             <span v-html="date"></span>{{ news?.date.split("|")[0] }}</span
@@ -57,6 +57,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.news,"Shoha_test");
   },
 };
 </script>

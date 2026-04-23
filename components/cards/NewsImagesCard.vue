@@ -13,7 +13,7 @@
         </p>
         <div class="news-images-card-info">
           <span> <span v-html="comments"></span>{{ news?.comment_count }}</span>
-          <span><span v-html="view"></span>{{ news?.views ? news?.views : 0 }}</span>
+          <span v-if="news?.views_enabled"><span v-html="view"></span>{{ news?.views ? news?.views : 0 }}</span>
           <span class="news-images-card_web"
             ><span v-html="date"></span>{{ news?.date }}</span
           >

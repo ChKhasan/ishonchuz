@@ -311,64 +311,72 @@ export default {
       }),
     ]);
   },
-  async asyncData({ store, params, i18n, query }) {
-    const [
-      newsData,
-      topNewsData,
-      simpleNewsData,
-      categoriesData,
-      bannersData,
-    ] = await Promise.all([
-      store.dispatch("fetchNews/getNews", {
-        params: { last_news: true, page_size: 3 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        params: { top: true, page_size: 1 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchCategories/getCategoriesBySlug", {
-        id: params.index,
-        params: {
-          params: {
-            page_size: 20,
-            page: query.page,
-          },
+  async asyncData({ store, params, i18n, query, error }) {
+    try {
+      const [
+        newsData,
+        topNewsData,
+        simpleNewsData,
+        categoriesData,
+        bannersData,
+      ] = await Promise.all([
+        store.dispatch("fetchNews/getNews", {
+          params: { last_news: true, page_size: 3 },
           headers: {
             Language: i18n.locale,
           },
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-    ]);
+        }),
+        store.dispatch("fetchNews/getNews", {
+          params: { top: true, page_size: 1 },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchNews/getNews", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchCategories/getCategoriesBySlug", {
+          id: params.index,
+          params: {
+            params: {
+              page_size: 20,
+              page: query.page,
+            },
+            headers: {
+              Language: i18n.locale,
+            },
+          },
+        }),
+        store.dispatch("fetchBanners/getBanners", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+      ]);
 
-    const news = newsData.results;
-    const topNews = topNewsData.results;
-    const simpleNews = simpleNewsData.results;
-    const categories = categoriesData;
-    const banners = bannersData.results;
-    const totalCount = categoriesData.news_count;
-    return {
-      news,
-      topNews,
-      simpleNews,
-      categories,
-      banners,
-      totalCount,
-    };
+      const news = newsData.results;
+      const topNews = topNewsData.results;
+      const simpleNews = simpleNewsData.results;
+      const categories = categoriesData;
+      const banners = bannersData.results;
+      const totalCount = categoriesData.news_count;
+      return {
+        news,
+        topNews,
+        simpleNews,
+        categories,
+        banners,
+        totalCount,
+      };
+    } catch (err) {
+      const status = err?.response?.status || 500;
+      return error({
+        statusCode: status,
+        message: status === 404 ? "Category not found" : "Failed to load category page",
+      });
+    }
   },
   components: {
     BannerCard,

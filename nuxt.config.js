@@ -1,3 +1,5 @@
+const apiBaseUrl = process.env.BASE_URL || "https://admin.ishonch.uz/api";
+
 export default {
   head: {
     title: "Ishonch",
@@ -65,7 +67,7 @@ export default {
     init(axios) {
       axios.defaults.withCredentials = true;
     },
-    baseURL: "https://admin.ishonch.uz/api",
+    baseURL: apiBaseUrl,
   },
   loading: {
     color: "#0192ff",
@@ -82,7 +84,13 @@ export default {
     vendor: ["aos"],
     standalone: true,
     extend(config, ctx) {
+      const existingExternals = Array.isArray(config.externals)
+        ? config.externals
+        : config.externals
+          ? [config.externals]
+          : [];
       config.externals = [
+        ...existingExternals,
         {
           encoding: "encoding",
         },
