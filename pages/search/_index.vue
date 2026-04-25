@@ -9,7 +9,7 @@
         <div class="col-lg-9 col-xs-12 p-0 home-page-left">
           <div class="search-page-container">
             <h3 v-if="newsSearch?.length > 0">
-              “{{ $route.params.index }}”
+              “{{ decodedRouteSearchTerm }}”
               {{ $store.state.translations["main.search-text1"] }} -
               <span>{{ totalCount }}</span>
               {{ $store.state.translations["main.search-text2"] }}
@@ -78,13 +78,13 @@
       </div>
       <div class="search_empty search-page-container" v-else>
         <h3 v-if="newsSearch?.length > 0">
-          “{{ $route.params.index }}”
+          “{{ decodedRouteSearchTerm }}”
           {{ $store.state.translations["main.search-text1"] }} -
           <span>{{ totalCount }}</span>
           {{ $store.state.translations["main.search-text2"] }}
         </h3>
         <h3 v-else>
-          “{{ $route.params.index }}” {{ $store.state.translations["main.not-found"] }}
+          “{{ decodedRouteSearchTerm }}” {{ $store.state.translations["main.not-found"] }}
         </h3>
         <div class="search_to_back">
           <div class="btn_container_show_more">
@@ -200,6 +200,15 @@ import RightNewsCard from "../../components/cards/RightNewsCard.vue";
 import AllNewsCard from "../../components/cards/AllNewsCard.vue";
 import NewsImagesCard from "../../components/cards/NewsImagesCard.vue";
 
+function decodeSearchParam(value) {
+  if (typeof value !== "string") return "";
+  try {
+    return decodeURIComponent(value);
+  } catch (error) {
+    return value;
+  }
+}
+
 export default {
   name: "IndexPage",
   data() {
@@ -218,39 +227,50 @@ export default {
   },
   mounted() {
     if (Object.keys(this.$route.query).length == 0) {
-      this.$router.replace({
-        path: `/search/${this.$route.params.index}`,
+      this.$router.replace(this.localePath({
+        path: `/search/${encodeURIComponent(this.decodedRouteSearchTerm)}`,
         query: {
           page: 1,
         },
-      });
+      }));
     }
   },
   async asyncData({ store, params, i18n, query }) {
-    const [searchData, importantNewsData, bannersData] = await Promise.all([
-      store.dispatch("fetchSearch/search", {
-        params: { search: params.index, page_size: 18, page: query.page },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchNews/getNews", {
-        params: { important: true, page_size: 6 },
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-      store.dispatch("fetchBanners/getBanners", {
-        headers: {
-          Language: i18n.locale,
-        },
-      }),
-    ]);
-    const newsSearch = searchData.results;
-    const totalCount = searchData.count;
-    const importantNews = importantNewsData.results;
-    const searchVal = params.index;
-    const banners = bannersData.results;
+    const searchTerm = decodeSearchParam(params.index);
+    const currentPage = Number(query.page) || 1;
+    let searchData = { results: [], count: 0 };
+    let importantNewsData = { results: [] };
+    let bannersData = { results: [] };
+
+    try {
+      [searchData, importantNewsData, bannersData] = await Promise.all([
+        store.dispatch("fetchSearch/search", {
+          params: { search: searchTerm, page_size: 18, page: currentPage },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchNews/getNews", {
+          params: { important: true, page_size: 6 },
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+        store.dispatch("fetchBanners/getBanners", {
+          headers: {
+            Language: i18n.locale,
+          },
+        }),
+      ]);
+    } catch (error) {
+      // Keep page renderable even if upstream search API fails.
+    }
+
+    const newsSearch = searchData?.results || [];
+    const totalCount = searchData?.count || 0;
+    const importantNews = importantNewsData?.results || [];
+    const searchVal = searchTerm;
+    const banners = bannersData?.results || [];
 
     return {
       newsSearch,
@@ -260,21 +280,27 @@ export default {
       banners,
     };
   },
+  computed: {
+    decodedRouteSearchTerm() {
+      return decodeSearchParam(this.$route.params.index);
+    },
+  },
 
   methods: {
     searchFunc() {
-      if (this.searchVal.length > 0) {
-        this.$router.replace({
-          path: `/search/${this.searchVal}`,
+      const normalizedSearch = this.searchVal.trim();
+      if (normalizedSearch.length > 0) {
+        this.$router.replace(this.localePath({
+          path: `/search/${encodeURIComponent(normalizedSearch)}`,
           query: {
             page: 1,
           },
-        });
-        this.$store.dispatch("fetchNews/getNews", {
+        }));
+        this.$store.dispatch("fetchSearch/search", {
           params: {
-            search: this.$route.params.index,
+            search: normalizedSearch,
             page_size: 18,
-            page: this.$route.query.page,
+            page: Number(this.$route.query.page) || 1,
           },
           headers: {
             Language: this.$i18n.locale,
@@ -285,11 +311,11 @@ export default {
     async __GET_NEWS() {
       this.loading = true;
       const [searchData] = await Promise.all([
-        this.$store.dispatch("fetchNews/getNews", {
+        this.$store.dispatch("fetchSearch/search", {
           params: {
-            search: this.$route.params.index,
+            search: this.decodedRouteSearchTerm,
             page_size: 18,
-            page: this.$route.query.page,
+            page: Number(this.$route.query.page) || 1,
           },
           headers: {
             Language: this.$i18n.locale,
@@ -303,7 +329,7 @@ export default {
     async showMore() {
       this.currentPage = Number(this.$route.query.page) + 1;
       await this.$router.push(this.localePath({
-        path: `/search/${this.$route.params.index}`,
+        path: `/search/${encodeURIComponent(this.decodedRouteSearchTerm)}`,
         query: {
           page: this.currentPage,
         },

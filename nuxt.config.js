@@ -1,6 +1,11 @@
 const apiBaseUrl = process.env.BASE_URL || "https://admin.ishonch.uz/api";
 const apiOrigin = apiBaseUrl.replace(/\/api\/?$/, "");
 
+if (process.env.NODE_ENV === "development") {
+  // Hide Node deprecation noise from legacy Nuxt 2 dependencies in dev.
+  process.noDeprecation = true;
+}
+
 export default {
   head: {
     title: "Ishonch",
