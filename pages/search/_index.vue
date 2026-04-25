@@ -234,50 +234,34 @@ export default {
         },
       }));
     }
+    this.fetchSidebarData();
   },
   async asyncData({ store, params, i18n, query }) {
     const searchTerm = decodeSearchParam(params.index);
     const currentPage = Number(query.page) || 1;
     let searchData = { results: [], count: 0 };
-    let importantNewsData = { results: [] };
-    let bannersData = { results: [] };
 
     try {
-      [searchData, importantNewsData, bannersData] = await Promise.all([
-        store.dispatch("fetchSearch/search", {
-          params: { search: searchTerm, page_size: 18, page: currentPage },
-          headers: {
-            Language: i18n.locale,
-          },
-        }),
-        store.dispatch("fetchNews/getNews", {
-          params: { important: true, page_size: 6 },
-          headers: {
-            Language: i18n.locale,
-          },
-        }),
-        store.dispatch("fetchBanners/getBanners", {
-          headers: {
-            Language: i18n.locale,
-          },
-        }),
-      ]);
+      searchData = await store.dispatch("fetchSearch/search", {
+        params: { search: searchTerm, page_size: 18, page: currentPage },
+        headers: {
+          Language: i18n.locale,
+        },
+      });
     } catch (error) {
       // Keep page renderable even if upstream search API fails.
     }
 
     const newsSearch = searchData?.results || [];
     const totalCount = searchData?.count || 0;
-    const importantNews = importantNewsData?.results || [];
     const searchVal = searchTerm;
-    const banners = bannersData?.results || [];
 
     return {
       newsSearch,
-      importantNews,
+      importantNews: [],
       searchVal,
       totalCount,
-      banners,
+      banners: [],
     };
   },
   computed: {
@@ -287,6 +271,28 @@ export default {
   },
 
   methods: {
+    async fetchSidebarData() {
+      const [importantNewsData, bannersData] = await Promise.allSettled([
+        this.$store.dispatch("fetchNews/getNews", {
+          params: { important: true, page_size: 6 },
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+        this.$store.dispatch("fetchBanners/getBanners", {
+          headers: {
+            Language: this.$i18n.locale,
+          },
+        }),
+      ]);
+
+      if (importantNewsData.status === "fulfilled") {
+        this.importantNews = importantNewsData.value?.results || [];
+      }
+      if (bannersData.status === "fulfilled") {
+        this.banners = bannersData.value?.results || [];
+      }
+    },
     searchFunc() {
       const normalizedSearch = this.searchVal.trim();
       if (normalizedSearch.length > 0) {
@@ -296,16 +302,6 @@ export default {
             page: 1,
           },
         }));
-        this.$store.dispatch("fetchSearch/search", {
-          params: {
-            search: normalizedSearch,
-            page_size: 18,
-            page: Number(this.$route.query.page) || 1,
-          },
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        });
       }
     },
     async __GET_NEWS() {

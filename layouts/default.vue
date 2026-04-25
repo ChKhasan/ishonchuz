@@ -27,7 +27,16 @@
 import Footer from "../components/layout/Footer.vue";
 import Header from "../components/layout/Header.vue";
 import MobileHeader from "@/components/layout/MobileHeader.vue";
-import moment from "moment";
+
+const layoutCache = {
+  locale: null,
+  categories: [],
+  banners: [],
+  columnist: {},
+  weather: {},
+  currency: [],
+};
+
 export default {
   head () {
     return {
@@ -38,8 +47,7 @@ export default {
     return {
       categories: [],
       currency: [],
-      banners: {},
-      date: new Date(),
+      banners: [],
       columnist: {},
       weather: {},
     };
@@ -53,110 +61,106 @@ export default {
     this.$store.commit("chackAuth");
     this.$store.commit("reloadStore");
     this.$store.commit("changeTheme", "first");
+    this.fetchNonBlockingData();
   },
   async fetch() {
-    const requests = [
+    const currentLocale = this.$i18n.locale;
+    if (layoutCache.locale === currentLocale && this.categories.length > 0) {
+      this.categories = layoutCache.categories || [];
+      this.banners = layoutCache.banners || [];
+      this.columnist = layoutCache.columnist || {};
+      this.weather = layoutCache.weather || {};
+      this.currency = layoutCache.currency || [];
+      return;
+    }
+
+    const settled = await Promise.allSettled([
       this.$store.dispatch("fetchCategories/getCategories", {
         headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
       this.$store.dispatch("fetchTranslations/getTranslations", {
         headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
       this.$store.dispatch("fetchBanners/getBanners", {
         headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
       this.$store.dispatch("fetchSiteInfo/getSiteInfo", {
         headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
       this.$store.dispatch("fetchCategories/getColumnist", {
         headers: {
-          Language: this.$i18n.locale,
-        },
-      }),
-      this.$store.dispatch("fetchWeather/getWeathers", {
-        params: {
-          lat: 41.25,
-          lon: 69.25,
-          region: "toshkentSh",
-        },
-        headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
       this.$store.dispatch("fetchTranslations/getLanguages", {
         headers: {
-          Language: this.$i18n.locale,
+          Language: currentLocale,
         },
       }),
-    ];
-    const settled = await Promise.allSettled(requests);
-    const categoriesData =
-      settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
-    const translationsData =
-      settled[1].status === "fulfilled" ? settled[1].value : {};
-    const bannersData =
-      settled[2].status === "fulfilled" ? settled[2].value : { results: [] };
+    ]);
+
+    const categoriesData = settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
+    const translationsData = settled[1].status === "fulfilled" ? settled[1].value : {};
+    const bannersData = settled[2].status === "fulfilled" ? settled[2].value : { results: [] };
     const siteInfoData = settled[3].status === "fulfilled" ? settled[3].value : {};
     const columnistData = settled[4].status === "fulfilled" ? settled[4].value : {};
-    const weatherData = settled[5].status === "fulfilled" ? settled[5].value : {};
-    const languagesData =
-      settled[6].status === "fulfilled" ? settled[6].value : { results: [] };
+    const languagesData = settled[5].status === "fulfilled" ? settled[5].value : { results: [] };
 
     this.categories = categoriesData.results || [];
     this.banners = bannersData.results || [];
     this.columnist = columnistData || {};
-    this.weather = weatherData || {};
     this.$store.commit("getSiteInfo", siteInfoData || {});
     this.$store.commit("getLanguages", languagesData?.results || []);
     this.$store.commit("getTranslations", translationsData || {});
 
-    const date = new Date();
-      try {
-        const currencyData = await this.$axios.$get(
-          `https://cbu.uz/ru/arkhiv-kursov-valyut/json/all/${moment(date).format("YYYY-MM-DD")}`
-        );
-        this.currency = currencyData;
-      } catch (error) {
-        console.error("Error fetching currency data:", error);
+    layoutCache.locale = currentLocale;
+    layoutCache.categories = this.categories;
+    layoutCache.banners = this.banners;
+    layoutCache.columnist = this.columnist;
+   },
+  methods: {
+    async fetchNonBlockingData() {
+      const currentLocale = this.$i18n.locale;
+      const [weatherData, currencyData] = await Promise.allSettled([
+        this.$store.dispatch("fetchWeather/getWeathers", {
+          params: {
+            lat: 41.25,
+            lon: 69.25,
+            region: "toshkentSh",
+          },
+          headers: {
+            Language: currentLocale,
+          },
+        }),
+        this.$axios.$get(
+          `https://cbu.uz/ru/arkhiv-kursov-valyut/json/all/${new Date().toISOString().slice(0, 10)}`
+        ),
+      ]);
+
+      if (weatherData.status === "fulfilled") {
+        this.weather = weatherData.value || {};
+        layoutCache.weather = this.weather;
       }
+      if (currencyData.status === "fulfilled") {
+        this.currency = currencyData.value || [];
+        layoutCache.currency = this.currency;
+      }
+    },
   },
 
   watch: {
     async targetLang() {
-      const settled = await Promise.allSettled([
-        this.$store.dispatch("fetchCategories/getCategories", {
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        }),
-        this.$store.dispatch("fetchTranslations/getTranslations", {
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        }),
-        this.$store.dispatch("fetchSiteInfo/getSiteInfo", {
-          headers: {
-            Language: this.$i18n.locale,
-          },
-        }),
-      ]);
-      const categoriesData =
-        settled[0].status === "fulfilled" ? settled[0].value : { results: [] };
-      const translationsData =
-        settled[1].status === "fulfilled" ? settled[1].value : {};
-      const siteInfoData = settled[2].status === "fulfilled" ? settled[2].value : {};
-
-      this.categories = categoriesData.results || [];
-      this.$store.commit("getTranslations", translationsData || {});
-      this.$store.commit("getSiteInfo", siteInfoData || {});
+      layoutCache.locale = null;
+      await this.$fetch();
+      this.fetchNonBlockingData();
       this.$store.commit("getTranslationsChange", !this.$store.state.translationsChange);
     },
     "$store.state.theme"(val) {
