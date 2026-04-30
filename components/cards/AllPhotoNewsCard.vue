@@ -2,8 +2,8 @@
   <div class="all-news-card">
     <nuxt-link :to="localePath(`/photo_news/${news?.slug}`)">
       <div class="all-news-card-img">
-        <img v-if="news?.image" :src="news?.image" alt="" />
-        <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+        <img loading="lazy" decoding="async" v-if="news?.image" :src="news?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       </div>
     </nuxt-link>
     <div class="all-news-card-body">

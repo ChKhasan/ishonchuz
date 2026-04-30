@@ -1,0 +1,10 @@
+HTTP/1.1 500 RuntimeError
+Set-Cookie: i18n_redirected=uz; Max-Age=31536000; Path=/; SameSite=Lax
+Content-Type: text/json; charset=utf-8
+Content-Length: 118
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Vary: Accept-Encoding
+Date: Thu, 30 Apr 2026 11:21:37 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+

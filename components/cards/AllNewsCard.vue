@@ -2,12 +2,12 @@
   <div class="all-news-card">
     <nuxt-link :to="localePath(`/news/${news?.slug}`)">
       <div class="all-news-card-img" v-if="news?.is_photo_news">
-        <img v-if="news?.images?.length > 0" :src="news?.images[0]?.image" alt="" />
-        <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+        <img loading="lazy" decoding="async" v-if="news?.images?.length > 0" :src="news?.images[0]?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       </div>
       <div class="all-news-card-img" v-else>
-        <img v-if="news?.image" :src="news?.image" alt="" />
-        <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+        <img loading="lazy" decoding="async" v-if="news?.image" :src="news?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       </div>
     </nuxt-link>
     <div class="all-news-card-body">

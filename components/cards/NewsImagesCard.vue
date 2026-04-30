@@ -2,10 +2,10 @@
   <div class="news-images-card">
     <nuxt-link :to="localePath(`/photo_news/${news?.slug}`)">
       <div class="news-images-card-image">
-        <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
+        <img loading="lazy" decoding="async" v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div>
       <!-- <div class="news-images-card-img_mobile">
-        <img v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
+        <img loading="lazy" decoding="async" v-if="news?.images[0]?.image" :src="news?.images[0]?.image" alt="" />
       </div> -->
       <div class="news-images-card-body">
         <p>

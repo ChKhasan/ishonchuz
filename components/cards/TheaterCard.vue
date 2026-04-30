@@ -2,8 +2,8 @@
   <div style="overflow: hidden">
     <div class="theater-card">
       <div class="theater-card-image">
-        <img v-if="theater?.image" :src="theater?.image" alt="" />
-        <img v-else src="../../assets/images/teater.png" alt="" />
+        <img loading="lazy" decoding="async" v-if="theater?.image" :src="theater?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else src="../../assets/images/teater.png" alt="" />
       </div>
       <div class="theater-card-title">
         <h4>{{ theater?.title }}</h4>

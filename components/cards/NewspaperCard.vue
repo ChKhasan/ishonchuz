@@ -4,8 +4,8 @@
     @click="$router.push(localePath(`/newspaper-inner/${newspaper?.slug}`))"
   >
     <div class="newspaper-image">
-      <img v-if="newspaper?.image" :src="newspaper?.image" alt="" />
-      <img v-else src="../../assets/images/gazeta.png" alt="" />
+      <img loading="lazy" decoding="async" v-if="newspaper?.image" :src="newspaper?.image" alt="" />
+      <img loading="lazy" decoding="async" v-else src="../../assets/images/gazeta.png" alt="" />
     </div>
     <div class="newspaper-body">
       <h3>

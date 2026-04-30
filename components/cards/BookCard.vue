@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="book-card" @click="$router.push(localePath(`/book/${book.slug}`))">
     <div class="book-card-img">
-      <img v-if="book?.image" :src="book?.image" alt="" />
-      <img v-else src="../../assets/images/image 1.png" alt="" />
+      <img loading="lazy" decoding="async" v-if="book?.image" :src="book?.image" alt="" />
+      <img loading="lazy" decoding="async" v-else src="../../assets/images/image 1.png" alt="" />
     </div>
     <div class="book-card-body">
       <h3>{{ book?.title }}</h3>

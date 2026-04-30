@@ -19,6 +19,49 @@ $ npm run generate
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
+## Docker Setup
+
+Build the production image:
+
+```bash
+docker build -t ishonchuz .
+```
+
+Build with explicit public/API URLs:
+
+```bash
+docker build -t ishonchuz \
+  --build-arg BASE_URL=https://admin.ishonch.uz/api \
+  --build-arg HOST_URL=http://ishonch.uz .
+```
+
+Run the container:
+
+```bash
+docker run --rm -p 3000:3000 \
+  -e BASE_URL=https://admin.ishonch.uz/api \
+  -e HOST_URL=http://ishonch.uz \
+  --name ishonchuz-web ishonchuz
+```
+
+The app will be available at `http://localhost:3000`.
+
+### Docker Compose
+
+Build and start:
+
+```bash
+docker compose up -d --build
+```
+
+Stop and remove:
+
+```bash
+docker compose down
+```
+
+Optional: define `BASE_URL` and `HOST_URL` in your shell (or in a local `.env` file next to `docker-compose.yml`) before running `docker compose up`.
+
 ## Special Directories
 
 You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.

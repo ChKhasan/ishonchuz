@@ -18,7 +18,7 @@
         ref="lazyVideo"
         :src="news?.video"
       />
-      <img v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
+      <img loading="lazy" decoding="async" v-else src="../../assets/images/Снимок экрана (925).png" alt="" />
       <span v-if="news?.category?.title"> {{ news?.category?.title }} </span>
       <div
         class="video-banner"

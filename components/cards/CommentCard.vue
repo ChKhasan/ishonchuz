@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="comment-card">
     <div class="comment-card-avatar">
-      <img src="../../assets/images/Frame 1239.png" alt="" />
+      <img loading="lazy" decoding="async" src="../../assets/images/Frame 1239.png" alt="" />
     </div>
     <div class="comment-card-body">
       <h6>{{ comment?.full_name }}</h6>

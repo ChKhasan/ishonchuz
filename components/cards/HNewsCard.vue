@@ -3,7 +3,7 @@
     <nuxt-link :to="localePath(`/news/${news?.slug}`)">
       <div class="h-news-card-img">
         <LazyYoutube v-if="news?.video" ref="lazyVideo" :src="news?.video" />
-        <img v-else :src="news?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else :src="news?.image" alt="" />
         <img
           v-if="!news?.video && !news?.image"
           src="../../assets/images/Снимок экрана (925).png"

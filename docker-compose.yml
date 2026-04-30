@@ -1,0 +1,15 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        BASE_URL: ${BASE_URL:-https://admin.ishonch.uz/api}
+        HOST_URL: ${HOST_URL:-http://ishonch.uz}
+    image: ishonchuz:latest
+    container_name: ishonchuz-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      BASE_URL: ${BASE_URL:-https://admin.ishonch.uz/api}
+      HOST_URL: ${HOST_URL:-http://ishonch.uz}

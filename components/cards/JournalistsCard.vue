@@ -2,8 +2,8 @@
   <div class="journalists-card">
     <div class="journalist-card-head">
       <div class="journalist-card-image">
-        <img v-if="journalist?.image" :src="journalist?.image" alt="" />
-        <img v-else src="@/assets/images/journalist.png" alt="" />
+        <img loading="lazy" decoding="async" v-if="journalist?.image" :src="journalist?.image" alt="" />
+        <img loading="lazy" decoding="async" v-else src="@/assets/images/journalist.png" alt="" />
       </div>
       <div class="journalist-card-title">
         <h4>{{ journalist?.full_name }}</h4>
