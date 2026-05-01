@@ -12,5 +12,3 @@ coverage
 .vscode
 agent-transcripts
 terminals
-.env
-.env.*
